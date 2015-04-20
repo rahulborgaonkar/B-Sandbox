@@ -6,6 +6,7 @@ public without sharing class InvoiceTriggerMethods
     //Populate Invoice Status field on booking event object, Opportunity Line Item object and Susbscription Line object
 
     // Case 6609
+    // Test Comment
     // updateSubscription function is called from InvoiceTrigger
     // This function check invoice fields Copy_Invoice_Status__c == 'Paid' and Copy_Match_Type__c != 'Credited'
     // if both conditions are true it updates subscrption fields Invoice_Status__c, Status__c, Invoice_Date__c, Start_Date__c, End_Date__c
