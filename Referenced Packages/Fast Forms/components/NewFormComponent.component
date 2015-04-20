@@ -1,0 +1,11 @@
+<apex:component controller="VisualAntidote.CKEditorNewFormController" allowDML="true">
+
+     <script src="{!URLFOR($Resource.jScroll,'js/jScrollPane.js')}"></script>
+
+
+
+      
+        
+  
+
+</apex:component>

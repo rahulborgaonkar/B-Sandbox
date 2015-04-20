@@ -1,0 +1,11 @@
+<apex:component controller="VisualAntidote.TrialExpiryComponentController">
+    <apex:outputPanel id="trialExpiryPanel" rendered="{!daysLeftToExpiry > -1}">
+        <div class="trialExpiryBar">
+        <center>
+            <div class="trialExpiryNumDays">{!daysLeftToExpiry}</div>
+            <div class="trialExpiryMsg">days left on your free trial</div>
+            <a href="http://visualantidote.com/fastforms#Subscribe" alt="Upgrade today!" class="trialExpiryUpgradeBtn" target="_blank">UPGRADE NOW</a>
+        </center>
+        </div>
+    </apex:outputPanel>
+</apex:component>

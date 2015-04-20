@@ -1,0 +1,33 @@
+<apex:page wizard="true" controller="popupWindowController" action="{!search}">
+<!-- This is popupWindow -->
+<apex:param assignTo="{!entityName}" name="entityName" value="{!entityName}"/>
+<apex:param assignTo="{!fieldName}" name="fieldName" value="{!fieldName}"/>
+<script>
+function passResults(x,y) {
+    top.window.opener.receiveResult('{!fieldName}',x,y);
+    top.window.close();
+    return false;
+}
+</script>
+<apex:form >
+    <apex:pageBlock title="Search">
+    <apex:pageBlockSection columns="2" collapsible="false">
+        <apex:pageBlockSectionItem >
+            <apex:outputLabel >Search</apex:outputLabel>
+            <apex:inputText value="{!searchTerm}"/>
+        </apex:pageBlockSectionItem>
+        <apex:commandButton action="{!search}" value="Search"/>
+    </apex:pageBlockSection>
+        <apex:pageBlockTable title="Results" value="{!searchResults}" var="result" rendered="{!searchResults.size>0}">
+            <apex:column >
+                <apex:outputLink onclick="return passResults('{!result.recordid}','{!JSINHTMLENCODE(result.name)}')">
+                    {!result.name}
+                </apex:outputLink>
+            </apex:column>
+        </apex:pageBlockTable>
+        <apex:outputText rendered="{!searchResults.size=0}">
+            No results found
+        </apex:outputText>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

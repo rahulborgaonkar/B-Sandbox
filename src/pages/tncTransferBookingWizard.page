@@ -1,0 +1,19 @@
+<apex:page wizard="true" controller="tncTransferBookingWizard">
+    <script>
+    function setFocusOnLoad() {}
+    </script>
+    <apex:param assignTo="{!fieldName}" name="fieldName" value="{!fieldName}"/>
+    
+    <apex:sectionHeader title="Transfer Booking" subtitle="{!record.Name}" />
+    
+    <apex:pageMessages />
+    
+    <apex:outputPanel >
+        <!--<apex:outputLink onclick="return passResults1('1234','vstest')">
+            {!fieldName}
+        </apex:outputLink>-->
+        <apex:form >
+            <c:tncTransferBookingController fieldtoUse="{!fieldName}" bEvent="{!record}" bType="Transfer" eventExclusions="{!eventExclusions}" />
+        </apex:form>
+    </apex:outputPanel> 
+</apex:page>

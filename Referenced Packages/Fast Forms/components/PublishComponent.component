@@ -1,0 +1,528 @@
+<apex:component controller="VisualAntidote.PublishComponentController" allowDML="true">
+    <apex:attribute name="ffrecord" type="String" description="TODO: SF Id for Form" required="true" assignTo="{!recordId}" />
+<head>
+ 
+</head>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <apex:includeScript value="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" />
+
+
+    <apex:includeScript value="{!$Resource.VisualAntidote__Bootstrapwizardjs}" />
+
+    <script src="{!URLFOR($Resource.Clipboard,'ZeroClipboard.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.sortable,'sortable/jquery-ui.css')}" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.select2,'select2.css')}" />
+    <script src="{!URLFOR($Resource.select2,'select2.js')}"></script>
+    
+    <script src="{!URLFOR($Resource.swfobjectjs)}"></script>
+    <script src="{!URLFOR($Resource.freshereditor,'freshereditor/shortcut.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.freshereditor,'freshereditor/farbtastic/farbtastic.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.freshereditor,'freshereditor/bootstrap/bootstrap-dropdown.js')}" type="text/javascript"></script>
+     <script src="{!URLFOR($Resource.freshereditor,'freshereditor/freshereditor.min.js')}" type="text/javascript"></script>
+    
+    
+    <link href="{!URLFOR($Resource.freshereditor,'freshereditor/farbtastic/farbtastic.css')}" rel="stylesheet" type="text/css" />
+    <link href="{!URLFOR($Resource.freshereditor,'freshereditor/freshereditor.css')}" rel="stylesheet" type="text/css" />
+    
+    <style>
+   
+    </style>
+   
+    
+    <apex:actionFunction name="passRecordParam" action="{!passRecordParam}" reRender="sfffpublishOptionsWrapper" status="loadstatus" onComplete="CopyToClipBoard();resetselect(); setToolbar(); ">
+        <apex:param assignTo="{!recordId}" name="ffrecordid" value="{!ffrecord}" />
+
+    </apex:actionFunction>
+
+ 
+ <apex:actionFunction name="clearpopupEmailResultMsg" action="{!clearEmailResultMsg}"  reRender="msgpanel"    >
+        <apex:param assignTo="{!popupEmailResultMsg}" name="popupEmailResultMsg" value="" />
+
+    </apex:actionFunction>
+
+    <apex:actionFunction immediate="true" name="ExportLinks" action="{!ExportLinks}"    reRender="msgpanel"  >
+        <apex:param name="lookupvalue" value="" />
+        <apex:param name="islist" value="" />
+        <apex:param name="isprefill" value="" />
+    </apex:actionFunction>
+
+
+    <apex:actionFunction immediate="true" name="SendOrSaveEmail2" action="{!SendOrSaveEmail2}"  >
+        <apex:param name="emailto" value="" />
+        <apex:param name="emailbcc" value="" />
+        <apex:param name="emailcc" value="" />
+        <apex:param name="emailsubject" value="" />
+        <apex:param name="templatebody" value="" />
+        <apex:param name="isdraftonly" value="" />
+        <apex:param name="prefillData" value="" />
+    </apex:actionFunction>
+
+    <apex:actionFunction immediate="true" name="SendOrSaveEmail" action="{!SendOrSaveEmail}" reRender="msgpanel" status="loadstatus">
+        <apex:param name="emailconfigxml" value="" />
+        <apex:param name="templatebody" value="" />
+        <apex:param name="isdraftonly" value="" />
+        <apex:param name="isprefill" value="" />
+        <apex:param name="islist" value="" />
+
+        <apex:param name="lookupvalue" value="" />
+    </apex:actionFunction>
+
+
+  <apex:outputPanel id="sfffpublishOptionsWrapper" styleClass="sfffpublishOptionsWrapperCSS"  layout="block">
+
+    <apex:outputPanel id="sfffpublishOptions" rendered="{!!OnlyDraft }" layout="block">
+
+        <div   class="MainTabContainer">
+
+<apex:outputPanel styleClass="marginLRauto ohidden text-align-center"  >
+     <div class="vff-success " id="successActionBox" style="display: none;">
+                
+                <div class="vff-success-msg msg-text-div" onclick="closeNotification(this);" style="display:block"> </div>
+                </div>
+    </apex:outputPanel>
+
+            <ul class="nav nav-tabs  publish-option-tabs">
+                <li class="sfff-tab active embed-code-header" id="embed-code-header">
+                    <a data-toggle="tab" href="#embedcodesection" onclick="goToNextTourStop();"><span class="tab-icon"></span><span class="tab-title">Embed Code</span></a>
+                </li>
+                <li class="sfff-tab hosted-form-header" id="hosted-form-header">
+                    <a data-toggle="tab" href="#hostedformsection" onclick="goToNextTourStop();"><span class="tab-icon"></span><span class="tab-title">Hosted Form</span></a>
+                </li>
+                <li class="sfff-tab send-email-header" id="send-email-header">
+                    <a data-toggle="tab" href="#sendemailsection" onclick="goToNextTourStop();"><span class="tab-icon"></span><span class="tab-title">Send by Email</span></a>
+                </li>
+                <li class="sfff-tab export-link-header" id="export-link-header">
+                    <a data-toggle="tab" href="#exportlinksection" onclick="goToNextTourStop();"><span class="tab-icon"></span><span class="tab-title">Export Links</span></a>
+                </li>
+            </ul>
+
+            <apex:outputPanel id="onlyDraftPanel" styleClass="onlyDraft" rendered="{!OnlyDraft}">
+                <h4>You currently have a draft for this form</h4>
+                <div class="sfff-action-buttons"> <a class="vabutton2" href="#">Start Fresh</a>
+
+                    <a class="vabutton1" href="#">Edit Current Draft</a>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel id="tabContentPanel" styleClass="publish-option-content tab-content" rendered="{!!OnlyDraft }">
+                <div id="embedcodesection" class="tab-pane fade in embed-code-body  active">
+                    <p>Use the embed code below to embed your form directly into any website.<br />You will only need do this once, as your form will update automatically when you publish changes to your form in the future.</p>
+                    <div class="code-block">
+                        <div class="help-box">
+
+                        </div>
+                        <div class="copy-code-block">
+                            <h4 id="clip_copyEmbedCodeText" data-clipboard-target="embedCodeTextArea" class="EmbedCodeText copy-code-text">Copy Code</h4>
+                        </div>
+
+                        <apex:inputTextarea readonly="true" styleClass="copyTextbox sfff-text-area embedCodeTextAreaClass" id="embedCodeTextArea" value="{!EmbedCode}" />
+                    </div>
+                </div>
+                <div id="hostedformsection" class="tab-pane fade hosted-form-body">
+                    <p>Use the link below to access your form from anywhere. <br />This link will never change, as the form will update automatically when you publish changes to your form in the future.</p>
+                    <div class="code-block">
+                        <div class="copy-code-block">
+                            <h4 id="clip_copyHostedFormText" data-clipboard-target="hostedFormScriptTextarea" class="HostedFormText copy-code-text">Copy Code</h4>
+                        </div>
+                      
+<label class="hostedFormScriptTextareaClass" id="hostedFormScriptTextarea" value="{!HostedFormCode}"><a alt="Open form in new tab" href="{!HostedFormCode}" target="_blank">{!HostedFormCode}</a></label>
+
+                    </div>
+                </div>
+                <div id="sendemailsection" class="tab-pane fade  send-email-body">
+                    <apex:outputPanel id="enterpriseCustomersOnlyPanel" styleClass="onlyDraft" rendered="{!NOT(packageTier == 'Enterprise')}">
+                        <h4>Send by Email is only available in the Enterprise Edition of Fast Forms.</h4>
+                        <br />
+                        <div class="sfff-action-buttons"> <a class="vabutton1" href="http://visualantidote.com/fastforms#Subscribe" target="_blank">Upgrade Now!</a>
+                        </div>
+                        <br />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="onlyDraftEMailPanel" styleClass="onlyDraft" rendered="{!OnlyDraft && packageTier == 'Enterprise'}">
+                        <h4>You currently have a draft for this form</h4>
+                        <div class="sfff-action-buttons"> <a class="vabutton2" href="#">Start Fresh</a>
+
+                            <a class="vabutton1" href="#">Edit Current Draft</a>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel id="hasNoEMailPanel" styleClass="onlyDraft" rendered="{!Not(IsObjectHasEmail) && packageTier == 'Enterprise'}">
+                        <h4>You don't have any e-mail fields in your form's primary object ({! HTMLENCODE(PrimaryObjectName) }).</h4>
+                        <div class="sfff-action-buttons"> <a href="{!URLENCODE($Site.BaseUrl)}FormEditor?id={!URLENCODE(ffrecord)}" class="vabutton2">Go to Form Editor</a>
+
+
+                        </div>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="mainEMailPanel" rendered="{! NOT(OnlyDraft) && IsObjectHasEmail && packageTier == 'Enterprise'}">
+                        <!--   Send Email Block starts -->
+
+<div id="sendEmailWizard" class="nav-wizard-container">
+                            <div class="navbar">
+                                 
+                                        <ul class="nav-wizard">
+                                            <li class="active"><a href="#emailfirsttab" class="nocursorevents"  >1 - Start</a>
+                                            </li>
+                                            <li><a href="#emaillasttab" class="nocursorevents" >2 - Send Email</a>
+                                            </li>
+
+                                        </ul>
+                                    
+                           
+                            <div class="tab-content horizontal-tab-content">
+                                <div class="tab-pane fade in active" id="emailfirsttab">
+
+                                    <div class="m0-150 pt50" style="display:block; overflow:hidden">
+                                        <p>Send By Email allows you to distribute a link to your form to the audience defined below. <br/ ><br />The 'Allow Prefill and Update' option will allow you to pre-populate your form with your audience's existing information and allow them to update their information.</p><br/ >
+                                        <div class="div-col-1 w40per txt616161">
+                                            Set Audience
+                                        </div>
+                                        <div class="div-col-2 w60per">
+                                            <div class="vertical-tab-container">
+                                                <ul class="nav nav-tabs vertical-tabs">
+                                                    <li class="active"><a href="#SBEselectindividualrecord" data-toggle="tab"><span class="ff-radio-css"></span>Select an individual record</a>
+                                                    </li>
+                                                    <li><a href="#SBEsetofrecords" data-toggle="tab"><span class="ff-radio-css"></span>Select a set of records</a>
+                                                    </li>
+
+                                                </ul>
+                                                <div class="tab-content vertical-tab-content">
+                                                    <div class="tab-pane fade in active" id="SBEselectindividualrecord">
+                                                        <span class="lookupInput"> 
+                                                        <input type="hidden" id="defaultSBELookupValueHidden" name="lookupElementhidden"  />
+                                                        <input class="sfff-lookup-input-text" type="textbox" id="defaultSBELookupValue"  onblur="validateLookupField(this.id)" name="lookupElement"   value=""/>
+                                                        <a href="javascript:void(0);" onclick="openLookupPopup('{!JSENCODE(PrimaryObjectName)}','');" id="lookupSBEElement_lkwgt"><img src="/s.gif" class="lookupIcon"/></a>
+                                                        </span>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="SBEsetofrecords">
+
+                                                        <apex:selectlist id="selectSBELookupObj" onchange="DummyOnchange();" styleClass="selectSBELookupObj" value="{!accountListitem}" multiselect="false" Size="1">
+                                                            <apex:selectOptions value="{!accountListitems}" />
+                                                        </apex:selectlist>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="div-col-1 w40per txt616161">
+                                            Allow Prefill and Update
+                                        </div>
+                                        <div class="div-col-2 w60per">
+
+                                            <input type="hidden" id="chkbxSBEEmailUpdateHidden" name="lookupElementhidden" />
+                                            <input id="chkbxSBEEmailUpdate" type="checkbox" class="css-checkbox" style="display: inline-block;float:left;" name="chkbxEmailUpdate" value="" />
+                                            <label for="chkbxSBEEmailUpdate" class="css-check-label"></label>
+                                            <div style="display: inline-block;width:250px;" class="emailupdateText txt616161">Pre-populate my form with audience's existing information and allow updates</div>
+
+                                        </div>
+
+ 
+
+                                        <div class="nav-wizard-btn mt30 mb50">
+                                            <div class="btn-next"> <a onclick="emailWizardbtnClick(this);" id="emailBtnNext" data-next-link="1" data-process="pass-to-next" class="vabutton1"><span class="btnText">Next</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane email-tab-section" id="emaillasttab">
+                                    <div class="email-to-fields  pt50">
+                                        <div class="form-row">
+                                            <label class="label-for">To</label>
+                                            <input style="display:{!if(primaryObjEmailFieldsList.size>1,'none','block')}" type="text" id="txtbxemailTo" class="el-text-box" />
+                                            <div class=" ">
+                                                <apex:selectlist rendered="{!primaryObjEmailFieldsList.size>1}" id="selectSBEEmailTo" styleClass="selectSBEEmailTo" value="{!accountListitem}" multiselect="false" Size="1">
+                                                    <apex:selectOptions value="{!primaryObjEmailFieldsList}" />
+                                                </apex:selectlist>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">CC</label>
+                                            <input type="text" id="txtbxemailCc" class="el-text-box" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">BCC</label>
+                                            <input type="text" id="txtbxemailBcc" class="el-text-box" />
+                                        </div>
+
+
+                                    </div>
+                                    <span class="silver-line-separator" />
+                                    <div class="email-content-box">
+                                        <div class="form-row">
+                                            <label class="label-for">Subject</label>
+                                            <input type="text" id="txtbxemailsubject" class="el-text-box" />
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="label-for">Message</label>
+                                        </div>
+                                        <div class="email-template-box">
+                                            <div id="email-editor-custom-toolbar">
+
+
+                                                <apex:selectlist id="selectSBEfieldlist" styleClass="selectSBELookup" onchange="enableInsertField();" value="{!accountListitem}" multiselect="false" Size="1">
+                                                    <apex:selectOptions value="{!primaryObjFieldsListitems}" />
+                                                </apex:selectlist>
+
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  id="insert-field-btn" class="action-icon add-icon blue-tooltip" data-fieldname='' onclick="insertfieldtoHtml(this);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                            </div>
+                                            <div id="email-editor-toolbar"></div>
+                                            <div id="email-content-editor" class="clear">{{-FastFormsLink-| Fast form Link}}</div>
+                                        </div>
+                                        <div class="nav-wizard-btn  mt30 mb50">
+                                        <div class="btn-go-back" >
+                                        <a class="vabutton1"  data-next-link="0" id="emailBtnGoBack" data-process="go-back"  onclick="emailWizardbtnClick(this);"><span class="btnText">Go Back</span></a>
+                                        </div>
+                                            <div class="btn-send-now">
+                                            <a onclick="emailWizardbtnClick(this);" id="emailBtnSend" data-next-link="" data-process="send" class="vabutton1"><span class="btnText">Send Now</span></a>
+                                            </div>
+                                            <div class="btn-save-changes">
+                                                <a onclick="emailWizardbtnClick(this);" id="emailBtnSaveasDraft" data-next-link="" data-process="saveasdraft" style="display:none;" class="vabutton2"><span class="btnText">Save as Draft</span></a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="ohidden">
+                                    <div class="vff-alert mb50 m0-150 " style="display:none" id="alertEmailValidation">
+                                        <div class="vff-alert-msg  msg-text-div" style="display:block" onclick="closeAlert(this);"></div>
+                                        
+                                    </div>
+                                </div>
+
+                                <apex:outputPanel id="msgpanel" styleClass="sf-message-css ohidden" layout="block" >
+<apex:outputPanel rendered="{!IF(JSINHTMLENCODE(popupEmailResultMsg)!='',true,false)}">
+ <script>
+ var message='{!JSINHTMLENCODE(popupEmailResultMsg)}';
+  
+  
+
+
+ var messagetype='dialogIconAlert';
+  var primarymessage='Email not sent';
+    if(message.length > 8 && message.indexOf("Email sent")==0 )
+    {
+        messagetype='dialogIconOK';
+        primarymessage='Email sent successfully';
+    }     
+    else 
+    {
+        if(message.length > 80)
+        {
+           var tempmessage=message;
+           message= message.substring(0, 80)+'...';
+           message+="<span class='toggle-more-less'>show detail</span>";
+           message+="<span class='toggle-more-less-detail'>"+tempmessage+"</span>";
+        }    
+    }
+
+  
+ popupEMailResult(primarymessage,message,messagetype);
+ </script>
+</apex:outputPanel>
+                                 
+                                </apex:outputPanel>
+
+                            </div>
+                        </div>
+                         </div>
+
+                       
+                        
+                        
+                         <div id="previewdialog" title="Preview HTML">
+
+                        </div>
+                        <!--  Ends -->
+                    </apex:outputPanel>
+
+
+
+                </div>
+                <div id="exportlinksection" class="tab-pane fade export-link-body">
+                    <apex:outputPanel id="enterpriseCustomersOnlyPanel2" styleClass="onlyDraft" rendered="{!NOT(packageTier == 'Enterprise')}">
+                        <h4>Export Links is only available in the Enterprise Edition of Fast Forms.</h4>
+                        <br />
+                        <div class="sfff-action-buttons"> <a class="vabutton1" href="http://visualantidote.com/fastforms#Subscribe" target="_blank">Upgrade Now!</a>
+                        </div>
+                        <br />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel id="exportLinksPanel2" rendered="{!packageTier == 'Enterprise'}">
+                        <div class="m0-150" style="overflow:hidden">
+                            <p class="pt50">Export Links allows you to export a set of unique links to your form for updating existing records. <br/ ><br />Select the records you'd like to generate links for and click 'Download CSV' to export them to a file.</p><br/ >
+    
+                            <div class="div-col-1 w40per txt616161">
+                                Set Audience
+                            </div>
+                            <div class="div-col-2 w60per">
+                                <div class="vertical-tab-container">
+                                    <ul class="nav nav-tabs vertical-tabs">
+                                        <li class="active"><a href="#selectindividualrecord" data-toggle="tab"><span class="ff-radio-css"></span>Select an individual record</a>
+                                        </li>
+                                        <li><a href="#setofrecords" data-toggle="tab"><span class="ff-radio-css"></span>Select a set of records</a>
+                                        </li>
+    
+                                    </ul>
+                                    <div class="tab-content vertical-tab-content">
+                                        <div class="tab-pane fade in active" id="selectindividualrecord">
+                                            <span class="lookupInput"> 
+                                        <input type="hidden" id="defaultLookupValueHidden" name="lookupElementhidden"  />
+                                        <input class="sfff-lookup-input-text" type="textbox" id="defaultLookupValue" onblur="validateLookupField(this.id)" name="lookupElement"   value=""/>
+                                        <a href="javascript:void(0);" onclick="openLookupPopup('{!JSENCODE(PrimaryObjectName)}','');" id="lookupElement_lkwgt"><img src="/s.gif" class="lookupIcon"/></a>
+                                        </span>
+                                        </div>
+                                        <div class="tab-pane fade" id="setofrecords">
+    
+    
+                                            <apex:selectlist id="selectELLookupObj" styleClass="selectELLookup" onchange="DummyELOnchange();" value="{!accountListitem}" multiselect="false" Size="1">
+                                                <apex:selectOptions value="{!accountListitems}" />
+                                            </apex:selectlist>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+    
+                            <div class="nav-wizard-btn  mt30 mb50">
+                                <div class="btn-next"> <a onclick="exportLinks();" class="vabutton1"><span class="btnText cursorpointer">Download CSV</span></a>
+                                </div>
+                                
+    
+                            </div>
+                            <div class="ohidden" style="clear:both">
+                                    <div class="vff-alert mb50  "  style="display:none"  id="alertExportLinkValidation">
+                                        <div class="vff-alert-msg msg-text-div"   onclick="closeAlert(this);"></div>
+                                         
+                                    </div>
+                                </div>
+    
+                            
+                            <div id="exportDataId" class="">
+    
+    
+     
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+
+
+            </apex:outputPanel>
+
+
+            <div class="bottom-box">
+               
+            </div>
+        </div>
+
+
+
+    </apex:outputPanel>
+    
+</apex:outputPanel>
+
+  
+ <script src="{!URLFOR($Resource.PublishComponentJs)}"></script>
+ <script>
+   /*JAVASCRIPT Remote Function */
+    function getRemoteEmailTemplateJs() {
+        /*JAVASCRIPT Remoting Method to populate Email draft configuration xml */
+        var ffrecordid = '{!ffrecord}';
+
+        Visualforce.remoting.Manager.invokeAction(
+            '{!URLENCODE($RemoteAction.PublishComponentController.getRemoteEmailTemplate)}',
+            ffrecordid,
+            function(result, event) {
+                if(event.status) {
+                    // Get DOM IDs for HTML and Visualforce elements like this
+                    var decoded = $('<div/>').html(result[0]).text();
+                    console.log(' result[0] ' + decoded);
+                    parsexml(decoded);
+                    console.log(' result[1] ' + result[1]);
+                    console.log(' result[2] ' + result[2]);
+                } else if(event.type === 'exception') {
+                    console.log(" Exception- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+                } else {
+                    console.log(" Exception 2- " + event.message);
+                }
+            },
+            {
+                escape: true
+            }
+        );
+    }
+ 
+  function loadComponent() {
+        var ffrecordid = '{!ffrecord}';
+        console.log('Load component please!! ');
+        passRecordParam(ffrecordid);
+         
+
+    }
+    function popupEMailResult(primarymsg,message,messagetype) {
+     
+        if(message!='undefined' && message!='')
+        {
+        $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon "+messagetype+"'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>"+primarymsg+"<br></div><div class='secondary'>"+message+" </div></div>");
+            // Define the Dialog and its properties.
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                modal: true,
+                title: "Email Result",
+                height: "auto",
+                width: 413,
+                buttons: {
+                    "OK": {
+                    click: function () {
+                        $(this).dialog("close");
+                         callback(true);
+                    },
+                    text: 'Ok',
+                    class: 'vabutton1'
+                    } 
+                     
+                },
+                open: function( event, ui ) {
+                    $('.ui-dialog :button').blur();
+                }
+            });
+               function callback(value)
+                {
+                    if (value) {
+                        clearpopupEmailResultMsg('');
+                    } 
+                }
+            
+            }
+    }
+    
+     loadComponent();
+  $(document).on( "click", ".toggle-more-less", function(){
+  $( ".toggle-more-less-detail" ).toggle();
+});
+  </script>
+  <div id="dialog-confirm" style="display:none;" class="content"></div>
+    <apex:actionStatus id="loadstatus" startStyleClass="loadStatusMaincss">
+        <apex:facet name="start">
+                <apex:facet name="start">
+                 <div id="load-status" > 
+                    <div class="overlay"></div>
+                        <div class="status">
+                            <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Loading, please wait...<br /><br /><br /></div></div>
+                        </div>
+                  </div>
+               </apex:facet>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:outputPanel id="scriptblock">
+
+</apex:outputPanel>
+</apex:component>

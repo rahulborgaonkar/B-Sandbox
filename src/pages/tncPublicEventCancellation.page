@@ -1,0 +1,140 @@
+<apex:page controller="tncPublicEventCancellationController">
+    <script>
+    
+    function processCancellation(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        processCancel1();  // actionfunction
+    }
+    
+    </script>
+    <apex:PageMessages />
+    <apex:form >
+        <apex:actionFunction action="{!processCancellation}" name="processCancel1" />
+        <!-- DISPLAY EVENTS TO SELECT -->
+        <apex:outputPanel id="eventSelection">
+            <apex:pageBlock title="Choose Event Bookings to be Cancelled" rendered="{!displaySelectionSection}">
+                <apex:commandButton value="Select All"
+                action="{!autoSelectAllRecords}"
+                reRender="eventSelection,cancellationFeesSection" />
+                <br />
+                <apex:pageBlockTable value="{!listBookings}" var="eb">
+                    <apex:column headerValue="Select"  style="vertical-align:top;">
+                        <apex:inputCheckbox value="{!eb.isSelected}" />
+                    </apex:column>
+                    <apex:column headerValue="Event Boooking" style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Contact" style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Contact__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Status" style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Status__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Event"  style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Special_Event__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Start Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!eb.booking.Event_Start_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="End Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!eb.booking.Event_end_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Product"  style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Product__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Can. Req. Date" style="vertical-align:top;">
+                        <apex:inputText style="width:75px" id="selectedDate"
+                        value="{!eb.reasonData.cancellationRequestedOn}"
+                        onfocus="DatePicker.pickDate(false, this, false);" />
+                    </apex:column>
+                    <apex:column headerValue="Can. Reason" style="vertical-align:top;">
+                        <apex:selectList multiselect="false" value="{!eb.reasonData.reason}" size="1">
+                            <apex:selectOptions value="{!selectOptionReasons}" />
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Can. Notes" style="vertical-align:top;">
+                        <apex:inputTextarea style="width:175px"  rows="3" value="{!eb.reasonData.reasonNote}" />
+                    </apex:column>
+                </apex:pageBlockTable>
+                <br />
+                <apex:commandButton value="<< Previous" action="{!previous}"
+                rendered="{!hasPrevious}" />
+                <apex:commandButton value="Next >>" action="{!next}"
+                rendered="{!hasNext}" />
+                <br />
+                
+                <center>
+                    <apex:outputPanel >
+                        <table border="0" width="10px">
+                                <tr>
+                                    <td nowrap="nowrap">
+                                        <apex:outputLabel styleClass="errorMsg" rendered="{!showError}">
+                                            <strong><apex:outputText value="{!cancellationError}" escape="false"/>
+                                            </strong>
+                                        </apex:outputLabel>
+                                    </td>
+                                </tr>
+                            </table>
+                    </apex:outputPanel>
+                </center>
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <apex:commandButton value="Cancel" action="{!cancel}" />
+                        </td>
+                        <td width="50%" style="text-align: right;">
+                            <apex:commandButton value="Cancel Selected Event Booking(s)" action="{!checkReason}" reRender="eventSelection,cancellationFeesSection" />
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+            
+            <apex:outputPanel id="cancellationFeesSection">
+                <apex:pageBlock title="Cancellation Fees" rendered="{!displayFeeEntrySection}">
+                    <apex:pageBlockTable value="{!selectedBookings}" var="seb">
+                        <apex:column headerValue="Status">
+                            <apex:outputText value="{!seb.booking.Status__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Event Boooking">
+                            <apex:outputText value="{!seb.booking.Name}" />
+                        </apex:column>
+                        <apex:column headerValue="Contact" style="vertical-align:top;">
+                            <apex:outputText value="{!seb.booking.Contact__r.Name}" />
+                        </apex:column>
+                        <apex:column headerValue="Event Name">
+                            <apex:outputText value="{!seb.booking.Product__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Cancellation Fees">
+                            <apex:outputText value="{!seb.cancellationFee}"
+                            rendered="{!seb.booking.Status__c = 'Provisional' || seb.feesToBeApplied = false}" />
+                            <apex:inputText value="{!seb.cancellationFee}"
+                            rendered="{!seb.booking.Status__c != 'Provisional'  && seb.feesToBeApplied = true}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <BR />
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">
+                                <apex:commandButton value="Back" action="{!back}" reRender="eventSelection,cancellationFeesSection" />
+                            </td>
+                            <td width="50%" style="text-align: right;">
+                                <!--<apex:commandButton action="{!processCancellation}" value="Finish" />-->
+                                <apex:commandButton id="finish" value="Finish" onclick="processCancellation(this);return false;" />
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </apex:pageBlock>
+            </apex:outputPanel>
+            
+        </apex:outputPanel>
+    </apex:form>
+    <script>
+    function setFocusOnLoad() {}
+    </script>
+</apex:page>

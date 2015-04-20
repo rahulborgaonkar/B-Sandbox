@@ -1,0 +1,147 @@
+<apex:page controller="tncInCompanyCancellationController">
+    <script>
+    
+    function processCancellation(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        processCancel1();  // actionfunction
+    }
+    
+    </script>
+    <!-- DISPLAY EVENTS TO SELECT -->
+    <apex:form >
+        <apex:actionFunction action="{!processCancellation}" name="processCancel1" />
+        <apex:outputPanel id="eventSelection">
+            <apex:pageBlock title="Choose Events to Cancel. "
+            rendered="{!displayEventSelectionSection}">
+                <apex:outputPanel rendered="{!oldworldMessage}">
+                    <p style="text-align:center;font-weight:800;"><big >Please check&nbsp;
+                        <apex:outputLink value="/{!oldworldoppId}">{!oldworldoppNo}</apex:outputLink> 
+                        to see if this needs to be invoiced/credited</big></p>
+                </apex:outputPanel>
+                <br/>
+                <apex:commandButton value="Select All"
+                action="{!AutoSelectAllRecords}"
+                reRender="eventSelection,cancellationFeesSection" />
+                <br />
+                <apex:pageBlockTable value="{!eventsListing}" var="events">
+                    <apex:column headerValue="Select" style="vertical-align:top;">
+                        <apex:inputCheckbox value="{!events.isSelected}" />
+                    </apex:column>
+                    <apex:column headerValue="Stage" style="vertical-align:top;">
+                        <apex:outputText value="{!events.event.Stage__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Event Name" style="vertical-align:top;">
+                        <apex:outputText value="{!events.event.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Start Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}">
+                            <apex:param value="{!events.event.StartDate__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Unit Price" style="text-align: right;vertical-align:top;">
+                        <apex:outputText value="{0, Number, #0.00}">
+                            <apex:param value="{!events.unitPrice}"/>
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Product" style="vertical-align:top;">
+                        <apex:outputText value="{!events.event.Product__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Cancellation Request Date" style="vertical-align:top;">
+                        <apex:inputText style="width:75px" id="selectedDate"
+                        value="{!events.reasonData.cancellationRequestedOn}"
+                        onfocus="DatePicker.pickDate(false, this, false);" />
+                    </apex:column>
+                    <apex:column headerValue="Cancellation Reason" style="vertical-align:top;">
+                        <apex:selectList multiselect="false" value="{!events.reasonData.reason}" size="1">
+                            <apex:selectOptions value="{!selectOptionReasons}" />
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Cancellation Notes" style="vertical-align:top;">
+                        <apex:inputTextarea style="width:175px"  rows="3" value="{!events.reasonData.reasonNote}" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <br />
+                <apex:commandButton value="<< Previous" action="{!previous}"
+                rendered="{!hasPrevious}" />
+                <apex:commandButton value="Next >>" action="{!next}"
+                rendered="{!hasNext}" />
+                <br />
+                
+                <center>
+                    <apex:outputPanel >
+                        <table border="0" width="10px">
+                            <tr>
+                                <td nowrap="nowrap">
+                                    <apex:outputLabel styleClass="errorMsg" rendered="{!showError}">
+                                        <strong><apex:outputText value="{!cancellationError}" escape="false"/></strong>
+                                    </apex:outputLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                </center>
+                
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <apex:commandButton value="Cancel" action="{!cancel}" />
+                        </td>
+                        <td width="50%" style="text-align: right;">
+                            <apex:commandButton value="Cancel Selected Event(s)" action="{!showCancellationFeeSection}" reRender="eventSelection,cancellationFeesSection" />
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+            
+        </apex:outputPanel>
+        
+        <!-- DISPLAY SELECTED EVENTS TO ENTER CANCELLATION FEES -->
+        <apex:outputPanel id="cancellationFeesSection">
+            <apex:pageBlock title="Cancellation Fees"
+            rendered="{!displayCancellationFeesSection}">
+                <apex:pageBlockTable value="{!selectedEventsListing}" var="sevent">
+                    <apex:column headerValue="Event Name">
+                        <apex:outputText value="{!sevent.event.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Stage">
+                        <apex:outputText value="{!sevent.event.Stage__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Product">
+                        <apex:outputText value="{!sevent.event.Product__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Cancellation Fees">
+                        <apex:outputText value="{!sevent.cancellationFee}"
+                        rendered="{!sevent.event.Stage__c = 'Provisional' || sevent.feesToBeApplied = false}" />
+                        <apex:inputText value="{!sevent.cancellationFee}"
+                        rendered="{!sevent.event.Stage__c != 'Provisional' && sevent.feesToBeApplied = true}" />
+                    </apex:column>
+                    <apex:column headerValue="BSC Liability" style="text-align: right;">
+                        <apex:outputText value="{0, number, #0.00}">
+                           <apex:param value="{!sevent.bscLiability}" />
+                     </apex:outputText>
+                    </apex:column>
+                </apex:pageBlockTable>
+                <BR />
+                
+                <table width="100%">
+                    <tr>
+                        <td width="50%"><apex:commandButton value="Back"
+                            action="{!showEventsToSelect}"
+                            reRender="eventSelection,cancellationFeesSection" /></td>
+                        <td width="50%" style="text-align: right;">
+                            <!--<apex:commandButton action="{!processCancellation}" value="Finish" />-->
+                            <apex:commandButton id="finish" value="Finish" onclick="processCancellation(this);return false;" />
+                        </td>
+                    </tr>
+                </table>
+                
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <script>
+        function setFocusOnLoad() {}
+        </script>
+    </apex:form>    
+</apex:page>

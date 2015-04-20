@@ -1,0 +1,10 @@
+<apex:page >
+<br />
+<br />
+  <strong><font color="#FF0000">Error: Can't create opportunity from here!</font></strong><br />
+  
+  You need to create your opportunity by finding the contact you want to create the opportunity is for. <br />
+  Then create a new opportunity from the contact record.
+<br />
+<br />
+</apex:page>

@@ -1,0 +1,75 @@
+<apex:page controller="tncConfirmTransfer">
+    <script>
+    
+    function confirmTransfer(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        confirmTransfer1();  // actionfunction
+    }
+    
+    </script>
+    <apex:PageMessages />
+    <apex:form >
+        <!--apex:actionFunction action="{!confirmTransfer}" name="confirmTransfer1" rerender="eventSelection" /-->
+        <apex:actionFunction action="{!confirmTransfer}" name="confirmTransfer1"/>
+        <apex:outputPanel id="eventSelection">
+            
+            <apex:outputText rendered="{!hasRows == false}">
+                <br/><br/>ERROR: There are no events at a status of To Be Transferred with the Transferred To field populated on this Opportunity OR <br/>
+                the event that you are attempting to transfer to has not been resourced by Logistics.
+            </apex:outputText>
+            <apex:pageBlock title="Confirm Events to Transfer." rendered="{!hasRows == true}">
+                <apex:pageBlockTable value="{!events}" var="e" >
+                    <apex:column headerValue="Select" style="vertical-align:top;">
+                        <apex:inputCheckbox value="{!e.selected}" />
+                    </apex:column>
+                    
+                    <apex:column headerValue="From Event" style="vertical-align:top;">
+                        <apex:outputText value="{!e.event.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Start Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!e.event.StartDate__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="End Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!e.event.EndDate__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    
+                    <apex:column headerValue="To Event" style="vertical-align:top;">
+                        <apex:outputText value="{!e.event.Transferred_To__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Start Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!e.event.Transferred_To__r.StartDate__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="End Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!e.event.Transferred_To__r.EndDate__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Transfer Fee" style="vertical-align:top;">
+                        <apex:outputText value="{!e.event.Liability_at_Cancellation_Transfer__c}" />
+                    </apex:column>
+                    
+                </apex:pageBlockTable>
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <apex:commandButton value="Cancel" action="{!cancel}" />
+                        </td>
+                        <td width="50%" style="text-align: right;">
+                            <!--<apex:commandButton value="Confirm Transfer" action="{!confirmTransfer}" reRender="eventSelection"/>-->
+                            <apex:commandButton id="finish" value="Confirm Transfer" onclick="confirmTransfer(this);return false;" />
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+            <!--<apex:outputText >{!selectedEvents}</apex:outputText>-->
+        </apex:outputPanel>
+    </apex:form>
+</apex:page>

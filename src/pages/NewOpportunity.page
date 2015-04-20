@@ -1,0 +1,11 @@
+<apex:page standardController="Opportunity" extensions="NewOpportunity" action="{!doRedirect}">
+
+  <h1>Error: Not created from Contact or no primary contact role found</h1>
+  
+  If you are creating a new opportunity you need to create it by finding the contact you want to create the opportunity is for. 
+  Then create a new opportunity from the contact record.
+  
+  If you are trying to create a subsequent opportunity and you get this error it is because the original opportunity doesn't have a
+  primary contact role on it. Create the primary contact role and try again.
+
+</apex:page>

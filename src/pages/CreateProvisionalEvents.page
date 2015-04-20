@@ -1,0 +1,66 @@
+<apex:page standardController="Opportunity" extensions="CreateProvisionalEventsController">
+
+<apex:sectionHeader title="Provisional Events" subtitle="{!Opportunity.Name}" />
+<apex:form id="form">
+
+<div style="display: none;" >
+<apex:inputField value="{!oppy.CloseDate}" />
+</div>
+
+<apex:PageBlock id="pg">
+
+    <script>
+    function saveEventJSFN(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        saveEventJS();  // actionfunction
+    }
+    </script>
+    
+    <apex:pageMessages />
+    <!--apex:actionStatus id="loading" startText="Please wait, updating page..."/-->
+    <apex:actionFunction action="{!save}" name="saveEventJS" />
+    <apex:pageBlockButtons id="buttonblock">
+        <apex:commandButton action="{!cancel}" value="Cancel"/> 
+        <!--apex:commandButton id="saveEvent" action="{!save}" value="Create" rendered="{!theProducts.size > 0}"/--> 
+        <apex:commandButton id="saveEvent" value="Create" rendered="{!theProducts.size > 0}" onclick="saveEventJSFN(this);return false;"/> 
+    </apex:pageBlockButtons>
+    <apex:repeat value="{!theProducts}" var="theProduct">
+        
+        <apex:pageBlockSection title=" {!theProduct.me.Name} - {!theProduct.me.Family} {!theProduct.linebreak} (Quantity: {!theProduct.oliQty}, Sales Price: {!theProduct.oliUnitPrice}, Number of Days: {!theProduct.oliNoOfDays}, Number of Delegates: {!theProduct.oliDelegates})" collapsible="false">
+            <apex:outputText rendered="{!!theProduct.createable}">
+                Cannot create events for this product family type.
+            </apex:outputText>
+            <apex:pageblocktable value="{!theProduct.theEvents}" var="theEvent" rendered="{!theProduct.createable}">
+                <apex:Column >
+                    <apex:facet name="header">Earliest Start Date</apex:facet>
+                    <apex:inputField value="{!theEvent.StartDate__c}" required="true"/>
+                </apex:Column>
+                <apex:Column >
+                    <apex:facet name="header">Latest Start Date</apex:facet>
+                    <apex:inputField value="{!theEvent.Latest_Start_Date__c}" required="true"/>
+                </apex:Column>
+                <apex:Column width="400px">
+                    <apex:facet name="header" >Notes</apex:facet>
+                    <apex:inputField value="{!theEvent.Sales_Notes__c}"/>
+                </apex:Column>
+                <apex:Column >
+                    <apex:facet name="header" >Venue</apex:facet>
+                    <apex:inputField value="{!theEvent.Venue__c}" required="false"/>
+                </apex:Column>
+            </apex:pageblocktable>
+            <br/>
+            <apex:commandButton action="{!addRow}" Value="Add Row" rerender="pg" status="loading" immediate="true" rendered="{!theProduct.createable}">
+                <!-- <apex:param name="productid" assignTo="{!theProductId}" value="{!theProduct.myId}"/> -->
+                <apex:param name="opplineId" assignTo="{!oplId}" value="{!theProduct.oppLineItemId}"/>
+            </apex:commandButton>
+            
+        </apex:pageBlockSection>
+    </apex:repeat>
+    <apex:outputPanel rendered="{!theProducts.size == 0}">
+    No products found against opportunity or products do not require an event to be requested.
+    </apex:outputPanel>
+</apex:PageBlock>
+</apex:form>
+
+</apex:page>

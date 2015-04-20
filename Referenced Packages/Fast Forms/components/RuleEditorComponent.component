@@ -1,0 +1,650 @@
+<apex:component controller="VisualAntidote.RuleEditorComponentController" allowDML="true">
+  
+
+ 
+ <!--<apex:includeScript value="{!$Resource.ruleEditorComponentJs}"/>-->
+
+
+<style>
+
+/* Could be static */
+.sfff-rule-header-box {
+background-color: #E6ECEF;
+  display: inline-block;
+  width: 100%;
+
+}
+/**/
+/*select2 css*/
+.select2-container .select2-choice{
+border-color: #a3a3a3 !important;
+}
+.select2-results li.FieldOption,
+.select2-results li.PageOption {
+background-color:#ffffff !important;
+}
+.select2-results li.PageOption {
+border-top:1px solid #33aefd ;
+}
+.select2-results li.SectionOption
+{
+border-top:1px solid #33aefd ;
+background-color:#f1f6f8 !important;
+}
+.select2-results li.SectionOption .select2-result-selectable{
+border-color:#f1f6f8 ;
+}
+.select2-results .select2-result-selectable{
+color:#616161;
+}
+
+.select2-results li.select2-result-with-children > .select2-result-label{
+color:#b2b5b6;
+}
+
+ 
+
+.select2-results li.select2-result-with-children.FieldOption.A > .select2-result-label
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'A.png')});
+background-position:165px 3px;
+background-repeat:no-repeat;
+ }
+ .select2-results li.select2-result-with-children.FieldOption.B > .select2-result-label
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'B.png')});
+background-position:165px 3px;
+background-repeat:no-repeat;
+ }
+ .select2-results li.select2-result-with-children.FieldOption.C > .select2-result-label
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')});
+background-position:165px 3px;
+background-repeat:no-repeat;
+ }
+ .select2-results li.select2-result-with-children.FieldOption 
+ {
+border-left:0px !important;
+ }
+
+ .select2-results li.select2-result-with-children.FieldOption.A .select2-highlighted{
+            border-left: 5px solid #d9217d !important;
+        }
+        .select2-results li.select2-result-with-children.FieldOption.B .select2-highlighted{
+            border-left: 5px solid #00cc00 !important;
+        }
+        .select2-results li.select2-result-with-children.FieldOption.C .select2-highlighted{
+            border-left: 5px solid #7d21d9 !important;
+        }
+
+.color-tag.A  ,.color-tag.B  ,.color-tag.C  {
+  background-position:165px 7px;
+background-repeat:no-repeat;
+border-left-width:1px !important;
+}
+.sfff-rule-st-existing-field-box .color-tag.A,
+.sfff-rule-st-existing-field-box .color-tag.B,
+.sfff-rule-st-existing-field-box .color-tag.C
+{
+  background-position:155px 7px;
+}
+.sfff-rule-then-existing-field-box .color-tag.A,
+.sfff-rule-then-existing-field-box .color-tag.B,
+.sfff-rule-then-existing-field-box .color-tag.C
+{
+  background-position:105px 7px;
+}
+.color-tag.A  
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'A.png')}) !important;
+
+ }
+ .color-tag.B
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'B.png')})  !important;
+ 
+ }
+.color-tag.C
+ {
+background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !important;
+ 
+ }
+/* Rule box css ends*/
+</style>
+
+       
+<!--  Action functions  -->
+<!-- NOTE:  try not to remove  immediate="true" - action function doesn't save any information if there is any dom validation error   -->
+<apex:actionFunction name="rerenderRuleEditor"    immediate="true" action="{!resetRuleList}" reRender="pnlForRuleBlock,pnlForRulethenBlock,tempIfAvailableFieldsSelect,ruleBoxTEMP,pnlFormainRuleRepeater,pnlForNewRuleBlock" status="statusLoad"  oncomplete="getRemoteFormFieldsJs();resetSelect2();showMainRuleRepeater(true);"/>
+<apex:actionStatus id="status">
+      <apex:facet name="start">
+       <div id="load-status" > 
+          <div class="overlay"></div>
+              <div class="status">
+                  <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Loading, please wait...<br /><br /><br /></div></div>
+              </div>
+        </div>
+     </apex:facet>
+</apex:actionStatus>
+
+
+
+<apex:actionStatus id="statusDelete">
+      <apex:facet name="start">
+       <div id="load-status" > 
+          <div class="overlay"></div>
+              <div class="status">
+                  <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Deleting, please wait...<br /><br /><br /></div></div>
+              </div>
+        </div>
+     </apex:facet>
+</apex:actionStatus>
+<apex:actionStatus id="statusCreate">
+      <apex:facet name="start">
+       <div id="load-status" > 
+          <div class="overlay"></div>
+              <div class="status">
+                  <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Creating a new rule, please wait...<br /><br /><br /></div></div>
+              </div>
+        </div>
+     </apex:facet>
+</apex:actionStatus>
+
+<apex:actionFunction immediate="true"  name="doDeleteRule" action="{!deleteRule}" reRender="msgPanel,pnlForNewRuleBlock,ruleBoxTEMP,pnlFormainRuleRepeater"  status="statusDelete"  oncomplete="getRemoteFormFieldsJs();resetSelect2();triggerAutoSave();" >
+    <apex:param name="deleteRuleId" value="deleteRuleId" />
+</apex:actionFunction>
+     <apex:actionFunction immediate="true" name="saveRule" action="{!autoSave}" reRender="msgPanel"  >
+             <apex:param name="ruleid" value=""/>
+             <apex:param name="rulexml" value=""/>
+      </apex:actionFunction> 
+      
+      <apex:actionFunction name="createANewRule"   immediate="true" action="{!createNewRule}"  status="statusCreate"  reRender="msgPanel, pnlFormainRuleRepeater" oncomplete="getRemoteFormFieldsJs();resetSelect2();triggerAutoSave();"  >
+            <apex:param name="ruleindex" value=""/>
+      </apex:actionFunction> 
+<!--   -->
+
+<apex:outputPanel id="pnlForNewRuleBlock"  styleClass="create-rule-header-block"    layout="block"  > 
+    <div   class="no-rule-block {!IF(formRuleXmlList.size>0,'','no-rule-block-show')}">
+     <h2 class="no-rule-text" style="{!IF(formRuleXmlList.size>0,'display:none','')}">You currently have no rules for this form</h2> 
+    <a   id="btn1" onclick="switchClass(this); return false;" data-rule-data="{!IF(formRuleXmlList.size>0,'ruleexists','norule')}"   class="vabuttonB1"><span class="btn-icon-plus"></span><span class="btn-text">New Rule</span></a>
+    </div>
+
+</apex:outputPanel>
+ 
+
+ 
+
+ <apex:outputPanel id="pnlFormainRuleRepeater"  styleClass="pnlFormainRuleRepeaterCSS"    layout="block"  > 
+   
+<apex:repeat id="mainRuleRepeater" rendered="{!IF(formRuleXmlList.size>0,true,false)}" value="{!formRuleXmlList}" var="rulexml">
+<!-- Rule box Repeat item  starts -->
+ 
+<div  id="sfff-rule-{!rulexml.RuleId}" class="sfff-rule-box-container- ">
+<div class="sfff-rule-header-box">
+<div class="sfff-rule-number-tag">
+<span class="rule-tag-text">Rule</span>
+<span class="rule-tag-number">{!rulexml.RuleOrder}</span>
+</div>
+<div class="sfff-rule-edit-box">
+<a class="rule-edit-link" style="display:none">Edit formula</a>
+  <a class="action-icon delete-icon blue-tooltip" onClick="DeleteRule('{!rulexml.RuleId}')"    ><span class="blue-tooltip-text">Delete rule</span></a>
+   
+</div>
+</div>
+ <!-- if block -->
+ 
+ 
+  <apex:variable var="sectioncount" value="{!0}" /> 
+  <div class="sfff-rule-box-if-block"> 
+<apex:repeat id="ruleIfSectionblocks" value="{!rulexml.RuleIfSectionList}" var="ruleSection">
+ <apex:outputPanel id="pnlForRuleBlock"  styleClass="sfff-if-block-inner"   layout="block"  > 
+ 
+ <div class="sfff-if-block-section-"> 
+ <div class="sfff-if-block-container">
+ <apex:selectList rendered="{!IF(ruleSection.rsIndex>0, true,false)}" id="operatorCondList" styleClass="select-elem sfff-select-and-or" value="{!ruleSection.rsOperator}"  onchange="callSaveRule(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!ConditionalOperatorList}"></apex:selectOptions> 
+                      </apex:selectList> 
+ <span class="sfff-if-block-text if-else-text">If</span>
+       
+      <apex:selectList id="operatorList" styleClass="select-elem sfff-select-any-all" value="{!ruleSection.rsConditionalRule}"  onchange="callSaveRule(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!OperatorList}"></apex:selectOptions> 
+                      </apex:selectList> 
+     
+        <span class="sfff-if-block- if-else-text">of the following is true</span>
+        </div>
+        <div class="sfff-if-block-rule-statements">
+          <!-- if condition section-->
+        <apex:repeat id="ruleIfConditionblocks" value="{!ruleSection.rsConditionList}" var="ruleCondition">
+            <apex:outputPanel id="pnlForRuleBlock"  styleClass="sfff-if-block-rule-statement-"   layout="block"  > 
+ 
+             <div class="sfff-rule-statements- rule-st-1">
+              <apex:selectList id="availableFieldLeft" styleClass="select-elem select-if-first-select  select-color-"  value="{!ruleCondition.rcOperand1}" onchange="resetOperatorAndFilter(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList> 
+             </div>
+             <div class="sfff-rule-statements- rule-st-2">
+             <apex:selectList id="availableOperators" styleClass="select-elem" value="{!ruleCondition.rcOperator}" onchange="callSaveRule(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableOperators}"></apex:selectOptions> 
+                      </apex:selectList> 
+             </div>
+             <div class="sfff-rule-statements- rule-st-3 {!IF(ruleCondition.rcIsOperand2Dynamic ,'dynamic-field','static-field')}">
+              <div class="sfff-rule-st-existing-field-box   {!IF(ruleCondition.rcIsOperand2Dynamic ,'','display-none')}">
+                  
+                <apex:selectList id="availableFieldsRight" styleClass="select-elem select-color-" value="{!ruleCondition.rcOperand2}" onchange="callSaveRule(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList> 
+                <a onClick="switchFieldsDynamicStatic(this,'static')" class="toggle-field-behaviour-link" >Set a value</a>
+              </div>
+              <div class="sfff-rule-st-static-value-box   {!IF(ruleCondition.rcIsOperand2Dynamic ,'display-none','')}">
+            
+                  <input type="text" class="sfff-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleCondition.rcIsOperand2Dynamic ,'',ruleCondition.rcOperand2)}" />
+                  <textarea class="sfff-value-field- sfff-textarea display-none"  onblur="callSaveRule(this,true);return false;"  >{!IF(ruleCondition.rcIsOperand2Dynamic ,'',ruleCondition.rcOperand2)}</textarea> 
+                    <div class="sfff-value-field-box  ">
+                                            <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxSelectValueField" value="" />
+                                             <label   class="css-check-label display-none"></label>
+                    </div>                                          
+                <select class="sfff-value-field- sfff-select-element select-elem display-none"  onchange="callSaveRule(this,true);return false;"  >
+                </select>
+                
+                <a onClick="switchFieldsDynamicStatic(this,'dynamic')" class="toggle-field-behaviour-link" >Select existing field</a>
+              </div>
+              </div>
+             <div class="sfff-rule-statements- rule-st-4 rule-add-delete-box">
+                <a href="#" class="sfff-rule-actions sfff-rule-delete" onclick="deleteRuleIfHTML(this);return false;" ></a>
+                <a href="#" class="sfff-rule-actions sfff-add-new-if-condition" onclick="addNewRuleIfHTML(this);return false;" ></a>
+             </div>
+         
+            </apex:outputPanel>
+          </apex:repeat>
+         <!-- if condition section ends-->
+         </div>
+ 
+ </div>
+ <div class="sfff-if-block-add-new-section"> 
+  </div>
+ 
+ 
+  
+</apex:outputPanel>
+
+<div style="{!IF(sectioncount<(rulexml.RuleIfSectionList.size-1),'display:none','display:block')}" class="sff-and-or-link-box">
+     <a  class="vabuttonA1"  onclick="addNewRuleSectionHTML(this); return false;" ><span class="btn-icon-plus"></span><span class="btn-text"> And/Or</span></a>
+     
+     </div>
+     <apex:variable var="sectioncount" value="{!sectioncount+1}"/>
+
+</apex:repeat>
+</div>
+ 
+ 
+ <!-- if block ends -->
+ 
+ <!-- then block starts -->
+ 
+  <div class="sfff-rule-box-then-block">
+   <div class="sfff-then-block-inner">
+   <span class="sfff-then-block-text if-else-text then-with">Then</span>
+      <div class="sfff-then-block-rule-statements">
+     
+         <apex:repeat id="ruleThenConditionblocks" value="{!rulexml.RuleThenSectionList}" var="ruleResult">
+            <apex:outputPanel id="pnlForRulethenBlock"  styleClass="sfff-then-block-rule-statement-"   layout="block"  > 
+         <div class="sfff-rule-statements- rule-st-1">
+             
+                                 
+                            <apex:selectList id="thenFieldsActions" styleClass="select-elem select-then-fields-action" value="{!ruleResult.rrAction}"  onchange="resetThenOperatorAndFilter(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!ThenActionFieldsList}"></apex:selectOptions> 
+                      </apex:selectList>
+                             
+         </div>
+         <div class="sfff-rule-statements- rule-st-2">
+            <div class="sfff-rule-then-field-list  {!IF(ruleResult.rrIsTargetDynamic ,'','display-none')}">
+            
+                            <apex:selectList id="thenFieldsTarget" styleClass="select-elem select-then-fields  select-color-" value="{!ruleResult.rrTarget}"  onchange="populateThenValueFields(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableThenFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+                      </div>
+                      <div class="sfff-rule-then-show-error-msg  {!IF(ruleResult.rrIsTargetDynamic ,'display-none','')}">
+
+                         <textarea class="sfff-then-error-message sfff-textarea"  onblur="callSaveRule(this,true);return false;"  >{!IF(ruleResult.rrIsTargetDynamic ,'',ruleResult.rrTarget)}</textarea>
+                     </div>
+         </div>
+        
+     <div class="sfff-rule-statements- rule-st-3  {!IF(ruleResult.rrIsOtherDynamic ,'dynamic-field','static-field')} ">
+                          
+             <div class="sfff-rule-then-populate-field   {!IF(ruleResult.rrIsOtherDynamic ,'','display-none')}">
+            <span class="then-with">With</span>
+                <div class="sfff-rule-then-existing-field-box   ">
+                  
+                <apex:selectList id="availableFieldsRight" styleClass="select-elem  select-color-" value="{!ruleResult.rrOther}" onchange="callSaveRule(this,true);return false;"  multiselect="false" size="1">
+                                  <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                              </apex:selectList> 
+                <a onClick="switchFieldsThenDynamicStatic(this,'static')" class="toggle-field-behaviour-link-then" >Set a value</a>
+                </div>
+                <div class="sfff-rule-then-static-value-box     {!IF(ruleResult.rrIsOtherDynamic ,'display-none','')}">
+                  <input type="text" class="sfff-then-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}" />
+                  <textarea class="sfff-then-value-field- sfff-textarea display-none"  onblur="callSaveRule(this,true);return false;"  >{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}</textarea> 
+                  <div class="sfff-value-field-box  ">
+                              <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-then-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxthenSelectValueField" value="{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}" />
+                               <label   class="css-check-label display-none"></label>
+                  </div>                      
+                <select class="sfff-value-field- sfff-select-element select-elem display-none"  onchange="callSaveRule(this,true);return false;"  >
+                </select>
+                
+                <a onClick="switchFieldsThenDynamicStatic(this,'dynamic')" class="toggle-field-behaviour-link-then" >Select existing field</a>
+                </div>
+             </div>
+         </div>
+         <div class="sfff-rule-statements- rule-st-4 rule-add-delete-box">
+              <a href="#" class="sfff-rule-then-actions sfff-rule-then-delete" onclick="deleteRuleThenHTML(this);return false;"></a>
+              <a href="#" class="sfff-rule-then-actions sfff-add-new-then-condition" onclick="addNewRuleThenHTML(this);return false;"></a>
+         </div>
+          
+          </apex:outputPanel>
+          </apex:repeat>
+    
+      </div>
+    </div>
+      </div>
+ 
+
+ <!-- then block ends -->
+</div>
+<!-- Rule box item ends -->
+ 
+<div class="create-rule-sibling-block">
+<div class="create-rule-inner bottom-link-create-rule">
+<a class="vabuttonA1"  data-rule-index="{!rulexml.RuleOrder+1}"  onclick="addNewRuleHTML(this); return false;" data-rule-data="norule"   ><span class="btn-icon-plus"></span><span class="btn-text">New Rule</span></a>
+</div>
+</div>
+ 
+ 
+</apex:repeat>
+
+</apex:outputPanel>
+<div class="create-rule-main-block display-none" >
+
+
+
+<div class="create-rule-inner bottom-link-create-rule">
+<a        class="vabuttonA1"><span class="btn-icon-plus"></span><span class="btn-text">New Rule</span></a>
+</div>
+</div>
+
+<apex:outputPanel id="msgpanel" styleClass="sf-message-css ohidden" layout="block" >
+<apex:messages />
+</apex:outputPanel>
+
+<div class="new-rule-btns" style="display:none">
+<a   id="btn"   class="vabuttonA1"><span class="btn-text">+ New Rule</span></a>
+<a   id="btn1"   class="vabuttonB1"><span class="btn-text">+ New Rule</span></a>
+
+<a   id="btn2"   class="vabuttonA1 btn-and-or btn-plus-only"><span class="btn-icon-plus"></span><span class="btn-text"> And/Or</span></a>
+
+</div>
+
+
+
+<div id="ruleBoxHtmlWrapper"  >
+
+</div>
+
+<div style="display:none">
+   
+     </div>
+     
+<apex:outputPanel id="ruleBoxTEMP"   layout="block" >
+<!-- TEMP RULE BOX HTML starts 
+the following block is  to add new blank statements, sections etc
+-->
+<div id="ruleBoxHtml" style="display:none">
+<div   class="sfff-rule-box-container- ">
+<div class="sfff-rule-header-box">
+<div class="sfff-rule-number-tag">
+<span class="rule-tag-text">Rule</span>
+<span class="rule-tag-number">1</span>
+</div>
+<div class="sfff-rule-edit-box">
+<a class="rule-edit-link" style="display:none">Edit formula</a>
+  <a class="action-icon delete-icon blue-tooltip"  href="#"    ><span class="blue-tooltip-text">Delete formula</span></a>
+   
+</div>
+</div>
+<!--if block starts -->
+ <div class="sfff-rule-box-if-block">
+ 
+ <div class="sfff-if-block-inner"> 
+ <div class="sfff-if-block-section-"> 
+ <div class="sfff-if-block-container">
+ <span class="sfff-if-block-text if-else-text">If</span>
+       <select    class="select-elem sfff-select-any-all" size="1"   title="">           
+            <option   value="any">Any</option>
+            <option   value="all">All</option>
+     </select>
+     
+        <span class="sfff-if-block- if-else-text">of the following is true</span>
+        </div>
+        <div class="sfff-if-block-rule-statements">
+        <div class="sfff-if-block-rule-statement-">
+          <div class="sfff-rule-statements- rule-st-1">
+          
+                      <apex:selectList id="availableFieldLefttemp" styleClass="select-elem select-if-first-select  select-color-"  value="{!tempStr}" onchange="resetOperatorAndFilter(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList> 
+         </div>
+         <div class="sfff-rule-statements- rule-st-2">
+            
+            <apex:selectList id="availableOperators" styleClass="select-elem" value="{!tempStr}" onchange="callSaveRule(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableOperators}"></apex:selectOptions> 
+                      </apex:selectList> 
+         </div>
+         <div class="sfff-rule-statements- rule-st-3 static-field">
+                <div class="sfff-rule-st-existing-field-box display-none  ">
+            
+                    <apex:selectList id="availableifFieldsRightTemp" styleClass="select-elem  select-color-" value="{!tempStr}" onchange="callSaveRule(this,true);return false;" multiselect="false" size="1">
+                        <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions>
+                    </apex:selectList>
+                    <a onClick="switchFieldsDynamicStatic(this,'static')" class="toggle-field-behaviour-link">Set a value</a>
+                </div>
+                <div class="sfff-rule-st-static-value-box  ">
+                    <input type="text" class="sfff-value-field- sfff-textbox" onblur="callSaveRule(this,true);return false;" value="" />
+                  <textarea class="sfff-value-field- sfff-textarea display-none"  > </textarea> 
+                    <div class="sfff-value-field-box  ">
+                                            <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxSelectValueField" value="" />
+                                             <label   class="css-check-label display-none"></label>
+                    </div>                                          
+                <select class="sfff-value-field- sfff-select-element select-elem display-none"  onchange="callSaveRule(this,true);return false;"  >
+                </select>
+            
+                    <a onClick="switchFieldsDynamicStatic(this,'dynamic')" class="toggle-field-behaviour-link">Select existing field</a>
+                </div>
+          </div>
+         <div class="sfff-rule-statements- rule-st-4 rule-add-delete-box">
+           <a href="#" class="sfff-rule-actions sfff-rule-delete" onclick="deleteRuleIfHTML(this);return false;" ></a>
+           <a href="#" class="sfff-rule-actions sfff-add-new-if-condition" onclick="addNewRuleIfHTML(this);return false;"></a>
+         </div>
+         
+         </div>
+         </div>
+ 
+ </div>
+ <div class="sfff-if-block-add-new-section"> 
+  </div>
+ </div>
+ 
+     <div class="sff-and-or-link-box">
+     <a  class="vabuttonA1"  onclick="addNewRuleSectionHTML(this); return false;" ><span class="btn-icon-plus"></span><span class="btn-text"> And/Or</span></a>
+     
+     </div>
+</div>
+
+ <div class="sfff-rule-box-then-block">
+ 
+  
+  <div class="sfff-then-block-inner">
+  <span class="sfff-then-block-text if-else-text then-with">Then</span>
+  <div class="sfff-then-block-rule-statements">
+    <div class="sfff-then-block-rule-statement-">
+         <div class="sfff-rule-statements- rule-st-1">
+             
+                              
+                                <apex:selectList id="thenFieldsActionstemp" styleClass="select-elem select-then-fields-action" value="{!tempStr}"  onchange="resetThenOperatorAndFilter(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!ThenActionFieldsList}"></apex:selectOptions> 
+                      </apex:selectList>
+                             
+         </div>
+          <div class="sfff-rule-statements- rule-st-2">
+            <div class="sfff-rule-then-field-list">
+            
+                            <apex:selectList id="thenFieldsTarget" styleClass="select-elem select-then-fields  select-color-" value="{!tempStr}"  onchange="populateThenValueFields(this,true);return false;"   multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableThenFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+                      </div>
+                      <div class="sfff-rule-then-show-error-msg   display-none ">
+
+                         <textarea class="sfff-then-error-message sfff-textarea"  onblur="callSaveRule(this,true);return false;"  ></textarea>
+                     </div>
+         </div>
+          <div class="sfff-rule-statements- rule-st-3   static-field ">
+                          
+             <div class="sfff-rule-then-populate-field   display-none">
+            <span class="then-with">With</span>
+                <div class="sfff-rule-then-existing-field-box  display-none ">
+                  
+                <apex:selectList id="availableFieldsRightTemp" styleClass="select-elem select-color-" value="{!tempStr}" onchange="callSaveRule(this,true);return false;"  multiselect="false" size="1">
+                                  <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                              </apex:selectList> 
+                <a onClick="switchFieldsThenDynamicStatic(this,'static')" class="toggle-field-behaviour-link-then" >Set a value</a>
+                </div>
+                <div class="sfff-rule-then-static-value-box    ">
+                  <input type="text" class="sfff-then-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="" />
+                  <textarea class="sfff-then-value-field- sfff-textarea display-none"  ></textarea> 
+                  <div class="sfff-value-field-box  ">
+                              <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-then-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxthenSelectValueField" value="" />
+                               <label   class="css-check-label display-none"></label>
+                  </div>                      
+                <select class="sfff-value-field- sfff-select-element select-elem display-none"  onchange="callSaveRule(this,true);return false;"  >
+                </select>
+                
+                <a onClick="switchFieldsThenDynamicStatic(this,'dynamic')" class="toggle-field-behaviour-link-then" >Select existing field</a>
+                </div>
+             </div>
+         </div>
+         <div class="sfff-rule-statements- rule-st-4 rule-add-delete-box">
+            <a href="#" class="sfff-rule-then-actions sfff-rule-then-delete" onclick="deleteRuleThenHTML(this);return false;"></a>
+            <a href="#" class="sfff-rule-then-actions sfff-add-new-then-condition" onclick="addNewRuleThenHTML(this);return false;"></a>
+         </div>
+         
+         </div>
+         
+    
+         </div>
+</div>
+</div>
+</div>
+
+
+<div class="create-rule-sibling-block">
+<div class="create-rule-inner bottom-link-create-rule">
+<a class="vabuttonA1"  data-rule-index="1" onclick="addNewRuleHTML(this); return false;" data-rule-data="norule"   ><span class="btn-icon-plus"></span><span class="btn-text">New Rule</span></a>
+</div>
+</div>
+
+ 
+
+
+</div>
+</apex:outputPanel>
+
+<apex:outputPanel id="tempIfAvailableFieldsSelect"  styleClass="tempIfAvailableFieldsSelectCSS" layout="block" style="display:none"     >
+     <apex:selectList id="tempIfAvailableFieldLeft" styleClass="select-elem select-if-first-select"  value="{!tempStr}" onchange="resetOperatorAndFilter(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableIfFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+      </apex:outputpanel> 
+      <apex:outputPanel id="tempThenAvailableFieldsSelect"  styleClass="tempThenAvailableFieldsSelectCSS" layout="block" style="display:none"   >
+     <apex:selectList id="tempThenAvailableFieldLeft" styleClass="select-elem select-then-fields  "  value="{!tempStr}" onchange="populateThenValueFields(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableThenFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+<apex:selectList id="tempThenAvailableFieldLeftTEMP" styleClass=""  value="{!tempStr}" onchange="populateThenValueFields(this,true);return false;"  multiselect="false" size="1">
+                          <apex:selectOptions value="{!AvailableThenFieldsListSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+
+      </apex:outputpanel> 
+<!-- TEMP RULE BOX ends -->
+<div id="dialog-confirm" class="content"></div>
+<div id="tempDiv" style="display:none">
+</div>
+
+<script type="javascript">
+  
+function unLoadWindow() {
+     if((isFirstOperandValid() && ifThenBlockIsValid()))
+     {
+     return  ;
+     }
+     else
+     {
+     
+    return 'You have one or more incomplete rule. If you leave the page your form will not work as expected.'
+    }
+       
+  }
+   
+   
+   
+  window.onbeforeunload = unLoadWindow;
+  var validOperators = [{"STRING": "eqt,net,con,nco,stw,edw,nsw,new"},{"BOOLEAN":"eqt,net"},
+                        {"DATE": "eqt,net,lst,grt,lte,gte"},{"DATETIME": "eqt,net,lst,grt,lte,gte"},
+                       {"TEXTAREA": "eqt,net,con,nco,stw,edw,nsw,new"},
+            {"PHONE": "eqt,net,con,nco,stw,edw,nsw,new"},{"URL": "eqt,net,con,nco,stw,edw,nsw,new"},
+            {"EMAIL": "eqt,net,con,nco,stw,edw,nsw,new"},{"PHONE": "eqt,net,con,nco,stw,edw,nsw,new"},             
+                        {"PICKLIST": "eqt,net,con,nco,stw,edw,nsw,new"},{"MULTIPICKLIST": "eqt,net,con,nco,stw,edw,nsw,new"},
+            {"NUMBER": "eqt,net,lst,grt,lte,gte"},{"PERCENT": "eqt,net,lst,grt,lte,gte"},
+            {"CURRENCY": "eqt,net,lst,grt,lte,gte"},{"DECIMAL": "eqt,net,lst,grt,lte,gte"},
+            {"DOUBLE": "eqt,net,lst,grt,lte,gte"},{"INTEGER": "eqt,net,lst,grt,lte,gte"}
+            ];
+               var jsonFieldsData= [];
+                        
+              $(document).ready(function() {
+            
+/*getRemoteFormFieldsJs();
+ rerenderRuleEditor();
+
+    resetSelect2();*/
+   
+ 
+
+});
+/*JAVASCRIPT Remote Function */
+
+   
+    function getRemoteFormFieldsJs() {
+        /*JAVASCRIPT Remoting Method to populate Email draft configuration xml */
+        var ffrecordid = '{!$CurrentPage.parameters.id}';
+
+        Visualforce.remoting.Manager.invokeAction(
+            '{!URLENCODE($RemoteAction.RuleEditorComponentController.getRemoteFormFields)}',
+            ffrecordid,
+            function(result, event) {
+                if(event.status) {
+                    
+                    var decoded = $('<div/>').html(result[0]).text();
+                    
+                     parseXMLForJSON(decoded);
+                    /*  console.log(" decoded- " + decoded);*/
+                } else if(event.type === 'exception') {
+                    console.log(" Exception- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+                } else {
+                    console.log(" Exception 2- " + event.message);
+                }
+            },
+            {
+                escape: true
+            }
+        );
+    }
+ 
+
+   
+
+</script>
+</apex:component>

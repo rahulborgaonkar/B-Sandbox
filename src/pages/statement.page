@@ -1,0 +1,263 @@
+<apex:page controller="ffps_blkstatex.PrintStatementController" renderAs="pdf" action="{!initialise}">
+<head>
+    <style type="text/css">
+            @page{
+                @bottom-center {
+                    content: element(footer);
+                }
+            }
+            div.footer {
+                display: block;
+                padding: 10px;
+                padding-bottom:20px;
+                position: running(footer);
+            }
+    body {
+        background-color: #FFFFFF;
+        font: 8.5pt Arial, sans-serif;
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        vertical-align: baseline;
+        display: block;
+        line-height:11.5pt;
+    }
+    
+    h1 {
+        padding-top:20px;
+        font-size:15pt;
+        font-weight:bold;
+        line-height:14pt;   
+        margin:0;
+    }
+    
+    hr {
+        height:1px;
+        border-width:0;
+        color:#CCCCCC;
+        background-color:#CCCCCC;
+        
+    }
+    
+    th {
+        text-align:left;
+    }
+    
+    td {
+        vertical-align:top;
+    }
+    
+    .boldRed {
+        font-weight:bold;
+        color:#ED1C24;
+    
+    }
+    
+    .cell {
+        text-align:right;
+    }
+    .bold {
+        font-weight:bold;
+    }
+    
+    #invDetails {
+        margin-top:30px;
+    }
+    
+    
+    #mainPane {
+        width:90%; /*595px;*/
+        margin-left:auto;
+        margin-right:auto;
+    }
+    
+    #rightNav {
+        width:150px;
+        float:right;
+        color:#002f5f;
+    }
+    
+    #totals {
+        width:200px;
+        float:right;
+    }
+    
+    #invLines tr {
+      border-bottom: 1px solid #ccc;
+      border-top: 1px solid #ccc;
+      border-collapse: collapse;
+    }
+    
+    .smallText {
+        font-size:7.5px;
+        color:#002F5F;
+        line-height:7.5pt;
+    }
+    </style>
+</head>
+<div class="footer">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="smallText">British Safety Council (Company Limited by Guarantee)<br />
+            Registered in England and Wales No. 4618713 at the above address.<br />
+          Registered Charity No. 1097271 and OSCR No. SC037998. VAT Registration No. 810266267</td>
+          <td align="right"><apex:image url="{!URLFOR($Resource.FinancialForceImages, 'FooterLogos.jpg')}"/></td>
+        </tr>
+      </table>
+</div>
+<apex:variable var="usePage" value="page-break-after:always;"/>
+<apex:outputPanel rendered="{!$CurrentPage.parameters.indStatement == '1'}">
+    <apex:variable var="usePage" value=""/>
+</apex:outputPanel>
+<apex:repeat value="{!statements}" var="account">   
+    <div style="{!usePage}">
+        <div id="mainPane">
+            <div id="rightNav">
+                <apex:image url="{!URLFOR($Resource.FinancialForceImages, 'newBSCLogo.gif')}"/><br />
+                <br />
+                <br />
+            </div>
+            <!-- MAIN HEADER -->
+            <h1>Statement</h1>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td>
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.Name!=''}" escape="false">
+                        <strong>{!account.ffps_blkstatex__Account__r.Name}</strong><br/>
+                    </apex:outputText>
+                    <apex:outputField value="{!account.ffps_blkstatex__Account__r.BillingStreet}" rendered="{!account.ffps_blkstatex__Account__r.BillingStreet!=''}" >
+                        <!--{!account.ffps_blkstatex__Account__r.BillingStreet}<br/>-->
+                    </apex:outputField>
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.BillingStreet!=''}" >
+                        <br/>
+                    </apex:outputText>
+                    
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.BillingCity!=''}" escape="false">
+                        {!account.ffps_blkstatex__Account__r.BillingCity}<br/>
+                       </apex:outputText>
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.BillingState!=''}" escape="false">
+                        {!account.ffps_blkstatex__Account__r.BillingState}<br/>
+                       </apex:outputText>
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.BillingPostalCode!=''}" escape="false">
+                        {!account.ffps_blkstatex__Account__r.BillingPostalCode}<br/>
+                       </apex:outputText>
+                    <apex:outputText rendered="{!account.ffps_blkstatex__Account__r.BillingCountry!=''}" escape="false">{!account.ffps_blkstatex__Account__r.BillingCountry}</apex:outputText>
+                    <br/>
+                    <br/>
+                    <c:AccountReferenceValue accountId="{!account.ffps_blkstatex__Account__c}"> </c:AccountReferenceValue>
+                </td>
+                <td width="150px">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="23">
+                            
+                        </td>
+                        <td>
+
+                            <apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__Street__c}"/><br/>
+                            <apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__City__c}"/><apex:outputText value=", "/>
+                            <apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__ZipPostCode__c}"/><br/>
+                            <apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__Country__c}"/><br/>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" height="10px"></td>
+                        </tr>
+                      <tr>
+                        <td class="boldRed">T</td>
+                        <td><apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__Phone__c}"/></td>
+                      </tr>
+                      <tr>
+                        <td class="boldRed">F</td>
+                        <td><apex:outputField value="{!account.ffps_blkstatex__OwnerCompany__r.c2g__Fax__c}"/></td>
+                      </tr>
+                      <tr>
+                        <td class="boldRed">E</td>
+                        <td>creditcontrol@britsafe.org</td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td><strong>www.britsafe.org</strong></td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+            </table>
+            Date:&nbsp;<apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!account.ffps_blkstatex__Created__c}"/></apex:outputText><br />
+            <br />
+            Dear Sir/Madam<br />
+            <br />
+            Please see below your account statement.<br />
+            <br />
+            We would appreciate prompt payment of this balance.
+            <div id="invDetails">
+                <hr noshade="noshade"/>
+            </div>
+            <div id="invLines">
+                <table width="100%" order="1" border="0" cellspacing="0" cellpadding="0" RULES="ROWS" FRAME="HSIDES">
+                    <tr>
+                        <th>Document Type</th>
+                        <th>Document Number</th>
+                        <th>Documen Date</th>
+                        <th>Due Date</th>
+                        <th>Currency</th>
+                        <th class="cell">Outstanding Amount</th>
+                    </tr>
+                    <apex:repeat value="{!account.ffps_blkstatex__StatementAccountLines__r}" var="line">
+                        <tr>
+                          <td colspan="6"><hr /></td>
+                        </tr>
+                        <tr>
+                          <td>{!line.ffps_blkstatex__Transaction__r.c2g__TransactionType__c}</td>
+                          <td>{!line.ffps_blkstatex__Transaction__r.c2g__DocumentNumber__c}</td>
+                          <td><apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!line.ffps_blkstatex__Transaction__r.c2g__TransactionDate__c}"/></apex:outputText></td>
+                          <td><apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!line.ffps_blkstatex__DueDate__c}"/></apex:outputText></td>
+                          <td>
+                            <apex:outputField value="{!line.ffps_blkstatex__TransactionLineItem__r.c2g__DocumentCurrency__r.Name}"/>
+                          </td>
+                          <td class="cell">
+                            <ffps_blkstatex:CODALocalFormatterController number="{!line.ffps_blkstatex__DocumentOutstandingValue__c}" currency="{!line.ffps_blkstatex__TransactionLineItem__r.c2g__DocumentCurrency__r.Name}"/>
+                          </td>
+                        </tr>
+                    </apex:repeat>
+                    <tr>
+                      <td colspan="6"><hr  noshade="noshade" /></td>
+                    </tr>
+              </table>
+              <div id="totals">
+                  <table width="100%" order="1" border="0" cellspacing="0" cellpadding="0" RULES="ROWS" FRAME="HSIDES">
+                    <tr>
+                        <td><strong>Total Outstanding</strong></td>
+                        <td class="cell"><apex:outputField value="{!account.ffps_blkstatex__StatementAmount__c}"/></td>
+                    </tr>
+                    <tr>
+                      <td colspan="6"><hr noshade="noshade"/></td>
+                    </tr>
+                  </table>
+              </div>
+              <br />
+              <br />
+              If you have any questions relating to this balance please do not hesitate to contact us.<br />
+                <br />
+                We are going green, to help us with this incentive please send your accounts payable email address to creditcontrol@britsafe.org.<br />
+                <br />
+                Yours faithfully<br />
+                <br />
+                <strong>{!$User.FirstName} {!$User.LastName}</strong><br />
+                <i>Credit Control</i>
+                          <br />
+                          <br />
+            </div>
+        </div>
+    </div>
+</apex:repeat>
+</apex:page>

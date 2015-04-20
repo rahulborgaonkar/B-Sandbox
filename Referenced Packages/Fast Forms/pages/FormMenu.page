@@ -1,0 +1,625 @@
+<apex:page standardController="VisualAntidote__Previous_Form__c" extensions="VisualAntidote.CKEditorMenuController" id="pg" sidebar="false" docType="html-5.0" title="Fast Forms" tabStyle="FastForms__tab">
+<!-- Pure Chat Snippet -->
+<head>
+<apex:includeScript value="//code.jquery.com/jquery-1.10.1.min.js" />
+
+    
+    </head>
+<script type='text/javascript'>
+(function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '25d09910-b904-4399-b5f3-988100ad71bf', f: true }); done = true; } }; })();
+</script>
+<!-- End Pure Chat Snippet -->
+
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    
+    
+  
+    
+       <link rel="stylesheet" href="{!URLFOR($Resource.jquery_dialog,'jquery_dialog/jquery-ui.css')}"/>
+    <!--- <script src="{!URLFOR($Resource.jquery_dialog,'jquery_dialog/jquery-1.9.1.js')}"></script> -->
+    <script src="{!URLFOR($Resource.jquery_dialog,'jquery_dialog/jquery-ui.js')}"></script>
+    
+    <script src="{!URLFOR($Resource.Clipboard,'ZeroClipboard.js')}"></script>
+     
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+
+    <script src="{!URLFOR($Resource.downloadifyjs)}"></script>
+    <script src="{!URLFOR($Resource.swfobjectjs)}"></script>
+
+      <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'ffcommon.css')}" /> 
+    <link rel="stylesheet" href="{!URLFOR($Resource.foundation,'css/foundation.css')}" />     
+    <script src="{!URLFOR($Resource.foundation,'js/foundation.min.js')}"></script>
+    <script src="{!URLFOR($Resource.foundation,'js/foundation/foundation.joyride.js')}"></script>
+    <style>
+    [title~="REFERENCE"] {
+        display: none !important;
+    }
+    
+    </style>
+    <c:TrialExpiryComponent id="trialExpCp" />
+    
+
+ <div class="mainHeader">
+          <div class="mainHeaderInner">
+        <div style="line-height: 22px;margin: auto auto;float: left;margin-top: 8px;display: inline-block; ">
+   
+             <a id="createNewForm"    class="vabutton3"      ><span class="btn-icon"></span> <span class="btn-text">Create New Form</span></a>
+           
+        
+        </div>
+            <div style="float: right;line-height:0px;"><img src="{!URLFOR($Resource.logos,'color_logo.png')}" />
+            </div>     
+            
+            <div class="help-text-r"><a target="_blank" href="http://visualantidote.com/sfffdocumentation" ><img src="{!URLFOR($Resource.helptext_image)}" /></a>
+            </div>                        
+        </div>
+                                 
+        
+     </div>
+
+
+    <apex:form id="frm">    
+       
+        <script>
+       var clip;
+       $( document ).ready(function() {
+       
+       $(document).foundation();
+
+       $( document ).foundation({ joyride : {         
+              tip_location : 'top',
+              tip_animation : 'fade',
+              tip_animation_fade_speed: 500,          
+              modal:false,
+              expose: false,
+              next_button: true,
+              prev_button: false,
+              cookie_monster: true,
+              cookie_name: 'fastforms-joyride',
+              cookie_domain: false,
+              cookie_expires: 365,
+              post_ride_callback: function() {
+                $(document).foundation('joyride', 'destroy');
+              }     
+          }
+       });
+
+       $(document).foundation('joyride', 'start');
+      /*
+       
+       $('.editText').autosize({append:false, resizeDelay:false});
+            $('#dialog').dialog({
+            autoOpen: false,
+            width: 455,
+            modal: true,           
+            title:"Form Preview"
+         }); 
+          */
+                       
+           $( '#createNewForm' ).click(function () {
+            
+
+            if ( $( ".createnewformblock" ).css( "display" )=="none" ) {
+    $( ".createnewformblock" ).show();
+    $('.newForm').show();
+    showDiv();
+    goToNextTourStop();
+  } else {
+    $( ".createnewformblock" ).hide();
+    $('.newForm').hide();
+  }
+  });
+            
+            var clip = new ZeroClipboard( 
+            $('.code'), {
+            moviePath: "{!URLFOR($Resource.Clipboard,'ZeroClipboard.swf')}"
+            });
+     /*
+             clip.addEventListener('complete',function(client,text) {
+                //message copy 
+                $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your embed code was copied to the clipboard! </div><br /><div class='secondary'>Simply paste the code into your website using <b>Command+V</b> on Mac or <b>Ctrl+V</b> on Windows.</div>");
+                // Define the Dialog and its properties.
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    modal: true,
+                    title: "Close",
+                    height: 150,
+                    width: 455,
+                    buttons: {
+                        "Close": {
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        text: 'Close',
+                        class: 'vabutton1'
+                        }
+                  }
+                  });
+              
+            });*/
+            if(getUrlVars() == 'form'){
+                showDiv();
+            }
+            $('.mainDiv div').each(function(){
+                  var i=0;
+                  $(this).find('.ObjectName h4 span').each(function(){                    
+                    if($(this).attr('id') != 'priName'){
+                      i++;
+                    }                     
+                  });
+                  if(i==1){
+                        $(this).find('.ObjectName').css("background-image", "url({!URLFOR($Resource.iconImages,'TreeEditorSingle.png')})");
+                  }
+                  if(i==2){
+                        $(this).find('.ObjectName').css("background-image", "url({!URLFOR($Resource.iconImages,'TreeEditorDouble.png')})");
+                  }
+                  if(i==3){
+                        $(this).find('.ObjectName').css("background-image", "url({!URLFOR($Resource.iconImages,'TreeEditor.png')})");
+                  }
+                  if(i==0){
+                        $(this).find('.ObjectName').css("background-image", "url()");
+                  }
+                  
+            });
+            
+        });
+        //Read a pages GET URL variables and return them as an associative array.
+        function getUrlVars()
+        {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        
+        
+      
+        
+       var delFormId='';
+       function deleteId(delId){ 
+           delFormId=delId;           
+           $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconAlert'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Are you sure you want to delete this form?</div></div>");        
+            // Define the Dialog and its properties.
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                modal: true,
+                title: "Delete",
+                height: "auto",
+                width: 413,
+                buttons: {
+                    "No":{
+                        click: function () {
+                        $(this).dialog('close');
+                        callback(false);
+                        },
+                        text: 'No',
+                        'class': 'vabutton2'
+                    },
+                    "Yes":{
+                        click: function () {
+                        $(this).dialog('close');
+                        callback(true);
+                        $('.button').removeClass('active');          
+                           $('#'+delId).find('#tabList tr td').find('.button').each(function(){ 
+                                if($(this).text() == 'Delete'){
+                                    $(this).addClass('active');
+                                }              
+                            });
+                    },
+                        text: 'Yes',
+                        'class': 'vabutton1'
+                    }
+                }
+            });
+            $('.ui-dialog :button').blur();
+            function callback(value) {
+            if (value) {
+                deleteTemplate(delId);               
+            } else {
+                return false;
+            }
+        }
+       }
+       function duplicateTemplate(cloneid)
+       {
+       duplicateTemplate(cloneid);
+       }
+       function closePreview(){
+           $("#dialog").dialog("close");
+           $('.button').removeClass('active'); 
+       }
+       function delTemplate(){
+               $('.formName').val('');
+               $('.newForm').hide();
+               $('.tooltips').next().remove();
+               $('.tooltips').next().remove();
+               $('.tooltips').html('');
+               $('.tooltips').html('<div style="margin-top: 5px;display:inline-block;" class="help"></div><span><h6>Your primary object is the main object you want to capture for your form. Once you select a primary object, you can choose other objects related to it.</h6></span>');
+               $('#createNewForm').removeClass('btnSaved');
+               $('#createNewForm').addClass('button');
+               $('#form-'+delFormId).fadeOut('slow');                
+       }
+       
+       function editTemplate(editId){
+           editTemplate(editId);
+       }
+      
+       function previewTemplate(txt){  
+               $("#dialog").html("");
+               var appHtml=$('#'+txt).find("textarea").val();
+               if(appHtml.length == 0){
+                   $("#dialog").append("<center></center><div style='cursor:pointer;float:right;height:24px;padding-right: 10px;padding-top: 6px;padding-bottom: 10px;'><img src='{!URLFOR($Resource.iconImages,'Close.png')}' onmouseover='changeImg(this);' onmouseout='rechangeImg(this);' onclick='closePreview();'/></div><div style='width:100%;border-bottom:1px solid #ccc;clear:both;'></div><!--<h3>Form Preview</h3>--><div id='formPreview'>"+appHtml+"</div><div style='position: absolute;bottom: 0;width:100%;clear:both;height:5px'></div>");             
+               }else{
+                   $("#dialog").append("<center></center><div style='cursor:pointer;float:right;height:24px;padding-right: 10px;padding-top: 6px;padding-bottom: 10px;'><img src='{!URLFOR($Resource.iconImages,'Close.png')}' onmouseover='changeImg(this);' onmouseout='rechangeImg(this);' onclick='closePreview();'/></div><div style='width:100%;border-bottom:1px solid #ccc;clear:both;'></div><!--<h3>Form Preview</h3>--><div id='formPreview'>"+appHtml+"</div><div style='position: absolute;bottom: 0;width:100%;clear:both;height:5px'></div>");             
+               }
+               $("#dialog").dialog("open");
+               $('.button').removeClass('active');          
+                   $('#'+txt.substring(3,txt.length)).find('#tabList tr td').find('.button').each(function(){ 
+                        if($(this).text() == 'Preview'){
+                                $(this).addClass('active');
+                        }             
+               });           
+       }
+
+       function setFormActive(recId)
+       {
+                var btn =  $('#btnFormActiveDiv' + recId);
+
+            if ($(btn).hasClass('formActive'))
+            {
+                $(btn).removeClass('formActive');
+                $(btn).addClass('formInactive');
+                $(btn).parent().find('.lblFormActive').text('Form inactive')
+            } else {
+                $(btn).removeClass('formInactive');
+                $(btn).addClass('formActive');
+                $(btn).parent().find('.lblFormActive').text('Form active')
+            }
+
+       }
+
+       function editText(e){
+            e.readOnly='';
+            $(e).removeClass('editText');
+            $(e).addClass('editTextfocus');            
+        }
+        function saveEdit(e,upId){
+            saveEditText(upId,$(e).val());
+            e.readOnly=true;            
+            $(e).removeClass('editTextfocus');
+            $(e).addClass('editText');                        
+        }
+        function changeImg(x,con){
+            if(con=='add'){
+                x.src="{!URLFOR($Resource.iconImages,'AddHover.png')}";
+            }
+            if(con=='remove'){
+                x.src="{!URLFOR($Resource.iconImages,'RemoveHover.png')}";
+            }
+            if(con=='Copy'){
+                x.src="{!URLFOR($Resource.alpha,'HelpHover.png')}";
+            }            
+            if(con==undefined){
+                x.src="{!URLFOR($Resource.iconImages,'CloseHover.png')}";
+            }
+        }
+        function rechangeImg(x,con){
+            if(con=='add'){
+                x.src="{!URLFOR($Resource.iconImages,'Add.png')}";
+            }
+            if(con=='remove'){
+                x.src="{!URLFOR($Resource.iconImages,'Remove.png')}";
+            }
+            if(con=='Copy'){
+                x.src="{!URLFOR($Resource.alpha,'HelpActive.png')}";
+            }
+            if(con==undefined){
+                x.src="{!URLFOR($Resource.iconImages,'Close.png')}";
+            }
+        }
+        
+   </script>
+   <style>
+  
+ 
+   </style>
+   <script>
+   var ffid='';
+
+function togglePublishOptionsFormID()
+{
+if(ffid!='')
+{
+return true;
+}
+else{
+false;
+}
+}
+
+function hidePublishPanels(linkelem)
+{    
+
+    $(linkelem).parent().toggleClass('active');
+    
+    console.log('linkelem '+linkelem);
+    console.log('linkelem data-eementid '+$(linkelem).attr('data-elemid'));
+    var formid=$(linkelem).attr('data-elemid');
+    $('.outer-container').each(function(index,elem){
+        if($(elem).find('.form-information-wrapper-outer').attr('id')!='form-'+formid){
+            $(elem).find('.publishComponentCSS').slideUp();
+            $(elem).find('.publishComponentCSS').html('');
+            $(elem).find('.publishComponentCSS').parent().find('.vabutton2-noactive.active').removeClass('active')
+        }
+        else
+        {
+            $(elem).find('.publishComponentCSS').slideDown();
+            console.log('Found open'+$(elem).find('.form-information-wrapper-outer').attr('id'));
+        }
+    });
+}
+
+function showNotification(elemid, textmsg)
+    {
+        $('#' + elemid).show();
+        $('#' + elemid).find('.msg-text-div').html(textmsg);
+    }
+    function hideNotification(elemid)
+    {
+        $('#' + elemid).find('.msg-text-div').html('');
+        $('#' + elemid).hide();
+    }
+    function hideMessage(elemid)
+    {
+        $(elemid).parent().hide();
+    }
+    function closeNotification(elemid)
+    {
+   
+        $(elemid).parent().find('.msg-text-div').html('');
+        $(elemid).parent().hide();
+    }
+
+    function ToggleFormActive(editId)
+    {      
+        doToggleFormActive(editId);
+    }
+    
+     function DiscardDraft(deleteDraftId){
+                  $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconAlert'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Are you sure you want to discard this draft?</div></div>");        
+            // Define the Dialog and its properties.
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                modal: true,
+                title: "Delete",
+                height: "auto",
+                width: 413,
+                buttons: {
+                    "No":{
+                        click: function () {
+                        $(this).dialog('close');
+                        callback(false);
+                        },
+                        text: 'No',
+                        'class': 'vabutton2'
+                    },
+                    "Yes":{
+                        click: function () {
+                        $(this).dialog('close');
+                        callback(true);
+                        $('.button').removeClass('active');          
+                           $('#'+delId).find('#tabList tr td').find('.button').each(function(){ 
+                                if($(this).text() == 'Delete'){
+                                    $(this).addClass('active');
+                                }              
+                            });
+                    },
+                        text: 'Yes',
+                        'class': 'vabutton1'
+                    }
+                }
+            });
+            $('.ui-dialog :button').blur();
+            function callback(value) {
+            if (value) {
+                doDiscardDraft(deleteDraftId);            
+            } else {
+                return false;
+            }
+       }
+       }     
+
+        var isFinalStep = false;  
+       function goToNextTourStop()
+       {
+          if ($(".joyride-tip-guide").length > 0 && !isFinalStep)
+            $("#takeTour").foundation('joyride','go_next');
+       }   
+</script>
+               
+        <div class="createnewformblock" style="display:none">
+         <c:NewFormComponentMulti id="pgCp" />
+        </div>
+        
+        <ol data-joyride="data-joyride" id="takeTour" style="display:none">
+          <li data-id="createNewForm" data-options="next_button: false;tip_location: bottom;">Welcome to Fast Forms! <br /><br />Click this button to create your first form.<br /></li>        
+          <li data-id="pg:frm:pgCp:cp:formName" data-options="next_button: false;tip_location: bottom;">Let's give our first form a name, something easily identifiable.<br /></li>        
+          <li data-id="s2id_mergeTypeSelect" data-options="next_button: false;tip_location: right;">Next, let's pick an object. This is where you want your form data to be captured in Salesforce. <br /><br />For example, if you are preparing a Contact Us form, you'll want to select Contact here.<br /></li>   
+          <li data-id="hoverRel" data-options="tip_location: right;">We can also pick related objects when we want to store other types of data that are related to our object above. <br /><br />For example, we may want to capture account information and associate that account to our contact. In that case, we can click this button and select Account.<br /><br /><a href="http://visualantidote.com/sfffdocumentation#Related-Objects" class="tourAnchor" target="_blank">Read more...</a><br /><br /></li>                 
+          <li data-id="createBtn" data-options="next_button: false;tip_location:bottom;">Once we've given our form a name and selected our objects, it's time to start building! <br /><br />Click here to get started.<br /></li>                           
+        </ol>        
+        
+        <apex:actionStatus id="status">
+                <apex:facet name="start">
+                 <div id="load-status" > 
+                    <div class="overlay"></div>
+                        <div class="status">
+                            <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Loading, please wait...<br /><br /><br /></div></div>
+                        </div>
+                  </div>
+               </apex:facet>
+    </apex:actionStatus>
+             <apex:actionFunction name="doDiscardDraft" action="{!doDiscardDraft}" reRender="mainrepeater" status="status">
+    <apex:param name="deleteDraftId" value="deleteDraftId" />
+</apex:actionFunction>
+             <apex:actionFunction name="doToggleFormActive" action="{!doToggleFormActive}" reRender="mainrepeater" status="status" oncomplete="setFormActive('{!editId}');" >
+    <apex:param name="eId" value="eId" assignTo="{!editId}" />
+</apex:actionFunction>
+        <apex:actionFunction name="deleteTemplate" action="{!deleteTemplate}" reRender="mainrepeater" status="status" oncomplete="delTemplate();">
+            <apex:param name="fId" value="fId" assignTo="{!delId}" />
+        </apex:actionFunction>
+        <apex:actionFunction name="saveEditText" action="{!saveEditText}" reRender="pg">
+            <apex:param assignTo="{!updateId}" name="updateId" value="updateId" />
+            <apex:param assignTo="{!updateName}" name="updateName"
+                value="updateName" />
+        </apex:actionFunction>
+        <apex:actionFunction name="duplicateTemplate" action="{!duplicateTemplate}" status="status" reRender="mainrepeater">
+            <apex:param name="cloneId" value="cloneId"   />
+        </apex:actionFunction>
+        <apex:actionFunction name="editTemplate" action="{!editTemplate}" status="status" reRender="pg">
+            <apex:param name="eId" value="eId" assignTo="{!editId}" />
+        </apex:actionFunction>
+        <center>                
+        
+        <div class="mainDiv">
+        <apex:outputPanel id="refresh"></apex:outputPanel>
+        <apex:outputPanel id="msgpanel" styleClass="ohidden">
+
+                                    <apex:pageMessages escape="false" />
+                                </apex:outputPanel>
+        <apex:repeat id="mainrepeater" value="{!listFormObjects}" var="formObj">
+            <apex:outputPanel styleClass="outer-container" id="itemFormWrapper">
+             
+             
+                <div    class="form-information-wrapper-outer " id="form-{!formObj.SFForm.id}">
+                      <div class="form-information-wrapper grey-left-border10"> 
+                        <div class="form-information ">   
+                              <apex:outputPanel >
+                              <h1  id="formTitle"  >{!formObj.SFForm.Name}</h1>
+                              </apex:outputPanel>
+                             <div class="ObjectName" style="margin-top:-1%;">
+                                
+                                  <h4 style="line-height:12.5px">
+                                  <span style="display:block">
+                                  <i>Primary Object:</i>&nbsp;&nbsp;<span data-object="{!formObj.SFForm.Object_Name__c}" class="{!formObj.SFForm.Object_Name__c}" id="priName" style="margin-bottom: 4px;display: inline-block;">{!primaryObjectLabelMap[formObj.SFForm.Object_Name__c]}</span> 
+                                  </span>  <apex:repeat value="{!preFormMap[formObj.SFForm.id]}" var="sepObj">
+                                       <img src="{!URLFOR($Resource.iconImages,'TreeEditorSingle.png')}" style="margin-left: 113px;margin-top:-6px;float:left;clear:left"/>
+                                       <span class="secName" style="float:left;clear:right;margin-top:4px;" id="{!sepObj}">{!sepObj}</span> 
+                                    </apex:repeat>
+                                  </h4>
+                              </div>
+                              <div class="formActiveDiv" >
+                                <div id="btnFormActiveDiv{!formObj.SFForm.id}" class="btnFormActive {!IF(formObj.SFForm.Active__c == true,'formActive','formInactive')}" onclick="ToggleFormActive('{!formObj.SFForm.id}');">
+                                    <div class="formActiveSwitch">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                                <h5><div class="lblFormActive">Form {!IF(formObj.SFForm.Active__c == true,'active','inactive')}</div></h5>
+                            </div>
+                         </div>
+                        
+                        
+                        <div class="form-editor-title-box">
+            <div class="form-actions publish-actions">
+            <div class="action-icons-left">
+            <span  style="float:left;display:{!IF(formObj.SFForm.Draft_Status__c!='' && formObj.SFForm.Draft_Status__c=='Unpublished' ,'inline-block','none')}" class="button-draft draft-event draft-mode draft-status-{!formObj.SFForm.Draft_Status__c} blue-tooltip"    >
+            <span class="blue-tooltip-text -mt40 -ml40">This form has changes that have not been published yet</span>
+            <span class="draft-text">Draft</span>
+            
+             <a class="delete-icon" href="#"    onClick="DiscardDraft('{!formObj.SFForm.id}')"></a>              
+
+                 
+
+             </span>
+             <div class="button-draft draft-event draft-saving italic-text blue-tooltip" id="draftSaveState" style="display:none"    >
+               
+               <span class="draft-text">Draft Saving</span>
+              </div>
+            
+            </div>
+            <div class="action-icons-right">
+            <!--<a class="action-icon edit-icon blue-tooltip" href="#" id="previewHtml"  ><span>Edit</span></a>
+            <a class="action-icon duplicate-icon blue-tooltip" href="#" id="previewHtml"  ><span>Duplicate</span></a>-->
+            <a class="action-icon edit-icon blue-tooltip" href="{!$Site.BaseUrl}FormEditor?id={!formObj.SFForm.id}"      ><span class="blue-tooltip-text -ml18">Edit</span></a>
+            <a class="action-icon duplicate-icon blue-tooltip" href="javascript:void(0);"  onClick="duplicateTemplate('{!formObj.SFForm.id}')"     ><span class="blue-tooltip-text -ml30">Duplicate</span></a>
+           <a class="action-icon preview-icon blue-tooltip" href="{!$Site.BaseUrl}FormdraftPreview?id={!formObj.SFForm.id}" target="_blank"      ><span class="blue-tooltip-text -ml25">Preview</span></a>
+           <a class="action-icon delete-icon blue-tooltip" href="#"    onClick="deleteId('{!formObj.SFForm.id}')"><span class="blue-tooltip-text -ml20">Delete</span></a>
+            </div>
+            </div>
+            </div>
+            <div class="form-settings-wrapper">
+           
+             <div class="form-settings-wrapper-inner">
+            
+            <apex:commandLink id="publishlink" html-data-elemid="{!formObj.SFForm.id}" styleClass="vabutton2-noactive" action="{!togglePublishOption}"  status="status" rerender="publishcomponent" oncomplete="hidePublishPanels(this);">
+            <apex:param name="togglePublishId"
+                value="{!formObj.SFForm.id}"/>    <span data-elemid="{!formObj.SFForm.id}" class='btn-text'>Publish Options</span><span data-elemid="{!formObj.SFForm.id}" class='btn-icon'></span>              
+        </apex:commandLink>
+            </div>             
+            </div>
+            
+            
+            
+       
+                        
+             
+               </div>
+           <div style="clear:both">  
+               </div>
+            <apex:outPutPanel styleClass="publishComponentCSS" id="publishcomponent" layout="block" style="display:none;"   >
+            <apex:outputPanel id="draftPublished" rendered="{!IF(formObj.SFForm.Id==currentOpenedId,true,false)}" layout="block" >
+           
+ <apex:outputPanel styleClass="marginLRauto ohidden text-align-center" rendered="{!IF(formObj.SFForm.VisualAntidote__Hosted_Form_ID__c==''  ,true,false)}" >
+ 
+     <div class="vff-alert " id="alertActionBox" style="display:{!IF(formObj.SFForm.VisualAntidote__Hosted_Form_ID__c=='' ,'inline-block','none')}">
+                
+                <div class="vff-alert-msg msg-text-div" onclick="hideMessage(this);" style="display:block">Warning: This form has not been published yet
+<apex:commandLink immediate="true" styleClass="vabutton1" action="{!publishDraftInstance}" oncomplete="hidePublishPanels(this);" value="Publish Draft" html-data-elemid="{!formObj.SFForm.id}" status="status" rerender="itemFormWrapper" >
+            <apex:param name="draftid"
+                value="{!formObj.SFForm.id}"/>                
+        </apex:commandLink>
+        </div>
+                </div>
+    </apex:outputPanel>
+    
+    <apex:outputPanel styleClass="marginLRauto ohidden text-align-center" rendered="{!IF(formObj.SFForm.VisualAntidote__Hosted_Form_ID__c!='' && formObj.SFForm.VisualAntidote__Draft_Status__c!='' && formObj.SFForm.VisualAntidote__Draft_Status__c=='Unpublished'  ,true,false)}" >
+ 
+     <div class="vff-alert " id="alertActionBox" style="display:{!IF(formObj.SFForm.VisualAntidote__Hosted_Form_ID__c!='' && formObj.SFForm.VisualAntidote__Draft_Status__c!='' && formObj.SFForm.VisualAntidote__Draft_Status__c=='Unpublished' ,'inline-block','none')}">
+                
+                <div class="vff-alert-msg msg-text-div" onclick="hideMessage(this);" style="display:block">Warning: This form has an Unpublished draft
+<apex:commandLink immediate="true" styleClass="vabutton1" action="{!publishDraftInstance}" oncomplete="hidePublishPanels(this);" value="Publish Draft" html-data-elemid="{!formObj.SFForm.id}" status="status" rerender="itemFormWrapper" >
+            <apex:param name="draftid"
+                value="{!formObj.SFForm.id}"/>                
+        </apex:commandLink>
+        </div>
+                </div>
+    </apex:outputPanel>
+    
+    
+
+
+</apex:outputPanel>
+ <c:PublishComponent ffrecord="{!formObj.SFForm.id}" rendered="{!IF(formObj.SFForm.Id==currentOpenedId,true,false)}"   />
+    
+
+</apex:outPutPanel>
+
+         <div class="grey-left-border10">
+                     </div>
+                     </div>
+             
+         </apex:outputPanel>
+        </apex:repeat></div>
+        </center>
+        <br />
+        <div id="dialog" class="preview"></div>
+        <div id="dialog-confirm" class="content"></div>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,327 @@
+<apex:page standardController="c2g__codaInvoice__c" extensions="CustomInvoicePrint" showHeader="false" sidebar="false" standardStylesheets="false"  renderas="{!if($CurrentPage.parameters.p == null, null, 'pdf')}">
+    
+    <apex:variable var="relatedTo" value="{!c2g__codaInvoice__c}"/>
+    <apex:variable var="taxType" value="{!relatedTo.c2g__OwnerCompany__r.RecordType.Name}"/>
+    
+    <head>
+        <style type="text/css">
+            @page{
+            @bottom-center {
+            content: element(footer);
+            }
+            }
+            div.footer {
+            display: block;
+            padding: 10px;
+            padding-bottom: 20px;
+            position: running(footer);
+            }
+            
+            body {
+            background-color: #FFFFFF;
+            font: 8.5pt Arial, sans-serif;
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            line-height: 20px;
+            vertical-align: baseline;
+            display: block;
+            line-height:11.5pt;
+            }
+            pre {
+            margin-top:0px; 
+            margin-bottom:0px;
+            font: 8.5pt Arial, sans-serif;
+            }
+            
+            h1 {
+            padding-top:20px;
+            font-size:15pt;
+            font-weight:bold;
+            line-height:14pt;   
+            margin:0;
+            }
+            
+            hr {
+            height:1px;
+            border-width:0;
+            color:#CCCCCC;
+            background-color:#CCCCCC;
+            
+            }
+            
+            .dashed {
+            border-top-width:1px;
+            border-bottom-width:0px;
+            border-left-width:0px;
+            border-right-width:0px; 
+            border-style:dashed;
+            width:100%;
+            height:1px;
+            }
+            #scissors {
+            float:right;
+            margin-top:-10px;
+            }
+            th {
+            text-align:right;
+            }
+            
+            td {
+            vertical-align:top;
+            }
+            
+            .boldRed {
+            font-weight:bold;
+            color:#ED1C24;
+            
+            }
+            
+            .cell {
+            text-align:right;
+            }
+            .bold {
+            font-weight:bold;
+            }
+            
+            #invDetails {
+            margin-top:30px;
+            }
+            
+            
+            #mainPane {
+            width:90%;
+            margin-left:auto;
+            margin-right:auto;
+            }
+            
+            #rightNav {
+            width:150px;
+            float:right;
+            color: #002f5f;
+            }
+            
+            #totals {
+            width:130px;
+            float:right;
+            }
+            
+            .smallText, .smlTxt {
+            font-size:7.5px;
+            color:#002F5F;
+            line-height:7.5pt;
+            }
+            .smlTxt {
+            font-style: italic;
+            }
+        </style>
+    </head>
+    <div class="footer">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td class="smallText">British Safety Council (Company Limited by Guarantee)<br />
+                    Registered in England and Wales No. 4618713 at the above address.<br />
+                    Registered Charity No. 1097271 and OSCR No. SC037998. VAT Registration No. 810266267</td>
+                <td align="right"><apex:image url="{!URLFOR($Resource.FinancialForceImages, 'FooterLogos.jpg')}"/> </td>
+            </tr>
+        </table>    
+        
+    </div>
+    
+    <apex:variable var="lblInvoice"  value="{!if(relatedTo.c2g__InvoiceStatus__c == 'In Progress','Proforma Invoice','Invoice')}" />
+    <div id="mainPane">
+        <div id="rightNav">
+            <apex:outputPanel rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__LogoURL__c<>''}"><img src="{!relatedTo.c2g__OwnerCompany__r.c2g__LogoURL__c}"/></apex:outputPanel> 
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+        <!-- MAIN HEADER -->
+        <h1>{!lblInvoice}</h1>
+        <apex:outputText value="{!if(relatedTo.c2g__InvoiceStatus__c == 'In Progress','This is not a VAT Invoice','')}"/>
+
+        <br />
+        <br />
+        <br />        
+        <br />
+        <br />
+        <br />
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td>
+                    <apex:outputText rendered="{!if(relatedTo.c2g__Opportunity__r.Id == null,true,false)}">
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.Name!=''}" escape="false"><strong>{!relatedTo.c2g__Account__r.Name}</strong><br/></apex:outputText>
+                        <!-- <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingStreet!=''}" escape="false"><pre>{!relatedTo.c2g__Account__r.BillingStreet}</pre></apex:outputText>-->
+                        
+                        <apex:outputField rendered="{!relatedTo.c2g__Account__r.BillingStreet!=''}" value="{!relatedTo.c2g__Account__r.BillingStreet}"/>
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingStreet!=''}" escape="false"> <br/> </apex:outputText>
+                        
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingCity!=''}" escape="false">{!relatedTo.c2g__Account__r.BillingCity}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingState!=''}" escape="false">{!relatedTo.c2g__Account__r.BillingState}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingPostalCode!=''}" escape="false">{!relatedTo.c2g__Account__r.BillingPostalCode}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Account__r.BillingCountry!=''}" escape="false">{!relatedTo.c2g__Account__r.BillingCountry}</apex:outputText>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(relatedTo.c2g__Opportunity__r.Id != null,true,false)}">
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Address_Account_Name__c!=''}" escape="false"><strong>{!relatedTo.c2g__Opportunity__r.Billing_Address_Account_Name__c}</strong><br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Address_Building__c!=''}" escape="false"><pre>{!relatedTo.c2g__Opportunity__r.Billing_Address_Building__c}</pre></apex:outputText>
+                        <!-- <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Street__c!=''}" escape="false"><pre>{!relatedTo.c2g__Opportunity__r.Billing_Street__c}</pre></apex:outputText>  -->
+                        
+                        <apex:outputField rendered="{!relatedTo.c2g__Opportunity__r.Billing_Street__c!=''}" value="{!relatedTo.c2g__Opportunity__r.Billing_Street__c}"/>
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Street__c!=''}" escape="false"> <br/> </apex:outputText>
+                        
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Area__c!=''}" escape="false"><pre>{!relatedTo.c2g__Opportunity__r.Billing_Area__c}</pre></apex:outputText>                       
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_City__c!=''}" escape="false">{!relatedTo.c2g__Opportunity__r.Billing_City__c}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_State__c!=''}" escape="false">{!relatedTo.c2g__Opportunity__r.Billing_State__c}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_PostalCode__c!=''}" escape="false">{!relatedTo.c2g__Opportunity__r.Billing_PostalCode__c}<br/></apex:outputText>
+                        <apex:outputText rendered="{!relatedTo.c2g__Opportunity__r.Billing_Country__c!=''}" escape="false">{!relatedTo.c2g__Opportunity__r.Billing_Country__c}</apex:outputText>
+                    </apex:outputText>
+                    
+                    <br />
+                    <br />
+                    
+                    <strong><apex:outputText rendered="{!relatedTo.c2g__Account__r.Account_Reference__c!=''}" escape="false">Account Reference:&nbsp;</apex:outputText></strong>
+                    <apex:outputField rendered="{!relatedTo.c2g__Account__r.Account_Reference__c!=''}" value="{!relatedTo.c2g__Account__r.Account_Reference__c}"/>
+                        
+                    
+                </td>
+                <td width="150px">
+                    <br />
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td width="23">
+                                
+                            </td>
+                            <td>
+                                <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__Street__c}<br/>" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__Street__c!=''}" escape="false"/>       
+                                <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__City__c},&nbsp;" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__City__c!=''}" escape="false"/>
+                                <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__StateProvince__c},&nbsp;" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__StateProvince__c!=''}" escape="false"/>
+                                <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__ZipPostCode__c}<br/>" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__ZipPostCode__c!=''}" escape="false"/>
+                                <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__Country__c}" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__Country__c!=''}" escape="false"/>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" height="10px"></td>
+                        </tr>
+                        <tr>
+                            <td class="boldRed">T</td>
+                            <td><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__Phone__c}<br />" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__Phone__c!=''}" escape="false"/></td>
+                        </tr>
+                        <tr>
+                            <td class="boldRed">F</td>
+                            <td><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__Fax__c}" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__Fax__c!=''}" escape="false"/></td>
+                        </tr>
+                        <tr>
+                            <td class="boldRed">E</td>
+                            <td><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__ContactEmail__c}" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__ContactEmail__c!=''}" escape="false"/></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><strong><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.c2g__Website__c}" rendered="{!relatedTo.c2g__OwnerCompany__r.c2g__Website__c!=''}" escape="false"/></strong></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div id="invDetails">
+            <hr noshade="noshade" />
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="53%"><strong>Invoice Number:</strong> {!relatedTo.Name}</td>
+                    <td width="9.5%">&nbsp;</td>
+                    <td><strong>Invoice Date:</strong>&nbsp;<apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!relatedTo.c2g__InvoiceDate__c}"/></apex:outputText></td>
+                </tr>
+                <tr>
+                    <td><strong>PO Number:</strong> {!relatedTo.c2g__InvoiceDescription__c}</td>
+                    <td width="9.5%">&nbsp;</td>
+                    <td>
+                        <apex:outputText rendered="{!if(relatedTo.c2g__InvoiceStatus__c == 'In Progress',true,false)}">
+                            <b>Due Date: </b>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!if(relatedTo.c2g__InvoiceStatus__c == 'In Progress',false,true)}">
+                            <b>Due Date: </b><apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!relatedTo.c2g__DueDate__c}"/></apex:outputText>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <!-- 
+<tr>
+<td><strong>Vendor Reference:</strong> </td>
+<td><strong>Customer VAT Number:</strong> GB99999999</td>
+</tr>
+-->
+                <tr>
+                    <td><strong>Our Reference:</strong> {!relatedTo.c2g__Opportunity__r.Opportunity_Number__c}</td>
+                    <td width="9.5%">&nbsp;</td>
+                    <td>
+                        <apex:outputText rendered="{!if(bookingContact != '',true,false)}">
+                            <strong>Order Contact:</strong> {!bookingContact}
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </table>
+        </div>
+        <div id="invLines">
+            <c:salesInvoiceEmailComponent salesInvoiceId="{!relatedTo.Id}" taxType="{!taxType}" isoCode="{!relatedTo.c2g__InvoiceCurrency__r.Name}" netTotal="{!relatedTo.c2g__NetTotal__c}" taxTotal="{!relatedTo.c2g__TaxTotal__c}" invoiceTotal="{!relatedTo.c2g__InvoiceTotal__c}" />
+            
+            
+            
+            <br />
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="bold" width="20%">Please make your</td>
+                    <td class="bold" width="25%">Bank Details:</td>
+                    <td><strong>Sort Code:</strong>&nbsp;<apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__SortCode__c}"/></td>
+                </tr>
+                <tr>
+                    <td class="bold" width="20%">cheque payable to:</td>
+                    <td><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__BankName__c}"/></td>
+                    <td><strong>Account No:</strong>&nbsp;<apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__AccountNumber__c}"/></td>
+                </tr>
+                <tr>
+                    <td><apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.Invoice_Make_payments_out_to__c}"/></td>
+                    <td>
+                        <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__Street__c}"/><br/>
+                        <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__City__c}"/>,&nbsp; <apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__ZipPostalCode__c}"/><br/>
+                    </td>
+                    <td>
+                        <strong>SWIFT:</strong>&nbsp;<apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__SWIFTNumber__c}"/><br />
+                        <strong>IBAN:</strong>&nbsp;<apex:outputText value="{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__IBANNumber__c}"/></td>
+                </tr>
+            </table>
+            <apex:image url="{!URLFOR($Resource.FinancialForceImages, 'scissors.jpg')}" id="scissors" />
+            <div class="smlTxt">Please tear off and return with remittance</div>
+            <br />
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td>
+                        <strong>Remittance Slip</strong><br />
+                        <strong>P/O:</strong> {!relatedTo.c2g__InvoiceDescription__c}<br />
+                        <strong>Date:</strong> &nbsp;<apex:outputText value="{0,date,dd MMMMM yyyy}"><apex:param value="{!relatedTo.c2g__InvoiceDate__c}"/></apex:outputText><br />
+                        <strong>Invoice No:</strong> {!relatedTo.Name}<br />
+                        <strong>Account Name:</strong> {!relatedTo.c2g__Account__r.Name}
+                    </td>
+                    <td width="20%">
+                        <strong>{!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__BankName__c}</strong><br />
+                        <strong>Code:</strong> {!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__SortCode__c}<br />
+                        <strong>Account:</strong> {!relatedTo.c2g__OwnerCompany__r.Default_Bank_Account__r.c2g__AccountNumber__c}<br />
+                    </td>
+                    <td width="30%">
+                        <strong>Total:</strong> £<br />
+                        Payment by [&nbsp;&nbsp;] cheque [&nbsp;&nbsp;] BACS<br />
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    
+</apex:page>

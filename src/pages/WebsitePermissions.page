@@ -1,0 +1,29 @@
+<apex:page standardController="Contact" extensions="WebsitePermissions">
+<!-- Being Passed to iframe:<br />
+<b>Contact Email: </b>{!Contact.Email}<br />
+<b>Contact WebId__c: </b>{!Contact.WebId__c}<br />
+<b>Contact Id: </b>{!Contact.Id}<br />
+<b>Security Hash: </b>{!MD5}<br />
+<b>Input String:</b> {!strToEncode}<br />
+<b>URL: </b><a href="{!Hostname}/salesforce/iframe?email={!URLENCODE(Contact.Email)}&webId={!URLENCODE(Contact.WebId__c)}&contactId={!URLENCODE(Contact.Id)}&hash={!MD5}">link</a>
+<b>Account Address:</b> {!Contact.Account.Principle_Address_Building__c} {!Contact.Account.Principle_Address_Street__c} {!Contact.Account.Principle_Address_Area__c} <br />
+<b>Are All:</b> {!AreFieldsFilledOut} -->
+    <apex:outputText rendered="{!Contact.Email!=''}" escape="false">
+    	<apex:outputText rendered="{!AreFieldsFilledOut ==''}" escape="false">
+        	<iframe src="{!Hostname}/salesforce/iframe?email={!URLENCODE(Contact.Email)}&webId={!URLENCODE(Contact.WebId__c)}&contactId={!URLENCODE(Contact.Id)}&hash={!MD5}" width="100%" height="440">
+        	<p>Your browser does not support iframes, please contact British Safety Council Support.</p>
+        	</iframe>
+        </apex:outputText>
+        <apex:outputText rendered="{!AreFieldsFilledOut !=''}" escape="false">
+        	<br />
+        	<br />
+        	<strong><font color="F00000">ERROR(s):</font> </strong><br />
+        	<apex:outputText value="{!AreFieldsFilledOut}" escape="false"></apex:outputText>
+        	<br />
+        	Please correct these error(s) and try again.
+        </apex:outputText>
+    </apex:outputText>
+    <apex:outputText rendered="{!Contact.Email==''}" escape="false">
+    Permissions cannot be displayed as the contact does not have an email address.
+    </apex:outputText>
+</apex:page>

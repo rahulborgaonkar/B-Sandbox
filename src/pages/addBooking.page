@@ -1,0 +1,70 @@
+<apex:page standardController="Opportunity" extensions="addBookingExtension" id="myPage"  docType="html-5.0" >
+    
+    <apex:form id="myform">
+        
+        <apex:sectionHeader title="Add Bookings" subtitle="{!Opportunity.Name}  {!Opportunity.Opportunity_Number__c}" />
+        
+        <apex:pageMessages />
+        <apex:actionStatus id="loading" startText="Please wait, updating page..."/>
+        
+        <apex:pageBlock id="block1" rendered="{!showsection}">
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!cancel}" value="Cancel"/> 
+                <apex:commandButton action="{!confirmBookings}" value="Submit" />
+            </apex:pageBlockButtons>
+            
+            <apex:repeat value="{!prodEvt}" var="p">
+                
+                <apex:pageBlockSection id="section1" title="{!p.event.Name} ({!p.event.Status__c}) - {!p.opl.PricebookEntry.Product2.Name}: Start Date: {!p.event.StartDate__c} - End Date: {!p.event.EndDate__c}" columns="1" collapsible="true" >
+                    
+                    <apex:pageBlockSection rendered="{!!p.validEvent}" title="Need Approval" columns="1" id="lower3">
+                        <apex:inputCheckbox value="{!p.requestApproval}" label="Send Request to Amend Bookings" />
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection rendered="{!p.validEvent}" title="Add Booking(s) - Free Spaces: {!p.avaliableBookings}" columns="1" id="lower1" collapsible="true">
+                        <apex:input type="number" style="width:50px" html-min="0" html-max="{!p.avaliableBookings}" value="{!p.newBookings}" label="Add Bookings to event {!p.event.Name}:"/>
+                        <!--<apex:outputText > You can add upto <b>{!p.avaliableBookings}</b> Bookings to Event: {!p.event.Name}, based on Maximum Spaces(<b>{!p.event.Maximum_Places__c}</b>) on the Event MINUS the number of Confirmed Bookings (<b>{!p.event.No_of_Delegates_Booked__c}</b>)</apex:outputText>
+						 -->
+                    </apex:pageBlockSection>
+                    
+                    <apex:pageBlockSection rendered="{!p.validEvent}" title="Delete Booking(s)" id="lower2" collapsible="true" columns="1">
+                        <apex:commandButton value="Select All Booking(s)" action="{!selectBookingsForEvent}" reRender="lower2" >
+                            <apex:param name="eventName" value="{!p.event.Name}" assignTo="{!eventName}"/>
+                        </apex:commandButton>
+                        <apex:pageBlockTable value="{!p.bookings}" var="bkg">
+                            <apex:Column >
+                                <apex:facet name="header">Delete</apex:facet>
+                                <apex:inputCheckbox id="deleteBooking" label="Delete" value="{!bkg.selected}" rendered="{!!bkg.booking.Primary_Booking__c}" />
+                            </apex:Column>
+                            
+                            <apex:column value="{!bkg.booking.Name}"  />
+                            <apex:column value="{!bkg.booking.Contact__c}"/>
+                            <apex:column value="{!bkg.booking.Status__c}"/>
+                            <apex:column value="{!bkg.booking.Primary_Booking__c}"/>
+                            <apex:column value="{!bkg.booking.Booking_Fee__c}"/>
+                        </apex:pageBlockTable> 
+                    </apex:pageBlockSection>
+                    
+                </apex:pageBlockSection>
+                
+            </apex:repeat>
+            <script>
+                closeAll()
+            
+                function closeAll(){
+                    var x = document.getElementsByClassName("hideListButton");
+                    var ii;
+                    var z = x.length;
+                    for (ii = 0; ii < z; ii++) {
+                        if (x[ii].getAttribute('Id').indexOf("lower") == -1)
+                            twistSection(x[ii]);
+                    }
+                }
+            </script>
+            
+        </apex:pageBlock>
+        
+    </apex:form>
+    
+</apex:page>

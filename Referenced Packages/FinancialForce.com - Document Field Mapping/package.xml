@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FinancialForce%2Ecom - Document Field Mapping</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <namespacePrefix>ffps_dm</namespacePrefix>
+    <types>
+        <members>AppContext</members>
+        <members>CommonMapper</members>
+        <members>DocumentMappingFieldTrigger</members>
+        <members>DocumentMappingFieldTriggerTest</members>
+        <members>Messages</members>
+        <members>PostChatter</members>
+        <members>TestContext</members>
+        <members>TransactionLineItemTrigger</members>
+        <members>TransactionLineItemTriggerTest</members>
+        <members>TransactionTrigger</members>
+        <members>TransactionTriggerTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>DocumentMappingFieldTrigger</members>
+        <members>TransactionLineItemMapping</members>
+        <members>TransactionMapping</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>DocumentMappingField__c.DestinationField__c</members>
+        <members>DocumentMappingField__c.DocumentMapping__c</members>
+        <members>DocumentMappingField__c.SourceField__c</members>
+        <members>DocumentMapping__c.SourceObject__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>InvalidField</members>
+        <members>SourceDestinationFieldTypesDifferent</members>
+        <name>CustomLabel</name>
+    </types>
+    <types>
+        <members>CustomLabels</members>
+        <name>CustomLabels</name>
+    </types>
+    <types>
+        <members>DocumentMappingField__c</members>
+        <members>DocumentMapping__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>DocumentMapping__c</members>
+        <name>CustomTab</name>
+    </types>
+    <types>
+        <members>DocumentMappingField__c-Document Mapping Field Layout</members>
+        <members>DocumentMapping__c-Document Mapping Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>DocumentMapping__c.All</members>
+        <name>ListView</name>
+    </types>
+    <version>31.0</version>
+</Package>

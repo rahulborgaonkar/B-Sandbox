@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+endpointApiVersion=31.0
+endpointEnvironment=Sandbox
+endpointServer=test.salesforce.com
+httpsProtocol=true
+ideVersion=31.0
+keependpoint=false
+metadataFormatVersion=31.0
+namespacePrefix=
+packageName=unpackaged
+preferToolingDeployment=true
+projectIdentifier=IDE-1446242656343472713
+readTimeout=400
+username=rahul.borgaonkar@britsafe.org.fftest

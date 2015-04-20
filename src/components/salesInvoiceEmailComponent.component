@@ -1,0 +1,199 @@
+<apex:component controller="salesInvoiceEmailComController" access="global" >
+    <apex:attribute name="salesInvoiceId" description="This is the Sales Invoice Id." type="Id" assignTo="{!salesInvoiceId}"/> 
+    <apex:attribute name="taxType" description="This is the tax type." type="String" assignTo="{!taxType}"/>
+    <apex:attribute name="isoCode" description="This is the currency iso code." type="String" assignTo="{!isoCode}"/>
+    
+    <apex:attribute name="netTotal" description="This is the currency iso code." type="Double" assignTo="{!netTotal}"/>
+    <apex:attribute name="taxTotal" description="This is the currency iso code." type="Double" assignTo="{!taxTotal}"/>
+    <apex:attribute name="invoiceTotal" description="This is the currency iso code." type="Double" assignTo="{!invoiceTotal}"/>
+            
+     <!-- Invoice Lines -->
+     <apex:variable var="lblProductName"                 value="Product Name" />
+     <apex:variable var="lblProductCode"                 value="Product Code: " />
+     <apex:variable var="lblQuantity"                    value="Quantity" />
+     <apex:variable var="lblUnitPrice"                   value="Unit Price" />
+     <apex:variable var="lblTaxCode"                     value="VAT Code" />
+     <apex:variable var="lblTaxValue"                    value="VAT Value" />
+     <apex:variable var="lblNetValue"                    value="Net Value" />  
+     
+     <!-- Invoice Total -->
+     <apex:variable var="lblInvoiceNetTotal"             value="Net Total" />
+     <apex:variable var="lblInvoiceTaxTotal"             value="VAT Total" />
+     <apex:variable var="lblInvoiceTotal"                value="Invoice Total" />
+     
+      <!-- Tax Summary -->
+      <apex:variable var="lblTaxSummary"                 value="VAT Summary" />
+     <apex:variable var="lbltaxRate"                     value="VAT Rate" />
+     <apex:variable var="lblnetValue"                    value="Net Value" />
+     <apex:variable var="lbltaxValue"                    value="VAT Value" />
+     <apex:variable var="lblproductCode"                 value="Product Code: " />
+     
+    
+        <div id="invLines">
+          <table width="100%" order="1" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="6"><hr noshade="noshade" /></td>
+            </tr>
+            <tr>
+              <td><strong>Product Name</strong></td>
+              <th width="10%">Quantity</th>
+              <th width="10%">Unit Price</th>
+              <th width="10%">VAT Code</th>
+              <th width="10%">VAT Value</th>
+              <th width="10%">Net Value</th>
+            </tr>
+            <apex:repeat value="{!LineItems}" var="line" id="lines">
+            <tr>
+              <td colspan="6"><hr noshade="noshade" /></td>
+            </tr>
+            <tr>
+              <td>
+                <apex:outputText rendered="{!if(IsUsingNewFormat,true,false)}">
+                    {!line.c2g__Product__r.Product_Correspondence_Name__c}<br/>
+                    <apex:outputText rendered="{!if(line.c2g__LineDescription__c<>'',true,false)}">
+                        {!line.c2g__LineDescription__c}<br/>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(line.Sales_Invoice_Line_Notes__c<>'',true,false)}">
+                        {!line.Sales_Invoice_Line_Notes__c}<br/>
+                    </apex:outputText>
+                    
+                    <span class="description">{!lblproductCode}{!line.c2g__Product__r.ProductCode}</span> 
+                </apex:outputText>
+                <apex:outputText rendered="{!if(!IsUsingNewFormat,true,false)}">
+                    {!line.c2g__Product__r.Name}<br/>
+                    <apex:outputText rendered="{!if(line.c2g__LineDescription__c<>'',true,false)}">
+                        {!line.c2g__LineDescription__c}<br/>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(line.Sales_Invoice_Line_Notes__c<>'',true,false)}">
+                        {!line.Sales_Invoice_Line_Notes__c}<br/>
+                    </apex:outputText>
+                    
+                    <span class="description">{!lblproductCode}{!line.c2g__Product__r.ProductCode}</span> 
+                </apex:outputText>
+              </td>
+              <td class="cell">
+                <apex:outputText value="{0,number,0.00}">
+                    <apex:param value="{!line.c2g__Quantity__c}"/>
+                </apex:outputText>
+              </td>
+              <td class="cell">
+                <apex:outputText value="{0,number,#,###,###,###,###,###.00}">
+                    {!invoiceCurrencySymbol}<apex:param value="{!line.c2g__UnitPrice__c}"/>
+                </apex:outputText>
+              </td>
+              <td class="cell">
+                {!line.c2g__TaxCode1__r.Name}
+              </td>
+              <td class="cell">
+                <apex:outputText value="{0,number,#,###,###,###,###,##0.00}">
+                    {!invoiceCurrencySymbol}<apex:param value="{!line.c2g__TaxValueTotal__c}"/>
+                </apex:outputText>
+              </td>
+              <td class="cell">
+                <apex:outputText value="{0,number,#,###,###,###,###,###.00}">
+                    {!invoiceCurrencySymbol}<apex:param value="{!line.c2g__NetValue__c}"/>
+                </apex:outputText>
+              </td>
+            </tr>
+            
+            </apex:repeat>
+            <tr>
+              <td colspan="6"><hr noshade="noshade" /></td>
+            </tr>
+            
+          </table>
+          <div id="totals">
+          <table width="100%" order="1" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td><strong>Net Total</strong></td>
+                <td class="cell">
+                    <apex:outputText value="{0,number,#,###,###,###,###,###.00}">
+                        {!invoiceCurrencySymbol}<apex:param value="{!netTotal}"/>
+                    </apex:outputText>
+                </td>
+              </tr>
+            <tr>
+              <td colspan="3"><hr noshade="noshade" /></td>
+            </tr>
+              <tr>
+                <td><strong>Tax Total</strong></td>
+                <td class="cell">
+                    <apex:outputText value="{0,number,#,###,###,###,###,##0.00}">
+                        {!invoiceCurrencySymbol}<apex:param value="{!taxTotal}"/>
+                    </apex:outputText>
+                </td>
+              </tr>
+            <tr>
+              <td colspan="3"><hr noshade="noshade" /></td>
+            </tr>
+              <tr>
+                <td nowrap="nowrap"><strong>Invoice Total</strong></td>
+                <td class="cell" nowrap="nowrap">
+                    <apex:outputText value="{0,number,#,###,###,###,###,###.00}">
+                        {!invoiceCurrencySymbol}<apex:param value="{!invoiceTotal}"/>
+                    </apex:outputText>
+                </td>
+              </tr>
+            <tr>
+              <td colspan="3"><hr noshade="noshade" /></td>
+            </tr>
+            </table>
+
+          </div>
+          <br />
+          <table width="50%" order="1" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="4"><hr noshade="noshade" /></td>
+            </tr>
+            <tr>
+              <td><strong>Tax Summary</strong></td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="4"><hr noshade="noshade" /></td>
+            </tr>
+            <tr>
+              <td><strong>VAT Code</strong></td>
+              <td class="cell bold">VAT Rate</td>
+              <td class="cell bold">Net value</td>
+              <td class="cell bold">VAT Value</td>
+            </tr>
+              <apex:repeat value="{!TaxSummaries}" var="TaxSummary" id="lines2">
+                <tr>
+                  <td colspan="4"><hr noshade="noshade" /></td>
+                </tr>
+                <tr>
+                  <td>
+                    <apex:outputText >
+                      {!TaxSummary.taxCode}
+                    </apex:outputText>
+                  </td>
+                  <td class="cell">
+                    <apex:outputText rendered="{!taxType=='VAT'}">
+                        {!TaxSummary.taxRate}
+                    </apex:outputText>
+                  </td>
+                  <td class="cell">
+                    <apex:outputText value="{0,number,#,###,###,###,###,###.00}" rendered="{!taxType=='VAT'}">
+                        {!invoiceCurrencySymbol}<apex:param value="{!TaxSummary.netValue}"/>  
+                    </apex:outputText>
+                  </td>
+                  <td class="cell">
+                    <apex:outputText value="{0,number,#,###,###,###,###,##0.00}">
+                        {!invoiceCurrencySymbol}<apex:param value="{!TaxSummary.taxValue}"/>
+                    </apex:outputText>
+                  </td>
+                </tr>
+            </apex:repeat>
+            <tr>
+              <td colspan="4"><hr noshade="noshade" /></td>
+            </tr>
+
+          </table>
+           
+        </div>
+    
+    
+</apex:component>

@@ -1,0 +1,653 @@
+<apex:page showHeader="false" standardstylesheets="true" standardController="Opportunity" extensions="MembershipApplicationForm" renderas="{!if($CurrentPage.parameters.p == null, null, 'pdf')}">
+<head>
+<style type="text/css">
+
+@page { size: 8.27in 11.69in;  /* A4 width and height */ }
+
+body {
+<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+	background: url('{!$Resource.Application_Form_Images}/bg-tile.png') repeat-x scroll left top #FFFFFF;
+</apex:outputText>
+	font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+	line-height: 1.5em;
+    font-size:12px;
+	
+}
+td,th {
+    /*text-align: left;*/
+    vertical-align: top;
+}
+
+#mainBody {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12px;
+    width:660px;
+    margin: 0 auto;
+    padding:10px;
+    background-color: #FFFFFF;
+}
+
+#bscLogo {
+    float: right;
+}
+
+h1 {
+	padding-top:15px;
+	font-size: 18px;
+	text-transform:uppercase;
+}
+
+.title {
+	background: url('{!$Resource.Application_Form_Images}/headerBar.gif') repeat-x scroll left top transparent;
+	color: #002A52;
+	font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	height: 44px;
+	line-height: 45px;
+	padding-left: 15px;
+	text-transform: uppercase;
+	margin-top: 20px;
+	width: 100%;
+}
+
+h3 {
+	font-size: 14px;
+	margin: 1.154em 0;
+}
+
+label {
+	color: #003263;
+	font-family: Arial;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+#requestAmendment, #acceptReservation, #saveForm, .dateFormat {
+	display: none;
+}
+
+<apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+#datePicker {
+	display:none;
+}
+</apex:outputText>
+
+/* Membership specific css */
+.address, .contact {
+	width:330px;
+}
+
+.address {
+	float:left;
+}
+.contact {
+	float: right;
+}
+
+.clear { 
+	clear: both;
+}
+</style>
+</head>
+<body>
+	<div id="mainBody">
+	<div id="bscLogo"><apex:image url="{!URLFOR($Resource.Application_Form_Images, 'logo.jpg')}" alt="BritSafe Logo" width="183" height="81" /></div>
+	<br />
+	<h1>Membership Application Form</h1><br />
+	<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+		<apex:outputLink value="?id={!Opportunity.Id}&p=1" id="theLink">View PDF Version</apex:outputLink>
+	</apex:outputText>
+	<table width="100%" border="0">
+	  <tr>
+	    <td>
+	        <strong>Company:</strong><br />
+	        {!Opportunity.Account.Name}<br />
+	        
+	        <strong>Address:</strong><br />
+	        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Building__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Building__c}<br /></apex:outputText>
+	        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Street__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Street__c}<br /></apex:outputText>
+	        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_City__c != null,true,false)}">{!Opportunity.Account.Principle_Address_City__c}<br /></apex:outputText>
+	        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_ZIP_Postal_Code__c != null,true,false)}">{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}<br /></apex:outputText>
+	        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Country__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Country__c}<br /></apex:outputText>
+	        
+		    <apex:outputText rendered="{!if(contactRole.Contact.Name != null,true,false)}">
+		 	<strong>Order made by:</strong><br />
+			  	{!contactRole.Contact.Salutation} {!contactRole.Contact.Name}, {!contactRole.Contact.Title}<br />
+		    	<apex:outputText rendered="{!if(contactRole.Contact.Phone != null,true,false)}">
+		    		{!contactRole.Contact.Phone}, 
+		    	</apex:outputText>
+		    	{!contactRole.Contact.Email}
+		    </apex:outputText>
+		    <apex:outputText rendered="{!if(contactRole.Contact.Name == null,true,false)}">
+		    	<font color="#FF0000"><strong>ERROR:</strong> No contact role on opportunity</font>
+		    </apex:outputText>        
+	    </td>
+	    <td>
+	      <div align="right">
+		      <strong>Our Reference:</strong><br />
+		      {!Opportunity.Opportunity_Number__c}<br />
+		      <strong>Your Account Manager:</strong><br />
+		      <apex:outputText rendered="{!if(Opportunity.Owner.Name != null,true,false)}">{!Opportunity.Owner.Name}<br /></apex:outputText>
+		      <apex:outputText rendered="{!if(Opportunity.Owner.Phone != null,true,false)}">{!Opportunity.Owner.Phone}<br /></apex:outputText>
+		      <apex:outputText rendered="{!if(Opportunity.Owner.Email != null,true,false)}">{!Opportunity.Owner.Email}<br /></apex:outputText>
+	      </div>
+	     </td>
+	     
+	  </tr>
+	</table>
+	<apex:pageMessages />
+<!-- 
+	<apex:outputText rendered="{!if(confirmed == true,true,false)}">
+	
+		<div class="title"><h2>Pay Online Now!</h2></div>
+		
+		You can now pay this order online using a credit or debit card. To do this please click the following link that will redirect you to our secure payment gateway.
+		
+		<form action="https://secure-test.worldpay.com/wcc/purchase" method="post" name="WorldPayForm">
+			<input type="hidden" name="instId" value="239879"/>
+			<input type="hidden" name="cartId" value="{!Opportunity.Opportunity_Number__c}"/>
+			<input type="hidden" name="currency" value="{!Opportunity.CurrencyIsoCode}"/>
+			<input type="hidden" name="amount"  value="{!round((OppTotal * (taxAmounts[0] / 100)) + OppTotal,2)}"/>
+			<input type="hidden" name="desc" value="Order: {!Opportunity.Opportunity_Number__c}"/>
+			<input type="hidden" name="testMode" value="100"/>
+			<input type="hidden" name="M_recipient" value="{!contactRole.Contact.Email}"/>
+			<input type="hidden" name="M_subject" value="Order {!Opportunity.Opportunity_Number__c} from British Safety Council"/>
+			<input type="hidden" name="M_sname" value="{!contactRole.Contact.Name}"/>
+			<input type="hidden" name="M_stel" value="{!contactRole.Contact.Phone}"/>
+			<input type="hidden" name="M_saddress" value="{!Opportunity.Account.Principle_Address_Building__c}
+{!Opportunity.Account.Principle_Address_Street__c}
+{!Opportunity.Account.Principle_Address_City__c}"/>
+			<input type="hidden" name="M_spostcode" value="{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}"/>
+			
+			<input type="hidden" name="name" value="{!Opportunity.Billing_Address_Account_Name__c}" />
+			<input type="hidden" name="address" value="{!Opportunity.Billing_Address_Building__c}
+		{!Opportunity.Billing_Street__c}
+		{!Opportunity.Billing_Area__c}
+		{!Opportunity.Billing_City__c}
+		{!Opportunity.Billing_State__c}" />
+			<input type="hidden" name="postcode" value="{!Opportunity.Billing_PostalCode__c}" />
+			<input type="hidden" name="tel" value="{!Opportunity.Account.c2g__CODAFinanceContact__r.Phone}" />
+			<input type="hidden" name="email" value="{!Opportunity.Account.c2g__CODAInvoiceEmail__c}" />
+			<input type="hidden" name="M_shipping_name" value="{!contactRole.Contact.Name}" />
+			<input type="hidden" name="M_shipping_tel" value="{!contactRole.Contact.Phone}" />
+			<input type="hidden" name="M_shipping_address" value="{!Opportunity.Account.Principle_Address_Building__c}
+		{!Opportunity.Account.Principle_Address_Street__c}
+		{!Opportunity.Account.Principle_Address_City__c}" />
+			<input type="hidden" name="M_shipping_postcode" value="{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}" />
+			<p align="center"><input type="SUBMIT" value="Pay By Secure WorldPay Service"/></p>
+		</form>
+	</apex:outputText>
+ -->
+	<div class="title">
+		<h2>Subscription Sites</h2>
+	</div>
+
+	<apex:repeat value="{!allSubSites}" var="site" id="subSites">
+		<br />
+		<h3>Subscription Site ({!site.Name})</h3>
+		<div id="container">
+			<apex:form id="addressForm2">
+				<apex:actionRegion >
+					<apex:outputPanel id="addressResultPanel2" layout="block">
+						<div class="address">
+							<table width="100%" border="0">
+							  <tr>
+							    <th width="33%"><label>Site Name</label></th>
+							    <td><apex:inputField value="{!site.Site_Account__c}" id="sA_id" />
+							    
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Name__c}"/>
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Address</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Building__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_Building__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Street</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Street__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_Street__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Area</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Area__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_Area__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site City</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_City__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_City__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Post/Zip Code</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Postal_Zip_code__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_ZIP_Postal_Code__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Country</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+							    			<apex:inputField value="{!site.CE_Site_Country__c}"/>
+							    		</apex:outputText>
+							    		<apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+							    			{!site.CE_Site_Country__c}
+							    		</apex:outputText>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Principle_Address_Country__c}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							  </tr>
+						  </table>						
+					</div>
+										
+					<div class="contact">
+							<table width="100%" border="0">
+							  <tr>
+							    <th><div align="right"><label>Site Contact Name</label></div></th>
+							    <td>
+							    	<apex:actionRegion >
+							    		<apex:inputField value="{!site.Site_Contact__c}" />
+							    		<!-- 
+							    		<apex:outputText rendered="{!if($User.Alias != 'guest',true,false)}">
+							    			<apex:commandButton action="{!updateAddAndContant}" value="Update" id="updateAddAndContant2" status="ROcontactStatus" rerender="contactResultPanel2" />
+							    		</apex:outputText>
+							    		<apex:actionStatus startText=" (updating...)" stopText="" id="ROcontactStatus"/>
+							    		 -->
+							    	</apex:actionRegion>
+							    	
+							    	<apex:outputText rendered="{!if(site.Site_Contact__c == null,true,false)}">
+						    			<apex:inputField value="{!site.CE_Site_Contact_Name__c}"/>
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><div align="right"><label>Email</label></div></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Contact__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Contact_Email__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Contact__c != null,true,false)}">
+									    {!site.Site_Contact__r.Email}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><div align="right"><label>Phone</label></div></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Contact__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Contact_Phone__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Contact__c != null,true,false)}">
+									    {!site.Site_Contact__r.Phone}
+							    	</apex:outputText>
+							    </td>
+							  </tr>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Industry</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Site_Industry__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.Industry} : {!site.Site_Account__r.Industry_Sector__c}
+							    	</apex:outputText>						    
+							    </td>
+							  </tr>
+							  <tr>
+							    <th><label>Site Employees</label></th>
+							    <td>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c == null,true,false)}">
+							    		<apex:inputField value="{!site.CE_Number_of_Site_Employees__c}"/>
+							    	</apex:outputText>
+							    	<apex:outputText rendered="{!if(site.Site_Account__c != null,true,false)}">
+									    {!site.Site_Account__r.NumberOfEmployees}
+							    	</apex:outputText>						    
+							    </td>
+							  </tr>	
+							  </table>
+
+					</div>
+						  <table width="100%" border="0">
+							  <tr width="33%">
+							    <th><label>Primary Site</label></th>
+							    <td><apex:actionRegion ><apex:outputPanel id="primarySite" layout="block">{!site.Type__c}<input type="Hidden" value="{!site.Id}" name="siteId" id="siteId"/><apex:outputText rendered="{!if(site.Type__c == 'Multi-Site Primary' || site.Type__c == 'Single Site',false,true)}"> <apex:commandButton action="{!makePrimarySite}" value="Make Primary" id="makePrimarySite" /></apex:outputText></apex:outputPanel></apex:actionRegion></td>
+							  </tr>
+							  <apex:repeat value="{!site.Site_Products__r}" var="siteProd" id="siteProd">
+								  <tr>
+								    <th><label><apex:outputText rendered="{!if(siteProd.Subscription_Line__r.Product__r.Core_Subscription_Product__c == true,true,false)}">Core Product</apex:outputText><apex:outputText rendered="{!if(siteProd.Subscription_Line__r.Product__r.Core_Subscription_Product__c == false,true,false)}">Site Module</apex:outputText></label></th>
+								    <td>{!siteProd.Subscription_Line__r.Product__r.Product_Correspondence_Name__c}<apex:outputText rendered="{!if(siteProd.Subscription_Line__r.Product__r.Core_Subscription_Product__c == false,true,false)}"><input type="Hidden" value="{!siteProd.Id}" name="siteProduct" id="siteProduct"/><apex:commandButton action="{!removeSiteProduct}" value="Remove" id="removeSiteProduct" /></apex:outputText></td>
+								  </tr>
+							  </apex:repeat>
+							  <apex:outputText rendered="{!if(AvilProductsCount > 0,true,false)}">
+								  <tr>
+								    <th><label>Add Module</label></th>
+								    <td>
+								    	
+										    <select name="module" id="CEaddModuleSelect">
+												<apex:repeat value="{!AvilProducts}" var="avilProd" id="CEavilProd">
+													<option value="{!avilProd.Id}">{!avilProd.Product__r.Product_Correspondence_Name__c}</option>
+												</apex:repeat>
+											</select>
+											<input type="Hidden" value="{!site.Id}" id="subSiteId" name="subSiteId" />
+											<apex:commandButton action="{!addSiteProduct}" value="Add" id="CEaddSiteProduct" />
+										
+									</td>
+								  </tr>
+							  </apex:outputText>
+							  <tr>
+							    <td>&nbsp;</td>
+							    <td>&nbsp;</td>
+							  </tr>
+							</table>
+						<apex:commandButton action="{!updateAddAndContant}" value="Save Site" id="updateAddAndContant" style="background-color:lightgreen;" rerender="addressResultPanel2" status="addressStatus" />
+						<apex:actionStatus startText=" (updating...)" stopText="" id="addressStatus"/>
+														
+						</apex:outputPanel>
+				</apex:actionRegion>
+				</apex:form>
+			<div class="clear"></div>
+		</div>
+
+
+		<hr />
+	</apex:repeat>
+
+	<br />
+	<div class="title"><h2>Details of Service</h2></div>
+	<table width="100%" border="0">
+	  <tr>
+	    <th>Product Code</th>
+	    <th>Product</th>
+	    <th>Qty</th>
+	    <th>Item Price</th>
+	    <th><div align="right">Sub Total</div></th>
+	  </tr>
+	  <apex:repeat value="{!oppLines}" var="oppLine">
+		  <tr>
+		    <td>{!oppLine.PriceBookEntry.ProductCode}</td>
+		    <td>
+		    	<apex:outputText rendered="{!if(oppLine.Product_Correspondence_Name__c == null,true,false)}">
+				    {!oppLine.PriceBookEntry.Product2.Product_Correspondence_Name__c}
+				</apex:outputText>
+		    	<apex:outputText rendered="{!if(oppLine.Product_Correspondence_Name__c != null,true,false)}">
+				    {!oppLine.Product_Correspondence_Name__c}
+				</apex:outputText>
+		    </td>
+		    <td>
+		    	<apex:outputText rendered="{!if(oppLine.Qty_to_show_on_booking_form__c > 0,false,true)}">
+		    		{!round(oppLine.Quantity,0)}
+		    	</apex:outputText>
+		    	<apex:outputText rendered="{!if(oppLine.Qty_to_show_on_booking_form__c > 0,true,false)}">
+		    		{!round(oppLine.Qty_to_show_on_booking_form__c,0)}
+		    	</apex:outputText>
+		    </td>
+		    <td nowrap="nowrap">{!CurrSymbol} 
+		    	<apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == true,true,false)}">
+			    	TBA
+			    </apex:outputText>
+		    	<apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == false,true,false)}">
+				    {!round(oppLine.UnitPrice,2)}
+			    </apex:outputText>
+		    </td>
+		    <td align="right" nowrap="nowrap">{!CurrSymbol} 
+		    	<apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == true,true,false)}">
+					TBA
+				</apex:outputText>
+		    	<apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == false,true,false)}">
+				    {!oppLine.Booking_form_total_price__c}
+				</apex:outputText>
+		    </td>
+		  </tr>
+	  </apex:repeat>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td align="right"><strong>NET TOTAL</strong></td>
+	    <td align="right" nowrap="nowrap">{!CurrSymbol} {!OppTotal}</td>
+	  </tr>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td align="right" nowrap="nowrap"><strong>VAT ( @ {!taxAmounts[0]}% )</strong></td>
+	    <td align="right" nowrap="nowrap">{!CurrSymbol} {!round(OppTotal * (taxAmounts[0] / 100),2)}</td>
+	  </tr>
+	  <tr>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td>&nbsp;</td>
+	    <td align="right"><strong>TOTAL FEES</strong></td>
+	    <td align="right" nowrap="nowrap"><strong>{!CurrSymbol} {!round((OppTotal * (taxAmounts[0] / 100)) + OppTotal,2)}</strong></td>
+	  </tr>
+	</table>
+	<apex:outputText rendered="{!if(Opportunity.Booking_form_notes__c != null,true,false)}">	
+		<div class="title"><h2>Additional Notes</h2></div>
+		{!HTMLENCODE(Opportunity.Booking_form_notes__c)}<br />
+		<br />
+	</apex:outputText>
+	<div class="title"><h2>Payment Details &amp; Authorisation</h2></div>
+	<table width="100%">
+	  <tr width="50%">
+	  	<td valign="middle"><strong>Billing Information</strong></td>
+	    <td>
+	      	<apex:outputText rendered="{!if(Opportunity.Account.Name != null,true,false)}">{!Opportunity.Account.Name}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_Address_Building__c != null,true,false)}">{!Opportunity.Billing_Address_Building__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_Street__c != null,true,false)}">{!Opportunity.Billing_Street__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_Area__c != null,true,false)}">{!Opportunity.Billing_Area__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_City__c != null,true,false)}">{!Opportunity.Billing_City__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_State__c != null,true,false)}">{!Opportunity.Billing_State__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_PostalCode__c != null,true,false)}">{!Opportunity.Billing_PostalCode__c}<br /></apex:outputText>
+	    	<apex:outputText rendered="{!if(Opportunity.Billing_Country__c != null,true,false)}">{!Opportunity.Billing_Country__c}</apex:outputText>
+	    </td>
+	    <td><strong>Accounts Contact</strong><br />
+	    {!Opportunity.Account.c2g__CODAFinanceContact__r.Name}<br />
+	    <strong>Phone:</strong><br />
+	    <strong>Email Invoice to:</strong> {!Opportunity.Account.c2g__CODAInvoiceEmail__c}<br />    
+	    </td>
+	  </tr>
+	</table>
+	<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+		<div class="title">
+			<h2>Approval and Requesting Amendments</h2>
+		</div>
+	</apex:outputText>
+	<apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+		<h2>Approval Information</h2>
+	</apex:outputText>
+	<apex:form id="EventForm">
+		<apex:outputText rendered="{!if($User.Alias != 'guest',true,false)}"><apex:outputText rendered="{!if(fatalError != true,true,false)}"><div align="right"><apex:commandButton action="{!sendToCustomer}" value="Send form to {!contactRole.Contact.Salutation} {!contactRole.Contact.Name}" id="sendToCustomer" /></div></apex:outputText><br /></apex:outputText>
+		<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+			<apex:outputText rendered="{!if($User.Alias == 'guest',true,false)}">
+				<apex:outputText rendered="{!if(fatalError == true,false,true)}">
+
+						<p><strong>I want to:</strong></p>					
+						<input type="radio" name="iWantTo" id="Request amendment" selected="selected" onClick="javascript:show('requestAmendment');hide('acceptReservation');" value="Request amendment" />
+						Request Amendment / Contact {!Opportunity.Owner.Name}<br />
+						<apex:outputText rendered="{!if(Opportunity.Probability == 100.0 || Opportunity.Probability == 0.0,false,true)}">			
+							<input type="radio" name="iWantTo" id="Confirm Booking" onClick="javascript:hide('requestAmendment');show('acceptReservation');" value="Confirm Booking" />
+							Confirm Booking
+						</apex:outputText>
+						<br />
+						<br />
+						<div id="requestAmendment">
+							<h3>Request to amend booking</h3>
+							<p>Additional details of change / notes to {!Opportunity.Owner.Name}:</p>
+							<p>
+							  <textarea name="changeDetails" id="changeDetails" cols="45" rows="5"></textarea>
+							</p>
+							  <input type="hidden" name="whoId" value="{!contactRole.ContactId}"/>
+							  <apex:commandButton action="{!sendToAE}" value="Send to {!Opportunity.Owner.Name}" id="sendToAE" />
+						</div>
+						<div id="acceptReservation">
+							<h3>Accept Membership</h3>
+							<table width="50%" border="0">
+							  <tr>
+							    <td scope="col">Authorised by*:</td>
+							    <td scope="col"><input type="text" name="authorisedBy" value="{!authorisedBy}"/></td>
+							  </tr>
+							  <tr>
+							    <td scope="row">Position*:</td>
+							    <td><input type="text" name="authorisedPosition" value="{!authorisedPosition}"/></td>
+							  </tr>
+							  <tr>
+							    <td scope="row">Method of Payment*:</td>
+							    <td>
+							    <select name="methodofPayment" id="methodofPayment">
+							    	<option value="Purchase Order">Purchase Order</option>
+									<option value="Credit/Debit Card">Credit/Debit Card</option>
+									<option value="Other Reference">Other Reference</option>
+								</select>
+								</td>
+							  </tr>
+							  <tr>
+							    <td scope="row">Purchase order number*:</td>
+							    <td><input type="text" name="purchaseOrderReference" value="{!purchaseOrderReference}"/></td>
+							  </tr>
+							  <tr>
+							    <td scope="row">Authorised Date:</td>
+							    <td>
+									<apex:outputText value="{0,date,dd MMMMM yyyy}">
+										<apex:param value="{!TODAY()}" />
+				   					</apex:outputText>
+							    </td>
+							  </tr>
+							</table>
+							<p>
+							  <apex:inputCheckbox value="{!confirmTerms}" required="true"/> 
+							&quot;I confirm that I have read and I accept the <a href="#">Terms &amp; Conditions&quot;</a></p>
+							<p>* = Required Field</p>
+							<p>
+							  <input type="hidden" name="whoId" value="{!contactRole.ContactId}"/>
+							  <apex:commandButton action="{!confirmBooking}" value="Confirm Booking" id="confirmBooking" />
+							</p>
+						</div>
+				
+					</apex:outputText>
+				</apex:outputText>
+		</apex:outputText>
+		<apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+			<table width="75%" border="0">
+			  <tr>
+			    <th scope="col">Authorised by:</th>
+			    <td scope="col">
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_By__c != null,true,false)}">
+			    	{!$CurrentPage.parameters.Authorised_By__c}
+			    	</apex:outputText>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_By__c == null,true,false)}">
+			    	{!custApproval.Authorised_By__c}
+			    	</apex:outputText>
+			    </td>
+			  </tr>
+			  <tr>
+			    <th scope="row">Position:</th>
+			    <td>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_Position__c != null,true,false)}">
+			    	{!$CurrentPage.parameters.Authorised_Position__c}
+			    	</apex:outputText>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_Position__c == null,true,false)}">
+			    	{!custApproval.Authorised_Position__c}
+			    	</apex:outputText>
+			    </td>
+			  </tr>
+			  <tr>
+			    <th scope="row">Method of Payment:</th>
+			    <td>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Method_of_Payment__c != null,true,false)}">
+			    	{!$CurrentPage.parameters.Method_of_Payment__c}
+			    	</apex:outputText>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Method_of_Payment__c == null,true,false)}">
+				    {!custApproval.Method_of_Payment__c}
+			    	</apex:outputText>
+				</td>
+			  </tr>
+			  <tr>
+			    <th scope="row">Purchase order number:</th>
+			    <td>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Purchase_Order_Reference__c != null,true,false)}">
+			    	{!$CurrentPage.parameters.Purchase_Order_Reference__c}
+			    	</apex:outputText>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.Purchase_Order_Reference__c == null,true,false)}">
+				    {!custApproval.Purchase_Order_Reference__c}
+			    	</apex:outputText>
+			    </td>
+			  </tr>
+			  <tr>
+			    <th scope="row">Authorised On:</th>
+			    <td nowrap="nowrap">
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.CreatedDate != null,true,false)}">
+			    	{!$CurrentPage.parameters.CreatedDate}
+			    	</apex:outputText>
+			    	<apex:outputText rendered="{!if($CurrentPage.parameters.CreatedDate == null,true,false)}">
+				    {!custApproval.CreatedDate}
+			    	</apex:outputText>
+			    </td>
+			  </tr>
+			</table>
+		</apex:outputText>		
+	</apex:form>
+</div>
+	<script language="javascript"> 
+	function toggle(element) {
+		var ele = document.getElementById(element);
+		if(ele.style.display == "block") {
+	    	ele.style.display = "none";
+	  	}
+		else {
+			ele.style.display = "block";
+		}
+	} 
+	function show(element) {
+		var ele = document.getElementById(element);
+	    ele.style.display = "block";
+	}
+	function hide(element) {
+		var ele = document.getElementById(element);
+	    ele.style.display = "none";
+	}
+	
+	</script>
+</body>
+</apex:page>

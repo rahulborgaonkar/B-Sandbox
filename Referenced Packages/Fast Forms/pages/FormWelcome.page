@@ -1,0 +1,51 @@
+<apex:page docType="html-5.0" title="Fast Forms" action="{!checkCredentials}" controller="VisualAntidote.CKEditorNewFormMultiController" sidebar="false" tabStyle="FastForms__tab">
+    <head>
+<!-- Pure Chat Snippet -->
+<script type='text/javascript'>
+(function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '25d09910-b904-4399-b5f3-988100ad71bf', f: true }); done = true; } }; })();
+</script>
+<!-- End Pure Chat Snippet -->    
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <c:FormCss />
+    <style>
+    .welcome {
+        margin-top: 50px;
+    }
+    
+    .welcome p {
+        margin-top: 10px;
+        line-height: 20px;
+    }
+    
+    #inner {
+        margin-top: 70px;
+    }
+    </style>
+    <script src="{!URLFOR($Resource.sortable,'sortable/jquery-1.8.3.js')}"></script>
+    <script>
+        window.open("{!JSENCODE(engineUrl)}/EngineFrame/Update?d={!JSENCODE(urlParamStr)}&isSandbox={!isSandbox}","_blank");
+    </script>
+    </head>
+
+
+    <div class="welcome">
+    <center><img src="{!URLFOR($Resource.logos,'color_logo.png')}" /><br />
+    <br />
+    <br />
+    <h1>Welcome to Fast Forms!</h1>
+    <br />
+    <p>Please follow the instructions in the pop-up window to<br />
+    start using Fast Forms.</p>
+    <p>If your <b>browser blocks pop-up windows,</b> you may want<br />
+    to allow them temporarily for this page.</p>
+    <p id="inner">Once you're done, Click the <b>"Get Started"</b>
+    button to begin</p>
+    <a class="vabutton1" id="btnGetStarted" href="/apex/FormWelcome">Get
+    Started</a> <br />
+    <br />
+    <br />
+    <br />
+    </center>
+    </div>
+</apex:page>

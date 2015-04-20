@@ -1,0 +1,555 @@
+<apex:page showHeader="false" standardstylesheets="true" standardController="Opportunity" extensions="EventApplicationForm" renderas="{!if($CurrentPage.parameters.p == null, null, 'pdf')}">
+<head>
+<style type="text/css">
+
+@page { size: 8.27in 11.69in;  /* A4 width and height */ }
+
+body {
+<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+    background: url('{!$Resource.Application_Form_Images}/bg-tile.png') repeat-x scroll left top #FFFFFF;
+</apex:outputText>
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    line-height: 1.5em;
+    font-size: 14px;
+    
+}
+td,th {
+    /*text-align: left;*/
+    vertical-align: top;
+}
+
+#mainBody {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    width:660px;
+    margin: 0 auto;
+    padding:10px;
+    background-color: #FFFFFF;
+}
+
+#bscLogo {
+    float: right;
+}
+
+h1 {
+    padding-top:15px;
+    font-size: 20px;
+    text-transform:uppercase;
+}
+
+.title {
+    background: url('{!$Resource.Application_Form_Images}/headerBar.gif') repeat-x scroll left top transparent;
+    color: #002A52;
+    font-family: "Trebuchet MS",Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    height: 44px;
+    line-height: 45px;
+    padding-left: 15px;
+    text-transform: uppercase;
+    margin-top: 20px;
+    width: 100%;
+}
+
+h3 {
+    font-size: 16px;
+    padding-bottom: 15px;
+    margin: 1.154em 0;
+}
+
+label {
+    color: #003263;
+    font-family: Arial;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+#requestAmendment, #acceptReservation, #saveForm, .dateFormat {
+    display: none;
+}
+
+<apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+#datePicker {
+    display:none;
+}
+</apex:outputText>
+</style>
+</head>
+<body>
+<script language="javascript"> 
+function toggle(element) {
+    var ele = document.getElementById(element);
+    if(ele.style.display == "block") {
+        ele.style.display = "none";
+    }
+    else {
+        ele.style.display = "block";
+    }
+} 
+function show(element) {
+    var ele = document.getElementById(element);
+    ele.style.display = "block";
+}
+function hide(element) {
+    var ele = document.getElementById(element);
+    ele.style.display = "none";
+}
+
+</script>
+
+<div id="mainBody">
+<div id="bscLogo"><apex:image url="{!URLFOR($Resource.Application_Form_Images, 'logo.jpg')}" alt="BritSafe Logo" width="183" height="81" /></div>
+<br />
+<h1>{!OppTypeText} RESERVATION</h1><br />
+<apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+    <apex:outputLink value="?id={!Opportunity.Id}&p=1" id="theLink" target="_blank">View PDF Version</apex:outputLink>
+</apex:outputText>
+<table width="100%" border="0">
+  <tr>
+    <td>
+        <strong>Company:</strong><br />
+        {!Opportunity.Account.Correspondence_Name__c}<br />
+        
+        <strong>Address:</strong><br />
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Building__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Building__c}<br /></apex:outputText>
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Street__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Street__c}<br /></apex:outputText>
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Area__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Area__c}<br /></apex:outputText>
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_City__c != null,true,false)}">{!Opportunity.Account.Principle_Address_City__c}<br /></apex:outputText>
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_ZIP_Postal_Code__c != null,true,false)}">{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}<br /></apex:outputText>
+        <apex:outputText rendered="{!if(Opportunity.Account.Principle_Address_Country__c != null,true,false)}">{!Opportunity.Account.Principle_Address_Country__c}<br /></apex:outputText>
+        <br />
+      <apex:outputText rendered="{!if(contactRole.Contact.Name != null,true,false)}">
+        <strong>Order made by:</strong><br />
+        {!contactRole.Contact.Salutation} {!contactRole.Contact.Name}, {!contactRole.Contact.Title}<br />
+        <apex:outputText rendered="{!if(contactRole.Contact.Phone != null,true,false)}">
+            {!contactRole.Contact.Phone}, 
+        </apex:outputText>
+        {!contactRole.Contact.Email}
+      </apex:outputText>
+      <apex:outputText rendered="{!if(contactRole.Contact.Name == null,true,false)}">
+        <font color="#FF0000"><strong>ERROR:</strong> No contact role on opportunity</font>
+      </apex:outputText>
+
+        </td>
+    <td>
+      <div align="right">
+          <strong>Our Reference:</strong><br />
+          {!Opportunity.Opportunity_Number__c}<br />
+          <strong>Your Account Manager:</strong><br />
+          <apex:outputText rendered="{!if(Opportunity.Owner.Name != null,true,false)}">{!Opportunity.Owner.Name}<br /></apex:outputText>
+          <apex:outputText rendered="{!if(Opportunity.Owner.Phone != null,true,false)}">{!Opportunity.Owner.Phone}<br /></apex:outputText>
+          <apex:outputText rendered="{!if(Opportunity.Owner.Email != null,true,false)}">{!Opportunity.Owner.Email}<br /></apex:outputText>
+      </div>
+     </td>
+     
+  </tr>
+</table>
+<apex:pageMessages />
+<!-- 
+<apex:outputText rendered="{!if(confirmed == true,true,false)}">
+
+    <div class="title"><h2>Pay Online Now!</h2></div>
+    
+    You can now pay this order online using a credit or debit card. To do this please click the following link that will redirect you to our secure payment gateway.
+    
+    <form action="https://secure-test.worldpay.com/wcc/purchase" method="post" name="WorldPayForm">
+        <input type="hidden" name="instId" value="{!worldPayInstallationId}"/>
+        <input type="hidden" name="cartId" value="{!Opportunity.Opportunity_Number__c}"/>
+        <input type="hidden" name="currency" value="{!Opportunity.CurrencyIsoCode}"/>
+        <input type="hidden" name="amount"  value="{!round((OppTotal * (taxAmounts[0] / 100)) + OppTotal,2)}"/>
+        <input type="hidden" name="desc" value="Order: {!Opportunity.Opportunity_Number__c}"/>
+        <input type="hidden" name="testMode" value="100"/>
+        <input type="hidden" name="M_recipient" value="{!contactRole.Contact.Email}"/>
+        <input type="hidden" name="M_subject" value="Order {!Opportunity.Opportunity_Number__c} from British Safety Council"/>
+        <input type="hidden" name="M_sname" value="{!contactRole.Contact.Name}"/>
+        <input type="hidden" name="M_stel" value="{!contactRole.Contact.Phone}"/>
+        <input type="hidden" name="M_saddress" value="{!Opportunity.Account.Principle_Address_Building__c}
+    {!Opportunity.Account.Principle_Address_Street__c}
+    {!Opportunity.Account.Principle_Address_City__c}"/>
+        <input type="hidden" name="M_spostcode" value="{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}"/>
+        
+        <input type="hidden" name="name" value="{!Opportunity.Billing_Address_Account_Name__c}" />
+        <input type="hidden" name="address" value="{!Opportunity.Billing_Address_Building__c}
+    {!Opportunity.Billing_Street__c}
+    {!Opportunity.Billing_Area__c}
+    {!Opportunity.Billing_City__c}
+    {!Opportunity.Billing_State__c}" />
+        <input type="hidden" name="postcode" value="{!Opportunity.Billing_PostalCode__c}" />
+        <input type="hidden" name="tel" value="{!Opportunity.Account.c2g__CODAFinanceContact__r.Phone}" />
+        <input type="hidden" name="email" value="{!Opportunity.Account.c2g__CODAInvoiceEmail__c}" />
+        <input type="hidden" name="M_shipping_name" value="{!contactRole.Contact.Name}" />
+        <input type="hidden" name="M_shipping_tel" value="{!contactRole.Contact.Phone}" />
+        <input type="hidden" name="M_shipping_address" value="{!Opportunity.Account.Principle_Address_Building__c}
+    {!Opportunity.Account.Principle_Address_Street__c}
+    {!Opportunity.Account.Principle_Address_City__c}" />
+        <input type="hidden" name="M_shipping_postcode" value="{!Opportunity.Account.Principle_Address_ZIP_Postal_Code__c}" />
+        <input type="hidden" name="signatureFields" value="instId:currency:cartId"/>
+        <input type="hidden" name="signature" value="{!worldPayMD5}"/>
+        <p align="center"><input type="SUBMIT" value="Pay By Secure WorldPay Service"/></p>
+    </form>
+</apex:outputText>
+ -->
+<div class="title"><h2>Details of Service</h2></div>
+    <apex:form id="EventForm">  
+    <apex:repeat value="{!allLocations}" var="loc" id="allLocations">
+        <br />
+        
+        <table width="100%" border="0">
+          <tr>
+            <td><strong>Location of service</strong></td>
+            <td><apex:outputText rendered="{!if(OppType != 'Public_Event',true,false)}"><strong>Site contacts</strong></apex:outputText></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>{!loc.location.Special_Event__r.Venue_Name__c}<br />
+                <apex:outputText value="{!loc.location.Special_Event__r.Venue_Address__c}" escape="false"/></td>
+            <td>
+                <apex:outputText rendered="{!if(OppType != 'Public_Event',true,false)}">
+                    <strong>Name:</strong><br />
+                    <strong>Phone:</strong><br />
+                    <strong>Email:</strong>
+                </apex:outputText>
+            </td>
+            <td>
+                <apex:outputText rendered="{!if(OppType != 'Public_Event',true,false)}">
+                {!loc.location.Special_Event__r.Venue__r.Venue_Contact__r.Name}<br />
+                {!loc.location.Special_Event__r.Venue__r.Venue_Contact__r.Phone}<br />
+                {!loc.location.Special_Event__r.Venue__r.Venue_Contact__r.Email}
+                </apex:outputText>
+            </td>
+          </tr>
+        </table>
+        <table border="0" width="100%">
+            <tr>
+                <th>Reference</th>
+                <th>Service</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <apex:outputText rendered="{!if(OppType == 'In_Company_Event',true,false)}">
+                    <th><div align="center">No. Candidates</div></th>
+                    <th><div align="center"></div></th>
+                </apex:outputText>
+                <th><div align="right">Actions</div></th>
+            </tr>
+            <apex:repeat value="{!loc.events}" var="evt" id="locations">
+            <tr>
+                <td>{!evt.event.Name}</td>
+                <td>{!evt.event.Product__r.Product_Correspondence_Name__c}</td>
+                <td>
+                    <apex:outputText value="{0,date,dd MMMMM yyyy}">
+                        <apex:param value="{!evt.event.StartDate__c}" />
+                    </apex:outputText>
+                </td>
+                <td>
+                    <apex:outputText value="{0,date,dd MMMMM yyyy}">
+                        <apex:param value="{!evt.event.EndDate__c}" />
+                    </apex:outputText>
+                </td>
+                <apex:outputText rendered="{!if(OppType == 'In_Company_Event',true,false)}">
+                    <td><div align="center">{!round(evt.event.Total_Booking__c,0)}</div></td>
+                    <th><div align="center"> </div></th>
+                </apex:outputText>
+                <td><div align="right"><a href="javascript:toggle('{!evt.event.id}');">Delegates</a></div></td>
+            </tr>
+            <tr>
+                <td colspan="{!ColSpan}">
+                    <div id="{!evt.event.id}" style="display:block;">
+                        <table width="100%" border="1">
+                            <tr>
+                                <th>Delegate Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Birthdate</th>
+                                <th>Status</th>
+                            </tr>
+                            <apex:repeat value="{!evt.eventBookings}" var="booking" id="bookings1">
+                                <apex:outputText rendered="{!if(booking.Contact__c == null,true,false)}">
+                                    <tr>
+                                        <td><apex:inputField value="{!booking.CE_Contact_Name__c}"/>
+                                            <apex:outputText rendered="{!if($User.Alias != 'guest',true,false)}"><apex:inputField value="{!booking.Contact__c}"/></apex:outputText>
+                                            <apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+                                                {!booking.CE_Contact_Name__c}
+                                            </apex:outputText>
+                                        
+                                        </td>
+                                        <td><apex:inputField value="{!booking.CE_Contact_Email__c}"/></td>
+                                        <td><apex:inputField value="{!booking.CE_Contact_Phone__c}"/></td>
+                                        <td><apex:inputField value="{!booking.CE_Contact_Brithdate__c}"/></td>
+                                        <td>{!booking.Status__c}</td>
+                                    </tr>
+                                </apex:outputText>
+                                <apex:outputText rendered="{!if(booking.Contact__c != null,true,false)}">
+                                    <tr>
+                                        <td><apex:outputText rendered="{!if($User.Alias != 'guest',true,false)}"><apex:inputField value="{!booking.Contact__c}"/></apex:outputText>
+                                            <apex:outputText rendered="{!if($User.Alias != 'guest',false,true)}">{!booking.Contact__r.Name}</apex:outputText>
+                                            <apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+                                                {!booking.Contact__r.Name}
+                                            </apex:outputText>
+                                        </td>
+                                        <td>{!booking.Contact__r.Email}</td>
+                                        <td>{!booking.Contact__r.Phone}</td>
+                                        <td>
+                                            <apex:outputText value="{0,date,dd MMMMM yyyy}">
+                                                <apex:param value="{!booking.Contact__r.Birthdate}" />
+                                            </apex:outputText>
+                                        </td>
+                                        <td>{!booking.Status__c}</td>
+                                    </tr>
+                                </apex:outputText>
+                            </apex:repeat>
+                        </table>
+                        <br />
+                    </div>
+                </td>
+            </tr>
+            </apex:repeat>
+        </table>
+        <hr/>
+    </apex:repeat>
+    <br />
+    <div class="title"><h2>Charges</h2></div>
+    <table width="100%" border="0">
+      <tr>
+        <th>Product Code</th>
+        <th>Product</th>
+        <th>Qty</th>
+        <th>Item Price</th>
+        <th><div align="right">Sub Total</div></th>
+      </tr>
+      <apex:repeat value="{!oppLines}" var="oppLine">
+          <tr>
+            <td>{!oppLine.PriceBookEntry.ProductCode}</td>
+            <td>
+                <apex:outputText rendered="{!if(oppLine.Product_Correspondence_Name__c == null,true,false)}">
+                    {!oppLine.PriceBookEntry.Product2.Product_Correspondence_Name__c}
+                </apex:outputText>
+                <apex:outputText rendered="{!if(oppLine.Product_Correspondence_Name__c != null,true,false)}">
+                    {!oppLine.Product_Correspondence_Name__c}
+                </apex:outputText>
+            
+            </td>
+            <td>
+                <apex:outputText rendered="{!if(oppLine.Qty_to_show_on_booking_form__c > 0,false,true)}">
+                    {!oppLine.Quantity}
+                </apex:outputText>
+                <apex:outputText rendered="{!if(oppLine.Qty_to_show_on_booking_form__c > 0,true,false)}">
+                    {!oppLine.Qty_to_show_on_booking_form__c}
+                </apex:outputText>
+            </td>
+            <td nowrap="nowrap">{!CurrSymbol} 
+                <apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == true,true,false)}">
+                    TBA
+                </apex:outputText>
+                <apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == false,true,false)}">
+                    {!round(oppLine.UnitPrice,2)}
+                </apex:outputText>
+            </td>
+            <td align="right" nowrap="nowrap">{!CurrSymbol} 
+                <apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == true,true,false)}">
+                    TBA
+                </apex:outputText>
+                <apex:outputText rendered="{!if(oppLine.Show_Price_as_TBA__c == false,true,false)}">
+                    {!oppLine.Booking_form_total_price__c}
+                </apex:outputText>
+            </td>
+          </tr>
+      </apex:repeat>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right"><strong>NET TOTAL</strong></td>
+        <td align="right" nowrap="nowrap">{!CurrSymbol} {!OppTotal}</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right" nowrap="nowrap"><strong>VAT ( @ {!taxAmounts[0]}% )</strong></td>
+        <td align="right" nowrap="nowrap">{!CurrSymbol} {!round(OppTotal * (taxAmounts[0] / 100),2)}</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td align="right"><strong>TOTAL FEES</strong></td>
+        <td align="right" nowrap="nowrap"><strong>{!CurrSymbol} {!round((OppTotal * (taxAmounts[0] / 100)) + OppTotal,2)}</strong></td>
+      </tr>
+    </table>
+    <apex:outputText rendered="{!if(Opportunity.Booking_form_notes__c != null,true,false)}">    
+        <div class="title"><h2>Additional Notes</h2></div>
+        {!HTMLENCODE(Opportunity.Booking_form_notes__c)}<br />
+        <br />
+    </apex:outputText>
+    <div class="title"><h2>Payment Details &amp; Authorisation</h2></div>
+    <table width="100%">
+      <tr width="50%">
+        <td valign="middle"><strong>Billing Information</strong></td>
+        <td>
+            <apex:outputText rendered="{!if(Opportunity.Billing_Address_Account_Name__c != null,true,false)}">{!Opportunity.Billing_Address_Account_Name__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_Address_Building__c != null,true,false)}">{!Opportunity.Billing_Address_Building__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_Street__c != null,true,false)}">{!Opportunity.Billing_Street__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_Area__c != null,true,false)}">{!Opportunity.Billing_Area__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_City__c != null,true,false)}">{!Opportunity.Billing_City__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_State__c != null,true,false)}">{!Opportunity.Billing_State__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_PostalCode__c != null,true,false)}">{!Opportunity.Billing_PostalCode__c}<br /></apex:outputText>
+            <apex:outputText rendered="{!if(Opportunity.Billing_Country__c != null,true,false)}">{!Opportunity.Billing_Country__c}</apex:outputText>
+        </td>
+        <td><strong>Accounts Contacts</strong><br />
+        {!Opportunity.Account.c2g__CODAFinanceContact__r.Name}<br />
+        <strong>Phone:</strong> {!Opportunity.Account.c2g__CODAFinanceContact__r.Phone}<br />
+        <strong>Email Invoice to:</strong> {!Opportunity.Account.c2g__CODAInvoiceEmail__c}<br />    
+        </td>
+      </tr>
+    </table>
+    
+    <div class="title">
+    <apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+        <h2>Approval and Requesting Amendments</h2>
+    </apex:outputText>
+    <apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+        <h2>Approval Information</h2>
+    </apex:outputText>
+    </div>
+        <apex:outputText rendered="{!if($User.Alias != 'guest',true,false)}"><apex:commandButton action="{!updateBookings}" value="Save" id="updateBookings" /><apex:outputText rendered="{!if(fatalError != true,true,false)}"><div align="right"><apex:commandButton action="{!sendToCustomer}" value="Send form to {!contactRole.Contact.Salutation} {!contactRole.Contact.Name}" id="sendToCustomer" /></div></apex:outputText><br /></apex:outputText>
+        <apex:outputText rendered="{!if($CurrentPage.parameters.p == null,true,false)}">
+            <apex:outputText rendered="{!if($User.Alias == 'guest',true,false)}">
+                <apex:outputText rendered="{!if(fatalError == true,false,true)}">
+
+                        <p><strong>I want to:</strong></p>
+                        <apex:outputText rendered="{!if(Opportunity.Probability == 100.0 || Opportunity.Probability == 0.0,false,true)}">           
+                        <input type="radio" name="iWantTo" id="Save Form" selected="selected" onClick="javascript:show('saveForm');hide('requestAmendment');hide('acceptReservation');" value="Save" />
+                        Save this form and return later<br />
+                        </apex:outputText>
+                        <input type="radio" name="iWantTo" id="Request amendment" onClick="javascript:show('requestAmendment');hide('saveForm');hide('acceptReservation');" value="Request amendment" />
+                        Request Amendment / Contact {!Opportunity.Owner.Name}<br />
+                        <apex:outputText rendered="{!if(Opportunity.Probability == 100.0 || Opportunity.Probability == 0.0,false,true)}">           
+                            <input type="radio" name="iWantTo" id="Confirm Booking" onClick="javascript:hide('requestAmendment');hide('saveForm');show('acceptReservation');" value="Confirm Membership" />
+                            Confirm {!OppTypeText}
+                        </apex:outputText>
+                        <br />
+                        <br />
+                        <div id="saveForm">
+                            <h3>Save the form</h3>
+                            <p>Click the button to save the form.</p>
+                            <apex:commandButton action="{!updateBookings}" value="Save" id="updateBookings2" />
+                        </div>
+                        <div id="requestAmendment">
+                            <h3>Request to amend {!OppTypeText}</h3>
+                            <p>Additional details of change / notes to {!Opportunity.Owner.Name}:</p>
+                            <p>
+                              <textarea name="changeDetails" id="changeDetails" cols="45" rows="5"></textarea>
+                            </p>
+                              <input type="hidden" name="whoId" value="{!contactRole.ContactId}"/>
+                              <apex:commandButton action="{!sendToAE}" value="Send to {!Opportunity.Owner.Name}" id="sendToAE" />
+                        </div>
+                        <div id="acceptReservation">
+                            <h3>Accept {!OppTypeText}</h3>
+                            <table width="50%" border="0">
+                              <tr>
+                                <td scope="col">Authorised by*:</td>
+                                <td scope="col"><input type="text" name="authorisedBy" value="{!authorisedBy}"/></td>
+                              </tr>
+                              <tr>
+                                <td scope="row">Position*:</td>
+                                <td><input type="text" name="authorisedPosition" value="{!authorisedPosition}"/></td>
+                              </tr>
+                              <tr>
+                                <td scope="row">Method of Payment*:</td>
+                                <td>
+                                <select name="methodofPayment" id="methodofPayment">
+                                    <option value="Purchase Order">Purchase Order</option>
+                                    <option value="Credit/Debit Card">Credit/Debit Card</option>
+                                    <option value="Other Reference">Other Reference</option>
+                                </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td scope="row">Purchase order number*:</td>
+                                <td><input type="text" name="purchaseOrderReference" value="{!purchaseOrderReference}"/></td>
+                              </tr>
+                              <tr>
+                                <td scope="row">Authorised Date:</td>
+                                <td>
+                                    <apex:outputText value="{0,date,dd MMMMM yyyy}">
+                                        <apex:param value="{!TODAY()}" />
+                                    </apex:outputText>
+                                </td>
+                              </tr>
+                            </table>
+                            <p>
+                              <apex:inputCheckbox value="{!confirmTerms}" required="true"/> 
+                            &quot;I confirm that I have read and I accept the <a href="https://www.britsafe.org/sites/default/files/editor/terms-and-conditions.pdf" target="_blank">Terms &amp; Conditions and Privacy Policy</a>&quot;*</p>
+                            <p>* = Required Field</p>
+                            <p>
+                              <input type="hidden" name="whoId" value="{!contactRole.ContactId}"/>
+                              <apex:commandButton action="{!confirmBooking}" value="Confirm {!OppTypeText}" id="confirmBooking" />
+                            </p>
+                        </div>
+                
+                    </apex:outputText>
+                </apex:outputText>
+        </apex:outputText>
+        <apex:outputText rendered="{!if($CurrentPage.parameters.p != null,true,false)}">
+            <table width="85%" border="0">
+              <tr>
+                <th scope="col">Authorised by:</th>
+                <td scope="col">
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_By__c != null,true,false)}">
+                    {!$CurrentPage.parameters.Authorised_By__c}
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_By__c == null,true,false)}">
+                    {!custApproval.Authorised_By__c}
+                    </apex:outputText> <a href="https://www.britsafe.org/sites/default/files/editor/terms-and-conditions.pdf" target="_blank">Terms &amp; Conditions and Privacy Policy</a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Position:</th>
+                <td>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_Position__c != null,true,false)}">
+                    {!$CurrentPage.parameters.Authorised_Position__c}
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Authorised_Position__c == null,true,false)}">
+                    {!custApproval.Authorised_Position__c}
+                    </apex:outputText>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Method of Payment:</th>
+                <td>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Method_of_Payment__c != null,true,false)}">
+                    {!$CurrentPage.parameters.Method_of_Payment__c}
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Method_of_Payment__c == null,true,false)}">
+                    {!custApproval.Method_of_Payment__c}
+                    </apex:outputText>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Purchase order number:</th>
+                <td>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Purchase_Order_Reference__c != null,true,false)}">
+                    {!$CurrentPage.parameters.Purchase_Order_Reference__c}
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.Purchase_Order_Reference__c == null,true,false)}">
+                    {!custApproval.Purchase_Order_Reference__c}
+                    </apex:outputText>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Authorised On:</th>
+                <td nowrap="nowrap">
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.CreatedDate != null,true,false)}">
+                    {!$CurrentPage.parameters.CreatedDate}
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if($CurrentPage.parameters.CreatedDate == null,true,false)}">
+                    {!custApproval.CreatedDate}
+                    </apex:outputText>
+                </td>
+              </tr>
+            </table>
+        </apex:outputText>
+    </apex:form>
+
+</div>
+</body>
+</apex:page>

@@ -1,0 +1,26 @@
+<apex:page standardController="Special_Event__c" docType="html-5.0" extensions="CloneEvent" sidebar="false">
+    <script>
+    
+    function CloneRecordJSFN(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        CloneRecordJS();  // actionfunction
+    }
+    
+    </script>
+
+    <apex:form > 
+    <apex:actionFunction action="{!CloneRecord}" name="CloneRecordJS" />
+        <apex:pageBlock title="" mode="edit">
+            
+            <apex:pageBlockSection title="Clone Event: {!Special_Event__c.Name}" columns="2">
+                <apex:input type="auto" value="{!startDate}" label="Start Date"/>
+                <apex:input type="auto" value="{!numberOfDays}" label="Number of Days"/>
+                <apex:outputLabel ></apex:outputLabel>
+                <!--<apex:commandButton action="{!CloneRecord}" value="Clone"/>-->
+                <apex:commandButton id="CloneEvent" value="Clone Event" onclick="CloneRecordJSFN(this);return false;" />
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

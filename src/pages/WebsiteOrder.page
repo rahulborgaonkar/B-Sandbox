@@ -1,0 +1,15 @@
+<apex:page standardController="Opportunity" extensions="WebsiteOrder">
+<!-- Being Passed to iframe:<br />
+<b>URL: </b>https://{!Hostname}/admin/store/order/{!URLENCODE(Opportunity.Website_order_Id__c)}?hash={!MD5}<br />
+<b></b>Security Hash: <b/>{!MD5}<br />
+ -->
+    <apex:outputText rendered="{!Opportunity.Website_Order_Id__c!=''}" escape="false">
+        <iframe src="https://{!Hostname}/salesforce/order/{!URLENCODE(Opportunity.Website_order_Id__c)}?hash={!MD5}" width="100%" height="800px">
+        <p>Your browser does not support iframes, please contact British Safety Council Support.</p>
+        </iframe>
+    </apex:outputText>
+    
+    <apex:outputText rendered="{!Opportunity.Website_Order_Id__c==''}" escape="false">
+    Order cannot be displayed as the opportunity does not have a website order id.
+    </apex:outputText>
+</apex:page>

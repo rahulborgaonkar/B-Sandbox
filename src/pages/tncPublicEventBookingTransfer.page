@@ -1,0 +1,280 @@
+<apex:page controller="tncPublicEventBookingTransfer" >
+    
+    <script>
+    
+    function checkReason(){
+        checkReasons(); //apex:actionfunction
+    }
+    
+    function markToBeTransferred(){
+        checkReasonsMarkTBT(); //apex:actionfunction
+    }
+    
+    function processTBT(){
+        var errors = document.getElementById("j_id0:j_id28:theBlock:errorValue");
+       
+        if (errors.innerHTML == ''){
+            markTBT(); //apex:actionfunction
+        }
+    }
+    
+    function customLookup() {
+        
+        var errors = document.getElementById("j_id0:j_id28:theBlock:errorValue");
+       
+        if (errors.innerHTML == ''){
+            var checkBoxes = document.getElementsByClassName("checkboxClass");
+            var records = "";
+            var record = "";
+            var events = "";
+            var products = "";
+            var goodToGo = "Yes";
+            for(var i = 0; i< checkBoxes.length; i++) {
+                
+                if (checkBoxes[i].checked){
+                    var recordTag  = checkBoxes[i].name.replace('select','Recordid');
+                    var eventId = checkBoxes[i].name.replace('select','eventId');
+                    var product = checkBoxes[i].name.replace('select','product');
+                    
+                    if (products == ""){
+                        products = document.getElementById(product).innerHTML;
+                    }
+                    else if (document.getElementById(product).innerHTML !=  products) {
+                        alert('You cannot transfer bookings for different products at the same time.  Please only select bookings which have the same product and will be transferred to the same event');
+                        goodToGo = "No";
+                        break;
+                    }
+                    
+                    if (record == ""){
+                         record = document.getElementById(recordTag).value;
+                    }
+                    
+                    var event = document.getElementById(eventId).value + ',';
+                    if (events.search(event) == -1){
+                        events += event;
+                    }
+                    records += document.getElementById(recordTag).value + ',';
+                }  
+            }
+            
+            if (goodToGo == "Yes"){
+                for(var i = 0; i< checkBoxes.length; i++) {
+                    checkBoxes[i].disabled = true;
+                }
+                
+                var tempvar = records.slice(0,records.length-1);
+                var tempvar1 = events.slice(0,events.length-1);
+                window.open('/apex/tncTransferBookingWizard?id='+record+'&fieldName='+escape(tempvar)+'&events='+escape(tempvar1),'lookupWindow','width=800,height=600,modal=yes');
+            }
+        }
+        return false;
+    }
+    
+    function receiveResult(e,x,y,z, units) {
+        var checkBoxes = document.getElementsByClassName("checkboxClass");
+        var records = "";
+        var record = "";
+        
+        for(var i = 0; i< checkBoxes.length; i++) {
+            checkBoxes[i].disabled = false;
+            if (checkBoxes[i].checked){
+                //checkBoxes[i].checked = false;
+                var status  = checkBoxes[i].name.replace('select','status');
+                var transferTo  = checkBoxes[i].name.replace('select','transferTo');
+                var transferToEvent  = checkBoxes[i].name.replace('select','transferToEventid');
+                var transferToEventName  = checkBoxes[i].name.replace('select','transferToEventName');
+                var transferToEventStatusChanged  = checkBoxes[i].name.replace('select','transferToStatusChanged');
+                var eventUnit  = checkBoxes[i].name.replace('select','eventUnit');
+                
+                document.getElementById(transferToEvent).value = x;
+                document.getElementById(transferTo).innerHTML = y;
+                document.getElementById(status).innerHTML = z;
+                document.getElementById(transferToEventName).value = y;
+                document.getElementById(transferToEventStatusChanged).value = 'Yes';
+                document.getElementById(eventUnit).value = units;
+            }
+        }
+        return false;
+    }
+    
+    function cancel() {
+        var checkBoxes = document.getElementsByClassName("checkboxClass");
+        for(var i = 0; i< checkBoxes.length; i++) {
+            checkBoxes[i].disabled = false;
+        }
+    }
+    
+    
+    function setFocusOnLoad() {}
+    
+    function processTransfer(btn){
+        btn.disabled = true;
+        btn.value = "Please wait..";
+        processTransfer1();  // actionfunction
+    }
+    </script>
+    
+    <apex:PageMessages />
+    <apex:form >
+        <!-- DISPLAY EVENTS TO SELECT -->
+        <apex:actionFunction reRender="eventSelection" name="rerenderEventSelection"/>
+        <apex:actionFunction action="{!checkReason}" reRender="errorBlock" name="checkReasons" oncomplete="customLookup()"/>
+        <apex:actionFunction action="{!checkReason}" reRender="errorBlock" name="checkReasonsMarkTBT" oncomplete="processTBT()"/>
+        <apex:actionFunction action="{!markToBeTransferred}" name="markTBT" />
+        
+        <apex:actionFunction action="{!processTransfer}" name="processTransfer1" />
+        
+        <apex:outputPanel id="eventSelection">
+            <apex:pageBlock id="theBlock" title="Choose Public Event Bookings to be Transferred" rendered="{!displaySelectionSection}">
+                <apex:commandButton value="Select All"
+                action="{!autoSelectAllRecords}"
+                reRender="eventSelection,cancellationFeesSection" />
+                <br />
+                <apex:pageBlockTable value="{!listBookings}" var="eb">
+                    <apex:column headerValue="Select"  style="vertical-align:top;">
+                        <apex:inputCheckbox styleClass="checkboxClass"  id="select" value="{!eb.isSelected}" />
+                    </apex:column>
+                    <apex:column headerValue="Status" style="vertical-align:top;">
+                        <apex:outputText id="status" value="{!eb.booking.Status__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Event Boooking" style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Contact" style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Contact__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Event"  style="vertical-align:top;">
+                        <apex:outputText value="{!eb.booking.Special_Event__r.Name}" />
+                    </apex:column>
+                    <apex:column headerValue="Start Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!eb.booking.Event_Start_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="End Date" style="vertical-align:top;">
+                        <apex:outputText value="{0,date,dd/MM/yyyy}" style="vertical-align:top;">
+                            <apex:param value="{!eb.booking.Event_end_Date__c}" />
+                        </apex:outputText>
+                    </apex:column>
+                    <apex:column headerValue="Product"  style="vertical-align:top;">
+                        <apex:outputText id="product" value="{!eb.booking.Product__c}" />
+                    </apex:column>
+                    <apex:column headerValue="Tran. Req. Date" style="vertical-align:top;width:75px">
+                        <apex:inputText style="width:75px" id="selectedDate"
+                        value="{!eb.reasonData.cancellationRequestedOn}"
+                        onfocus="DatePicker.pickDate(false, this, false);" />
+                    </apex:column>
+                    <apex:column headerValue="Tran. Reason" style="vertical-align:top;">
+                        <apex:selectList multiselect="false" value="{!eb.reasonData.reason}" size="1">
+                            <apex:selectOptions value="{!selectOptionReasons}" />
+                        </apex:selectList>
+                    </apex:column>
+                    <apex:column headerValue="Tran. Notes" style="width:105px;vertical-align:top;">
+                        <apex:inputTextarea style="width:105px"  rows="3" value="{!eb.reasonData.reasonNote}" />
+                    </apex:column>
+                    <apex:column headerValue="Transfer To"  style="vertical-align:top;">
+                        <apex:inputHidden id="Recordid" value="{!eb.booking.Id}"/>
+                        <apex:inputHidden id="transferToEventid" value="{!eb.transferToId}"/>
+                        <apex:inputHidden id="transferToEventName" value="{!eb.transferToName}"/>
+                        <apex:inputHidden id="transferToStatusChanged" value="{!eb.StatusChanged}"/>
+                        <apex:inputHidden id="eventUnit" value="{!eb.eventUnits}"/>
+                        <apex:inputHidden id="eventId" value="{!eb.booking.Special_Event__r.Name}" />
+                        <apex:outputText id="transferTo" value="{!eb.booking.Transfer_To__r.Name}" />                        
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <apex:commandButton value="<< Previous" action="{!previous}"
+                            rendered="{!hasPrevious}" />
+                            <apex:commandButton value="Next >>" action="{!next}"
+                            rendered="{!hasNext}" />
+                        </td>
+                        <td width="50%" style="text-align: right;">
+                           <apex:commandButton style="width:180px" id="tbt" value="Mark To Be Transferred" onclick="markToBeTransferred();return false;" />
+                           <apex:commandButton style="width:180px" id="transferTo" value="Search for Event" onclick="checkReason();return false;" />
+                        </td>
+                    </tr>
+                </table>
+                
+                 
+                <br />
+                
+                <br />
+                
+                <center>
+                    <apex:outputPanel id="errorBlock">
+                        <table border="0" width="10px">
+                            <tr>
+                                <td nowrap="nowrap">
+                                    <apex:outputLabel styleClass="errorMsg" >
+                                        <strong><apex:outputText id="errorValue" value="{!cancellationError}" escape="false"/>
+                                        </strong>
+                                    </apex:outputLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                </center>
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <apex:commandButton value="Cancel" action="{!cancel}" />
+                            <apex:commandButton value="Return to Opportunity" action="{!returnToOpp}" />
+                        </td>
+                        <td width="50%" style="text-align: right;">
+                            <apex:commandButton style="width:180px" value="Complete Transfer" action="{!proceedWithTransfer}" reRender="errorBlock,eventSelection,transferFeesSection" />
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+            
+            <apex:outputPanel id="transferFeesSection">
+                <apex:pageBlock title="Transfer Fees" rendered="{!displayFeeEntrySection}">
+                    <apex:pageBlockTable value="{!selectedBookings}" var="seb">
+                        
+                        <apex:column headerValue="Event Boooking">
+                            <apex:outputText value="{!seb.booking.Name}" />
+                        </apex:column>
+                        <apex:column headerValue="Contact" style="vertical-align:top;">
+                            <apex:outputText value="{!seb.booking.Contact__r.Name}" />
+                        </apex:column>
+                        <apex:column headerValue="Event">
+                            <apex:outputText value="{!seb.booking.Special_Event__r.Name}" />
+                        </apex:column>
+                        <apex:column headerValue="Product">
+                            <apex:outputText value="{!seb.booking.Product__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Transfer To">
+                            <apex:outputText value="{!seb.transferToName}" />
+                        </apex:column>
+                        <apex:column headerValue="Cancellation Fees">
+                            <apex:outputText value="{!seb.cancellationFee}"
+                            rendered="{!seb.booking.Status__c = 'Provisional'  || seb.feesToBeApplied = false}" />
+                            <apex:inputText value="{!seb.cancellationFee}"
+                            rendered="{!seb.booking.Status__c != 'Provisional' && seb.feesToBeApplied = true}" />
+                        </apex:column>
+                    </apex:pageBlockTable>
+                    <BR />
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">
+                                <apex:commandButton value="Back" action="{!back}" reRender="eventSelection,cancellationFeesSection" />
+                            </td>
+                            <td width="50%" style="text-align: right;">
+                                <!--<apex:commandButton action="{!processTransfer}" value="Confirm Transfer" />-->
+                                <apex:commandButton id="finish" value="Confirm Transfer" onclick="processTransfer(this);return false;" />
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </apex:pageBlock>
+            </apex:outputPanel>
+            
+        </apex:outputPanel>
+    </apex:form>
+    <script>
+    function setFocusOnLoad() {}
+    </script>
+</apex:page>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Response Integration</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <description>This package contains the Salesforce customisations required by your email marketing platform to integrate with Salesforce.</description>
+    <namespacePrefix>response</namespacePrefix>
+    <types>
+        <members>Campaign_Event_Response__c.Campaign_Event__c</members>
+        <members>Campaign_Event_Response__c.ContactID__c</members>
+        <members>Campaign_Event_Response__c.Event_Date__c</members>
+        <members>Campaign_Event_Response__c.Lead_ID__c</members>
+        <members>Campaign_Event_Response__c.Link_URL__c</members>
+        <members>Campaign_Event_Response__c.Outbound_Message_ID__c</members>
+        <members>Campaign_Event_Response__c.Response_Description__c</members>
+        <members>Campaign_Event_Response__c.Response_Type__c</members>
+        <members>Campaign_Event__c.Blocked__c</members>
+        <members>Campaign_Event__c.Bounced__c</members>
+        <members>Campaign_Event__c.Campaign_Event_ID__c</members>
+        <members>Campaign_Event__c.Campaign_ID__c</members>
+        <members>Campaign_Event__c.Clicked__c</members>
+        <members>Campaign_Event__c.Delivery_Finish_Date__c</members>
+        <members>Campaign_Event__c.Delivery_ID__c</members>
+        <members>Campaign_Event__c.Delivery_List_Names__c</members>
+        <members>Campaign_Event__c.Delivery_Start_Date__c</members>
+        <members>Campaign_Event__c.Delivery_Status__c</members>
+        <members>Campaign_Event__c.Message_Name__c</members>
+        <members>Campaign_Event__c.Opened__c</members>
+        <members>Campaign_Event__c.Opted_out__c</members>
+        <members>Campaign_Event__c.Outbound_Message_ID__c</members>
+        <members>Campaign_Event__c.Profile__c</members>
+        <members>Campaign_Event__c.Scheduled_Date__c</members>
+        <members>Campaign_Event__c.Sent__c</members>
+        <members>Campaign_Event__c.Soft_bounced__c</members>
+        <members>Campaign_Event__c.Type__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Campaign_Event_Response__c</members>
+        <members>Campaign_Event__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Campaign_Event_Response__c-Campaign Event Response Layout</members>
+        <members>Campaign_Event__c-Campaign Event Layout</members>
+        <name>Layout</name>
+    </types>
+    <version>31.0</version>
+</Package>

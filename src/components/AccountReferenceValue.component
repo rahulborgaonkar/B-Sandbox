@@ -1,0 +1,4 @@
+<apex:component controller="AccountReferenceValue">
+    <apex:attribute name="accountId" description="" type="Id" assignTo="{!accId}" />
+    <apex:outputText >{!accReference}</apex:outputText>
+</apex:component>

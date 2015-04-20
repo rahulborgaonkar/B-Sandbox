@@ -1,0 +1,383 @@
+<apex:page standardController="Special_Event__c" recordSetVar="{!EventBookingRecords}" extensions="BSCDelegateCaptureController" cache="false" id="page" name="Delegate Capture Form">
+    <!--apex:sectionHeader title="Delegate Capture Form ({!BSCEventBookings[0].Opportunity__r.Recordtype.name})" subtitle="{!BSCEvent.Name} - {!BSCEvent.Product__r.Name}" description="Start Date - {!BSCEvent.StartDate__c} : End Date - {!BSCEvent.EndDate__c}"/-->
+    <apex:sectionHeader title="Delegate Capture Form ({!rectype})" subtitle="{!BSCEvent.Name} - {!BSCEvent.Product__r.Name}" description="Start Date - {!BSCEvent.StartDate__c} : End Date - {!BSCEvent.EndDate__c}"/>
+    <apex:form id="form">
+        <apex:pageBlock id="pbc" rendered="{!if(BSCEvent.Status__c = 'Completed', true, false)}">
+        <html>
+            <head>
+                <style>
+                h1 { 
+                    display: block;
+                    font-size: 15pt;
+                    margin-top: 0.67em;
+                    margin-bottom: 0.67em;
+                    margin-left: 0;
+                    margin-right: 0;
+                    font-weight: bold;
+                }
+                </style>
+            </head>
+            <body>
+                <h1>This event is now complete, to make changes to attendees, please contact Operations on 020 8741 1231</h1>
+            </body>
+        </html>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="pbr" rendered="{!if(recType == '', true, false)}">
+        <html>
+            <head>
+                <style>
+                h1 { 
+                    display: block;
+                    font-size: 15pt;
+                    margin-top: 0.67em;
+                    margin-bottom: 0.67em;
+                    margin-left: 0;
+                    margin-right: 0;
+                    font-weight: bold;
+                }
+                </style>
+            </head>
+            <body>
+                <h1>This event is has no Event Bookings with Status Confirmed/Attended/No Show, please contact Operations on 020 8741 1231</h1>
+            </body>
+        </html>
+        </apex:pageBlock>
+
+        <apex:pageBlock id="pb" rendered="{!if(BSCEvent.Status__c != 'Completed' && recType != '', true, false)}">
+        <apex:pageMessages id="pm"/>
+
+        <script>
+        function capitalFirst(fld)
+        {
+            var u=fld.value.charAt(0).toUpperCase()+fld.value.slice(1).toLowerCase();
+            if(fld.value!=u)
+            {
+                fld.value=u;
+            }
+        }
+        </script>
+
+        <script>
+        function setFocus()
+        {
+            var inx = {!index}
+            var substitue = {!isSubstitute}
+            var focusid = '';
+            if(substitue == false)
+            {
+                inx = inx + 1;
+                focusid = 'page:form:pb:pbs:pbt:'+inx+':inputem';
+            }
+            else
+            {
+                focusid = 'page:form:pb:pbs:pbt:'+inx+':inputem';
+            }
+            document.getElementById(focusid).focus();
+        }
+        </script>
+
+        <apex:actionfunction action="{!setSelectedId}" name="getSelectedContact" reRender="btn1">
+            <apex:param assignto="{!popupIndex}" name="param1" value="id"/>
+        </apex:actionfunction>
+
+        <apex:actionfunction action="{!substituteDelegate}" name="substituteDelegate" reRender="form">
+            <apex:param assignto="{!index}" name="param1" value=""/>
+            <apex:param assignto="{!isSubstitute}" name="param2" value=""/>
+        </apex:actionfunction>
+
+        <apex:actionfunction action="{!saveValues}" name="saveValues" reRender="pm">
+            <apex:param assignto="{!index}" name="param1" value="id"/>
+        </apex:actionfunction>
+
+        <apex:pageBlockButtons id="pbb" location="top">
+
+            <apex:actionStatus id="submitStatus">
+                <apex:facet name="stop">
+                <apex:outputPanel id="oppbb" >
+                    <!--apex:commandButton status="submitStatus" value="Add Delegate" action="{!addDelegates}" reRender="pbs,pm" disabled="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', true, false)}"/--> 
+                    <!--apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" disabled="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', true, false)}"--> 
+                    <apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" disabled="{!IF(rectype == 'Public Event' || rectype == '', true, false)}"> 
+                        <apex:actionSupport event="onclick" oncomplete="setFocus();" action="{!addDelegates}"/>
+                    </apex:commandButton>
+                    <apex:commandButton status="submitStatus" id="sb" value="Save Details" action="{!saveData}" reRender="pbs,pm" disabled="{!isNotChanged}" /> 
+                    <apex:commandButton status="submitStatus" value="Cancel" action="{!cancelData}" reRender="pbs,pm"/>
+                </apex:outputPanel>
+                </apex:facet>
+                <apex:facet name="start">
+                <apex:outputPanel >
+                    <apex:commandButton value="Please Wait..." disabled="true" />
+                    <apex:commandButton value="Please Wait..." disabled="true"/>
+                    <apex:commandButton value="Please Wait..." disabled="true" />
+                    <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                        &nbsp;
+                    </div>
+                    <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                        <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+                            <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                            <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                </apex:facet>
+            </apex:actionStatus>
+
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection id="pbs">
+            <apex:pageblocktable value="{!EventBookingRecords}" var="ebrecs" id="pbt">
+
+                <apex:Column headerValue="Substitue" id="sub">
+                    <apex:inputCheckbox id="chk" value="{!ebrecs.isSubstitute}" rendered="{!ebrecs.isCheckBoxShow}">
+                        <apex:actionsupport status="submitStatus" oncomplete="setFocus();" event="onclick" action="{!substituteDelegate}" reRender="pbs,pm" focus="em">
+                            <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                            <apex:param assignto="{!isSubstitute}" name="param2" value="{!ebrecs.isSubstitute}"/>
+                        </apex:actionsupport>
+                    </apex:inputCheckbox>
+                </apex:Column>
+
+                <apex:Column headerValue="Booking Name">
+                    <apex:outputText id="bn" value="{!IF(ebrecs.EventBooking['Name'] != null, ebrecs.EventBooking['Name'], 'New Booking')}" rendered="{!ebrecs.isShow}"/>
+                </apex:Column>
+
+                <apex:Column >
+                    <apex:facet name="header">Booking Account</apex:facet>
+                    <apex:outputPanel rendered="{!IF(ebrecs.EventBooking['Name']!=null && ebrecs.isShow,true,false)}">
+                        <apex:outputText value="{!ebrecs.bookingAccount.Name}"/>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!IF(ebrecs.EventBooking['Name']==null && ebrecs.isShow,true,false)}">                    
+                        <apex:selectList value="{!ebrecs.AccountId}" size="1" onchange="saveValues({!ebrecs.index})">
+                            <apex:selectOptions value="{!l_eventAccounts}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="em" >
+                    <apex:facet name="header">Email</apex:facet>
+                    <apex:actionRegion >
+                    <apex:outputPanel rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <apex:inputField id="inputem" value="{!ebrecs.bookingContact.email}" rendered="{!ebrecs.isShow}">
+                            <apex:actionsupport status="submitStatus" event="onchange" action="{!searchContact}" reRender="pbs,oppbb,pm" focus="inputtl">
+                                <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                            </apex:actionsupport>
+                            <!--apex:actionStatus id="emailStatus" startText="Please wait..." stopText=""/-->
+                        </apex:inputField>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.email}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                    </apex:actionRegion>
+                </apex:Column>
+
+                <apex:Column id="tl">
+                    <apex:facet name="header">Job Title</apex:facet>
+                    <apex:outputPanel id="otl" rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <apex:inputField id="inputtl" value="{!ebrecs.bookingContact.title}" rendered="{!ebrecs.isShow}">
+                            <apex:actionSupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="inputtl,oppbb,pm">
+                                <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                            </apex:actionSupport>
+                            <!--apex:actionStatus id="titleStatus" startText="Please Wait..." StopText="" /-->
+                        </apex:inputField>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.title}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="fn">
+                    <apex:facet name="header">First Name</apex:facet>
+                    <apex:outputPanel id="ofn" rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField id="inputfn" value="{!ebrecs.bookingContact.firstname}" rendered="{!ebrecs.isShow}">
+                                <apex:actionSupport status="submitStatus" event="onchange" onsubmit="capitalFirst(this)" action="{!saveValues}" reRender="ofn,oppbb,pm">
+                                    <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                                </apex:actionSupport>
+                                <!--apex:actionStatus id="fstnameStatus" startText="Please Wait..." StopText="" /-->
+                            </apex:inputField>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.firstname}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="ln">
+                    <apex:facet name="header">Last Name</apex:facet>
+                    <apex:outputPanel id="oln"  rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField id="inputln" value="{!ebrecs.bookingContact.lastname}" rendered="{!ebrecs.isShow}" required="false">
+                                <apex:actionsupport status="submitStatus" event="onchange" onsubmit="capitalFirst(this)" action="{!searchDuplicateName}" reRender="popup,oln,oppbb,pm">
+                                    <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                                </apex:actionsupport>
+                                <!--apex:actionStatus id="lastNameStatus" startText="Please wait..." stopText=""/-->
+                            </apex:inputField>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.lastname}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="ph">
+                    <apex:facet name="header">Phone Number</apex:facet>
+                    <apex:outputPanel rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <apex:inputField id="inputph" value="{!ebrecs.bookingContact.phone}" rendered="{!ebrecs.isShow}">
+                            <apex:actionSupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="oppbb,pm">
+                                <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                            </apex:actionSupport>
+                            <!--apex:actionStatus id="phoneStatus" startText="Please Wait..." StopText="" /-->
+                        </apex:inputField>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.phone}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="bd" rendered="{!BSCEvent.Product__r.Require_DOB_on_DCForm__c}" >
+                    <apex:facet name="header">Date of Birth</apex:facet>
+                    <apex:outputPanel id="opbd" rendered="{!NOT(ebrecs.isSubstitute)}">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField id="inputbd" value="{!ebrecs.bookingContact.birthdate}" rendered="{!ebrecs.isShow}">
+                                <apex:actionSupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="opbd,oppbb,pm">
+                                    <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                                </apex:actionSupport>
+                                <!--apex:actionStatus id="dobStatus" startText="Please Wait..." StopText="" /-->
+                            </apex:inputField>
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!ebrecs.isSubstitute}">
+                        <apex:outputField value="{!ebrecs.bookingContact.birthdate}" rendered="{!ebrecs.isShow}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column >
+                    <apex:facet name="header">Booking Status</apex:facet>
+                    <div class="requiredInput">
+                    <div class="requiredBlock"></div>
+                    <apex:selectList id="status" value="{!ebrecs.EventBooking['Status__c']}" size="1" rendered="{!ebrecs.isShow}" disabled="{!ebrecs.isSubstitute}">
+                        <apex:selectOption itemValue="" itemLabel=""/>
+                        <apex:selectOption itemValue="Confirmed" itemLabel="Confirmed"/>
+                        <apex:selectOption itemValue="Attended" itemLabel="Attended"/>
+                        <apex:selectOption itemValue="No Show" itemLabel="No Show"/>
+                        <apex:actionSupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="oppbb,pm">
+                            <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                        </apex:actionSupport>
+                        <!--apex:actionStatus id="bookingStatus" startText="Please Wait..." StopText="" /-->
+                    </apex:selectList>
+                    </div>
+                </apex:Column>
+
+                <!--apex:Column rendered="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', false, true)}"-->
+                <apex:Column rendered="{!IF(rectype == 'Public Event', false, true)}">
+                    <apex:facet name="header">Delete</apex:facet>
+                    <apex:inputCheckbox id="isDelete" value="{!ebrecs.deleteDelegate}" selected="false" rendered="{!OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB'))}">
+                        <apex:actionsupport status="submitStatus" event="onclick" onsubmit="if(!confirm('Delete - Are you sure?')) return false;" action="{!deleteDelegate}" reRender="pbs,pm" focus="ln">
+                            <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                        </apex:actionsupport>
+                        <!--apex:actionStatus id="counterStatus" startText="Deleting..." stopText=""/-->
+                    </apex:inputCheckbox>
+                </apex:Column>
+
+                <apex:Column id="pa">
+                    <apex:facet name="header">Partial Attendance</apex:facet>
+                    <apex:inputCheckbox id="isPartialAttendance" value="{!ebrecs.EventBooking['Partial_Attendance_Flag__c']}" selected="false" rendered="{!OR(ebrecs.isCheckBoxShow,OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB')))}">
+                        <apex:actionsupport status="submitStatus" event="onclick" action="{!saveValues}" reRender="ippa,oppbb,pm">
+                            <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                        </apex:actionsupport>
+                    </apex:inputCheckbox>
+                    <apex:outputPanel id="ippa">
+                    <apex:inputTextarea rows="1" id="inputpa" value="{!ebrecs.EventBooking['Attendance_Notes__c']}" rendered="{!AND(if(ebrecs.EventBooking['Partial_Attendance_Flag__c']==true,true,false),OR(ebrecs.isCheckBoxShow,OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB'))))}">
+                        <apex:actionsupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="ippa,oppbb,pm">
+                            <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
+                        </apex:actionsupport>
+                        <apex:actionStatus id="notesStatus" StartText="Please Wait..." StopText=""/>
+                    </apex:inputTextarea>
+                    </apex:outputPanel>
+                </apex:Column>
+
+
+            </apex:pageblocktable>
+        </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:outputpanel id="popup" style="left:35%;margin-left:-250px;top:100px;z-index:9999;position:absolute;">
+        <apex:outputpanel rendered="{!displayPopUp}">
+        <apex:pageMessages id="pm2"/>
+        <apex:pageblock title="Duplicate Firstname and Lastname Found">
+        <apex:pageBlockSection >
+            <apex:pageblocktable value="{!contactFound}" var="dup" id="pbt" width="100%">
+
+                <apex:Column headerValue="Select One">
+                    <input type="radio" name="group" id="{!dup.index}" onclick="getSelectedContact({!dup.index});" />
+                </apex:Column>
+
+                <apex:Column id="cs2" >
+                    <apex:facet name="header">Status</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputText value="{!dup.contactStatus}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="em2" >
+                    <apex:facet name="header">Email</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.email}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="tl2">
+                    <apex:facet name="header">Job Title</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.title}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+
+                <apex:Column id="fn2">
+                    <apex:facet name="header">First Name</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.firstname}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="ln2">
+                    <apex:facet name="header">Last Name</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.lastname}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="ph2">
+                    <apex:facet name="header">Phone Number</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.phone}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column id="bd2">
+                    <apex:facet name="header">Date of Birth</apex:facet>
+                    <apex:outputPanel >
+                        <apex:outputField value="{!dup.dupContact.birthdate}"/>
+                    </apex:outputPanel>
+                </apex:Column>
+
+                <apex:Column >
+                    <apex:facet name="header">Index</apex:facet>
+                    <apex:outputText value="{!dup.index}"/>
+                </apex:Column>
+
+            </apex:pageblocktable>
+         </apex:pageBlockSection>
+         <apex:pageBlockButtons location="bottom">
+             <apex:commandButton value="Save & Close" action="{!savePopup}" id="btn1" disabled="{!enableSave}" reRender="popup,pbs,pm2"/>
+             <apex:commandButton value="Cancel" action="{!cancelPopup}" id="btn2" reRender="popup,pbs"/>
+        </apex:pageBlockButtons>
+        </apex:pageblock>
+        </apex:outputpanel>
+        </apex:outputpanel>
+
+    </apex:form>
+</apex:page>
