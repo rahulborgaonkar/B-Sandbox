@@ -17,6 +17,7 @@ public with sharing class TransactionLineItemMethods {
                                                                                                                        where Id In:transLineId]);
          Set<Id> transactionId = new Set<Id>();
          List<c2g__codaInvoice__c> updateInvoice = new List<c2g__codaInvoice__c>();
+         List<Opportunity> updateOpportunity = new List<Opportunity>();
          //Transaction Id
          for(c2g__codaTransactionLineItem__c transLineItem:transLineItemsList)
          {
@@ -66,7 +67,8 @@ public with sharing class TransactionLineItemMethods {
                                                  c.c2g__PaymentStatus__c, 
                                                  c.Copy_Invoice_Status__c,
                                                  c.c2g__Transaction__c,
-                                                 c.c2g__Transaction__r.c2g__MatchType__c
+                                                 c.c2g__Transaction__r.c2g__MatchType__c,
+                                                 c.c2g__Opportunity__r.StageName
                                                  From c2g__codaInvoice__c c
                                                  where 
                                                  (NOT c2g__InvoiceDescription__c LIKE 'Data Migration%')
@@ -75,18 +77,32 @@ public with sharing class TransactionLineItemMethods {
              if(DocumentTotal.containsKey(invoice.c2g__Transaction__c)&& DocumentOutstandingTotal.containsKey(invoice.c2g__Transaction__c))
              {
                  // Code added to update text field ->invoice.Copy_Match_Type__c
+                 System.debug('In Invoice field updates');
                  if(invoice.c2g__Transaction__r.c2g__MatchType__c != 'Credited')
                  {
+                     System.debug('invoice.Copy_Match_Type__c - empty');
                      invoice.Copy_Match_Type__c = '';
                  }
                  else
                  {
+                     System.debug('invoice.Copy_Match_Type__c - Credited');
                      invoice.Copy_Match_Type__c = 'Credited';
+                     if(invoice.c2g__Opportunity__c != null)
+                     {
+                         invoice.c2g__Opportunity__r.StageName = 'Credited';
+                     }
                  }
                  // Code added to update text field ->invoice.Copy_Match_Type__c
 
                  if(DocumentOutstandingTotal.get(invoice.c2g__Transaction__c)== 0)
+                 {
+                     System.debug('invoice.Copy_Match_Type__c - Paid');
                      invoice.Copy_Invoice_Status__c ='Paid';
+                     if(invoice.c2g__Opportunity__c != null)
+                     {
+                         invoice.c2g__Opportunity__r.StageName = 'Booking Received';
+                     }
+                 }
                  else{
                      if(DocumentOutstandingTotal.get(invoice.c2g__Transaction__c)== DocumentTotal.get(invoice.c2g__Transaction__c))    
                          invoice.Copy_Invoice_Status__c ='Unpaid';
@@ -96,6 +112,10 @@ public with sharing class TransactionLineItemMethods {
                  }
                  System.debug('INVOICE ADDED: '+invoice.Id);
                  updateInvoice.add(invoice);
+                 if(invoice.c2g__Opportunity__c != null)
+                 {
+                     updateOpportunity.add(invoice.c2g__Opportunity__r);
+                 }
              }
          
          }
@@ -105,6 +125,11 @@ public with sharing class TransactionLineItemMethods {
             update updateInvoice;
             //throw new Test_Exception (updateInvoice.get(0).Copy_Invoice_Status__c);
          }
+         if(!updateOpportunity.isEmpty())        
+         {    
+            update updateOpportunity;
+         }
+
      }
     
     public testmethod static void testTransactionLineItemMethods()
