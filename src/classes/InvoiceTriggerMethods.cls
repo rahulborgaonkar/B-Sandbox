@@ -40,7 +40,7 @@ public without sharing class InvoiceTriggerMethods
             }
 
             Map<Id, Subscription__c> subscriptions = new Map<Id, Subscription__c>([SELECT Invoice_Status__c, Invoice_Date__c, Type__c, Start_Date__c, End_Date__c
-                                            , Longest_Duration_Years__c, Status__c, Subscription_Value__c FROM Subscription__c 
+                                            , Longest_Duration_Years__c, Status__c, Subscription_Value__c, Includes_E_Delivery_Product__c FROM Subscription__c 
                                             WHERE Renewal_Sales_Invoice__c in :invIds]);
             system.debug('subscriptions - ' + subscriptions);
 
@@ -70,8 +70,11 @@ public without sharing class InvoiceTriggerMethods
                     system.debug('Inside New');
                     sub.Status__c = 'Current';
                     sub.Invoice_Date__c = Date.today();
-                    sub.Start_Date__c = Date.today();
-                    sub.End_Date__c = sub.Start_Date__c.addYears((integer)sub.Longest_Duration_Years__c) - 1;
+                    if(sub.Includes_E_Delivery_Product__c != true)
+                    {
+                        sub.Start_Date__c = Date.today();
+                        sub.End_Date__c = sub.Start_Date__c.addYears((integer)sub.Longest_Duration_Years__c) - 1;
+                    }
                 }
                 if(sub.Type__c == 'Renewal' && sub.Subscription_Value__c > 0)
                 {
