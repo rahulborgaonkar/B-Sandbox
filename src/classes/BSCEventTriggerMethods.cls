@@ -157,91 +157,107 @@ public with sharing class BSCEventTriggerMethods
         List<Special_Event__c> allEvents = new List<Special_Event__c>(); // Var 3
         List<c2g__codaDimension4__c> dimList = new List<c2g__codaDimension4__c>(); // Var 4
 
+        system.debug('RSB Inside createDimension4');
+            
         try // Added this exeception handler to catch unknow error while creating events after pressing 'Request Event'. Adhoc creating event name same as it's ID
         {
         // This loop create a set of unique products - Rahul
-        for (Special_Event__c se : bEvent)
-        {
-            ProductIds.add(se.product__c);
-        }        
+            for (Special_Event__c se : bEvent)
+            {
+                ProductIds.add(se.product__c);
+            }        
 
         // Product map of all products, SOQL from line 172 is taken out of loop - Rahul
-        allProductMap = new Map<Id, Product2>([Select id, productcode From product2 where id in :ProductIds]);
+            allProductMap = new Map<Id, Product2>([Select id, productcode From product2 where id in :ProductIds]);
 
-        for (Special_Event__c se : bEvent)
-        {
-            Special_Event__c b = new Special_Event__c();
-            b=se.clone();
-            //product2 prod = [Select productcode  From product2 where id = :b.product__c][0]; commented for testing - Rahul
-            product2 prod2 = allProductMap.get(se.product__c); // Get current product from map, this will replace above SOQL - Rahul
-            
-            //system.debug('prod - ' + prod);
-            system.debug('prod2 - ' + prod2);
-            
-            //b.name = prod.productcode + '/'+ b.Event_Auto_Number__c; commented for testing - Rahul
-            //system.debug('b.name using prod var - ' + b.name);
-
-            // New assignment using prod2 variable to create name - Rahul
-            b.name = prod2.productcode + '/'+ b.Event_Auto_Number__c;
-            system.debug('b.name using prod2 var - ' + b.name);
-                        
-            c2g__codaDimension4__c dim = new c2g__codaDimension4__c();
-            
-            if (test.isRunningTest()){
-                dim.c2g__ReportingCode__c = b.name + string.valueof(math.random()).substring(1,4);
-            }else{
-                dim.c2g__ReportingCode__c=b.name;
-            }
-            
-            dim.Name=b.name;
-            dim.CurrencyIsoCode=se.currencyIsoCode;
-            dimList.add(dim); // Added dimension changes to dim List - Rahul
-            
-            try
+            for (Special_Event__c se : bEvent)
             {
-                //insert dim; commented for testing - Rahul
-                b.Dimension_4__c = dim.id;
-                allEvents.add(b); // All updated events are collected in list - Rahul
+                Special_Event__c b = new Special_Event__c();
+                b=se.clone();
+                system.debug('Special_Event__c b - ' + b);
+                //product2 prod = [Select productcode  From product2 where id = :b.product__c][0]; commented for testing - Rahul
+                product2 prod2 = allProductMap.get(se.product__c); // Get current product from map, this will replace above SOQL - Rahul
+            
+                //system.debug('prod - ' + prod);
+                system.debug('RSB prod2 - ' + prod2);
+            
+                //b.name = prod.productcode + '/'+ b.Event_Auto_Number__c; commented for testing - Rahul
+                //system.debug('b.name using prod var - ' + b.name);
+
+                // New assignment using prod2 variable to create name - Rahul
+                b.name = prod2.productcode + '/'+ b.Event_Auto_Number__c;
+                system.debug('Special_Event__c b - ' + b);
+                system.debug('b.name using prod2 var - ' + b.name);
+                        
+                c2g__codaDimension4__c dim = new c2g__codaDimension4__c();
+            
+                if (test.isRunningTest()){
+                    dim.c2g__ReportingCode__c = b.name + string.valueof(math.random()).substring(1,4);
+                }else{
+                    dim.c2g__ReportingCode__c=b.name;
+                }
+            
+                dim.Name=b.name;
+                dim.CurrencyIsoCode=se.currencyIsoCode;
+                dimList.add(dim); // Added dimension changes to dim List - Rahul
+            
                 try
                 {
-                    system.debug('Inside dimension');
-                    //update b; commented for testing - Rahul
+                    //insert dim; commented for testing - Rahul
+                    system.debug('dim.id - ' + dim.id);
+                    b.Dimension_4__c = dim.id;
+                    allEvents.add(b); // All updated events are collected in list - Rahul
+                    try
+                    {
+                        system.debug('Inside dimension');
+                        //update b; commented for testing - Rahul
+                    }
+                    catch(DMLException e)
+                    {
+                        se.addError(e);
+                    }
+                }
+                catch(DMLException f)
+                {
+                    se.addError(f);            
+                }
+            }
+
+            // Below insert and update commands are replacing Line 199 & 205, this is bulk insert and update - Rahul
+            try
+            {
+                insert dimList;
+                system.debug('dimList - ' + dimList);
+                Map<String, ID> mapDim = new Map<String, ID>();
+                for(c2g__codaDimension4__c dim : dimList)
+                {
+                    mapDim.put(dim.name, dim.id);
+                }
+                try
+                {
+                    system.debug('After loop Inside dimension');
+                    system.debug('allEvents - ' + allEvents);
+                    for(Special_Event__c e : allEvents)
+                    {
+                        e.Dimension_4__c = mapDim.get(e.name);
+                    }
+                    update allEvents;
                 }
                 catch(DMLException e)
                 {
-                    se.addError(e);
+                    for(Special_Event__c se : allEvents)
+                    {
+                        se.addError(e);                    
+                    }
                 }
             }
             catch(DMLException f)
             {
-                se.addError(f);            
-            }
-        }
-
-        // Below insert and update commands are replacing Line 199 & 205, this is bulk insert and update - Rahul
-        try
-        {
-            insert dimList;
-            try
-            {
-                system.debug(' After loop Inside dimension');
-                update allEvents;
-            }
-            catch(DMLException e)
-            {
                 for(Special_Event__c se : allEvents)
                 {
-                    se.addError(e);                    
+                    se.addError(f);
                 }
             }
-        }
-        catch(DMLException f)
-        {
-            for(Special_Event__c se : allEvents)
-            {
-                se.addError(f);
-            }
-        }
         }
 //        catch(System.Exception ex)
         catch(BaseException ex)
