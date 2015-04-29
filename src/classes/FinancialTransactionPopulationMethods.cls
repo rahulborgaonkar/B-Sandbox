@@ -26,7 +26,9 @@ Opportunity/ Opportunity Lines/ Event Booking and Subscriptions
     public static void cashMatching(Set<Id> cshmch)
     {
         List<String> invList = new List<String>();
+        System.debug('RSB Set<Id> cshmch - ' + cshmch);
         List<c2g__codaCashMatchingHistory__c> invListDesc = [Select c2g__TransactionLineItem__r.c2g__LineDescription__c, c2g__TransactionLineItem__r.c2g__lineReference__c From c2g__codaCashMatchingHistory__c Where c2g__matchingreference__c IN :cshmch and (c2g__TransactionLineItem__r.c2g__LineDescription__c Like '%SIN%' or c2g__TransactionLineItem__r.c2g__lineReference__c Like '%SIN%')];
+        System.debug('RSB List<c2g__codaCashMatchingHistory__c> invListDesc - ' + invListDesc);
         if(invListDesc.size()>0)
             for(c2g__codaCashMatchingHistory__c inv: invListDesc)
         {
@@ -193,7 +195,8 @@ AND c2g__Invoice__r.c2g__InvoiceStatus__c <>'In Progress']){
 allCreditNotes.put(allCreditNote.c2g__Invoice__r.Id,allCreditNote.Id);
 }*/
         // END: Get all credit notes for the invoices
-        
+
+        System.debug('RSB Inside populateFinancialJunctionObject');
         System.debug('*****************Retrieved all invoices***************');
         List<Financial_Transactional_Header_Data__c> fthd = [Select Id From Financial_Transactional_Header_Data__c Where Sales_Invoice__c IN :ffInvoice];
         if(fthd.size()==0)
