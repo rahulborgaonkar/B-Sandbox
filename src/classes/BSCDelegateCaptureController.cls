@@ -1,5 +1,6 @@
 public class BSCDelegateCaptureController
 {
+    ApexPages.StandardController gcontroller {get; set;}
     public Special_Event__c BSCEvent {get; set;}
     public List<Special_Event_Booking__c> BSCEventBookings {get; set;}
     public List<Temp_Special_Event_Booking__c> newBSCEventBookings {get; set;}
@@ -36,8 +37,6 @@ public class BSCDelegateCaptureController
         public EventBookingRecs oldRecord {get; set;}
         public EventBookingRecs newRecord {get; set;}
     }
-
-    //public Map<Temp_Special_Event_Booking__c, Boolean> newDelegates {get;set;}
 
     public class duplicateContacts
     {
@@ -90,7 +89,13 @@ public class BSCDelegateCaptureController
 
     public BSCDelegateCaptureController(ApexPages.StandardController controller) 
     {
-        BSCEvent = (Special_Event__c)controller.getRecord();
+        gcontroller = controller;
+        initData();
+    }
+    
+    public void initData()
+    {
+        BSCEvent = (Special_Event__c)gcontroller.getRecord();
         BSCEvent = [SELECT Name, Owner.name, Recordtype.name, Product__r.name, Product__r.Require_DOB_on_DCForm__c, opportunity__c, startdate__c, enddate__c, Status__c FROM Special_Event__c where id = :BSCEvent.id];
         system.debug('Inside BSCDelegateCaptureController');
 
@@ -549,14 +554,21 @@ public class BSCDelegateCaptureController
         EventBookingRecords[index].EventBooking.put('Status__c', EventBookingRecords[index].EventBooking.get('Status__c'));
         EventBookingRecords[index].bookingContact.birthdate = EventBookingRecords[index].bookingContact.birthdate;
         EventBookingRecords[index].EventBooking.put('Partial_Attendance_Flag__c', EventBookingRecords[index].EventBooking.get('Partial_Attendance_Flag__c'));
-        if(EventBookingRecords[index].EventBooking.get('Partial_Attendance_Flag__c') == true)
+        system.debug('EventBookingRecords[index].EventBooking.Partial_Attendance_Flag__c - ' + EventBookingRecords[index].EventBooking.get('Partial_Attendance_Flag__c'));
+        system.debug('EventBookingRecords[index].EventBooking.Attendance_Notes__c - ' + EventBookingRecords[index].EventBooking.get('Attendance_Notes__c'));
+        // Case 6625
+        //if(EventBookingRecords[index].EventBooking.get('Partial_Attendance_Flag__c') == true)
+        if(EventBookingRecords[index].EventBooking.get('Attendance_Notes__c') != null)
         {
             EventBookingRecords[index].EventBooking.put('Attendance_Notes__c', EventBookingRecords[index].EventBooking.get('Attendance_Notes__c'));
         }
         else
         {
-            EventBookingRecords[index].EventBooking.put('Attendance_Notes__c', '');
+            EventBookingRecords[index].EventBooking.put('Attendance_Notes__c', 'Partial Attendance Notes Here');
+            //EventBookingRecords[index].EventBooking.put('Attendance_Notes__c', '');
         }
+        // Case 6625
+        system.debug('EventBookingRecords[index].EventBooking.Attendance_Notes__c - ' + EventBookingRecords[index].EventBooking.get('Attendance_Notes__c'));
         isNotChanged = false;
         system.debug('EventBookingRecords[index].bookingContact - ' + EventBookingRecords[index].bookingContact);
     }
@@ -774,34 +786,6 @@ public class BSCDelegateCaptureController
             return null;
         }
 
-        for(EventBookingRecs ebr : EventBookingRecords)
-        {
-/*
-            if(ebr.index < 2)
-            {
-                system.debug('Before Update');
-                system.debug('ebr.ContactId - ' + ebr.ContactId);
-                system.debug('ebr.bookingContact.Id - ' + ebr.bookingContact.Id);
-                system.debug('ebr.bookingContact.email - ' + ebr.bookingContact.email);
-            }
-
-            if(ebr.ContactId == null)
-            {
-                ebr.ContactId = ebr.bookingContact.id;
-            }
-            if(ebr.bookingContact.id == null)
-            {
-                ebr.bookingContact.id = ebr.ContactId;
-            }
-
-            system.debug('After Update');
-            system.debug('ebr.ContactId - ' + ebr.ContactId);
-            system.debug('ebr.bookingContact.Id - ' + ebr.bookingContact.Id);
-            system.debug('ebr.bookingContact.email - ' + ebr.bookingContact.email);
-*/
-
-        }
-
         system.debug('Second Loop');
         
         List<Special_Event_Booking__c> updateBSCEventBookings = new List<Special_Event_Booking__c> ();
@@ -938,6 +922,8 @@ public class BSCDelegateCaptureController
             return null;
         }
 
+        system.debug('newEventBooking - ' + newEventBooking);
+
         if(newEventBooking.size() > 0)
         {
             Map<Id, Temp_Special_Event_Booking__c> newEB = new Map<Id, Temp_Special_Event_Booking__c>();
@@ -947,12 +933,14 @@ public class BSCDelegateCaptureController
                         , Partial_Attendance_Flag__c, Attendance_Notes__c, isNew__c
                         FROM Temp_Special_Event_Booking__c where Id in :newEB.keyset() AND isNew__c = true]);
 
+            system.debug('newEB - ' + newEB);
+
             EmailTemplate addDelEmail = [SELECT Id, Name, Subject, Body, IsActive, Description, HtmlValue, BrandTemplateId, Markup, NamespacePrefix, TemplateStyle, TemplateType, DeveloperName FROM EmailTemplate WHERE DeveloperName = 'Delegate_Addition_Email'];
             system.debug('EmailTemplate email - ' + addDelEmail);
 
             List<Add_Delegate_Email_Alert_List__c> addDelEmailList = [SELECT Id, Name, Send_Email_To__c FROM Add_Delegate_Email_Alert_List__c];
 
-            if(addDelEmail != null && addDelEmailList != null)
+            if(addDelEmail != null && addDelEmailList != null && newEB.size() > 0)
             {
                 String body = '<head><style>table, th, tr {border: 1px solid black;border-collapse: collapse;font-size:15px;} tr {padding: 10px;}</style></head>';
                 body = body + addDelEmail.htmlValue;
@@ -1050,19 +1038,13 @@ public class BSCDelegateCaptureController
         }
 
         isNotChanged=true;
+        initData();
+/*
+        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO,'Data is successfully saved'));
         PageReference pageRef = new PageReference('/apex/BSCDelegateCapture?id='+BSCEvent.id);
         pageRef.setRedirect(true);
         return pageRef;
-    }
-
-    public PageReference completeEvent()
-    {
-        if(BSCEvent.status__c == 'Completed')
-        {
-            PageReference pageRef = new PageReference('/apex/BSCDelegateCaptureComplete?id='+BSCEvent.id);
-            pageRef.setRedirect(true);
-            return pageRef;
-        }
+*/
         return null;
     }
 
@@ -1073,5 +1055,17 @@ public class BSCDelegateCaptureController
         PageReference pageRef = new PageReference('/apex/BSCDelegateCapture?id='+BSCEvent.id);
         pageRef.setRedirect(true);
         return pageRef;
+    }
+
+    public void saveExitData()
+    {
+        system.debug('Inside saveExitData');
+        saveData();
+/*
+        PageReference pageRef = new PageReference('/apex/BSCDelegateCapture?id='+BSCEvent.id);
+        pageRef.setRedirect(true);
+        return pageRef;
+        return new PageReference('javascript:self.close()'); 
+*/
     }
 }

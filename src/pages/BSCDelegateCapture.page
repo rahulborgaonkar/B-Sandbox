@@ -61,8 +61,8 @@
         <script>
         function setFocus()
         {
-            var inx = {!index}
-            var substitue = {!isSubstitute}
+            var inx = {!index};
+            var substitue = {!isSubstitute};
             var focusid = '';
             if(substitue == false)
             {
@@ -77,6 +77,25 @@
         }
         </script>
 
+        <!-- Case 6625 -->
+        <script>
+        function clearDefaultJS(fld)
+        {
+            if(fld.value == 'Partial Attendance Notes Here')
+            {
+                fld.value = null;
+            }
+        }
+        </script>
+
+        <script>
+        function CloseWindow()
+        {
+            alert('hello');
+            window.close(); 
+        } 
+        </script>
+        
         <apex:actionfunction action="{!setSelectedId}" name="getSelectedContact" reRender="btn1">
             <apex:param assignto="{!popupIndex}" name="param1" value="id"/>
         </apex:actionfunction>
@@ -95,27 +114,31 @@
             <apex:actionStatus id="submitStatus">
                 <apex:facet name="stop">
                 <apex:outputPanel id="oppbb" >
-                    <!--apex:commandButton status="submitStatus" value="Add Delegate" action="{!addDelegates}" reRender="pbs,pm" disabled="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', true, false)}"/--> 
-                    <!--apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" disabled="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', true, false)}"--> 
-                    <apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" disabled="{!IF(rectype == 'Public Event' || rectype == '', true, false)}"> 
-                        <apex:actionSupport event="onclick" oncomplete="setFocus();" action="{!addDelegates}"/>
+                    <!--apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" disabled="{!if(rectype == 'Public Event' || rectype == '', true, false)}"--> 
+                    <apex:commandButton status="submitStatus" value="Add Delegate" reRender="pbs,pm" > 
+                        <!-- Case 6625 -->
+                        <apex:actionSupport event="onclick" onsubmit="if('{!rectype}' == 'Public Event' || '{!rectype}' == ''){alert('Please Note : \nYou are unable to add new delegates onto public courses directly onto the system.\nPlease call Operations Team on 02087411231.\nYou can however substitute a delegate who has arrived in place of a colleague from the same organisation.'); return false;}" oncomplete="setFocus();" action="{!addDelegates}"/>
                     </apex:commandButton>
-                    <apex:commandButton status="submitStatus" id="sb" value="Save Details" action="{!saveData}" reRender="pbs,pm" disabled="{!isNotChanged}" /> 
+                    <apex:commandButton id="sb" status="submitStatus" value="Save Details" action="{!saveData}" oncomplete="alert('Data is successfully saved.');" reRender="form" disabled="{!isNotChanged}"/>
                     <apex:commandButton status="submitStatus" value="Cancel" action="{!cancelData}" reRender="pbs,pm"/>
+                    <apex:commandButton status="submitStatus" value="Save & Exit" action="{!saveExitData}" oncomplete="alert('Data is successfully saved.\nPlease close Delegate Capture Form now.');"/>
                 </apex:outputPanel>
                 </apex:facet>
                 <apex:facet name="start">
                 <apex:outputPanel >
-                    <apex:commandButton value="Please Wait..." disabled="true" />
                     <apex:commandButton value="Please Wait..." disabled="true"/>
-                    <apex:commandButton value="Please Wait..." disabled="true" />
+                    <apex:commandButton value="Please Wait..." disabled="true"/>
+                    <apex:commandButton value="Please Wait..." disabled="true"/>
+                    <apex:commandButton value="Please Wait..." disabled="true"/>
                     <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
                         &nbsp;
                     </div>
                     <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
                         <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
                             <img src="/img/loading.gif" style="float: left; margin: 8px;" />
-                            <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+                            <span style="display: inline-block; padding: 10px 0px;">
+                                Please Wait...
+                            </span>
                         </div>
                     </div>
                 </apex:outputPanel>
@@ -137,15 +160,15 @@
                 </apex:Column>
 
                 <apex:Column headerValue="Booking Name">
-                    <apex:outputText id="bn" value="{!IF(ebrecs.EventBooking['Name'] != null, ebrecs.EventBooking['Name'], 'New Booking')}" rendered="{!ebrecs.isShow}"/>
+                    <apex:outputText id="bn" value="{!if(ebrecs.EventBooking['Name'] != null, ebrecs.EventBooking['Name'], 'New Booking')}" rendered="{!ebrecs.isShow}"/>
                 </apex:Column>
 
                 <apex:Column >
                     <apex:facet name="header">Booking Account</apex:facet>
-                    <apex:outputPanel rendered="{!IF(ebrecs.EventBooking['Name']!=null && ebrecs.isShow,true,false)}">
+                    <apex:outputPanel rendered="{!if(ebrecs.EventBooking['Name']!=null && ebrecs.isShow,true,false)}">
                         <apex:outputText value="{!ebrecs.bookingAccount.Name}"/>
                     </apex:outputPanel>
-                    <apex:outputPanel rendered="{!IF(ebrecs.EventBooking['Name']==null && ebrecs.isShow,true,false)}">                    
+                    <apex:outputPanel rendered="{!if(ebrecs.EventBooking['Name']==null && ebrecs.isShow,true,false)}">                    
                         <apex:selectList value="{!ebrecs.AccountId}" size="1" onchange="saveValues({!ebrecs.index})">
                             <apex:selectOptions value="{!l_eventAccounts}"/>
                         </apex:selectList>
@@ -270,8 +293,8 @@
                     </div>
                 </apex:Column>
 
-                <!--apex:Column rendered="{!IF(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', false, true)}"-->
-                <apex:Column rendered="{!IF(rectype == 'Public Event', false, true)}">
+                <!--apex:Column rendered="{!if(BSCEventBookings[0].Opportunity__r.Recordtype.name == 'Public Event', false, true)}"-->
+                <apex:Column rendered="{!if(rectype == 'Public Event', false, true)}">
                     <apex:facet name="header">Delete</apex:facet>
                     <apex:inputCheckbox id="isDelete" value="{!ebrecs.deleteDelegate}" selected="false" rendered="{!OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB'))}">
                         <apex:actionsupport status="submitStatus" event="onclick" onsubmit="if(!confirm('Delete - Are you sure?')) return false;" action="{!deleteDelegate}" reRender="pbs,pm" focus="ln">
@@ -289,7 +312,8 @@
                         </apex:actionsupport>
                     </apex:inputCheckbox>
                     <apex:outputPanel id="ippa">
-                    <apex:inputTextarea rows="1" id="inputpa" value="{!ebrecs.EventBooking['Attendance_Notes__c']}" rendered="{!AND(if(ebrecs.EventBooking['Partial_Attendance_Flag__c']==true,true,false),OR(ebrecs.isCheckBoxShow,OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB'))))}">
+                    <!-- Case 6625 -->
+                    <apex:inputTextarea rows="1" id="inputpa" onclick="clearDefaultJS(this);" title="Partial Attendance Notes Here" value="{!ebrecs.EventBooking['Attendance_Notes__c']}" rendered="{!AND(if(ebrecs.EventBooking['Partial_Attendance_Flag__c']==true,true,false),OR(ebrecs.isCheckBoxShow,OR(if(ebrecs.EventBooking['Name']==null,true,false), contains(ebrecs.EventBooking['Name'], 'New-EB'))))}">
                         <apex:actionsupport status="submitStatus" event="onchange" action="{!saveValues}" reRender="ippa,oppbb,pm">
                             <apex:param assignto="{!index}" name="param1" value="{!ebrecs.index}"/>
                         </apex:actionsupport>

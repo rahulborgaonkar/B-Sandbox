@@ -170,6 +170,7 @@ class testBSCDelegateCapture
         delegateCapture.EventBookingRecords[index].bookingContact.FirstName = 'testFirstName';
         delegateCapture.EventBookingRecords[index].bookingContact.LastName = 'testLastName';
         delegateCapture.searchDuplicateName();
+        delegateCapture.setSelectedId();
         delegateCapture.saveValues();
         delegateCapture.popupIndex = 0;
         delegateCapture.savePopup();
@@ -193,6 +194,10 @@ class testBSCDelegateCapture
         delegateCapture.substituteDelegate();
         delegateCapture.saveValues();
         delegateCapture.saveData();
+        
+        delegateCapture.cancelData();
+        delegateCapture.saveExitData();
+        
 
         BSCDelegateCaptureClass.sendDelegateFormToTrainer(spe.id);
 
