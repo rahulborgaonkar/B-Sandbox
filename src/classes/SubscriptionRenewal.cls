@@ -214,7 +214,7 @@ global without sharing class SubscriptionRenewal {
             
             Id OWNER = DEFAULT_OWNER;
             if (subscription.Includes_E_Delivery_Product__c && subscription.Opportunity__c !=null && subscription.Opportunity__r.Owner.IsActive == true){
-            	OWNER = subscription.Opportunity__r.OwnerId;
+                OWNER = subscription.Opportunity__r.OwnerId;
             }
             
             Opportunity opportunity = new Opportunity(
@@ -331,17 +331,17 @@ global without sharing class SubscriptionRenewal {
                             
                             // Check to see if someone has
                             if (subscriptionLine.Product__r.Renew_at_this_price__c == null || subscriptionLine.Product__r.Renew_at_this_price__c == 0){
-	                            // No-one has entered a renewal price so work out the renewal price based on renewal multiplier if on the product otherwise
-	                            // based on Product Unit price.
-	                            if (pricebookEntries[0].Product2.Renewal_Multiplier__c !=null){
-	                                System.debug('Using Multiplier to determine price. Multiplier = '+pricebookEntries[0].Product2.Renewal_Multiplier__c+', UnitPrice = '+pricebookEntries[0].UnitPrice+', Qty = '+quantity);
-	                                totalPrice = (pricebookEntries[0].Product2.Renewal_Multiplier__c * pricebookEntries[0].UnitPrice) * quantity;
-	                            }else{
-	                                System.debug('Using Pricebook unitprice ('+pricebookEntries[0].UnitPrice+')* qty ('+quantity+') to determine price');
-	                                totalPrice = pricebookEntries[0].UnitPrice * quantity;
-	                            }
+                                // No-one has entered a renewal price so work out the renewal price based on renewal multiplier if on the product otherwise
+                                // based on Product Unit price.
+                                if (pricebookEntries[0].Product2.Renewal_Multiplier__c !=null){
+                                    System.debug('Using Multiplier to determine price. Multiplier = '+pricebookEntries[0].Product2.Renewal_Multiplier__c+', UnitPrice = '+pricebookEntries[0].UnitPrice+', Qty = '+quantity);
+                                    totalPrice = (pricebookEntries[0].Product2.Renewal_Multiplier__c * pricebookEntries[0].UnitPrice) * quantity;
+                                }else{
+                                    System.debug('Using Pricebook unitprice ('+pricebookEntries[0].UnitPrice+')* qty ('+quantity+') to determine price');
+                                    totalPrice = pricebookEntries[0].UnitPrice * quantity;
+                                }
                             }else{
-                            	totalPrice = subscriptionLine.Product__r.Renew_at_this_price__c * quantity;
+                                totalPrice = subscriptionLine.Product__r.Renew_at_this_price__c * quantity;
                             }
                             System.debug('Total Price set to: '+totalPrice);
                         
@@ -380,9 +380,9 @@ global without sharing class SubscriptionRenewal {
                         System.debug('Renewal price is blank so use subscription Line renewal price');
                         opportunityLineItem.TotalPrice = (subscriptionLine.Renewal_Price__c*quantity);
                     }
-                	if (subscriptionLine.Product__r.E_Delivery_Subscription__c){
-                		opportunityLineItem.E_Delivery_Override_Algorithm_Price__c = true;
-                	}
+                    if (subscriptionLine.Product__r.E_Delivery_Subscription__c){
+                        opportunityLineItem.E_Delivery_Override_Algorithm_Price__c = true;
+                    }
                     opportunityLineItems.add(opportunityLineItem);
                     oldSubLineToOppLine.put(subscriptionLine.Id,opportunityLineItem);
                 }
@@ -583,12 +583,12 @@ global without sharing class SubscriptionRenewal {
      * Creates the invoice renewal packs and send/print for customer.
      */
     public static String runSubscriptionRenewalInvPacks(List<Subscription__c> subscriptionList, Boolean postInvoice){
-        
+
         setDefaultValues();
         
         String result = 'false';
         if (postInvoice == null){
-        	postInvoice = false;
+            postInvoice = false;
         }
         
         List<Subscription__c> subsToUpdate = new List<Subscription__c>();
@@ -637,11 +637,11 @@ global without sharing class SubscriptionRenewal {
                 Paying_By__c = 'Invoice' AND
                 Invoice_Status__c != 'Paid' AND
                 (CreatedDate >= 2012-06-11T00:00:00Z AND
-                	(
-                		(Includes_Membership_Product__c = True OR Includes_Publication_Product__c = True OR Includes_SUSA_Product__c = True) OR
-                		(CreatedDate >= 2013-02-11T00:00:00Z AND Includes_RCP_Product__c = True) OR 
-                		(CreatedDate >= 2013-05-16T00:00:00Z AND Includes_E_Delivery_Product__c = True)
-                	)
+                    (
+                        (Includes_Membership_Product__c = True OR Includes_Publication_Product__c = True OR Includes_SUSA_Product__c = True) OR
+                        (CreatedDate >= 2013-02-11T00:00:00Z AND Includes_RCP_Product__c = True) OR 
+                        (CreatedDate >= 2013-05-16T00:00:00Z AND Includes_E_Delivery_Product__c = True)
+                    )
                 )              
                 ]);
             
@@ -709,16 +709,16 @@ global without sharing class SubscriptionRenewal {
      * Creates an invoice based on an Opportunity Id
      */
     private static Id createInvoiceFromOpp(Id oppId, Boolean postInvoice){
-        
+
         Opportunity opp = [SELECT Invoice_Company__r.Name, Create_Invoice__c FROM Opportunity WHERE Id = :oppId][0];
-		
-		if (opp.Invoice_Company__r.Name == 'Complywise Ltd' && !FinanceHelper.usrInCorrectFFCompany('Complywise Ltd')){
-			opp.Create_Invoice__c = true;
-			update opp;
-			return null;
-		}else{
-	        return FinanceHelper.createInvoiceFromOpp(oppId, postInvoice);		
-		}
+        
+        if (opp.Invoice_Company__r.Name == 'Complywise Ltd' && !FinanceHelper.usrInCorrectFFCompany('Complywise Ltd')){
+            opp.Create_Invoice__c = true;
+            update opp;
+            return null;
+        }else{
+            return FinanceHelper.createInvoiceFromOpp(oppId, postInvoice);      
+        }
         
         /*
         setDefaultValues();
@@ -847,14 +847,14 @@ global without sharing class SubscriptionRenewal {
                 }
                 
                 if (oppLineItem.PriceBookEntry.Product2.Renewal_Dimension_1__c != null){
-	                // OPT-759: Use the Renewal Dimension 1 code if its filled out on the product.
-	                lineItem.Dimension1 = new c2g.CODAAPICommon.Reference();
-	                lineItem.Dimension1.Id = oppLineItem.PriceBookEntry.Product2.Renewal_Dimension_1__c;
+                    // OPT-759: Use the Renewal Dimension 1 code if its filled out on the product.
+                    lineItem.Dimension1 = new c2g.CODAAPICommon.Reference();
+                    lineItem.Dimension1.Id = oppLineItem.PriceBookEntry.Product2.Renewal_Dimension_1__c;
                 }else{
-	                // Otherwise use the default Dimension 1 code
-	                lineItem.Dimension1 = new c2g.CODAAPICommon.Reference();
-	                List<c2g__codaDimension1__c> dimension1 = [Select c.Name, c.Id From c2g__codaDimension1__c c WHERE c.Name = :DEFAULT_DIMENSION_1_NAME LIMIT 1];
-	                lineItem.Dimension1.Id = dimension1[0].Id;
+                    // Otherwise use the default Dimension 1 code
+                    lineItem.Dimension1 = new c2g.CODAAPICommon.Reference();
+                    List<c2g__codaDimension1__c> dimension1 = [Select c.Name, c.Id From c2g__codaDimension1__c c WHERE c.Name = :DEFAULT_DIMENSION_1_NAME LIMIT 1];
+                    lineItem.Dimension1.Id = dimension1[0].Id;
                 }
                 
                 // Dimension 2 = Product Dimension code.

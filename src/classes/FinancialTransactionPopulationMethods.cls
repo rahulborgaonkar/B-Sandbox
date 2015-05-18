@@ -30,7 +30,7 @@ Opportunity/ Opportunity Lines/ Event Booking and Subscriptions
         List<c2g__codaCashMatchingHistory__c> invListDesc = [Select c2g__TransactionLineItem__r.c2g__LineDescription__c, c2g__TransactionLineItem__r.c2g__lineReference__c From c2g__codaCashMatchingHistory__c Where c2g__matchingreference__c IN :cshmch and (c2g__TransactionLineItem__r.c2g__LineDescription__c Like '%SIN%' or c2g__TransactionLineItem__r.c2g__lineReference__c Like '%SIN%')];
         System.debug('RSB List<c2g__codaCashMatchingHistory__c> invListDesc - ' + invListDesc);
         if(invListDesc.size()>0)
-            for(c2g__codaCashMatchingHistory__c inv: invListDesc)
+        for(c2g__codaCashMatchingHistory__c inv: invListDesc)
         {
             // if(inv.c2g__TransactionLineItem__r.c2g__LineDescription__c.length()>0)
             if(inv.c2g__TransactionLineItem__r.c2g__LineDescription__c!=Null)
@@ -46,7 +46,7 @@ Opportunity/ Opportunity Lines/ Event Booking and Subscriptions
             }
             else
                 // if(inv.c2g__TransactionLineItem__r.c2g__lineReference__c.length()>0)
-                if(inv.c2g__TransactionLineItem__r.c2g__lineReference__c!=Null)
+            if(inv.c2g__TransactionLineItem__r.c2g__lineReference__c!=Null)
             {
                 Integer pos = inv.c2g__TransactionLineItem__r.c2g__lineReference__c.indexOf('SIN',0);
                 if(pos<>-1)
@@ -61,7 +61,7 @@ update invId.Values();*/
             if(invId.size()>0)
                 populateFinancialJunctionObject(invId.KeySet());
             
-        }  
+        }
     }
     
     /*@future    
