@@ -433,6 +433,16 @@ ListPrice * PricebookEntry.Product2.Renewal_Multiplier__c,
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Update_OPL_Subscription_Product_Type_SUL</fullName>
+        <description>Used by Workflow Update OPL Subscription Product Type SUL</description>
+        <field>Subscription_Product_Type__c</field>
+        <literalValue>Service Under Licence</literalValue>
+        <name>Update OPL Subscription Product Type SUL</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Update_Product_Correspondence_Name</fullName>
         <description>Updates the product correspondence name from the product to the product line.</description>
         <field>Product_Correspondence_Name__c</field>
@@ -828,6 +838,17 @@ NOT(ISBLANK( Sales_Manager_Price__c )),
         <active>true</active>
         <description>Updates OPL Subscription Product Type depending on subscription flags on associated product.  This is used in roll up summary fields &quot;RCP subscription products&quot; on Opportunity</description>
         <formula>IF (PricebookEntry.Product2.RCP_Product__c, True, False)</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Update OPL Subscription Product Type SUL</fullName>
+        <actions>
+            <name>Update_OPL_Subscription_Product_Type_SUL</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Updates OPL Subscription Product Type depending on subscription flags on associated product.  This is used in roll up summary fields &quot;Service under licence&quot; subscription products&quot; on Opportunity</description>
+        <formula>IF (PricebookEntry.Product2.Services_Under_Licence_Subscription_Prod__c, True, False)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
