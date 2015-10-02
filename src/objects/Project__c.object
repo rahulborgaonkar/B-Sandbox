@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage tenders and bespoke projects</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Owner__c</fullName>
+        <externalId>false</externalId>
+        <formula>Account__r.Area__r.Territory_Owner__c</formula>
+        <inlineHelpText>NOTE: May be issues with Accounts manually excluded from assignment rules not displaying correctly - remind us later to check this</inlineHelpText>
+        <label>Account Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Business_Development_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the person managing the project (for Culture Change)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the person managing the project</inlineHelpText>
+        <label>BSC Business Development Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Projects4</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Client_Project_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Client Project Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Projects (Client Contact)</relationshipLabel>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Client_Purchasing_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Client Purchasing Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Projects (Client Purchasing Contact)</relationshipLabel>
+        <relationshipName>Projects1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Client_Sector__c</fullName>
+        <externalId>false</externalId>
+        <label>Client Sector</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Private</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Won_By__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contract Won By</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Projects3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contract_Won_By_if_not_BSC__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>If the Contract was lost to another competitor enter the account name if known</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If the Contract was lost to another competitor enter the account name if known</inlineHelpText>
+        <label>Contract Won By (if not BSC)</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Projects (Contract Won By (if not BSC))</relationshipLabel>
+        <relationshipName>Projects1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Current_Proposal_Value__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Proposal Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Project_Value__c</fullName>
+        <description>This is used to enter the overall estimated value of the project (created for culture change)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is used to enter the overall estimated value of the project</inlineHelpText>
+        <label>Estimated Project Value</label>
+        <picklist>
+            <picklistValues>
+                <fullName>&lt; £10,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>£10,000 - £20,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>£20,000 - £50,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>£50,000 - £100,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>£100,000 - £250,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>£250,000 - £500,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&gt; £500,000</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>JOMC_Delivery_Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is to replace the Signatory field which was a lookup to user, but needed to be to the contact.</description>
+        <externalId>false</externalId>
+        <label>JOMC Delivery Lead</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Projects (JOMC Delivery Lead)</relationshipLabel>
+        <relationshipName>Projects2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Lost_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Lost Reason</label>
+        <picklist>
+            <controllingField>Status__c</controllingField>
+            <picklistValues>
+                <fullName>Price</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Competitive Offering</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inadequate References</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resource Availability</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Resource Competence</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Industry Experience</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Lost__c</fullName>
+        <externalId>false</externalId>
+        <label>Lost Stage</label>
+        <picklist>
+            <controllingField>Status__c</controllingField>
+            <picklistValues>
+                <fullName>Lost @ Initial Proposal</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost @ PQQ</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost @ Final Proposal</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost @ Bid</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost @ Further Requirements</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost @ Negotiation of Terms</fullName>
+                <controllingFieldValues>Lost</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Opportunities_open_total__c</fullName>
+        <description>Total value of all open opportunities related to this project</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This value includes all expenses and additional costs</inlineHelpText>
+        <label>Opportunities open total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunities_won_total__c</fullName>
+        <description>Total value of all won opportunities related to this project</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This value includes all expenses and additional costs</inlineHelpText>
+        <label>Opportunities won total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Project_Director__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Project Director</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Projects1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Project_Office_Engaged__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Project Office Engaged</label>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Project_Reference__c</fullName>
+        <description>Project reference Auto number</description>
+        <displayFormat>P-{00000}</displayFormat>
+        <externalId>false</externalId>
+        <label>Project Reference</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Project_Requirements__c</fullName>
+        <externalId>false</externalId>
+        <label>Project Requirements</label>
+        <length>32000</length>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Signatory__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Signatory</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Standard_T_Cs__c</fullName>
+        <externalId>false</externalId>
+        <label>Standard T&amp;Cs</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Viability Review</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Proposal Preparation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PQQ Preparation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Proposal Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PQQ Submission</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negotiation of Initial Proposal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Proposal Preparation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bid Preparation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Proposal Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bid Submitted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negotiaion of Final Proposal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Further Requirements Preparation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Further Requirements Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Awarded</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Qualified Out</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Qualifying</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Positioning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Proposal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Proposal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Negotiating Terms</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pilot/Taster Session Booked</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Ongoing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Project Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Withdrawn by BSC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Withdrawn by Client</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>T_C_Amendements__c</fullName>
+        <description>To be entered if the Standard T&amp;C&apos;s value = No (for Culture Change)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>To be entered if the Standard T&amp;C&apos;s value = No (for Culture Change)</inlineHelpText>
+        <label>T&amp;C Amendments</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Technical_Project_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Technical Project Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Projects2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Open - Framework/Call Off</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Value__c</fullName>
+        <description>Roll up of opportunity values</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total value of related opportunities</inlineHelpText>
+        <label>Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <label>Project</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Opportunities_open_total__c</columns>
+        <columns>Opportunities_won_total__c</columns>
+        <columns>Current_Proposal_Value__c</columns>
+        <columns>Account_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Projects</label>
+        <sharedTo>
+            <role>CommercialDirector</role>
+            <role>HeadofSales</role>
+            <role>Sales_Manager_KAM</role>
+            <role>Sales_Manager_RAM</role>
+            <role>Sales_Team_International</role>
+            <role>Sales_Team_KAM</role>
+            <role>Sales_Team_RAM</role>
+            <role>SystemAdministrator</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Culture_Change_Projects_Lost_On_hold</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Estimated_Project_Value__c</columns>
+        <columns>Opportunities_open_total__c</columns>
+        <columns>Opportunities_won_total__c</columns>
+        <columns>Account_Owner__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Project__c.Culture_Change</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Project Complete,Lost,Withdrawn by BSC,Withdrawn by Client</value>
+        </filters>
+        <label>Culture Change Projects (Lost/Complete)</label>
+    </listViews>
+    <listViews>
+        <fullName>Culture_Change_Projects_open</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Estimated_Project_Value__c</columns>
+        <columns>Opportunities_open_total__c</columns>
+        <columns>Opportunities_won_total__c</columns>
+        <columns>Account_Owner__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Project__c.Culture_Change</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Project Complete,Lost,Withdrawn by BSC,Withdrawn by Client</value>
+        </filters>
+        <label>Culture Change Projects (Open)</label>
+        <sharedTo>
+            <role>CommercialDirector</role>
+            <role>HeadofSales</role>
+            <role>ProductDevelopment</role>
+            <role>Sales_Manager_KAM</role>
+            <role>Sales_Manager_RAM</role>
+            <role>Sales_Team_International</role>
+            <role>Sales_Team_KAM</role>
+            <role>Sales_Team_RAM</role>
+            <role>SystemAdministrator</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>My_Culture_Change_Projects</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Owner__c</columns>
+        <columns>Status__c</columns>
+        <columns>Estimated_Project_Value__c</columns>
+        <columns>Opportunities_open_total__c</columns>
+        <columns>Opportunities_won_total__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Project__c.Culture_Change</value>
+        </filters>
+        <label>My Culture Change Projects</label>
+    </listViews>
+    <listViews>
+        <fullName>Won_Bids_Tenders</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>Account_Owner__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Project__c.Bid_Tender</value>
+        </filters>
+        <label>Bids &amp; Tenders</label>
+        <sharedTo>
+            <role>CommercialDirector</role>
+            <role>HeadofSales</role>
+            <role>ProductDevelopment</role>
+            <role>Sales_Manager_KAM</role>
+            <role>Sales_Manager_RAM</role>
+            <role>Sales_Team_International</role>
+            <role>Sales_Team_KAM</role>
+            <role>Sales_Team_RAM</role>
+        </sharedTo>
+    </listViews>
+    <nameField>
+        <label>Project Name</label>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Projects</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Bid_Tender</fullName>
+        <active>true</active>
+        <label>Bid / Tender</label>
+        <picklistValues>
+            <picklist>Client_Sector__c</picklist>
+            <values>
+                <fullName>Private</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost_Reason__c</picklist>
+            <values>
+                <fullName>Competitive Offering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate References</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Competence</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost__c</picklist>
+            <values>
+                <fullName>Lost %40 Bid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost %40 Further Requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost %40 PQQ</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Standard_T_Cs__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Bid Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bid Submitted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Awarded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Further Requirements Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Further Requirements Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQQ Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PQQ Submission</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Qualified Out</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Viability Review</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by Client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - Framework%2FCall Off</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Culture_Change</fullName>
+        <active>true</active>
+        <label>Culture Change</label>
+        <picklistValues>
+            <picklist>Client_Sector__c</picklist>
+            <values>
+                <fullName>Private</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Estimated_Project_Value__c</picklist>
+            <values>
+                <fullName>%3C %C2%A310%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%3E %C2%A3500%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%C2%A310%2C000 - %C2%A320%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%C2%A3100%2C000 - %C2%A3250%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%C2%A320%2C000 - %C2%A350%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%C2%A3250%2C000 - %C2%A3500%2C000</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>%C2%A350%2C000 - %C2%A3100%2C000</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost_Reason__c</picklist>
+            <values>
+                <fullName>Competitive Offering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate References</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Competence</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost__c</picklist>
+            <values>
+                <fullName>Lost %40 Final Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost %40 Initial Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost %40 Negotiation of Terms</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Standard_T_Cs__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Contract Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initial Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Negotiating Terms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pilot%2FTaster Session Booked</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Positioning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Project Ongoing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Qualifying</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by Client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - Framework%2FCall Off</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard</fullName>
+        <active>true</active>
+        <label>Standard</label>
+        <picklistValues>
+            <picklist>Client_Sector__c</picklist>
+            <values>
+                <fullName>Private</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost_Reason__c</picklist>
+            <values>
+                <fullName>Competitive Offering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inadequate References</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Industry Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Price</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Resource Competence</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Lost__c</picklist>
+            <values>
+                <fullName>Lost %40 Final Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost %40 Initial Proposal</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Standard_T_Cs__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Contract Awarded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contract Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Proposal Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Proposal Sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Further Requirements Complete</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Further Requirements Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initial Proposal Preparation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Initial Proposal Sent</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lost</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Negotiaion of Final Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Negotiation of Initial Proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Qualified Out</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Viability Review</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Withdrawn by Client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open - Framework%2FCall Off</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Mandatory_if_Final_Proposal</fullName>
+        <active>true</active>
+        <description>Where the Status of the project is from the value &quot;Final Proposal&quot; then make this field mandatory.</description>
+        <errorConditionFormula>AND(
+OR (
+ISPICKVAL(Status__c, &quot;Final Proposal&quot;),
+ISPICKVAL(Status__c, &quot;Negotiating Terms&quot;),
+ISPICKVAL(Status__c, &quot;Pilot/Taster Session Booked&quot;),
+ISPICKVAL(Status__c, &quot;Project Ongoing&quot;), 
+ISPICKVAL(Status__c, &quot;Project Complete&quot;)),
+ISPICKVAL(Standard_T_Cs__c,&quot;&quot;))</errorConditionFormula>
+        <errorDisplayField>Standard_T_Cs__c</errorDisplayField>
+        <errorMessage>Please enter a Standard T&amp;Cs</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Mandatory_if_Initia_Proposal_Bus_Dev_Mgr</fullName>
+        <active>true</active>
+        <description>If the Status is from Final Proposal, this field should be mandatory</description>
+        <errorConditionFormula>AND(
+OR (
+ISPICKVAL(Status__c, &quot;Initial Proposal&quot;),
+ISPICKVAL(Status__c, &quot;Final Proposal&quot;),
+ISPICKVAL(Status__c, &quot;Negotiating Terms&quot;),
+ISPICKVAL(Status__c, &quot;Pilot/Taster Session Booked&quot;),
+ISPICKVAL(Status__c, &quot;Project Ongoing&quot;),
+ISPICKVAL(Status__c, &quot;Project Complete&quot;)),
+ISBLANK( BSC_Business_Development_Manager__c ))</errorConditionFormula>
+        <errorDisplayField>BSC_Business_Development_Manager__c</errorDisplayField>
+        <errorMessage>Please select the BSC Business Development Manager</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Mandatory_if_Initia_Proposal_JOMC_Del_Ld</fullName>
+        <active>true</active>
+        <description>If the Status is from Initial Proposal, this field should be mandatory</description>
+        <errorConditionFormula>AND(
+OR (
+ISPICKVAL(Status__c, &quot;Initial Proposal&quot;),
+ISPICKVAL(Status__c, &quot;Final Proposal&quot;),
+ISPICKVAL(Status__c, &quot;Negotiating Terms&quot;),
+ISPICKVAL(Status__c, &quot;Pilot/Taster Session Booked&quot;),
+ISPICKVAL(Status__c, &quot;Project Ongoing&quot;),
+ISPICKVAL(Status__c, &quot;Project Complete&quot;)),
+ ISBLANK(JOMC_Delivery_Lead__c))</errorConditionFormula>
+        <errorDisplayField>JOMC_Delivery_Lead__c</errorDisplayField>
+        <errorMessage>Please select the JOMC Delivery Lead</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Mandatory_if_Standard_T_C_is_No</fullName>
+        <active>true</active>
+        <description>If the value of Standard T&amp;Cs is No,  the T&amp;C Amendments is mandatory.</description>
+        <errorConditionFormula>AND(
+ ISPICKVAL( Standard_T_Cs__c , &quot;No&quot;) ,
+ T_C_Amendements__c =&quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>T_C_Amendements__c</errorDisplayField>
+        <errorMessage>If the value of Standard T&amp;Cs is No, please enter the T&amp;C Amendments</errorMessage>
+    </validationRules>
+</CustomObject>

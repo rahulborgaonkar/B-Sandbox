@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage bookings to an event Unit (Session or component)</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Attended__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Automatically ticked as attended but untick if the delegate did not attend this day (not currently updated)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Un-check if the delegate did not attend this unit</inlineHelpText>
+        <label>Attended</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>lookup to the contact to show the name of the delegate booked on that session.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>lookup to the contact to show the name of the delegate booked on that session.</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>BSC Event Unit Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Unit_Bookings</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Delegate_Days__c</fullName>
+        <description>unit end date minus unit start date times by 3</description>
+        <externalId>false</externalId>
+        <formula>(Event_Unit__r.Unit_End_Time__c - Event_Unit__r.Unit_Start_Time__c)*3</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>unit end date minus unit start date times by 3</inlineHelpText>
+        <label>Delegate Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Booking__c</fullName>
+        <description>Lookup to the related event booking</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to the related event booking</inlineHelpText>
+        <label>Event Booking</label>
+        <referenceTo>Special_Event_Booking__c</referenceTo>
+        <relationshipLabel>BSC Event Unit Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Unit_Bookings</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Event_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the related event unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to the related event unit</inlineHelpText>
+        <label>Event Unit</label>
+        <referenceTo>Special_Event_Unit__c</referenceTo>
+        <relationshipLabel>BSC Event Unit Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Unit_Bookings</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the BSC Event Unit Booking was migrated from the Course Booker database</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether the BSC Event Unit Booking was migrated from the Course Booker database</inlineHelpText>
+        <label>Migrated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_ELEMACT_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This is a unique key to identify each BSC Event Unit Booking against the source data from Course Booking. It is a concatenation of the BSC Event Booking PK and the BSC Event Unit PK</description>
+        <externalId>true</externalId>
+        <inlineHelpText>concatenation of the BSC Event Booking PK and the BSC Event Unit PK from Course Booker</inlineHelpText>
+        <label>PK CB ELEMACT ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Trainer__c</fullName>
+        <externalId>false</externalId>
+        <formula>Event_Unit__r.BSC_Event_Trainer__r.Trainer__r.Trainer_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Trainer</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>BSC Event Unit Booking</label>
+    <nameField>
+        <displayFormat>EUB-{0000000}</displayFormat>
+        <label>Event Unit Booking Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BSC Event Unit Bookings</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Event_Booking__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Event_Unit__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Event_Booking__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Event_Unit__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Attended__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Event_Booking__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Event_Unit__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Attended__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Event_Booking__c</searchFilterFields>
+        <searchFilterFields>Event_Unit__c</searchFilterFields>
+        <searchFilterFields>Attended__c</searchFilterFields>
+        <searchResultsAdditionalFields>Event_Booking__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Event_Unit__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_BSC_Events_Match</fullName>
+        <active>true</active>
+        <description>between BSC Event Booking and BSC Event Unit - make sure the BSC Event is the same!</description>
+        <errorConditionFormula>Event_Booking__r.Special_Event__r.Id &lt;&gt; Event_Unit__r.Special_Event__r.Id</errorConditionFormula>
+        <errorMessage>The BSC Event on the Event Booking and the BSC Event on the Event Unit does not match, please update either the Event Booking or the Event Unit!</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Conga_Composer</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx
+?SessionId={!API.Session_ID}
+&amp;ServerUrl={!API.Partner_Server_URL_80}
+&amp;Id=</url>
+    </webLinks>
+</CustomObject>

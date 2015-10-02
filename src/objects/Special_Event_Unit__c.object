@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage Units of an event, e.g. sessions or components</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>BSC_Event_Trainer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to trainer related to the event, shows who will be training/auditing on that day</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the trainer (only trainers attached to this event can be selected)</inlineHelpText>
+        <label>BSC Event Trainer</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Special_Event_Trainer__c.BSC_Event__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Special_Event__c</valueField>
+            </filterItems>
+            <infoMessage>You can only select Unit trainers that have been attached to the Event.</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Special_Event_Trainer__c</referenceTo>
+        <relationshipLabel>BSC Event Units</relationshipLabel>
+        <relationshipName>BSC_Event_Units</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Differs_from_Event_Venue__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Tick only if the venue should be different from the main Event Venue.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick only if the venue should be different from the main Event Venue.</inlineHelpText>
+        <label>Differs from Event Venue</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Duration_Hours__c</fullName>
+        <description>Calculates the number of hours the unit is taking place depending on the start and end date/time of the unit</description>
+        <externalId>false</externalId>
+        <formula>(Unit_End_Time__c - Unit_Start_Time__c)*24</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Calculates the number of hours the unit is taking place depending on the start and end date/time of the unit</inlineHelpText>
+        <label>Duration (Hours)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration__c</fullName>
+        <description>shows the duration of the event unit depending on the times of the unit and is calculated by a workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Duration in Days (0.5 or 1), calculated by workflow</inlineHelpText>
+        <label>Duration</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mandatory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Is the BSC Event Unit Mandatory on the Event i.e. Is it Mandatory for a Delegate to attend this BSC Event Unit if they are attending this BSC Event</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Is the BSC Event Unit Mandatory on the Event i.e. Is it Mandatory for a Delegate to attend this BSC Event Unit if they are attending this BSC Event</inlineHelpText>
+        <label>Mandatory</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the BSC Event Unit Data was migrated from the Course Booker database</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether the BSC Event Unit Data was migrated from the Course Booker database</inlineHelpText>
+        <label>Migrated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Override_Venue_Costs__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check if custom venue costs apply</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if custom venue costs apply</inlineHelpText>
+        <label>Override Venue Costs</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_ACT_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The Unique Key for the BSC Event Unit from the Course Booker Database</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The Unique Key for the BSC Event Unit from the Course Booker Database</inlineHelpText>
+        <label>PK_CB_ACT_ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Primary_c__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether this is the Primary BSC Event Unit related to an Event, this is used to allow us to report on the trainer related to the event without pulling multiple lines</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether this is the Primary BSC Event Unit related to an Event</inlineHelpText>
+        <label>Primary</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Special_Event__c</fullName>
+        <description>Related event</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related event</inlineHelpText>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>BSC Event Units</relationshipLabel>
+        <relationshipName>Sessions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Travel_Day__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Tick if the event unit is a travel day and shouldn&apos;t be included as part of the code to update the event start/end date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick if the event unit is a travel day and shouldn&apos;t be included as part of the code to update the event start/end date</inlineHelpText>
+        <label>Travel Day</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Description__c</fullName>
+        <description>Any text needed to describe or is relevant to the unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Any text needed to describe or is relevant to the unit</inlineHelpText>
+        <label>Unit Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Unit_End_Time__c</fullName>
+        <description>Stores the End Date/Time of a BSC Event Unit or &apos;Session&apos; e.g. a Gala Dinner could be a BSC Event Unit of a BSC Event.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores the End Date/Time of a BSC Event Unit or &apos;Session&apos; e.g. a Gala Dinner could be a BSC Event Unit of a BSC Event.</inlineHelpText>
+        <label>Unit End Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Start_Time__c</fullName>
+        <description>Stores the Start Date/Time of a BSC Event Unit or &apos;Session&apos; e.g. a Gala Dinner could be a BSC Event Unit of a BSC Event</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores the Start Date/Time of a BSC Event Unit or &apos;Session&apos; e.g. a Gala Dinner could be a BSC Event Unit of a BSC Event</inlineHelpText>
+        <label>Unit Start Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Venue_Delegate_Day_Rate__c</fullName>
+        <description>Populates automatically from Account (Venue)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populates automatically from Account (Venue)</inlineHelpText>
+        <label>Venue Delegate Day Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Venue_Fixed_Cost__c</fullName>
+        <description>Populates automatically from Account (Venue)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populates automatically from Account (Venue)</inlineHelpText>
+        <label>Venue Fixed Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Venue__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Select the Unit venue (if different from the Event venue)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the Unit venue (if different from the Event venue)</inlineHelpText>
+        <label>Venue</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Event Units (Held in this Venue)</relationshipLabel>
+        <relationshipName>BSC_Event_Units</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>BSC Event Unit</label>
+    <nameField>
+        <label>Event Unit Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>BSC Event Units</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Special_Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Duration__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Unit_Start_Time__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Special_Event__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Duration__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Unit_Start_Time__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Duration__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Unit_Start_Time__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Special_Event__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Special_Event__c</searchFilterFields>
+        <searchFilterFields>Duration__c</searchFilterFields>
+        <searchFilterFields>Unit_Start_Time__c</searchFilterFields>
+        <searchResultsAdditionalFields>Special_Event__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Duration__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Unit_Start_Time__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>End_Date_to_be_greater_than_Start_Date</fullName>
+        <active>true</active>
+        <description>to make sure that the end date entered on the event unit is after the start date.</description>
+        <errorConditionFormula>Unit_End_Time__c  &lt;  Unit_Start_Time__c</errorConditionFormula>
+        <errorDisplayField>Unit_End_Time__c</errorDisplayField>
+        <errorMessage>The End Date and Time must be after the Start Date and Time!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Only_update_start_end_date_if_no_trainer</fullName>
+        <active>true</active>
+        <description>Make sure that they delete the trainer before updating the unit dates</description>
+        <errorConditionFormula>AND( 
+OR( 
+DATEVALUE( 
+PRIORVALUE( 
+Unit_Start_Time__c) 
+) 
+&lt;&gt; 
+DATEVALUE( 
+Unit_Start_Time__c 
+), 
+DATEVALUE( 
+PRIORVALUE( 
+Unit_End_Time__c) 
+) 
+&lt;&gt; 
+DATEVALUE( 
+Unit_End_Time__c 
+) 
+), 
+!ISBLANK(BSC_Event_Trainer__c) 
+)</errorConditionFormula>
+        <errorMessage>This event unit is linked to a trainer with an activity, please delete the event trainer before updating the event unit.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Assign_Trainer</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Assign Trainers</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>#</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Delegate_List</fullName>
+        <availability>online</availability>
+        <description>Delegate List at Unit Level</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Delegate List</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Special_Event_Unit__c.Id}&amp;ReportVar={!Special_Event_Unit__c.Id}&amp;ReportID=00O20000003qhH9?pv0={ReportVar}&amp;ReportID=00O20000003qhIb?pv0={!Special_Event_Unit__c.Special_EventId__c}&amp;OFN=Unit+Delegate+List&amp;TemplateId=01HD0000000HNom</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Delete_Event_Units</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Delete Event Units</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)}
+
+var url = parent.location.href;   // string for the URL of the current page
+var records = {!GETRECORDIDS($ObjectType.Special_Event_Unit__c)}; //grabs the records that the user is requesting to delete
+
+if (records[0] == null) {      //if the button was clicked but there was no record selected
+	alert(&quot;Please select at least one record to delete&quot;);     //alert the user that they didn&apos;t make a selection 
+}else{
+        if(confirm(&apos;Are you sure you want to delete &apos;+records.length+ &apos; event unit records? \n*** THIS CANNOT BE REVERSED ***&apos;)){
+             //alert(&apos;Deleting: &apos;+records);
+             result = sforce.connection.deleteIds(records);        //push the deleted records back to Salesforce
+             parent.location.href = url;
+       }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Mass_Edit</fullName>
+        <availability>online</availability>
+        <description>Allows users to mass update event units</description>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Mass Edit</masterLabel>
+        <openType>sidebar</openType>
+        <page>MassEditEventUnits</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+</CustomObject>

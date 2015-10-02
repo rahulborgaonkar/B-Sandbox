@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Holds custom feature settings that have been developed in Salesforce.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Enable_Logistics_Notification_Email__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Enables &amp; disabled &apos;Transfers &amp; Cancellation&apos; notification emails to Logistics</inlineHelpText>
+        <label>Enable Logistics Notification Email</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>One_to_One_Invoicing_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The start date on which new opportunities have to conform to the new one to one invoicing model.</inlineHelpText>
+        <label>One to One Invoicing Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>Feature Settings</label>
+</CustomObject>

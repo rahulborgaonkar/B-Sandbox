@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ProductFamily</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Advertising</fullName>
+                <color>#996633</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Advisory</fullName>
+                <color>#78C953</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Audit</fullName>
+                <color>#33FF33</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In-Company Training</fullName>
+                <color>#33CCFF</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Training</fullName>
+                <color>#000099</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Legacy Event Product</fullName>
+                <color>#33FFFF</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Memberships and Subscriptions</fullName>
+                <color>#FFFF66</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>E-Delivery</fullName>
+                <color>#A845DC</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tangible Good</fullName>
+                <color>#FF6600</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Special Events</fullName>
+                <color>#FF0000</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System Products</fullName>
+                <color>#FF99FF</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expenses</fullName>
+                <color>#DDDDDD</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OTHER</fullName>
+                <color>#000000</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Shipping</fullName>
+                <color>#CC33CC</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Qualifications</fullName>
+                <color>#EFAE73</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transfer / Cancellation fees</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

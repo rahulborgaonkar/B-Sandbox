@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object used to track project milestones</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Completed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick when project is completed</inlineHelpText>
+        <label>Completed</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Decision__c</fullName>
+        <externalId>false</externalId>
+        <label>Decision</label>
+        <picklist>
+            <controllingField>Type__c</controllingField>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <controllingFieldValues>Bid Decision</controllingFieldValues>
+                <controllingFieldValues>Bid Submitted</controllingFieldValues>
+                <controllingFieldValues>Contract Complete</controllingFieldValues>
+                <controllingFieldValues>Contract Started</controllingFieldValues>
+                <controllingFieldValues>Final Decision</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>Further Requirements Delivered</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>PQQ Decision</controllingFieldValues>
+                <controllingFieldValues>PQQ Submitted</controllingFieldValues>
+                <controllingFieldValues>Viability Review</controllingFieldValues>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Accepted</fullName>
+                <controllingFieldValues>Bid Decision</controllingFieldValues>
+                <controllingFieldValues>Final Decision</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>PQQ Decision</controllingFieldValues>
+                <controllingFieldValues>Viability Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <controllingFieldValues>Bid Decision</controllingFieldValues>
+                <controllingFieldValues>Final Decision</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Decision</controllingFieldValues>
+                <controllingFieldValues>PQQ Decision</controllingFieldValues>
+                <controllingFieldValues>Viability Review</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Submitted</fullName>
+                <controllingFieldValues>Bid Submitted</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>Further Requirements Delivered</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>PQQ Submitted</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Submitted</fullName>
+                <controllingFieldValues>Bid Submitted</controllingFieldValues>
+                <controllingFieldValues>Contract Complete</controllingFieldValues>
+                <controllingFieldValues>Contract Started</controllingFieldValues>
+                <controllingFieldValues>Final Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>Further Requirements Delivered</controllingFieldValues>
+                <controllingFieldValues>Initial Proposal Submitted</controllingFieldValues>
+                <controllingFieldValues>PQQ Submitted</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Project_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Project Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Culture Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bid / Tender</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Project__c</fullName>
+        <externalId>false</externalId>
+        <label>Project</label>
+        <referenceTo>Project__c</referenceTo>
+        <relationshipLabel>Milestones</relationshipLabel>
+        <relationshipName>Milestones</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Signatory_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Signatory Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Signatory__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Signatory</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Milestones</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <controllingField>Project_Type__c</controllingField>
+            <picklistValues>
+                <fullName>Viability Review</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PQQ Submitted</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Proposal Submitted</fullName>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>PQQ Decision</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Initial Proposal Decision</fullName>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bid Submitted</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Proposal Submitted</fullName>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bid Decision</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Proposal Decision</fullName>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Further Requirements Delivered</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final Decision</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Started</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contract Complete</fullName>
+                <controllingFieldValues>Bid / Tender</controllingFieldValues>
+                <controllingFieldValues>Culture Change</controllingFieldValues>
+                <controllingFieldValues>Standard</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Milestone</label>
+    <nameField>
+        <displayFormat>M-{0000000}</displayFormat>
+        <label>Milestone Reference</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Milestones</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

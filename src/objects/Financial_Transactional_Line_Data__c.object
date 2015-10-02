@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A junction object to track financial transactions intended to drive sales commissions and other financial reporting.  Trigger written by 2020 populate this object dynamically.  This captures line level transactions and looks up to the Financial Transactional Header Data object.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Name_Holder__c</fullName>
+        <externalId>true</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Account Name Holder</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <description>Pulls in the related opportunities account name</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Account.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunities account name</inlineHelpText>
+        <label>Account Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Booking__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Looks up to BSC Event Booking to capture data on BSC Event Booking records. This is used for reports and also to drive visual force invoicing code / logic</description>
+        <externalId>false</externalId>
+        <label>BSC Event Booking</label>
+        <referenceTo>Special_Event_Booking__c</referenceTo>
+        <relationshipLabel>Financial Transactional Line Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Line_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_End_Date_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>BSC Event End Date Holder</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_End_Date__c</fullName>
+        <description>Pulls in the Related Event Booking&apos;s Event End Date</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event_Booking__r.Special_Event__r.EndDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the Related Event Booking&apos;s Event End Date</inlineHelpText>
+        <label>BSC Event End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Start_Date_Holder__c</fullName>
+        <externalId>false</externalId>
+        <label>BSC Event Start Date Holder</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Start_Date__c</fullName>
+        <description>Pulls in the Related Event Booking&apos;s Event Start Date</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event_Booking__r.Special_Event__r.StartDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the Related Event Booking&apos;s Event Start Date</inlineHelpText>
+        <label>BSC Event Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Note_Status__c</fullName>
+        <description>Checks on the Financial Transactional Header Data for a Sales Credit Note and adds text &quot;No credit note&quot; or &quot;Invoice credited / part credited&quot; depending on if there is one.</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Financial_Transactional_Header_Data__r.Sales_Credit_Note__c ),&quot;No credit note&quot;,&quot;Invoice credited / part credited&quot;)</formula>
+        <inlineHelpText>Checks on the Financial Transactional Header Data for a Sales Credit Note and adds text &quot;No credit note&quot; or &quot;Invoice credited / part credited&quot; depending on if there is one.</inlineHelpText>
+        <label>Credit Note Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Transactional_Header_Data__c</fullName>
+        <description>This relationship allows us to link transactional lines items up to header records.  This is neccessary to allow reporting on payments and credits by linking Salesforce Opportunity Line level items to Financial Force line level items and then look up to header to retrieve payment information.</description>
+        <externalId>false</externalId>
+        <label>Financial Transactional Header Data</label>
+        <referenceTo>Financial_Transactional_Header_Data__c</referenceTo>
+        <relationshipLabel>Financial Transactional Line Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Line_Data</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Invoice Date Holder</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <description>Pulls in the related invoice date</description>
+        <externalId>false</externalId>
+        <formula>Sales_Invoice_Line_Item__r.c2g__Invoice__r.c2g__InvoiceDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related invoice date</inlineHelpText>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Invoice Number Holder</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <description>Pulls in the related invoice number</description>
+        <externalId>false</externalId>
+        <formula>Sales_Invoice_Line_Item__r.c2g__Invoice__r.Name</formula>
+        <inlineHelpText>Pulls in the related invoice number</inlineHelpText>
+        <label>Invoice Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OPL_ID__c</fullName>
+        <description>Holds OPL ID from Invoice Line Item</description>
+        <externalId>false</externalId>
+        <label>OPL ID</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Account__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity Account</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Number_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Opportunity Number Holder</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Number__c</fullName>
+        <description>Pulls in the related opportunity number</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Opportunity_Number__c</formula>
+        <inlineHelpText>Pulls in the related opportunity number</inlineHelpText>
+        <label>Opportunity Number</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Financial Transactional Line Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Line_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Status__c</fullName>
+        <description>Looks at whether there is a Sales Credit Note attached to the Financial Transactional Header Data, if there is, then it adds the Financial Transactional Header Data Payment Status, OR the Payment Status plus &quot; / Maybe credited, check invoice&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Financial_Transactional_Header_Data__r.Sales_Credit_Note__c ),Financial_Transactional_Header_Data__r.Payment_Status__c, Financial_Transactional_Header_Data__r.Payment_Status__c +&quot; / Maybe credited, check invoice&quot;)</formula>
+        <inlineHelpText>Looks at whether there is a Sales Credit Note attached to the Financial Transactional Header Data, if there is, then it adds the Financial Transactional Header Data Payment Status, OR the Payment Status plus &quot; / Maybe credited, check invoice&quot;</inlineHelpText>
+        <label>Payment Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product__r.ProductCode</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Product Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Financial Transactional Line Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Line_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Invoice_Line_Item__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Provides a lookup to the Financial Force invoice line item.  This is used to link Opportunity product lines to the appropriate invoice line items.</description>
+        <externalId>false</externalId>
+        <label>Sales Invoice Line Item</label>
+        <referenceTo>c2g__codaInvoiceLineItem__c</referenceTo>
+        <relationshipName>Financial_Transactional_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sales_invoice_Net_Line_amount_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Sales invoice Net Line amount Holder</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_invoice_Net_Line_amount__c</fullName>
+        <description>Pulls in the net value of the related sales invoice line item.</description>
+        <externalId>false</externalId>
+        <formula>Sales_Invoice_Line_Item__r.c2g__NetValue__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the net value of the related sales invoice line item.</inlineHelpText>
+        <label>Sales invoice Net Line amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Subscription End Date Holder</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_End_Date__c</fullName>
+        <description>Pulls in the related subscription end date</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Line__r.Subscription__r.End_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related subscription end date</inlineHelpText>
+        <label>Subscription End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Looks up to Subscription Line to capture data on Subscription records.  This is used for reports and also to drive visual force invoicing code / logic</description>
+        <externalId>false</externalId>
+        <label>Subscription Line</label>
+        <referenceTo>Subscription_Line__c</referenceTo>
+        <relationshipLabel>Financial Transactional Line Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Line_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Product_Codes_Holder__c</fullName>
+        <description>Holding field to solve issue with financial transactions</description>
+        <externalId>false</externalId>
+        <label>Subscription Product Codes Holder</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Product_Codes__c</fullName>
+        <description>To pull in the related subscription&apos;s product codes (used for customer services reporting)</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Line__r.Subscription__r.Product_Codes__c</formula>
+        <inlineHelpText>To pull in the related subscription&apos;s product codes (used for customer services reporting)</inlineHelpText>
+        <label>Subscription Product Codes</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Ref_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Subscription Ref Holder</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Ref__c</fullName>
+        <description>pulls in the related subscription ref (for customer services reports)</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Line__r.Subscription__r.Name</formula>
+        <inlineHelpText>pulls in the related subscription ref (for customer services reports)</inlineHelpText>
+        <label>Subscription Ref</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Start_Date_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Subscription Start Date Holder</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Start_Date__c</fullName>
+        <description>Pulls in the related subscription start date</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Line__r.Subscription__r.Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related subscription start date</inlineHelpText>
+        <label>Subscription Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Status_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Subscription Status Holder</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Status__c</fullName>
+        <description>pulls in the related subscription status (used for customer service reports)</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Subscription_Line__r.Subscription__r.Status__c)</formula>
+        <inlineHelpText>pulls in the related subscription status (used for customer service reports)</inlineHelpText>
+        <label>Subscription Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Type_Holder__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Holding field to solve issue with financial transactions</inlineHelpText>
+        <label>Subscription Type Holder</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Type__c</fullName>
+        <description>Pulls in the related subscription type field (so that subscriptions can tell if it is a new or renewal)</description>
+        <externalId>false</externalId>
+        <formula>TEXT( Subscription_Line__r.Subscription__r.Type__c )</formula>
+        <inlineHelpText>Pulls in the related subscription type field (so that subscriptions can tell if it is a new or renewal)</inlineHelpText>
+        <label>Subscription Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Financial Transactional Line Data</label>
+    <nameField>
+        <displayFormat>FT-{000000}</displayFormat>
+        <label>Financial Transactional Data Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Financial Transactional Line Data</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

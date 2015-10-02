@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object for managing costs associated with holding an event</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <description>Currency field showing the amount of cost</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Currency field showing the amount of cost</inlineHelpText>
+        <label>Amount</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Populate if costs apply to a specific unit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populate if costs apply to a specific unit</inlineHelpText>
+        <label>BSC Event Unit</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>You can only select a Unit from the Event in question</errorMessage>
+            <filterItems>
+                <field>Special_Event_Unit__c.Special_Event__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.BSC_Event__c</valueField>
+            </filterItems>
+            <infoMessage>Units of the Event in question</infoMessage>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Special_Event_Unit__c</referenceTo>
+        <relationshipLabel>BSC Event Costs</relationshipLabel>
+        <relationshipName>BSC_Event_Costs</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event__c</fullName>
+        <description>related event</description>
+        <externalId>false</externalId>
+        <inlineHelpText>related event</inlineHelpText>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>BSC Event Costs</relationshipLabel>
+        <relationshipName>R00N50000001mIafEAE</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Bill_Date__c</fullName>
+        <description>Date the payment is paid</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the payment is paid</inlineHelpText>
+        <label>Date Paid</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Shows the type of cost this refers to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Shows the type of cost this refers to</inlineHelpText>
+        <label>Category</label>
+        <picklist>
+            <controllingField>Type__c</controllingField>
+            <picklistValues>
+                <fullName>Course Notes</fullName>
+                <controllingFieldValues>Variable</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Delegate Packs</fullName>
+                <controllingFieldValues>Variable</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trainer Accommodation</fullName>
+                <controllingFieldValues>Fixed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trainer Additional Costs</fullName>
+                <controllingFieldValues>Fixed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <controllingFieldValues>Fixed</controllingFieldValues>
+                <controllingFieldValues>Variable</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Visa</fullName>
+                <controllingFieldValues>Fixed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Flights</fullName>
+                <controllingFieldValues>Fixed</controllingFieldValues>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Cost_Total__c</fullName>
+        <description>calculates the total cost by amount and number of delegates unless the type of cost is fixed.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ ISPICKVAL(Type__c,&quot;Fixed&quot;),
+ Amount__c , Amount__c * Number_of_Delegates__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>calculates the total cost by amount and number of delegates unless the type of cost is fixed</inlineHelpText>
+        <label>Cost Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Date_Due__c</fullName>
+        <description>Date the payment is due.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date the payment is due.</inlineHelpText>
+        <label>Date Due</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>Short description of cost</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Short description of cost</inlineHelpText>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Details__c</fullName>
+        <description>Any additional details of the cost that are relevant</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Any additional details of the cost that are relevant</inlineHelpText>
+        <label>Details</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Delegates__c</fullName>
+        <description>Pulls in the number of delegates booking from the related event</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.No_of_Delegates_Booked__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the number of delegates booking from the related event</inlineHelpText>
+        <label>Number of Delegates</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>lookup field to Accounts to identify Supplier company</description>
+        <externalId>false</externalId>
+        <inlineHelpText>lookup field to Accounts to identify Supplier company</inlineHelpText>
+        <label>Supplier</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>BSC Event Costs</relationshipLabel>
+        <relationshipName>Expenses</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Indicates whether the type of cost is per delegate or fixed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether the type of cost is per delegate or fixed.</inlineHelpText>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Variable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>BSC Event Costs</label>
+    <nameField>
+        <displayFormat>EC-{0000000}</displayFormat>
+        <label>Cost Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BSC Event Costs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

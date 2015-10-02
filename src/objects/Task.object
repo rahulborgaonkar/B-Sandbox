@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Close</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>DeleteSeries</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>NewTask</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ActivityDate</fullName>
+    </fields>
+    <fields>
+        <fullName>CallDisposition</fullName>
+    </fields>
+    <fields>
+        <fullName>CallDurationInSeconds</fullName>
+    </fields>
+    <fields>
+        <fullName>CallObject</fullName>
+    </fields>
+    <fields>
+        <fullName>CallType</fullName>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>Email</fullName>
+    </fields>
+    <fields>
+        <fullName>IsVisibleInSelfService</fullName>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Phone</fullName>
+    </fields>
+    <fields>
+        <fullName>Priority</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>High</fullName>
+                <default>false</default>
+                <highPriority>true</highPriority>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Normal</fullName>
+                <default>true</default>
+                <highPriority>false</highPriority>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Low</fullName>
+                <default>false</default>
+                <highPriority>false</highPriority>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>RecurrenceInterval</fullName>
+    </fields>
+    <fields>
+        <fullName>RecurrenceRegeneratedType</fullName>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <closed>false</closed>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <closed>false</closed>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <closed>true</closed>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Waiting on someone else</fullName>
+                <closed>false</closed>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deferred</fullName>
+                <closed>false</closed>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <picklist>
+            <picklistValues>
+                <fullName>None</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marking - IOSH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marking - Nebosh</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>WhatId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>WhoId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <recordTypes>
+        <fullName>Marketo</fullName>
+        <active>true</active>
+        <description>Marketo Activity Types</description>
+        <label>Marketo</label>
+        <picklistValues>
+            <picklist>Company__c</picklist>
+            <values>
+                <fullName>BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complywise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Credit_Control__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duplication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Reminder before CCC %26%2For admin order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paperwork corrected%2E Pmt expected %3C30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paperwork query</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purch order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recon required</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Since paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slow%2C confirmed anticipated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slow%2C to follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Write off delinquent debtor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Event_Trainer_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Fee_Earning_FE__c</picklist>
+            <values>
+                <fullName>FE - Distance learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - E-learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Learner support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Marking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - NVQ assessment%2Fverification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Prod Dev</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Projects %28external%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - QA review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Report writing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Scoping</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Travel to%2Ffrom Int client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Fee_Earning_External_NFEE__c</picklist>
+            <values>
+                <fullName>NFEE - Article</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Client meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Conference</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Exhibition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Investigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Shadow audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Training sit-in</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Travel to%2Ffrom UK client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Fee_Earning_Internal_NFEI__c</picklist>
+            <values>
+                <fullName>NFEI - Admin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Available</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - CPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - H%26S issue %28internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Induction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Internal meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Prep</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Project %28internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Staff training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Standardisation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - WFH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Working_Day_NWD__c</picklist>
+            <values>
+                <fullName>NWD - Holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NWD - Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NWD - TOIL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_Type__c</picklist>
+            <values>
+                <fullName>Credit control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marking - IOSH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marking - Nebosh</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wrapup_Department__c</picklist>
+            <values>
+                <fullName>01 Membership%2FClient Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07 Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>08 Abandoned call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>09 Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10 Policy And Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11 IT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wrapup_subtype__c</picklist>
+            <values>
+                <fullName>01 Membership%2FClient Services - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Membership service and admin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Payment%2Finvoice Membership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Sales enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Sales enquiry %28new%2Fexisting%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Application and awards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Approved Centres%2FOQS queries</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations -</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Associates and trainers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Audits%2Freports%2Fcert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - E-learning LMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - E-learning set up %28iosh%2Fnebosh etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Examinations Officer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - NVQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Accounts payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Payment%2Finvoice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing - Event%2FAwards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>08 Abandoned call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>09 Human Resources - All Enquiries</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10 Policy And Communications - All Enquiries</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard</fullName>
+        <active>true</active>
+        <label>Standard</label>
+        <picklistValues>
+            <picklist>Company__c</picklist>
+            <values>
+                <fullName>BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Complywise</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Credit_Control__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Duplication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Final Reminder before CCC %26%2For admin order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paperwork corrected%2E Pmt expected %3C30 days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paperwork query</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Purch order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recon required</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Since paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slow%2C confirmed anticipated</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slow%2C to follow up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transfer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Write off delinquent debtor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Event_Trainer_Status__c</picklist>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Fee_Earning_FE__c</picklist>
+            <values>
+                <fullName>FE - Distance learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - E-learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Learner support</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Marking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - NVQ assessment%2Fverification</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Prod Dev</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Projects %28external%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - QA review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Report writing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Scoping</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>FE - Travel to%2Ffrom Int client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Fee_Earning_External_NFEE__c</picklist>
+            <values>
+                <fullName>NFEE - Article</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Client meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Conference</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Exhibition</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Investigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Shadow audit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Training sit-in</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEE - Travel to%2Ffrom UK client</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Fee_Earning_Internal_NFEI__c</picklist>
+            <values>
+                <fullName>NFEI - Admin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Available</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - CPD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - H%26S issue %28internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Induction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Internal meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Prep</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Project %28internal%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Staff training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - Standardisation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NFEI - WFH</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Non_Working_Day_NWD__c</picklist>
+            <values>
+                <fullName>NWD - Holiday</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NWD - Medical</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NWD - TOIL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Sub_Type__c</picklist>
+            <values>
+                <fullName>Credit control</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Suspect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marking - IOSH</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marking - Nebosh</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wrapup_Department__c</picklist>
+            <values>
+                <fullName>01 Membership%2FClient Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07 Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>08 Abandoned call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>09 Human Resources</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10 Policy And Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11 IT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Wrapup_subtype__c</picklist>
+            <values>
+                <fullName>01 Membership%2FClient Services - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Membership service and admin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Payment%2Finvoice Membership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>01 Membership%2FClient Services - Sales enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>02 Sales - Sales enquiry %28new%2Fexisting%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Application and awards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Approved Centres%2FOQS queries</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>03 Awarding Body - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations -</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Associates and trainers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Audits%2Freports%2Fcert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - E-learning LMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - E-learning set up %28iosh%2Fnebosh etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Examinations Officer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - NVQ</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>04 Logistics%2FOperations - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Accounts payable</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>05 Finance - Payment%2Finvoice</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing - Complaint</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>06 Marketing - Event%2FAwards</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>08 Abandoned call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>09 Human Resources - All Enquiries</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10 Policy And Communications - All Enquiries</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Assignment_Permission_Check</fullName>
+        <active>true</active>
+        <description>Checks that a user is able to assign task to others</description>
+        <errorConditionFormula>AND(
+OwnerId &lt;&gt;  $User.Id , 
+$User.Task_Assign_Permitted__c = FALSE,
+$Setup.Workflow_Validation__c.Migration_Workflow_Validation_Disabled__c =FALSE
+)</errorConditionFormula>
+        <errorMessage>You are not permitted to assign tasks to others. Check with your administrator for details</errorMessage>
+    </validationRules>
+</CustomObject>

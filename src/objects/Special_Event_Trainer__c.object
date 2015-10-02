@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object for tracking which trainers are assigned to an event</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Accommodation_Cost_Total__c</fullName>
+        <description>This is a formula field that looks at the day rate for accommodation plus the cost of meals etc times the number of days staying at the accommodation.</description>
+        <externalId>false</externalId>
+        <formula>( Trainer_Accommodation_Day_Rate__c + Trainer_Sustenance__c )* Trainer_Accommodation_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This is a formula field that looks at the day rate for accommodation plus the cost of meals etc times the number of days staying at the accommodation.</inlineHelpText>
+        <label>Accommodation Cost Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Unit__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is a lookup to the event unit (day/time) that the trainer is scheduled to train on</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is a lookup to the event unit (day/time) that the trainer is scheduled to train on</inlineHelpText>
+        <label>BSC Event Unit</label>
+        <referenceTo>Special_Event_Unit__c</referenceTo>
+        <relationshipLabel>BSC Event Trainers</relationshipLabel>
+        <relationshipName>BSC_Event_Trainers1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event__c</fullName>
+        <description>This is the lookup to the event that the trainer is scheduled to train on</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the lookup to the event that the trainer is scheduled to train on</inlineHelpText>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>BSC Event Trainers</relationshipLabel>
+        <relationshipName>BSC_Event_Trainers</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Class__c</fullName>
+        <description>Used by logistics to determine the level of use a trainer is to the company</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Green = Use with confidence 
+Amber = Use if no others available 
+Red = Use only in dire emergency</inlineHelpText>
+        <label>Class</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Red</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Amber</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Green</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Day_Rate__c</fullName>
+        <description>Workflow rule will populate the day rate, if the trainer has a specific day rate that this is the amount that will be pulled in, otherwise it will pull in the day rate from the related product.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This will auto populate with the appropriate day rate</inlineHelpText>
+        <label>Day Rate</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Is_Primary_Event_Unit__c</fullName>
+        <description>Is the associated event unit a primary unit?</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event_Unit__r.Primary_c__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Primary Event Unit</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Where the trainer record has been migrated, if the trainer is no longer working for the BSC then this will lookup to the contact record rather then the user</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates Contact for Legacy Trainers</inlineHelpText>
+        <label>Legacy Trainer</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>BSC Event Trainers</relationshipLabel>
+        <relationshipName>BSC_Event_Trainers</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_Trainer_Name__c</fullName>
+        <description>Formula field to pull in the first and last name of the related legacy trainer (contact)</description>
+        <externalId>false</externalId>
+        <formula>Legacy_Contact__r.FirstName +&quot; &quot;+ Legacy_Contact__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the first and last name of the related legacy trainer</inlineHelpText>
+        <label>Legacy Trainer Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If ticked, this trainer was migrated from Coursebooker</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates Migrated Data</inlineHelpText>
+        <label>Migrated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Non_Standard_Trainer_Fee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Tick this box if you do not want to apply a standard day rate (from the Trainer record or from the Product record if the Trainer record is not populated)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick this box if you do not want to apply a standard day rate (from the Trainer record or from the Product record if the Trainer record is not populated)</inlineHelpText>
+        <label>Non-Standard Trainer Fee</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Days__c</fullName>
+        <description>This is the number of days that the day rate will apply (where non-standard fee is not selected) populated by the same workflow that works out the day rate</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days a trainer will be active (populated by workflow if non-standard fee is not selected). 1 day = 8 hours.</inlineHelpText>
+        <label>Number of Days</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postcode_1__c</fullName>
+        <description>Pulls the postcode from the related user</description>
+        <externalId>false</externalId>
+        <formula>Trainer__r.User__r.PostalCode</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls the postcode from the related user</inlineHelpText>
+        <label>Postcode 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postcode_2__c</fullName>
+        <description>Pulls in the event venue&apos;s principle address postcode</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.Venue__r.Principle_Address_ZIP_Postal_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the event venue&apos;s principle address postcode</inlineHelpText>
+        <label>Postcode 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_ID__c</fullName>
+        <description>For mapping migrated trainers - can be deleted after use</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.Product__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>For mapping migrated trainers - can be deleted after use</inlineHelpText>
+        <label>Product ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Determines the status of the scheduled trainer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines the status of the scheduled trainer</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Provisional</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Confirmed</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Temp_Check__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Temporary field</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Temporary field</inlineHelpText>
+        <label>Temp-Check</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Total_Trainer_Cost__c</fullName>
+        <description>Sum of Fees and Accommodation</description>
+        <externalId>false</externalId>
+        <formula>Accommodation_Cost_Total__c + Trainer_Fee__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Fees and Accommodation</inlineHelpText>
+        <label>Total Trainer Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Trainer_Accommodation_Day_Rate__c</fullName>
+        <defaultValue>89</defaultValue>
+        <description>pulls in the standard day rate of £89 which is an average accommodation rate</description>
+        <externalId>false</externalId>
+        <inlineHelpText>pulls in the standard day rate of £89 which is an average accommodation rate</inlineHelpText>
+        <label>Trainer Accommodation Day Rate</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Trainer_Accommodation_Days__c</fullName>
+        <description>Number of days&apos; accommodation required by Trainer</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of days&apos; accommodation required by Trainer</inlineHelpText>
+        <label>Trainer Accommodation Days</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trainer_Fee__c</fullName>
+        <description>Works out the total trainer fee by calculating the number of days X day rate</description>
+        <externalId>false</externalId>
+        <formula>Number_of_Days__c * Day_Rate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Works out the total trainer fee by calculating the number of days X day rate</inlineHelpText>
+        <label>Trainer Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Trainer_Name__c</fullName>
+        <description>Pulls in the related users first name and last name</description>
+        <externalId>false</externalId>
+        <formula>Trainer__r.User__r.FirstName  &amp; &quot; &quot;&amp;  Trainer__r.User__r.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related users first name and last name</inlineHelpText>
+        <label>Trainer Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Trainer_Sustenance__c</fullName>
+        <defaultValue>19</defaultValue>
+        <description>Pulls in the average cost of the trainer expenses (ie meals etc) of £19 per day</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Pulls in the average cost of the trainer expenses (ie meals etc) of £19 per day</inlineHelpText>
+        <label>Trainer Sustenance</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Trainer__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup field to the trainer record</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup field to the trainer record</inlineHelpText>
+        <label>Trainer</label>
+        <referenceTo>Trainer__c</referenceTo>
+        <relationshipLabel>BSC Event Trainers</relationshipLabel>
+        <relationshipName>BSC_Event_Trainers</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>determines the scheduled trainer&apos;s role (ie whether they are performing the training or just sitting in)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>determines the scheduled trainer&apos;s role (ie whether they are performing the training or just sitting in)</inlineHelpText>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active Trainer</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sitting In</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Unit_End_Date_Time__c</fullName>
+        <description>Pulls in the related event units end date/time</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event_Unit__r.Unit_End_Time__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related event units end date/time</inlineHelpText>
+        <label>Unit End Date / Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Unit_Start_Date_Time__c</fullName>
+        <description>Pulls in the related event units start date/time</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event_Unit__r.Unit_Start_Time__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related event units start date/time</inlineHelpText>
+        <label>Unit Start Date / Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <label>BSC Event Trainer</label>
+    <nameField>
+        <displayFormat>ET-{0000000}</displayFormat>
+        <label>BSC Event Trainer Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BSC Event Trainers</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Trainer__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>Trainer__c</lookupFilterFields>
+        <lookupPhoneDialogsAdditionalFields>Trainer__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Trainer__c</searchFilterFields>
+        <searchFilterFields>Trainer_Name__c</searchFilterFields>
+        <searchFilterFields>BSC_Event_Unit__c</searchFilterFields>
+        <searchFilterFields>BSC_Event__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <webLinks>
+        <fullName>Delete_Trainers</fullName>
+        <availability>online</availability>
+        <description>Deletes all trainers from the BSC Event</description>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Delete Trainers</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/apex.js&quot;)}
+
+var url = parent.location.href;   // string for the URL of the current page
+var records = {!GETRECORDIDS($ObjectType.Special_Event_Trainer__c)}; //grabs the records that the user is requesting to delete
+
+if (records[0] == null) {      //if the button was clicked but there was no record selected
+	alert(&quot;Please select at least one record to delete&quot;);     //alert the user that they didn&apos;t make a selection 
+}else{
+        if(confirm(&apos;Are you sure you want to delete &apos;+records.length+ &apos; event trainer records? \n*** THIS CANNOT BE REVERSED ***&apos;)){
+             //alert(&apos;Deleting: &apos;+records);
+             result = sforce.connection.deleteIds(records);        //push the deleted records back to Salesforce
+             parent.location.href = url;
+       }
+}</url>
+    </webLinks>
+</CustomObject>

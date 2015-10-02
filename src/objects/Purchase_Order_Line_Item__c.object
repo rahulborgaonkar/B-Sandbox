@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Cost_Code__c</fullName>
+        <description>Cost code to be used for line item.</description>
+        <externalId>false</externalId>
+        <label>Cost Code</label>
+        <length>100</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cost__c</fullName>
+        <externalId>false</externalId>
+        <formula>If( 
+!ISPICKVAL(VAT_Rate__c,&quot;&quot;) , 
+(Unit_Days__c * Unit_Price__c) + (((Unit_Days__c * Unit_Price__c) * value(TEXT(VAT_Rate__c )))/100), 
+Unit_Days__c * Unit_Price__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cost</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Line_Item_Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Line Item Description</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Line_Item_Detail__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/&quot;+Id, Line_Item_Description__c ,&quot;_self&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Line Item Detail</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Net_Price__c</fullName>
+        <externalId>false</externalId>
+        <formula>(Unit_Days__c * Unit_Price__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Purchase_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Purchase Order</label>
+        <referenceTo>Purchase_Order__c</referenceTo>
+        <relationshipLabel>Purchase Order Line Items</relationshipLabel>
+        <relationshipName>Purchase_Order_Line_Items</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Unit_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit/Days</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit /Price</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAT_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>(((Unit_Days__c * Unit_Price__c) * value(TEXT(VAT_Rate__c )))/100)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>VAT Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAT_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>VAT Rate</label>
+        <picklist>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>17.5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>20</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Purchase Order Line Item</label>
+    <nameField>
+        <displayFormat>POLI-{0000}</displayFormat>
+        <label>Purchase Order Line Item Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Purchase Order Line Items</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>NoEditByNonAdmins</fullName>
+        <active>true</active>
+        <description>Prevents no admin or Finance staff from updating PO in various statues</description>
+        <errorConditionFormula>AND(
+NOT(ISNEW())
+,
+OR(
+ISPICKVAL(Purchase_Order__r.Status__c, &quot;Awaiting Approval&quot;), 
+ISPICKVAL(Purchase_Order__r.Status__c, &quot;Paid&quot;),
+ISPICKVAL(Purchase_Order__r.Status__c, &quot;Cancelled&quot;),
+ISPICKVAL(Purchase_Order__r.Status__c, &quot;Do Not Pay&quot;)
+)
+,
+AND(
+$Profile.Name&lt;&gt;&quot;System Administrator&quot;,
+$Profile.Name&lt;&gt;&quot;Finance User&quot;,
+$Profile.Name&lt;&gt;&quot;FinancialForce Accountant&quot;,
+$Profile.Name&lt;&gt;&quot;FinancialForce Cash Entry Clerk&quot;,
+$Profile.Name&lt;&gt;&quot;FinancialForce Payables Clerk&quot;,
+$Profile.Name&lt;&gt;&quot;FinancialForce Read Only&quot;,
+$Profile.Name&lt;&gt;&quot;FinancialForce Sales Invoicing Clerk&quot;
+)
+)</errorConditionFormula>
+        <errorMessage>You can not update PO Line Item if the PO status is Awaiting Approval OR Paid OR Cancelled OR Do Not Pay</errorMessage>
+    </validationRules>
+</CustomObject>

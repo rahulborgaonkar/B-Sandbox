@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage products / elements of a subscription</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active_Site_Product_Count__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Count of Site Products in Active Subscription Sites</inlineHelpText>
+        <label>Active Site Product Count</label>
+        <summaryForeignKey>Site_Product__c.Subscription_Line__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Credited_Status__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used in Financial transaction objects code</description>
+        <externalId>false</externalId>
+        <label>Credited Status</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Number_of_Licences__c</fullName>
+        <externalId>false</externalId>
+        <label>E-Delivery: Number of Licences</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Edit_Subscription__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Edit Subscription</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>International_Product_Count__c</fullName>
+        <description>Denotes this subscription line is associated to an international product</description>
+        <externalId>false</externalId>
+        <formula>IF( Product__r.International_Product__c = True, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If true then this subscription line is associated to an international product</inlineHelpText>
+        <label>International Product Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Paid_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Paid Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not-Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Lapse_Days_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Lapse Days (Number)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lapse_Days__c</fullName>
+        <description>Calculates lapse days based on product information</description>
+        <externalId>false</externalId>
+        <formula>Product__r.Lapse_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Calculates lapse days based on product information</inlineHelpText>
+        <label>Lapse Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Migrated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OPL_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>OPL ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ongoing_Renewal_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If filled out when this product renews this value (UNIT PRICE) will be used for EVERY future renewal.</inlineHelpText>
+        <label>Ongoing Renewal Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_MEL_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This is the Primary Key of the Membership Period from the source Membership Period data and maps to MEMBER_PERIOD.MEP_ID from the Membership_Period table in the CB database.
+
+Changed field label for data migration.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Maps to MEMBER_PERIOD.MEP_ID from CB 
+NOTE**
+(for benefit products the MXPREF_ID from the Member_Prod_XRef table may also be appended to the end)</inlineHelpText>
+        <label>PK_CB_MEP_ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Subscription_Line__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Previous Subscription Line</label>
+        <referenceTo>Subscription_Line__c</referenceTo>
+        <relationshipLabel>Subscription Lines</relationshipLabel>
+        <relationshipName>Previous_Subscription_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If a subs line is pro-rata, enter the start date here</inlineHelpText>
+        <label>Pro-Rata Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Product_Sales_Price__c</fullName>
+        <description>Will auto populated on creation of subs lines - with sales price from opp product line</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Opportunity Product Line Sales Price</inlineHelpText>
+        <label>Product Sales Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Product</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Subscription Lines</relationshipLabel>
+        <relationshipName>Subscription_Lines</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Quantity_Available__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Quantity Available</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reminder_Days_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Reminder Days (Number)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Reminder_Days__c</fullName>
+        <description>Calculates reminder days based on product information</description>
+        <externalId>false</externalId>
+        <formula>Product__r.Initial_Reminder_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Calculates reminder days based on product information</inlineHelpText>
+        <label>Reminder Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Fill this out with a UNIT PRICE if you want to change the renewal price for this product for the very NEXT RENEWAL ONLY.</inlineHelpText>
+        <label>Next Renewal Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This displays the quantity that will renewed as part of the renewal process. If this is blank the current quantity is used.</inlineHelpText>
+        <label>Renewal Quantity</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Subscription__c</referenceTo>
+        <relationshipLabel>Subscription Lines</relationshipLabel>
+        <relationshipName>Subscription_Lines</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>tmpUpd__c</fullName>
+        <externalId>false</externalId>
+        <label>tmpUpd</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Subscription Line</label>
+    <nameField>
+        <displayFormat>SL-{0000000}</displayFormat>
+        <label>Subscription Line Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Subscription Lines</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Next_Renewal_Price_CANNOT_be_blank</fullName>
+        <active>true</active>
+        <description>If the Ongoing Renewal Price is populated</description>
+        <errorConditionFormula>AND(Ongoing_Renewal_Price__c &gt;= 0,  
+ ISBLANK(Renewal_Price__c))</errorConditionFormula>
+        <errorDisplayField>Renewal_Price__c</errorDisplayField>
+        <errorMessage>Next Renewal Price cannot be blank if Ongoing Renewal Price is populated.  Please enter.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Renewal_Qty_cant_be_more_than_Sub_Qty</fullName>
+        <active>true</active>
+        <errorConditionFormula>Quantity__c &lt; Renewal_Quantity__c</errorConditionFormula>
+        <errorDisplayField>Renewal_Quantity__c</errorDisplayField>
+        <errorMessage>You can&apos;t have a renewal quantity greater than the subscription line quantity.</errorMessage>
+    </validationRules>
+</CustomObject>

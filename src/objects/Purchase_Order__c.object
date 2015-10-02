@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Billing_Address_Formula__c</fullName>
+        <description>Pulls Billing address from Account</description>
+        <externalId>false</externalId>
+        <formula>Account__r.BillingStreet&amp;BR()&amp;
+Account__r.BillingCity&amp;&apos;, &apos;&amp; Account__r.BillingState&amp;&apos; &apos;&amp; Account__r.BillingPostalCode&amp;BR()&amp;  Account__r.BillingCountry</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Account billing address</inlineHelpText>
+        <label>Account Billing Address Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Billing_Address__c</fullName>
+        <externalId>false</externalId>
+        <label>Account Billing Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Organisation</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>Account.Supplier__c</field>
+                <operation>equals</operation>
+                <value>TRUE</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Purchase Orders</relationshipLabel>
+        <relationshipName>Purchase_Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Start_Date__c</fullName>
+        <description>Start date of related BSC event</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.StartDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Start date of related BSC event</inlineHelpText>
+        <label>BSC Event Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>Purchase Orders</relationshipLabel>
+        <relationshipName>Purchase_Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Current_Liability__c</fullName>
+        <externalId>false</externalId>
+        <formula>Total_Cost__c  *
+(
+   IF
+   ( 
+      NOW() &lt; Liability_1_Date__c, Liability_1_Percentage__c, 
+      IF
+      (
+         AND(  NOW() &gt; Liability_1_Date__c, NOW() &lt;= Liability_2_Date__c
+            ), Liability_2_Percentage__c,
+         IF
+         (
+            AND( OR(NOW() &gt; Liability_1_Date__c, NOW() &gt; Liability_2_Date__c) , NOW() &lt;= Liability_3_Date__c
+               ),Liability_3_Percentage__c, 0
+         )
+      )
+   )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current Liability</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Liability_1_Date__c</fullName>
+        <description>The date on which Liability 1 Percentage of the Event Cost is liable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date on which Liability 1 Percentage of the Event Cost is liable</inlineHelpText>
+        <label>Liability 1 Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Liability_1_Percentage__c</fullName>
+        <description>The percentage for liability 1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The percentage for liability 1</inlineHelpText>
+        <label>Liability 1 Percentage</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Liability_2_Date__c</fullName>
+        <description>The date on which Liability 2 Percentage of the Event Cost is liable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date on which Liability 2 Percentage of the Event Cost is liable</inlineHelpText>
+        <label>Liability 2 Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Liability_2_Percentage__c</fullName>
+        <description>The percentage for liability 2.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The percentage for liability 2.</inlineHelpText>
+        <label>Liability 2 Percentage</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Liability_3_Date__c</fullName>
+        <description>The date on which Liability 3 Percentage of the Event Cost is liable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date on which Liability 3 Percentage of the Event Cost is liable</inlineHelpText>
+        <label>Liability 3 Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Liability_3_Percentage__c</fullName>
+        <description>The percentage for liability 3.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The percentage for liability 3.</inlineHelpText>
+        <label>Liability 3 Percentage</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Link__c</fullName>
+        <description>Link to view PO from approval page</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(&quot;/&quot;+Id,&quot;Click Here to View&quot;,&quot;_blank&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Net_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Price</label>
+        <summarizedField>Purchase_Order_Line_Item__c.Net_Price__c</summarizedField>
+        <summaryForeignKey>Purchase_Order_Line_Item__c.Purchase_Order__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Notify_PO_Owners_of_T_C__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Field used to trigger workflows to e-mail+task PO Owner and Will that PO Event has been cancelled or &quot;To be transferred&quot;</description>
+        <externalId>false</externalId>
+        <label>Notify PO Owners of T&amp;C</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order_Date_2__c</fullName>
+        <description>Shows the BSC Event Start Date if an Event is related otherwise the Created Date of the PO.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+(ISBLANK(BSC_Event__c)),
+(DATEVALUE( CreatedDate)) ,
+BSC_Event__r.StartDate__c)</formula>
+        <inlineHelpText>Shows the BSC Event Start Date if an Event is related otherwise the Created Date of the PO.</inlineHelpText>
+        <label>Order Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Order_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <description>OLD FIELD - NO LONGER USED.  KEPT FOR OLD DATA ONLY!</description>
+        <externalId>false</externalId>
+        <label>Order Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Owner_Department__c</fullName>
+        <description>Used for Drawloop documents (Not on Page Layouts)</description>
+        <externalId>false</externalId>
+        <formula>Owner:User.Department</formula>
+        <label>Owner Department</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PO_Ref_Display__c</fullName>
+        <description>Does not display PO ref if status is in &quot;a progress&quot; state</description>
+        <externalId>false</externalId>
+        <formula>CASE(text( Status__c ), &apos;New&apos;, &apos;Not yet to be displayed&apos;, &apos;Draft&apos;, &apos;Not yet to be displayed&apos;,&apos;Awaiting Approval&apos;, &apos;Not yet to be displayed&apos;,Name)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>PO ref will be shown when PO has been approved</inlineHelpText>
+        <label>PO Ref Display</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Do not Pay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Address__c</fullName>
+        <description>Supplier Address. If empty, it wil be populated  same as Supplier billing address</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Supplier Address. If empty, it wil be populated  same as Supplier billing address</inlineHelpText>
+        <label>Supplier Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Approved__c</fullName>
+        <description>If supplier is not approved NOT Approved - You cannot raise this PO is displayed</description>
+        <externalId>false</externalId>
+        <formula>IF( Account__r.Approved_Supplier__c =TRUE,&quot;Approved&quot;,&quot;Supplier NOT Approved - You cannot raise this PO&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>calculates if supplier is approved</inlineHelpText>
+        <label>Supplier Approved?</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Supplier_Invoice__c</fullName>
+        <externalId>false</externalId>
+        <label>Supplier Invoice</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supplier_Name__c</fullName>
+        <description>Name of account linked to PO</description>
+        <externalId>false</externalId>
+        <formula>Account__r.Name</formula>
+        <inlineHelpText>Name of account associated to this PO</inlineHelpText>
+        <label>Supplier Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Cost__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Cost</label>
+        <summarizedField>Purchase_Order_Line_Item__c.Cost__c</summarizedField>
+        <summaryForeignKey>Purchase_Order_Line_Item__c.Purchase_Order__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Ultimate_Approver__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Ultimate Approver</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Purchase_Orders1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Purchase Order</label>
+    <listViews>
+        <fullName>Add_Hoc</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>BSC_Event_Start_Date__c</columns>
+        <columns>Total_Cost__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OBJECT_ID</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Purchase_Order__c.Purchase_Order_for_Trainers_Auditors</value>
+        </filters>
+        <label>Ad Hoc</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Purchase_Orders</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Status__c</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>Net_Price__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Total_Cost__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Purchase Orders</label>
+    </listViews>
+    <listViews>
+        <fullName>Awaiting_Approval</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Supplier_Approved__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Awaiting Approval</value>
+        </filters>
+        <label>Awaiting Approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Awaiting_Approval1</fullName>
+        <columns>CREATEDBY_USER</columns>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Supplier_Approved__c</columns>
+        <columns>Status__c</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>BSC_Event_Start_Date__c</columns>
+        <columns>Order_Date_2__c</columns>
+        <columns>Net_Price__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </filters>
+        <label>Status of New</label>
+        <sharedTo>
+            <group>EventLogistics</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Created_Today</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Supplier_Approved__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Created Today</label>
+    </listViews>
+    <listViews>
+        <fullName>PO_Listing1</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Total_Cost__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>Net_Price__c</columns>
+        <columns>Notes__c</columns>
+        <columns>Order_Date__c</columns>
+        <columns>PO_Ref_Display__c</columns>
+        <columns>Status__c</columns>
+        <columns>Supplier_Invoice__c</columns>
+        <columns>Supplier_Invoice_Date__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>PO Listing</label>
+    </listViews>
+    <listViews>
+        <fullName>PO_listing</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Total_Cost__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>Link__c</columns>
+        <columns>Net_Price__c</columns>
+        <columns>Notes__c</columns>
+        <columns>Order_Date__c</columns>
+        <columns>PO_Ref_Display__c</columns>
+        <columns>Status__c</columns>
+        <columns>Supplier_Invoice__c</columns>
+        <columns>Supplier_Invoice_Date__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>PO listing</label>
+    </listViews>
+    <nameField>
+        <displayFormat>PO-{0000}</displayFormat>
+        <label>PO Ref</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Purchase Orders</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>General_Purchase_Order</fullName>
+        <active>true</active>
+        <description>General Purchase Orders</description>
+        <label>General Purchase Order</label>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Do not Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Purchase_Order_for_Trainers_Auditors</fullName>
+        <active>true</active>
+        <description>For Trainers / Auditors</description>
+        <label>Purchase Order for Trainers/Auditors</label>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awaiting Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Do not Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>BSC_Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Net_Price__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATEDBY_USER</customTabListAdditionalFields>
+        <customTabListAdditionalFields>PO_Ref_Display__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Account__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>BSC_Event__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Net_Price__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATEDBY_USER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PO_Ref_Display__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Account__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>BSC_Event__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Net_Price__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PO_Ref_Display__c</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>BSC_Event__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Net_Price__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PO_Ref_Display__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Cost__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Approved_Supplier_or_Not</fullName>
+        <active>true</active>
+        <description>To check whether the supplier is approved supplier or not  to raise the PO.</description>
+        <errorConditionFormula>OR( 
+AND
+( 
+ ISCHANGED(Account__c), 
+  OR
+  (  
+   Account__r.Supplier__c = False,
+   Account__r.Approved_Supplier__c = False
+  )
+), 
+AND( 
+ISNEW(),
+  OR
+  ( 
+  Account__r.Supplier__c = False,
+  Account__r.Approved_Supplier__c = False 
+  )
+) 
+)</errorConditionFormula>
+        <errorDisplayField>Account__c</errorDisplayField>
+        <errorMessage>The account is not an Approved Supplier. The PO can only be raised when an account is approved supplier!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_for_Confirmed_Events</fullName>
+        <active>true</active>
+        <description>This will let the users to raise the PO only if the Event status is confirmed.This will be applicable only for  Trainer Record Type POs</description>
+        <errorConditionFormula>AND(
+ BEGINS($RecordType.Name, &apos;Purchase Order for Trainers&apos;),
+text(BSC_Event__r.Status__c) &lt;&gt;&apos;Confirmed&apos;,
+text(BSC_Event__r.Status__c) &lt;&gt;&apos;Completed&apos;,
+text (Status__c) &lt;&gt; &apos;Rejected&apos;
+)</errorConditionFormula>
+        <errorDisplayField>BSC_Event__c</errorDisplayField>
+        <errorMessage>Event Status is not Confirmed. Please confirm the Event first  to raise the PO.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Liability_1_Date_Correct</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR
+(
+    Liability_1_Date__c &gt; Liability_2_Date__c,
+    Liability_1_Date__c &gt; Liability_3_Date__c 
+)</errorConditionFormula>
+        <errorDisplayField>Liability_1_Date__c</errorDisplayField>
+        <errorMessage>Liability 1 date must be less than Liability 2 Date and Liability 3 Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Liability_2_Date_Correct</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR
+(
+    Liability_1_Date__c &gt; Liability_2_Date__c,
+    Liability_2_Date__c &gt; Liability_3_Date__c 
+)</errorConditionFormula>
+        <errorDisplayField>Liability_2_Date__c</errorDisplayField>
+        <errorMessage>Liability 2 Date should be greater than Liability 1 Date and less than Liability 3 Date</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Liability_3_Date_Correct</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR
+(
+    Liability_1_Date__c &gt; Liability_3_Date__c,
+    Liability_2_Date__c &gt; Liability_3_Date__c 
+)</errorConditionFormula>
+        <errorDisplayField>Liability_3_Date__c</errorDisplayField>
+        <errorMessage>Liability 3 date must be greater than Liability 2 Date and Liability 3 Date.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NoEditByNonAdmins</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(
+NOT(ISNEW())
+,
+OR(
+ISPICKVAL(Status__c, &quot;Awaiting Approval&quot;),
+ISPICKVAL(Status__c, &quot;Paid&quot;),
+ISPICKVAL(Status__c, &quot;Cancelled&quot;),
+ISPICKVAL(Status__c, &quot;Do Not Pay&quot;)
+)
+,
+AND(
+$Profile.Id &lt;&gt;&quot;00eD0000001Pgwv&quot;,
+$Profile.Id &lt;&gt;&quot;00eD0000001Pgdj&quot;,
+$Profile.Id&lt;&gt;&quot;00e20000001Mkam&quot;
+)
+)</errorConditionFormula>
+        <errorMessage>You can not update PO if the status is Awaiting Approval OR  Paid OR Cancelled OR Do Not Pay</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>PO_Cannot_be_raised_against_this_Account</fullName>
+        <active>false</active>
+        <description>Either the Account is not active or isn&apos;t an approved supplier.</description>
+        <errorConditionFormula>OR(
+Account__r.Active__c = False,
+ Account__r.Approved_Supplier__c  = False
+)</errorConditionFormula>
+        <errorDisplayField>Account__c</errorDisplayField>
+        <errorMessage>You cannot raise a PO against this account, either the Account is not active or it is not an approved supplier.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Create_Payable_Invoice</fullName>
+        <availability>online</availability>
+        <description>Creates a payable invoice from the PO.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Create Payable Invoice</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/a22/e?00N20000002PDzp={!Purchase_Order__c.Supplier_Invoice__c}&amp;00N20000002PE09={!Purchase_Order__c.Name}&amp;CF00N20000002PDzq_lkid={!Purchase_Order__c.AccountId__c}&amp;CF00N20000002PDzq={!Purchase_Order__c.Account__c}&amp;CF00ND0000003kosO_lkid={!Purchase_Order__c.Id}&amp;CF00ND0000003kosO={!Purchase_Order__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>LOOPlus</fullName>
+        <availability>online</availability>
+        <description>Used to print off purchase orders</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>LOOPlus</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/loop__looplus?eid={!Purchase_Order__c.Id}&amp;PurchaseOrderLineItemID={!Purchase_Order_Line_Item__c.Id}&amp;sessionId={!$Api.Session_ID}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Purchase_Order_Line_Item</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>New Purchase Order Line Item</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/29.0/connection.js&apos;)}
+
+var query = &quot;select id, Unit_Duration_Total__c, Product_Dimension_2__c, Name, Product__r.Cost_Code_Part_1__c,Product__r.Cost_Code_Part_3__c  from Special_Event__c where id = &apos;{!Purchase_Order__c.BSC_EventId__c}&apos; limit 1&quot;;
+
+
+var queryResults = sforce.connection.query(query);
+
+var event = queryResults.getArray(&quot;records&quot;);
+
+if (event.length == 1){
+var part2 = event[0].Product_Dimension_2__c.split(&apos; &apos;);
+
+var costCode;
+if (&quot;{!Purchase_Order__c.RecordType}&quot; == &quot;Purchase Order for Trainers/Auditors&quot;){
+   costCode  = event[0].Product__r.Cost_Code_Part_1__c + &quot;-&quot; + 
+               part2[0] + &quot;-&quot; + 
+               event[0].Name + &quot;-&quot; + 
+               event[0].Product__r.Cost_Code_Part_3__c;
+} else {
+   costCode  = event[0].Product__r.Cost_Code_Part_1__c + &quot;-&quot; + 
+               part2[0] + &quot;-&quot; + 
+               event[0].Name ;
+}
+
+if (&quot;{!Purchase_Order__c.RecordType}&quot; == &quot;Purchase Order for Trainers/Auditors&quot;){
+   url = &quot;a2S/e?CF00N20000002CVe9={!Purchase_Order__c.Name}&amp;CF00N20000002CVe9_lkid={!Purchase_Order__c.Id}&amp;00N20000002CVdk={!Purchase_Order__c.BSC_Event__c}&amp;00N20000002CVdp=&quot;+event[0].Unit_Duration_Total__c+&quot;&amp;00ND0000002vihf=&quot;+costCode+&quot;&amp;saveURL=%2F{!Purchase_Order__c.Id}&quot;;
+} else {
+   url = &quot;a2S/e?CF00N20000002CVe9={!Purchase_Order__c.Name}&amp;CF00N20000002CVe9_lkid={!Purchase_Order__c.Id}&amp;00N20000002CVdk={!Purchase_Order__c.BSC_Event__c}&amp;00ND0000002vihf=&quot;+costCode+&quot;&amp;saveURL=%2F{!Purchase_Order__c.Id}&quot;;
+
+}
+
+window.location = url;
+} else {
+var url = &quot;a2S/e?CF00N20000002CVe9={!Purchase_Order__c.Name}&amp;CF00N20000002CVe9_lkid={!Purchase_Order__c.Id}&amp;saveURL=%2F{!Purchase_Order__c.Id}&quot;;
+window.location = url;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Print</fullName>
+        <availability>online</availability>
+        <description>Generate the pdf for the Trainers/Auditors</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Print (Trainer/Auditor)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Purchase_Order__c.Id}&amp;reportID=00O20000003vPOA?pv0={!Purchase_Order__c.Name}&amp;BPW=1&amp;TemplateId=01HD0000000HUqG</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Print_General_Test</fullName>
+        <availability>online</availability>
+        <description>Test Only</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Print (General) Test</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Purchase_Order__c.Id}&amp;reportID=00O20000003vPOA?pv0={!Purchase_Order__c.Name}&amp;BPW=1&amp;TemplateId=01HD0000000HThN&amp;queryID=a3iD0000000L7Br
+?pv0={!Purchase_Order__c.Name}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Print_General_V2</fullName>
+        <availability>online</availability>
+        <description>Used to Print PDF of the standard PO</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Print (General)</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Purchase_Order__c.Id}&amp;reportID=00O20000003vPOA?pv0={!Purchase_Order__c.Name}&amp;BPW=1&amp;TemplateId=01HD0000000HUo5</url>
+    </webLinks>
+</CustomObject>

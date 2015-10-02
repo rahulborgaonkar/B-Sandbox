@@ -1,0 +1,2516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage subscriptions (Memberships, Complywise Subscriptions and other ongoing product deliveries)</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account_Invoice_Email__c</fullName>
+        <description>Used by DDP - pulls invoice email account</description>
+        <externalId>false</externalId>
+        <formula>Account_Name__r.c2g__CODAInvoiceEmail__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Renewal emails will be cc&apos;d to account invoice email address</inlineHelpText>
+        <label>Account Invoice Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account Name</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Subscriptions</relationshipLabel>
+        <relationshipName>Subscriptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Add_to_timed_workflow__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>All time based subscription workflows include this field set to true to to include in workflow.  Si if you have a record which meets criteria but for some reason is not in the workflow - set this field to false then true.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set this to false then back to true to ad this record to time based workflows.  Note other criteria will be required to ad to workflow, see workflows for details</inlineHelpText>
+        <label>Add to timed workflow</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Create_Sales_Invoice__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Default TRUE, if this is unchecked the automated renewals will not create an invoice</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Uncheck this box if you do not want an invoice created for this subscription on the first reminder date</inlineHelpText>
+        <label>Auto Create Sales Invoice</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CB_Ref__c</fullName>
+        <externalId>false</externalId>
+        <formula>LEFT( PK_CB_OPP_ID__c ,10)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CB Ref</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Certificate_Printed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If ticked the certificate has been previously printed for this subscription</inlineHelpText>
+        <label>Certificate Printed</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Consolidated_Subscription__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This subscription is a consolidation of multiple subscriptions into one (Currently used by the system to determine what dimension 2 code to used.</inlineHelpText>
+        <label>Consolidated Subscription</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Invoice_Email__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact__r.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contact Invoice Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>The primary contact for this subscription</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Subscriptions</relationshipLabel>
+        <relationshipName>Subscriptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Create_Renewal_Objects_on__c</fullName>
+        <description>Calculates date renewal objects will be created based on longest reminder days</description>
+        <externalId>false</externalId>
+        <formula>IF 
+(
+   Includes_SUSA_Product__c = True, 
+   (End_Date__c - Longest_Reminder_Days__c) - 35,
+
+   IF ( 
+      Includes_E_Delivery_Product__c = True, 
+      (End_Date__c - Longest_Reminder_Days__c) - 45, 
+      (End_Date__c - Longest_Reminder_Days__c) - 7
+      )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The date on which the subscription with automatically create the renewal opportunity &amp; subscription etc..</inlineHelpText>
+        <label>Create Renewal Objects on</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>DrawLoop_Start_Date__c</fullName>
+        <description>Used for DrawLoop calculated by subscription start date - 1</description>
+        <externalId>false</externalId>
+        <formula>Start_Date__c -1</formula>
+        <label>DrawLoop Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_First_Reminder_EMAIL__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>IF 
+(Includes_RCP_Product__c = True, 
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L72B;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L7PY&quot;, 
+
+IF (Includes_E_Delivery_Product__c = True, 
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L7Ae;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000LAFr&quot;, 
+
+IF (Includes_SUSA_Product__c = True,
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L79b;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L9Tw&quot;,
+
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6EAMA0;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L6bv&quot;
+)
+)
+)</formula>
+        <label>LOOP Member First Reminder EMAIL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_First_Reminder_by_POST__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>IF 
+( Includes_RCP_Product__c = True, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L72B;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L7Pb&quot;, 
+
+IF ( Includes_E_Delivery_Product__c = True, 
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L7Ae;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000LAFs&quot;, 
+
+IF ( Includes_SUSA_Product__c = True, 
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L79b;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L9Tw&quot;, 
+
+&quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6EAMA0;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L6bv&quot;
+
+)
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOOP Member First Reminder by POST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Renewal_Wel_Inv_by_POST__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>IF ( Includes_RCP_Product__c = True, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L72B;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L7Pb&quot;, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6dz;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L72K&quot;)</formula>
+        <inlineHelpText>The Drawloop command line to determine what pack and deployment method to use when sending the welcome post pack.</inlineHelpText>
+        <label>LOOP Member Renewal Wel Inv Pack by POST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Renewal_Welcome_by_Emai__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>IF ( Includes_RCP_Product__c = True, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L72B;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L7PZ&quot;, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6EU;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L6b2&quot;)</formula>
+        <inlineHelpText>Drawloop configuration for sending the membership welcome pack.</inlineHelpText>
+        <label>LOOP Member Renewal Welcome Pack by Emai</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Renewal_Welcome_by_POST__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>IF ( Includes_RCP_Product__c = True, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L72B;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L7Pb&quot;, &quot;SFSubscription__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6EU;SFContact:&quot; &amp; Contact__c &amp;&quot;;Deploy:a3SD0000000L6b2&quot;)</formula>
+        <inlineHelpText>The Drawloop command line to determine what pack and deployment method to use when sending the welcome post pack.</inlineHelpText>
+        <label>LOOP Member Renewal Welcome Pack by POST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Second_Reminder_EMAIL__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>&quot;SFSubscription__c:&quot; &amp;  Id &amp; &quot;;DDPId:a3TD0000000L6EF;SFContact:&quot; &amp;  Contact__c  &amp;&quot;;Deploy:a3SD0000000L6bH&quot;</formula>
+        <label>LOOP Member Second Reminder EMAIL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Second_Reminder_POST__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>&quot;SFSubscription__c:&quot; &amp;  Id &amp; &quot;;DDPId:a3TD0000000L6EF;SFContact:&quot; &amp;  Contact__c  &amp;&quot;;Deploy:a3SD0000000L6bM&quot;</formula>
+        <label>LOOP Member Second Reminder POST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Third_Reminder_EMAIL__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>&quot;SFSubscription__c:&quot; &amp;  Id &amp; &quot;;DDPId:a3TD0000000L6EK;SFContact:&quot; &amp;  Contact__c  &amp;&quot;;Deploy:a3SD0000000L6bW&quot;</formula>
+        <inlineHelpText>Used by drawloop workflow outbound message to determine which pack and how to deploy pack.</inlineHelpText>
+        <label>LOOP Member Third Reminder EMAIL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Third_Reminder_POST__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>&quot;SFSubscription__c:&quot; &amp;  Id &amp; &quot;;DDPId:a3TD0000000L6EK;SFContact:&quot; &amp;  Contact__c  &amp;&quot;;Deploy:a3SD0000000L6bb&quot;</formula>
+        <inlineHelpText>Used by drawloop third membership reminder workflow outbound message to determine what pack to use and how to deploy the contents.</inlineHelpText>
+        <label>LOOP Member Third Reminder POST</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Text_2__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  ISPICKVAL(Account_Name__r.Principle_Address_Global_Region__c, &quot;UK&quot;) ,
+
+&quot;NEW for 2012/13:  We are delighted to announce that members will receive 100 free places on the new British Safety Council Introduction to Workplace Health and Safety e-learning course – worth over £1,000.&quot;
+
+,&quot;&quot;)</formula>
+        <inlineHelpText>Text used in Drawloop reminder letters. Displayed if the sub account global region is the UK</inlineHelpText>
+        <label>Drawloop Text 2</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Text_3__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Account_Name__r.Principle_Address_Global_Region__c, &quot;UK&quot;) , 
+
+BR() + &quot;The course covers the basic health and safety knowledge that any employee, contractor or visitor to a workplace, should know and understand. It is an easy and time efficient way to support your induction programme or refresher training. The course prepares learners for the British Safety Council Level 1 qualification in Health and Safety (assessments can be purchased and undertaken via registered course providers.) Learners get a certificate of completion which can help you keep training records for your staff. &quot; + BR() + BR() + &quot;For more information and to view a demonstration of the course, visit www.britsafe.org/memberupdate.  Please note the above offer is in place of the free 100 Level 1 assessment offer.&quot;
+,&quot;&quot;)</formula>
+        <inlineHelpText>Text used in Drawloop reminder letters. Displayed if the sub account global region is the UK</inlineHelpText>
+        <label>Drawloop Text 3</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Text_4__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Account_Name__r.Principle_Address_Global_Region__c, &quot;UK&quot;) , 
+
+&quot;and a voucher with instructions on how to access your free 100 e-learning places&quot;
+
+,&quot;&quot;)</formula>
+        <inlineHelpText>Text used in Drawloop reminder letters. Displayed if the sub account global region is the UK</inlineHelpText>
+        <label>Drawloop Text 4</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Text_Top_1__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  Start_Date__c  &gt;= DATE(2012,09,1), 
+
+&quot;Please find your renewal notice with your new rate enclosed. We have made significant improvements to our membership benefits, such as free access to 100 e-learning course places and additional downloads and templates as part of the Tools and Templates package.&quot;
+
+, &apos;&apos;)</formula>
+        <inlineHelpText>Text used in Drawloop reminder letters. This only is displayed if the end date is after 1st Sept</inlineHelpText>
+        <label>Drawloop Text Top 1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Duration__c</fullName>
+        <externalId>false</externalId>
+        <label>Duration</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1 Year</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 Year</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3 Year</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ongoing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Earliest_Lapse_Days__c</fullName>
+        <externalId>false</externalId>
+        <label>Earliest Lapse Days</label>
+        <summarizedField>Subscription_Line__c.Lapse_Days_Number__c</summarizedField>
+        <summaryForeignKey>Subscription_Line__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>min</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>End_Date_90__c</fullName>
+        <description>calculate end date minus 90 days used to filter out subscriptions already renewed in coursebooker as part of the renewal process</description>
+        <externalId>false</externalId>
+        <formula>End_Date__c - 90</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>this field takes the subscription end date minus 90 days</inlineHelpText>
+        <label>End Date - 90</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>End_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Reminder_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  Subscription_Value__c &gt; 0,
+   IF(  ISPICKVAL(Type__c, &apos;Renewal&apos;),
+      IF( ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), Start_Date__c - 20, Start_Date__c - Longest_Reminder_Days__c),
+      null
+   ),
+   null
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date is only displayed if the subscription is a renewal, not paying by direct debit and the subscription value is greater than zero.</inlineHelpText>
+        <label>First Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_reminder_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First reminder email sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>First_reminder_post_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>First reminder post sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>First_reminder_sent__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+   OR(First_reminder_email_sent__c = True, First_reminder_post_sent__c = True) = True, 
+   &apos;Yes&apos;, 
+   &apos;No&apos;
+)</formula>
+        <inlineHelpText>If either the first reminder has been sent using email or post this displays &apos;Yes&apos; otherwise displays &apos;No&apos;</inlineHelpText>
+        <label>First reminder sent</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Flagged_for_Cleansing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines record which has been flagged during Subscription cleaning process</description>
+        <externalId>false</externalId>
+        <label>Flagged_for_Cleansing</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_E_Delivery_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if this Subscription contains an E-Delivery Product</inlineHelpText>
+        <label>Includes E-Delivery Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Guides_Publication_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Includes Guides Publication Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_HSWA_Publication_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Includes HSWA Publication Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Info_Membership_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If ticked this subscription includes an Info membership product.</inlineHelpText>
+        <label>Includes Info Membership Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Membership_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked automatically by Workflow on creation of Subscription Line</inlineHelpText>
+        <label>Includes Membership Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Publication_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Includes Publication Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_RCP_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked automatically by Workflow on save of Subscription Line</inlineHelpText>
+        <label>Includes RCP Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_SUSA_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If ticked this subscription includes a SUSA subscription product.</inlineHelpText>
+        <label>Includes SUSA Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Safety_Management_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Includes Safety Management Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Includes_Tools_Membership_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is ticked the subscription includes a tools membership product.</inlineHelpText>
+        <label>Includes Tools Membership Product</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>International_Product__c</fullName>
+        <description>Denotes Subscription has international products associated to it</description>
+        <externalId>false</externalId>
+        <formula>CONTAINS(Product_Codes__c,&apos;1ISMI -1-5;1ISMT -1-5;1IMS-1-5&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This Subscription has international products associated to it</inlineHelpText>
+        <label>International Product</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Billing_Address__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__c),
+Renewal_Sales_Invoice__r.c2g__Account__r.Name+ BR() +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Account__r.BillingStreet),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Account__r.BillingStreet+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Account__r.BillingCity),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Account__r.BillingCity+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Account__r.BillingState),&quot;&quot;, Renewal_Sales_Invoice__r.c2g__Account__r.BillingState+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Account__r.BillingPostalCode),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Account__r.BillingPostalCode+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Account__r.BillingCountry),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Account__r.BillingCountry),
+
+Renewal_Sales_Invoice__r.c2g__Account__r.Name + BR() +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Address_Building__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Address_Building__c+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Street__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Street__c+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Area__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Area__c+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_City__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_City__c+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_State__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_State__c+ BR() ) +
+IF(ISBLANK(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_PostalCode__c),&quot;&quot;,Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_PostalCode__c+ BR() ) +
+IF(ISPICKVAL(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Country__c,&quot;United Kingdom&quot;),&quot;&quot;,TEXT(Renewal_Sales_Invoice__r.c2g__Opportunity__r.Billing_Country__c))
+)</formula>
+        <label>Invoice Billing Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Company__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Invoice_Company__r.Name</formula>
+        <label>Invoice Company</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Currency_Symbol__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.Currency_Symbol__c</formula>
+        <label>Invoice Currency Symbol</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Currency__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__InvoiceCurrency__r.Name</formula>
+        <label>Invoice Currency</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Description__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__InvoiceDescription__c</formula>
+        <label>Invoice Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Due_Date__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__DueDate__c</formula>
+        <label>Invoice Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Net_Total__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__NetTotal__c</formula>
+        <label>Invoice Net Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Number__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.Name</formula>
+        <label>Invoice Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Reference__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.Opportunity_Number__c</formula>
+        <label>Invoice Reference</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not-Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Tax_Total__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__Tax1Total__c</formula>
+        <label>Invoice Tax Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_VAT_Registration_Number__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__Account__r.c2g__CODAVATRegistrationNumber__c</formula>
+        <label>Invoice VAT Registration Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lapse_Date__c</fullName>
+        <description>Calculates lapse date using end date + Earliest Lapse Days</description>
+        <externalId>false</externalId>
+        <formula>End_Date__c + Earliest_Lapse_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Lapse Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Lapse_Exception_Approved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Excludes subscription from the auto lapsing processes via workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box box if you require this subscription NOT to auto lapse</inlineHelpText>
+        <label>Lapse Exception Approved</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Latest_Invoice_Date__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__InvoiceDate__c</formula>
+        <label>Latest Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Latest_Invoice_Status__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop to determine if the latest sales invoice related is an Invoice or Proforma.</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Renewal_Sales_Invoice__c),&apos;&apos;,
+  IF(ISPICKVAL(Renewal_Sales_Invoice__r.c2g__InvoiceStatus__c, &quot;Complete&quot;) , &quot;INVOICE&quot;, &quot;PROFORMA&quot;)
+)</formula>
+        <label>Latest Invoice Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Latest_Invoice_Total__c</fullName>
+        <description>Created to use on the Invoice Template for drawloop</description>
+        <externalId>false</externalId>
+        <formula>Renewal_Sales_Invoice__r.c2g__InvoiceTotal__c</formula>
+        <label>Latest Invoice Total</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Subscription__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>This field disables workflows - used for testing import of data</inlineHelpText>
+        <label>Legacy Subscription</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Longest_Duration_Years__c</fullName>
+        <externalId>false</externalId>
+        <label>Longest Duration Years</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Longest_Reminder_Days__c</fullName>
+        <description>This drives the subscription first remminder date, and is derived by taking the longest reminder days of all asscoiated sub lines (reminder days(Number)) which in turn is popoluated from (reminder days) which is a formula filed driven by Product__r.Initial_Reminder_Days__c.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Formula dervied from the longest reminder days of associated subscription lines.</inlineHelpText>
+        <label>Longest Reminder Days</label>
+        <summarizedField>Subscription_Line__c.Reminder_Days_Number__c</summarizedField>
+        <summaryForeignKey>Subscription_Line__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>max</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Membership_Pack_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Records if Drawloop has created the drawloop membership pack.</description>
+        <externalId>false</externalId>
+        <label>Membership Pack Created</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Membership_pack_selection__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Includes_Membership_Product__c = True, &apos;CORE-&apos;,&apos;&apos;)+
+IF(Includes_Info_Membership_Product__c = True,&apos;INFO-&apos;, &apos;&apos;)+
+IF(Includes_Tools_Membership_Product__c = True,&apos;TOOLS-&apos;,&apos;&apos;)+
+IF(Includes_Guides_Publication_Product__c = True,&apos;GUIDES-&apos;,&apos;&apos;)+
+IF(Includes_HSWA_Publication_Product__c = True,&apos;HSWA-&apos;,&apos;&apos;)+
+IF(Includes_Safety_Management_Product__c = True,&apos;SAFETY-&apos;,&apos;&apos;)</formula>
+        <inlineHelpText>Used by LOOP to decide which membership pack to send to the customer.</inlineHelpText>
+        <label>Subscription pack selection</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Migrated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Old_Status__c</fullName>
+        <description>Used to show the status held against the subscription BEFORE updating to &quot;Manual Admin&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to show the status held against the subscription BEFORE updating to &quot;Manual Admin&quot;</inlineHelpText>
+        <label>Old Status</label>
+        <length>60</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Subscriptions</relationshipLabel>
+        <relationshipName>Subscriptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Original_MEP_Status__c</fullName>
+        <description>During the cleanup of membership data we updated all statuses of Subscriptions where CB status was in the renewing phase.  This field holds the backup of the original SFDC status</description>
+        <externalId>false</externalId>
+        <label>Original MEP Status</label>
+        <length>12</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Start_date__c</fullName>
+        <description>Denotes the date the original subscription was taken.</description>
+        <externalId>false</externalId>
+        <label>Original Start date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_OPP_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This is the Primary Key of the Membership from the source Membership data and maps to  MEMBERSHIP.MEM_ID and Member_Period.MEP_ID on CB Database.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Mem ID/Mep ID - Membership Table and Member Period Tables on CB</inlineHelpText>
+        <label>PK_CB_OPP_ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Password__c</fullName>
+        <description>Stores Membership Password</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores Membership Password</inlineHelpText>
+        <label>Password</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Paying_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Paying By</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Invoice</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Direct Debit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Previous_Subscription_Status__c</fullName>
+        <description>Formula returning previous subscription status</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Previous_Subscription__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Formula returning previous subscription status</inlineHelpText>
+        <label>Previous Subscription Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Previous Subscription</label>
+        <referenceTo>Subscription__c</referenceTo>
+        <relationshipLabel>Subscriptions (Previous Subscriptions)</relationshipLabel>
+        <relationshipName>Subscriptions_Previous</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Print_Certificates__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Forces a print of all related subscription site certificates if they have not already been printed.</inlineHelpText>
+        <label>Print all Certificates</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Print_First_Reminder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to manually print first reminder packs if workflow failed</description>
+        <externalId>false</externalId>
+        <label>Print First Reminder</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Print_Second_Reminder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to manually print Second reminder packs if workflow failed</description>
+        <externalId>false</externalId>
+        <label>Print Second Reminder</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Print_Subscription_Pack__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Forces the printing of the Welcome/Renewal subscription pack.</inlineHelpText>
+        <label>Print Subscription Pack</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Print_Third_Reminder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to manually print third reminder packs if workflow failed</description>
+        <externalId>false</externalId>
+        <label>Print Third Reminder</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_Codes__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Codes</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RCP_Verified__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Temp field used for quals team to mark this RCP subscription as verified.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick to denote this subscription has been checked and is valid</inlineHelpText>
+        <label>RCP Verified</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Opportunity_Created__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This  is updated by the scheduled task which creates a renewal opportunity for subscriptions due to renew.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Denotes when a renewal opportunity has been created by scheduled task.</inlineHelpText>
+        <label>Renewal Opportunity Created</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Opportunity__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Untick this box if you DO NOT wish to renew this subscription in the future</inlineHelpText>
+        <label>Renewal Opportunity</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Process_Old_Status__c</fullName>
+        <description>Used to store the old status&apos;s where correctly updated as part of the renewal process project.</description>
+        <externalId>false</externalId>
+        <label>Renewal Process Old Status</label>
+        <length>60</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Reminders__c</fullName>
+        <defaultValue>true</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Reminder emails should be generated from the renewal opportunity</inlineHelpText>
+        <label>Renewal Reminders</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Sales_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>The latest Sales Proforma/Invoice that has been created for this Subscription.</inlineHelpText>
+        <label>Latest Sales Invoice</label>
+        <referenceTo>c2g__codaInvoice__c</referenceTo>
+        <relationshipLabel>Subscriptions</relationshipLabel>
+        <relationshipName>Subscriptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Revoke_iframe_permissions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If ticked, remove the iframe permissions for membership from the site contacts</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If ticked, remove the iframe permissions for membership from the site contacts</inlineHelpText>
+        <label>Revoke iframe permissions?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Second_Reminder_Date__c</fullName>
+        <description>Calculates second reminder date</description>
+        <externalId>false</externalId>
+        <formula>IF(  Subscription_Value__c &gt; 0,
+   IF(  ISPICKVAL(Type__c, &apos;Renewal&apos;),
+      IF( Includes_RCP_Product__c  &lt;&gt; true,
+         IF( Includes_SUSA_Product__c  &lt;&gt; true,
+           IF ( Includes_E_Delivery_Product__c &lt;&gt; true,
+              IF(!ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), Start_Date__c -  ((Longest_Reminder_Days__c   / 3)  * 2), null),
+                 null
+              ),
+          null
+        ),
+     null
+    ),
+    null
+   ),
+null
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date is only displayed if the subscription is a renewal, not paying by direct debit and the subscription value is greater than zero.</inlineHelpText>
+        <label>Second Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Second_reminder_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Second reminder email sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Second_reminder_post_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Second reminder post sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Second_reminder_sent__c</fullName>
+        <description>Has second reminder has been sent</description>
+        <externalId>false</externalId>
+        <formula>IF(
+   OR(Second_reminder_email_sent__c = True, Second_reminder_post_sent__c = True) = True, 
+   &apos;Yes&apos;, 
+   &apos;No&apos;
+)</formula>
+        <inlineHelpText>If either the second reminder has been sent using email or post this displays &apos;Yes&apos; otherwise displays &apos;No&apos;</inlineHelpText>
+        <label>Second reminder sent</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_Subscription_by__c</fullName>
+        <description>Works out how the subscription renewal should be sent to the customer.</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Contact__r.Email),&apos;Post Only&apos;,
+   IF( Includes_RCP_Product__c = True,&apos;Email Only&apos;,
+   IF( Includes_E_Delivery_Product__c  = True,&apos;Email Only&apos;,
+   IF( Includes_SUSA_Product__c  = True,&apos;Email Only&apos;,
+      IF(ISPICKVAL(Contact__r.Subscription_Renewal_Communication__c,&apos;&apos;)  ||  ISPICKVAL(Contact__r.Subscription_Renewal_Communication__c, &apos;Use Global Setting&apos;),
+      IF($Setup.Global_Communication_Settings__c.Send_Subscription_Pack_by_EMAIL_default__c = True  &amp;&amp; $Setup.Global_Communication_Settings__c.Send_Subscription_Pack_by_POST_bydefault__c = True, &apos;Email and Post&apos;,
+         IF($Setup.Global_Communication_Settings__c.Send_Subscription_Pack_by_EMAIL_default__c = True, &apos;Email Only&apos;,
+            IF($Setup.Global_Communication_Settings__c.Send_Subscription_Pack_by_POST_bydefault__c = True, &apos;Post Only&apos;, &apos;Error: Global Com setting not set&apos;              
+            )
+         )
+      )
+      ,TEXT(Contact__r.Subscription_Renewal_Communication__c)
+    )
+   )
+  )
+ )
+)</formula>
+        <inlineHelpText>Works out how the subscription renewal should be sent to the customer. To change change the renewal communication preferences on the Subscription Contact. If no setting is set the system global setting will be used unless the contact has no email.</inlineHelpText>
+        <label>Send Subscription by</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Product__c</fullName>
+        <description>Total number of Site products on the subscription</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Total number of Site products on the subscription</inlineHelpText>
+        <label>Site Products</label>
+        <summaryForeignKey>Site_Product__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pending - Not Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending - Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current - Not Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current - Renewing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current - Renewed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current - Cancelling</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ended - Renewed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ended - Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ended - Lapsed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ended - Lapsing</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ended - Lapse Extended</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lost - Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current - Manual Admin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Manual Admin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Auto_Number__c</fullName>
+        <description>Auto number used as component in generating Sub Ref</description>
+        <displayFormat>S{0000000}</displayFormat>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to generate Sub Ref if this is a new Subscription</inlineHelpText>
+        <label>Sub Auto Number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Sub_Ref__c</fullName>
+        <description>Reference for Subscription - this is constant year on year
+Populated via workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reference for Subscription - this is constant year on year</inlineHelpText>
+        <label>Sub Ref</label>
+        <length>25</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Account_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Developer field used to send email notification to when subscription is first created.  Data in this field is not kept up to date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do not put on page layout</inlineHelpText>
+        <label>Subscription Account Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Subscriptions1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Contract_End_Date__c</fullName>
+        <description>End date of subscription contract</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Subscription_Contract_End_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls contract end date from related opportunity</inlineHelpText>
+        <label>Subscription Contract End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Contract_Start_Date__c</fullName>
+        <description>Start date of subscription contract</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Subscription_Contract_Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls contract start date from related opportunity</inlineHelpText>
+        <label>Subscription Contract Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Line__c</fullName>
+        <description>The total number of subscription lines on the subscription</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The total number of subscription lines on the subscription.</inlineHelpText>
+        <label>Subscription Lines</label>
+        <summaryForeignKey>Subscription_Line__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Mark the Subscription Manager, if this is different from the Account Manager. Renewals will go to this person if this field is populated.</inlineHelpText>
+        <label>Subscription Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Subscriptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Notice_Period_Days__c</fullName>
+        <description>Minimum notice required for customer to cancel subscription</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Subscription_Notice_Period_Days__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls Minimum notice required for customer to cancel subscription from opportunity</inlineHelpText>
+        <label>Subscription Notice Period (Days)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Pack_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates the welcome subscription pack has been sent, used in view &quot;Subscription Packs To Be Sent&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check box when welcome subscription pack has been sent</inlineHelpText>
+        <label>Subscription Pack Sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Sites__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>An automatic count of the number of sites covered by this subscription</inlineHelpText>
+        <label>Subscription Sites</label>
+        <summaryFilterItems>
+            <field>Subscription_Site__c.Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Subscription_Site__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Value__c</fullName>
+        <description>Roll up of sales prices from subs lines</description>
+        <externalId>false</externalId>
+        <label>Subscription Value</label>
+        <summarizedField>Subscription_Line__c.Product_Sales_Price__c</summarizedField>
+        <summaryForeignKey>Subscription_Line__c.Subscription__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Subsequent_First_Reminder_Date__c</fullName>
+        <description>Calculates subsequent first reminder date</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Subsequent_Subscription__c),
+   IF( ISPICKVAL(Type__c, &apos;Renewal&apos;), 
+      IF( ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), 
+         End_Date__c - 20, 
+         End_Date__c - Longest_Reminder_Days__c
+      ), 
+      null 
+   ),
+    Subsequent_Subscription__r.First_Reminder_Date__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subsequent First Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subsequent_Second_Reminder_Date__c</fullName>
+        <description>Calculates subsequent second reminder date</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Subsequent_Subscription__c),
+   IF(  ISPICKVAL(Type__c, &apos;Renewal&apos;),
+      IF(!ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), 
+         End_Date__c -  ((Longest_Reminder_Days__c   / 3)  * 2), 
+         null
+      ),
+      null
+   ),
+   Subsequent_Subscription__r.Second_Reminder_Date__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subsequent Second Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subsequent_Sub_Status__c</fullName>
+        <description>Formula returning subscription status</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Subsequent_Subscription__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Formula returning subscription status</inlineHelpText>
+        <label>Subsequent Sub Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subsequent_Subscription__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Subsequent Subscription</label>
+        <referenceTo>Subscription__c</referenceTo>
+        <relationshipLabel>Subscriptions (Subsequent Subscription)</relationshipLabel>
+        <relationshipName>Subscriptions_Subsequent</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subsequent_Third_Reminder_Date__c</fullName>
+        <description>Calculates subsequent third reminder date</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Subsequent_Subscription__c),
+   IF(  ISPICKVAL(Type__c, &apos;Renewal&apos;),
+      IF( !ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), 
+          End_Date__c -  (Longest_Reminder_Days__c   / 3), 
+          null
+      ),
+      null
+   ),
+    Subsequent_Subscription__r.Third_Reminder_Date__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Subsequent Third Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TestDataSubset__c</fullName>
+        <description>Temp field to identify subsets of data which are used for renewals testing</description>
+        <externalId>false</externalId>
+        <label>TestDataSubset</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Third_Reminder_Date__c</fullName>
+        <description>Calculates third reminder date</description>
+        <externalId>false</externalId>
+        <formula>IF(  Subscription_Value__c &gt; 0,
+   IF(  ISPICKVAL(Type__c, &apos;Renewal&apos;),
+      IF( Includes_RCP_Product__c &lt;&gt;true,  
+         IF( Includes_SUSA_Product__c &lt;&gt;true,  
+           IF( Includes_E_Delivery_Product__c  &lt;&gt;true,    
+              IF( !ISPICKVAL(Paying_By__c, &apos;Direct Debit&apos;), Start_Date__c -  (Longest_Reminder_Days__c   / 3), null),
+              null
+           ),
+           null
+        ),
+     null
+     ),
+    null
+   ),
+null
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Date is only displayed if the subscription is a renewal, not paying by direct debit and the subscription value is greater than zero.</inlineHelpText>
+        <label>Third Reminder Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Third_reminder_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Third reminder email sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Third_reminder_post_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Third reminder post sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Third_reminder_sent__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+   OR(Third_reminder_email_sent__c = True, Third_reminder_post_sent__c = True) = True, 
+   &apos;Yes&apos;, 
+   &apos;No&apos;
+)</formula>
+        <inlineHelpText>If either the third reminder has been sent using email or post this displays &apos;Yes&apos; otherwise displays &apos;No&apos;</inlineHelpText>
+        <label>Third reminder sent</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>New</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Renewal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Username__c</fullName>
+        <description>Stores Membership Username</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores Membership Username</inlineHelpText>
+        <label>Username</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Welcome_email_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Welcome email sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Welcome_post_sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Welcome post sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>tempUpdText__c</fullName>
+        <externalId>false</externalId>
+        <label>tempUpdText</label>
+        <length>18</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>tmpUpd__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Use this field to refresh the subscriptions and force an update.</description>
+        <externalId>false</externalId>
+        <label>tmpUpd</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Subscription</label>
+    <listViews>
+        <fullName>Admin_Renewal_OppThis_Week</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Description__c</columns>
+        <columns>Duration__c</columns>
+        <columns>First_Reminder_Date__c</columns>
+        <columns>Renewal_Opportunity_Created__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>First_Reminder_Date__c</field>
+            <operation>equals</operation>
+            <value>THIS_WEEK</value>
+        </filters>
+        <label>Admin: Renewal OppThis Week</label>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Sub_Ref__c</columns>
+        <columns>Subscription_Sites__c</columns>
+        <columns>Status__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Earliest_Lapse_Days__c</columns>
+        <columns>First_Reminder_Date__c</columns>
+        <columns>Credit_Status__c</columns>
+        <columns>Original_Start_date__c</columns>
+        <columns>Subscription_Value__c</columns>
+        <columns>Type__c</columns>
+        <columns>CB_Ref__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Current</value>
+        </filters>
+        <label>Current</label>
+    </listViews>
+    <listViews>
+        <fullName>All_Subscriptions</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>Status__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Subscriptions</label>
+    </listViews>
+    <listViews>
+        <fullName>Current_Subs_setup_incorrectly_by_user</fullName>
+        <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5) AND 6 and (7 OR 8)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>Includes_Membership_Product__c</columns>
+        <columns>Includes_E_Delivery_Product__c</columns>
+        <columns>Includes_Publication_Product__c</columns>
+        <columns>Includes_Info_Membership_Product__c</columns>
+        <columns>Includes_RCP_Product__c</columns>
+        <columns>Includes_Tools_Membership_Product__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subscription_Line__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Subscription_Sites__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Site_Product__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>End_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Migrated__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Current</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+        </filters>
+        <label>Current Subs setup incorrectly by user</label>
+    </listViews>
+    <listViews>
+        <fullName>LMS_subs_Data_Input</fullName>
+        <columns>NAME</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Create_Renewal_Objects_on__c</columns>
+        <columns>First_Reminder_Date__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>First_reminder_email_sent__c</columns>
+        <columns>Second_reminder_email_sent__c</columns>
+        <columns>Third_reminder_email_sent__c</columns>
+        <columns>Type__c</columns>
+        <columns>Invoice_Company__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Includes_E_Delivery_Product__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>8/19/2013 12:00 AM</value>
+        </filters>
+        <label>LMS subs Data Input</label>
+        <sharedTo>
+            <role>Customer_Service_Manager</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>RCP_Renewing_Subscriptions</fullName>
+        <booleanFilter>(1 AND 2) OR (3 AND 4 AND 5 AND 6)</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>First_Reminder_Date__c</columns>
+        <columns>Lapse_Date__c</columns>
+        <columns>Site_Product__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Includes_RCP_Product__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Current - Renewing</value>
+        </filters>
+        <filters>
+            <field>Includes_RCP_Product__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>First_Reminder_Date__c</field>
+            <operation>lessOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Pending - Not Paid,Pending - Paid,Current - Not Paid,Current</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Current - Cancelling,Ended - Renewed,Ended - Cancelled,Ended - Lapsed</value>
+        </filters>
+        <label>RCP Renewing Subscriptions</label>
+    </listViews>
+    <listViews>
+        <fullName>Subs_not_set_up_correctly_by_Migration</fullName>
+        <booleanFilter>(1 OR 2 OR 3 OR 4 OR 5) AND 6</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Status__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Subscription_Line__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Subscription_Sites__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Site_Product__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Start_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>End_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Migrated__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Subs not set up correctly by Migration</label>
+    </listViews>
+    <listViews>
+        <fullName>Subscriptions_Manual_Admin</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>Old_Status__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Lapse_Date__c</columns>
+        <columns>Renewal_Opportunity__c</columns>
+        <columns>Invoice_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Current - Manual Admin</value>
+        </filters>
+        <label>Subscriptions - Manual Admin</label>
+    </listViews>
+    <listViews>
+        <fullName>Website_Subscriptions_Packs_to_Send</fullName>
+        <columns>NAME</columns>
+        <columns>Sub_Ref__c</columns>
+        <columns>Subscription_Sites__c</columns>
+        <columns>Status__c</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Type__c</columns>
+        <columns>Subscription_Value__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>equals</operation>
+            <value>Website User</value>
+        </filters>
+        <filters>
+            <field>Subscription_Pack_Sent__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Website Subscriptions Packs to Send</label>
+    </listViews>
+    <nameField>
+        <label>Sub Ref: Current Year</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Subscriptions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subscription_Manager__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Lapse_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Renewal_Opportunity_Created__c</customTabListAdditionalFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subscription_Manager__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Lapse_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Renewal_Opportunity_Created__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Cannot_change_type_after_creation</fullName>
+        <active>false</active>
+        <description>Only the renewals system can create subscription renewals so after creation of a subscription the type cannot be changed</description>
+        <errorConditionFormula>IF( 
+   AND(
+        ISCHANGED( Type__c ),
+               
+                        $Profile.Id &lt;&gt; &quot;00e20000001Mkam&quot;,
+                        $Profile.Id &lt;&gt; &quot;00e200000011wmQ&quot;,
+                        $Profile.Id &lt;&gt; &quot;00eD0000001PgyI&quot;,
+                        $Profile.Id &lt;&gt; &quot;00eD0000001Pgxo&quot;
+              
+    )
+   , true, false
+)</errorConditionFormula>
+        <errorDisplayField>Type__c</errorDisplayField>
+        <errorMessage>You can only edit or create new subscriptions, all renewals are created as part of the renewals process.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>No_Sub_Insrt_with_Accnt_DC_1_or_3_or_6</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND (ISNEW(), OR(Account_Name__r.Data_Cleanse_1__c == true, Account_Name__r.Data_Cleanse_3__c == true, Account_Name__r.Data_Cleanse_6__c  == true))</errorConditionFormula>
+        <errorMessage>You can not insert new Subscription as this account will be deleted under Data Cleanse Project. Please contact IT team on 07789933270</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Renewed_Subs_Requires_Subsequent_Sub</fullName>
+        <active>false</active>
+        <description>If subscription is renewed and subsequent subscription is left blank an error message prompts the user to add the subsequent subscription</description>
+        <errorConditionFormula>AND(  
+ $Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE,
+
+(OR(
+ISPICKVAL(Status__c, &quot;Current - Renewed&quot;),
+ISPICKVAL(Status__c, &quot;Ended - Renewed&quot;)
+))
+,
+ ISBLANK(Subsequent_Subscription__c )
+)</errorConditionFormula>
+        <errorMessage>If the Subscription is Renewed, populate the Subsequent Subscription</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Subscription_Contact_cannot_be_blank</fullName>
+        <active>true</active>
+        <description>Subscriptions cannot be created if the subscription contact field is left blank</description>
+        <errorConditionFormula>AND
+(
+  ISBLANK(Contact__c), 
+   NOT( BEGINS(TEXT(Status__c),&apos;Ended&apos;) )
+)</errorConditionFormula>
+        <errorDisplayField>Contact__c</errorDisplayField>
+        <errorMessage>You cannot add a Subscription without specifying a contact</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Create_Proforma</fullName>
+        <availability>online</availability>
+        <description>Creates a proforma for the subscription and if chosen creates the pack as well.</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Proforma</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var error = false;
+
+var compCorrect = sforce.apex.execute(&quot;FinanceHelper&quot;, &quot;usrInCorrectFFCompany&quot;, {company:&quot;{!Subscription__c.Invoice_Company__c}&quot;}); 
+
+if (compCorrect == &apos;false&apos;){ 
+alert(&apos;You are trying to create an invoice for the company \&apos;{!Subscription__c.Invoice_Company__c}\&apos; but you dont have this company selected or invoice company hasn\&apos;t been selected on the opportunity.&apos;); 
+error = true; 
+} 
+
+// Check to make sure a proforma/invoice hasn&apos;t already been created
+if (&apos;{!Subscription__c.Renewal_Sales_InvoiceId__c}&apos; !=&apos;&apos;){
+   alert(&apos;Unable to create, Proforma Invoice has already been created&apos;);
+   error = true; 
+}
+
+// Check to make sure an opportunity is on the subscription
+if (&apos;{!Subscription__c.OpportunityId__c}&apos; ==&apos;&apos;){
+   alert(&apos;Unable to create proforma, Subscription is missing an opportunity&apos;);
+   error = true; 
+}
+
+if (!error){
+   if(confirm(&apos;OK = Create Proforma &amp; Pack, Cancel = Just create proforma&apos;)){
+
+      if(confirm(&apos;Are you sure you want to create a proforma invoice &amp; pack for this subscription?&apos;)){
+         var result = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewalInvPacks&quot;, {sObject:&quot;{!Subscription__c.Id}&quot;, postInvoice:false});
+         window.location = &apos;/apex/loop__looplus?eid={!Subscription__c.Id}&amp;accountId={!Subscription__c.Account_NameId__c}&amp;contactId={!Subscription__c.ContactId__c}&amp;sessionId={!$Api.Session_ID}&apos;
+      }
+   }else{
+      if(confirm(&apos;Are you sure you want to create a proforma invoice for this subscription?&apos;)){
+         var result = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewalInvPacks&quot;, {sObject:&quot;{!Subscription__c.Id}&quot;, postInvoice:false});
+         window.location = &apos;/{!Subscription__c.Id}&apos;;
+      }
+   }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_Site</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Create Site</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/18.0/connection.js&apos;)} 
+ window.location=&apos;/apex/SSCreation?SCid={!Subscription__c.Id}&apos;;</url>
+    </webLinks>
+    <webLinks>
+        <fullName>LOOPlus</fullName>
+        <availability>online</availability>
+        <description>Drawloop</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>LOOPlus</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/loop__looplus?eid={!Subscription__c.Id}&amp;accountId={!Subscription__c.Account_NameId__c}&amp;contactId={!Subscription__c.ContactId__c}&amp;sessionId={!$Api.Session_ID}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>New_Subscription_Labels</fullName>
+        <availability>online</availability>
+        <description>When a subscription has been paid for and it is new, use to create labels</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>New Subscription Labels</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}&amp;reportID=00OD0000005epon</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Renew_Subscription</fullName>
+        <availability>online</availability>
+        <description>Runs the renewal on the subscription</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Renew Subscription</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/10.0/apex.js&quot;)}
+
+var error = false;
+
+// *** Check Account is active
+if (error == false){
+   if (&apos;{!Subscription__c.Subsequent_Subscription__c}&apos; != &apos;&apos;){
+       alert(&apos;ERROR The subscription has already been renewed&apos;);
+       error = true;
+   }
+}
+
+// *** Check Subscription has at least one active subscription site
+if (error == false){
+   if ({!Subscription__c.Subscription_Sites__c} == 0){
+       alert(&apos;ERROR This subscription doesn\&apos;t have any active sites to renew&apos;);
+       error = true;
+   }
+}
+
+// *** alert user that they are renewing the subscription before the time they should and warn them if they should continue.
+if (error == false){
+   var dateToday=new Date(); //declare date object
+   var strCreateObjs = &apos;{!Subscription__c.Create_Renewal_Objects_on__c}&apos;;
+   var arrCreateObs = strCreateObjs.split(&apos;/&apos;);
+   var strCreateObjsUS = arrCreateObs[2]+&apos;-&apos;+arrCreateObs[1]+&apos;-&apos;+arrCreateObs[0];
+
+   var dateCreateObjs = new Date(strCreateObjsUS);
+
+   if (dateCreateObjs &gt; dateToday){
+      if(!confirm(&apos;This Subscription is being renewed outside the renewal period, are you sure you want to continue?&apos;)){
+         error=true;
+      }
+   }
+}
+
+   if (!error){
+      // call the web service to create the subscription renewal
+      if(confirm(&apos;OK = Renew subscription and DONT create proforma. CANCEL = Renew subscription and DO create proforma (DOES NOT WORK BSC-70)?&apos;)){
+         if (confirm(&apos;Are you sure you want to renew the subscription without creating a proforma?&apos;)){
+            alert(&apos;** RENEWING SUBSCRIPTION (not creating proforma) **&apos;);
+            var result = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewals&quot;, {sObject:&quot;{!Subscription__c.Id}&quot;});
+            alert(&apos;** SUBSCRIPTION RENEWAL RUN **&apos;);
+            window.location = &apos;/{!Subscription__c.Id}&apos;;
+         }
+      }else{
+         if (confirm(&apos;Are you sure you want to renew the subscription creating a proforma as well?&apos;)){
+            alert(&apos;** RENEWING SUBSCRIPTION (creating proforma) **&apos;);
+            var result = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewals&quot;, {sObject:&quot;{!Subscription__c.Id}&quot;});
+
+            // Get latest sub info
+            var sub = sforce.connection.query(&quot;Select Subsequent_Subscription__c, Subsequent_Subscription__r.Opportunity__c FROM Subscription__c WHERE Id = &apos;{!Subscription__c.Id}&apos; LIMIT 1&quot;);
+
+//alert(&apos;Opp Id: &apos;+sub.records.Subsequent_Subscription__r.Opportunity__c);
+
+//var excStr = &apos;var result2 = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewalInvPacks&quot;,{sObject:&quot;&apos;+sub.records.Subsequent_Subscription__r.Opportunity__c+&apos;&quot;}&apos;;
+//alert(&apos;excStr: &apos;+excStr);
+            //eval(excStr);
+            //var result2 = sforce.apex.execute(&quot;SubscriptionRenewal&quot;, &quot;runSubscriptionRenewalInvPacks&quot;,excStr);
+
+            alert(&apos;** SUBSCRIPTION RENEWAL RUN **&apos;);
+            window.location = &apos;/{!Subscription__c.Id}&apos;;
+         }
+       }
+   }</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Renewed_Letter_Membership</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Renewed Letter: Membership</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}&amp;ReportId=00OD0000003wwMN?pv0={!Subscription__c.Id}&amp;TemplateId=01HD0000000HO3N</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Renewed_Letter_RCP</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Renewed Letter: RCP</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Subscription_Structure_Report</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Subscription Structure Report</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00OD0000003xUAi?&amp;pv0={!Subscription__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_Membership</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: Membership</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_RCP</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: RCP</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_Subscription</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: Subscription</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription__c.Id}&amp;ReportId=00O20000003qiVE?pv0={!Subscription__c.Id}&amp;TemplateId=01HD0000000HNGf</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Actual_Number_Collected__c</fullName>
+        <description>this is the number of amended collections that have been made - writen back by Payonomy</description>
+        <externalId>false</externalId>
+        <label>Actual Number Collected</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Total Amount to be collected over the period</inlineHelpText>
+        <label>Total Amount</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Instruction__c</fullName>
+        <externalId>false</externalId>
+        <label>Instruction</label>
+        <referenceTo>Payonomy_Instruction__c</referenceTo>
+        <relationshipLabel>Short Term Amendments</relationshipLabel>
+        <relationshipName>Short_Amends</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Linked_STA__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This relationship represents a link to a subsequent amendment - the next in the processing chain if you would like to amend the amendment</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This relationship represents a link to a subsequent amendment - the next in the processing chain if you would like to amend the amendment</inlineHelpText>
+        <label>Linked STA</label>
+        <referenceTo>Short_Amend__c</referenceTo>
+        <relationshipLabel>Parent STA</relationshipLabel>
+        <relationshipName>Short_Term_Amendments</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status_Display__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Active</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Complete</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suspended</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status_Indicator__c</fullName>
+        <externalId>false</externalId>
+        <formula>IMAGE( 
+CASE( Status_Display__c , 
+&quot;Active&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;Suspended&quot;, &quot;/img/samples/light_yellow.gif&quot;,
+&quot;On hold&quot;, &quot;/img/samples/light_yellow.gif&quot;, 
+&quot;Cancelled&quot;, &quot;/img/samples/light_red.gif&quot;,
+&quot;Complete&quot;, &quot;/img/samples/light_red.gif&quot;,
+&quot;/img/samples/light_red.gif&quot;), 
+&quot;Status&quot;)</formula>
+        <label>Status Indicator</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Number_To_Be_Collected__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>this is the total number of amended collections that will be made</inlineHelpText>
+        <label>Total Number To Be Collected</label>
+        <precision>2</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Short Term Amendment</label>
+    <nameField>
+        <displayFormat>STA - {0}</displayFormat>
+        <label>Short Term Amendment Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Short Term Amendments</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Instruction__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status_Display__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Amount__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Actual_Number_Collected__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Total_Number_To_Be_Collected__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Instruction__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status_Display__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Amount__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Actual_Number_Collected__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Total_Number_To_Be_Collected__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Instruction__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status_Display__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Amount__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Actual_Number_Collected__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Total_Number_To_Be_Collected__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Instruction__c</searchFilterFields>
+        <searchFilterFields>Status_Display__c</searchFilterFields>
+        <searchFilterFields>Amount__c</searchFilterFields>
+        <searchFilterFields>Actual_Number_Collected__c</searchFilterFields>
+        <searchFilterFields>Total_Number_To_Be_Collected__c</searchFilterFields>
+        <searchResultsAdditionalFields>Instruction__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status_Display__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Actual_Number_Collected__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Total_Number_To_Be_Collected__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Check_number_of_STAs_to_be_collected</fullName>
+        <active>true</active>
+        <description>this checks against the DDI to make sure there are enough collections left to complete the STA collections</description>
+        <errorConditionFormula>Total_Number_To_Be_Collected__c   &gt;   Instruction__r.Collections_To_Be_Made__c</errorConditionFormula>
+        <errorDisplayField>Total_Number_To_Be_Collected__c</errorDisplayField>
+        <errorMessage>This exceeds the total number of collections left to be made against the Direct Debit Instruction</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Number_Collected_To_Be_Blank_On_Creation</fullName>
+        <active>true</active>
+        <description>this field is only to be written to by the Payonomy DD Processing service</description>
+        <errorConditionFormula>AND (NOT ISNULL (Actual_Number_Collected__c), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>Actual_Number_Collected__c</errorDisplayField>
+        <errorMessage>This field must be blank when the Direct Credit is created</errorMessage>
+    </validationRules>
+</CustomObject>

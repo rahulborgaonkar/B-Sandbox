@@ -1,0 +1,2033 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage bookings to an event</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Applicable_Delegate_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This defines the delegate address in the case where it is not the delegate&apos;s principle address.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Overides delegate principle address for booking address fields</inlineHelpText>
+        <label>Applicable Delegate Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>BSC Event Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Attendance_Notes__c</fullName>
+        <defaultValue>&quot;Note - If Partially Attended&quot;</defaultValue>
+        <description>Put note when attendee&apos;s attendance is partial on the course.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Put note when attendee&apos;s attendance is partial on the course.</inlineHelpText>
+        <label>Attendance Notes</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Attendee_Type__c</fullName>
+        <description>For the Events Team to determine the type of the attendee</description>
+        <externalId>false</externalId>
+        <inlineHelpText>For the Events Team to determine the type of the attendee</inlineHelpText>
+        <label>Attendee Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>FOC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Staff</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Speaker</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Winner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Available_places_on_event__c</fullName>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Available_places__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The number of available places left on the event that this booking is for.</inlineHelpText>
+        <label>Available places on event</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Award_Recipient__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Ticked if the delegate is the person who is receiving the award</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Ticked if the delegate is the person who is receiving the award</inlineHelpText>
+        <label>Award Recipient</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_Address_Area__c</fullName>
+        <description>pulls the applicable address area if applicable address is not blank or pulls the area from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), 
+Contact__r.Contact_Principle_Address_Area__c,
+Applicable_Delegate_Address__r.Address_Area__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address area if applicable address is not blank or pulls the area from the contact principle address</inlineHelpText>
+        <label>Booking Address Address: Area</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_Building__c</fullName>
+        <description>pulls the applicable address building if applicable address is not blank or pulls the building from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK(Applicable_Delegate_Address__c), Contact__r.Contact_Principle_Address_Building__c, Applicable_Delegate_Address__r.Address_Building__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address building if applicable address is not blank or pulls the building from the contact principle address</inlineHelpText>
+        <label>Booking Address: Building</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_City__c</fullName>
+        <description>pulls the applicable address city if applicable address is not blank or pulls the city from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), Contact__r.Contact_Principle_Address_City__c, Applicable_Delegate_Address__r.Address_City__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address city if applicable address is not blank or pulls the city from the contact principle address</inlineHelpText>
+        <label>Booking Address: City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_Country__c</fullName>
+        <description>pulls the applicable address country if applicable address is not blank or pulls the country from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), 
+(Contact__r.Contact_Principle_Address_Country__c), 
+TEXT (Applicable_Delegate_Address__r.Address_Country__c))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address country if applicable address is not blank or pulls the country from the contact principle address</inlineHelpText>
+        <label>Booking Address: Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_State_Province__c</fullName>
+        <description>pulls the applicable address state/province if applicable address is not blank or pulls the state/province from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), Contact__r.Contact_Principle_Address_State_Province__c, Applicable_Delegate_Address__r.Address_State_Province__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address state/province if applicable address is not blank or pulls the state/province from the contact principle address</inlineHelpText>
+        <label>Booking Address: State/ Province</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_Street__c</fullName>
+        <description>pulls the applicable address street if applicable address is not blank or pulls the street from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), Contact__r.Contact_Principle_Address_Street__c, 
+  Contact__r.Contact_Principle_Address_Street__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address street if applicable address is not blank or pulls the street from the contact principle address</inlineHelpText>
+        <label>Booking Address: Street</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Address_ZIP_Postal_Code__c</fullName>
+        <description>pulls the applicable address post code if applicable address is not blank or pulls the post code from the contact principle address</description>
+        <externalId>false</externalId>
+        <formula>IF
+( ISBLANK( Applicable_Delegate_Address__c ), Contact__r.Contact_Principle_Address_ZIP_Postal__c, Applicable_Delegate_Address__r.Address_ZIP_Postal_Code__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>pulls the applicable address post code if applicable address is not blank or pulls the post code from the contact principle address</inlineHelpText>
+        <label>Booking Address: ZIP / Postal Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Booking_Fee__c</fullName>
+        <description>This is pulled from the opportunity product unit price for public an total price on the in-company primary for in-company</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The amount that should be charged for this booking. This is automatically updated, change this by updating the opportunity line.</inlineHelpText>
+        <label>Booking Fee</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CE_Contact_Brithdate__c</fullName>
+        <description>Customer entered birth date.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Customer entered birth date</inlineHelpText>
+        <label>CE_Contact_Birthdate</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CE_Contact_Email__c</fullName>
+        <description>Customer Entered email address.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Customer Entered email address</inlineHelpText>
+        <label>CE Contact Email</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Contact_Name__c</fullName>
+        <description>Customer entered contact name</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Customer entered contact name</inlineHelpText>
+        <label>CE Contact Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Contact_Phone__c</fullName>
+        <description>Customer Entered contact phone number.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Customer Entered contact phone number</inlineHelpText>
+        <label>CE Contact Phone</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancelled_Formerlly_Provisonal__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>System field used to exclude bookings which have been cancelled from a p[provisional status from being invoiced using 1 to 1 invoicing and the old generateinvlice.cls.  This is populated by the cancellation process whenever a booking is cancelled using the new cancellation process</description>
+        <externalId>false</externalId>
+        <inlineHelpText>System field used to exclude bookings which have been cancelled from a p[provisional status from being invoiced using 1 to 1 invoicing and the old generateinvlice.cls.  This is populated by the cancellation process whenever a booking is cancelled using th</inlineHelpText>
+        <label>Cancelled Formerlly Provisonal</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Company__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Related to the original account booking the event booking.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related to the original account booking the event booking</inlineHelpText>
+        <label>Booking Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>BSC Event Bookings</relationshipLabel>
+        <relationshipName>R00N50000001mIaxEAE</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Conga__c</fullName>
+        <description>link to conga to open a report (not currently used)</description>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(
+(&quot;https://www.appextremes.com/apps/Conga/PointMerge.aspx?SessionID=&quot;
++$Api.Session_ID
++&quot;&amp;ServerURL=&quot;+$Api.Partner_Server_URL_80 
++&quot;&amp;Id=&quot;+Id
++&quot;&amp;ReportID=00O20000003m7Th?pv0= &quot;+Special_Event__c 
++&quot;,00O20000003m2dh?pv0=&quot;+$User.Id 
++&quot;,00O20000003m2Qs?pv0=&quot;+Opportunity_ID__c  
++&quot;,00O20000003mElO?pv0=&quot;
++&quot;,00O20000003mBx6?pv0=&quot;),&quot;Conga&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>link to conga to open a report</inlineHelpText>
+        <label>Conga</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_ID__c</fullName>
+        <description>Pulls in the related contact ID</description>
+        <externalId>false</externalId>
+        <formula>Contact__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related contact ID</inlineHelpText>
+        <label>Contact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Last_Name__c</fullName>
+        <description>Pulls in the related contact&apos;s last name, this is used on the Delegate Badges only so doesn&apos;t appear on the page layouts</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.LastName</formula>
+        <inlineHelpText>Pulls in the related contact&apos;s last name, this is used on the Delegate Badges only so doesn&apos;t appear on the page layouts</inlineHelpText>
+        <label>Contact Last Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Salutation__c</fullName>
+        <description>Pulls in the related Contact Salutation</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Contact__r.Salutation)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related Contact Salutation</inlineHelpText>
+        <label>Contact Salutation</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The name of the person attending the event as a delegate pulled from the contact</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The name of the person attending the event as a delegate</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>BSC Event Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Course_Notes_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Updated by flow used to send email to primary booker which is driven by a workflow</description>
+        <externalId>false</externalId>
+        <label>Course Notes Sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Credited_Status__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Ticked if the related invoice has been credited</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Ticked if the related invoice has been credited</inlineHelpText>
+        <label>Credited Status</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Cancellation_Transfer_Date__c</fullName>
+        <description>The date and time on which the customer asked for the transfer or cancellation.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date and time on which the customer asked for the transfer or cancellation.</inlineHelpText>
+        <label>Customer Cancellation/Transfer Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Customer_Requested_Transfer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to determine whether to charge a customer for a public booking transfer. Auto populated when transferring a public booking.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick this box if the client should incur transfer fees!</inlineHelpText>
+        <label>Customer Requested Transfer Apply Fees</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Delegate_Account_ID__c</fullName>
+        <description>Driven by Workflow - generate delegate account id - to populate booking delegate&apos;s account ID used to filter address search</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Pulls in the related contact account&apos;s ID</inlineHelpText>
+        <label>Delegate Account ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delegate_DOB__c</fullName>
+        <description>Pulls in the related contact&apos;s date of birth</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Birthdate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related contact&apos;s date of birth</inlineHelpText>
+        <label>Delegate DOB</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Delegate_Days__c</fullName>
+        <description>Formula to count the number of days the delegate is booked on to (includes any gaps and weekends though)</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.EndDate__c - Special_Event__r.StartDate__c +1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Number of days - note: inaccurate for courses spanning several weeks!</inlineHelpText>
+        <label>Delegate Days</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delegate_Email__c</fullName>
+        <description>Pulls in the email of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Email</formula>
+        <inlineHelpText>The email of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</inlineHelpText>
+        <label>Delegate Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delegate_Job_Title__c</fullName>
+        <description>Pulls in the related contact&apos;s job title</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Title</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related contact&apos;s job title</inlineHelpText>
+        <label>Delegate Job Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delegate_Mobile__c</fullName>
+        <description>Pulls in the mobile of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.MobilePhone</formula>
+        <inlineHelpText>The mobile of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</inlineHelpText>
+        <label>Delegate Mobile</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delegate_Notes__c</fullName>
+        <description>Any notes that could be relevant to the delegate</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Any notes that could be relevant to the delegate</inlineHelpText>
+        <label>Delegate Notes</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Delegate_Work_Phone__c</fullName>
+        <description>Pulls in the work phone of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.Work_Phone__c</formula>
+        <inlineHelpText>The work phone of the related delegate created to add to the trainers event booking related list layout on the BSC Event page</inlineHelpText>
+        <label>Delegate Work Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dietary_Requirements__c</fullName>
+        <description>Used for the Events Team to distinguish any special dietary requirements of the delegates</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used for the Events Team to distinguish any special dietary requirements of the delegates</inlineHelpText>
+        <label>Dietary Requirements</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Dont_Show_on_Booking_Form__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Disables this event booking from appearing on the booking form.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Disables this event booking from appearing on the booking form.</inlineHelpText>
+        <label>Don&apos;t Show on Booking Form</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Event_Certificate_Course_Name__c</fullName>
+        <description>Shows the Event.Certificate Course Name and is used to pull information into drawloop document</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Certificate_Course_Name__c</formula>
+        <inlineHelpText>Shows the Event.Certificate Course Name and is used to pull information into drawloop document</inlineHelpText>
+        <label>Event Certificate Course Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_City__c</fullName>
+        <description>Pulls in the related event&apos;s city</description>
+        <externalId>false</externalId>
+        <formula>TEXT (Special_Event__r.City__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related event&apos;s city</inlineHelpText>
+        <label>Event City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Start_Date__c</fullName>
+        <description>Pulls in the related event&apos;s start date</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.StartDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related event&apos;s start date</inlineHelpText>
+        <label>Event Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Event_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.RecordType.DeveloperName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Event Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Venue_City__c</fullName>
+        <description>Used for drawloop templates (not on page layouts)</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Venue__r.Principle_Address_City__c</formula>
+        <label>Event Venue City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_Venue__c</fullName>
+        <description>Used in Drawloop to populate venue name on automated booking confirmation</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Venue__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Populated automatically from related event</inlineHelpText>
+        <label>Event Venue</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Event_end_Date__c</fullName>
+        <description>Pulls in the related event&apos;s end date</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.EndDate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related event&apos;s end date</inlineHelpText>
+        <label>Event end Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FK_CB_BOOK_ID__c</fullName>
+        <description>This is a Foreign Key which maps to the Opportunities table in Salesforce from each BSC Event Booking via Oppotunitiy.PK_CB_BOOK_ID__c
+
+It is used during migration to associate BSC Event Bookings to Opportunities (Bookings)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is a System Administrator field</inlineHelpText>
+        <label>FK_CB_BOOK_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FK_CB_COURSE_ID__c</fullName>
+        <description>This is a Foreign Key which maps to the BSC Events table in Salesforce from each BSC Event Booking via BSC_Event__c.PK_CB_COURSE_ID__c
+
+It is used during migration to associate BSC Event Bookings (Elements) to BSC Events (Courses)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is a System Administrator field</inlineHelpText>
+        <label>FK_CB_ COURSE_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FK_CB_ORG_ID__c</fullName>
+        <description>This is a Foreign Key which maps to the Accounts table in Salesforce from each BSC Event Booking via Account.PK_CB_ORG_ID__c
+
+It is used during migration to associate BSC Event Bookings to Accounts (Organisations)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>used as part of the migration from course booker to link the event booking to the correct account</inlineHelpText>
+        <label>FK_CB_ ORG_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FK_CB_PN_ID__c</fullName>
+        <description>This is a Foreign Key which maps to the Contact table in Salesforce from each BSC Event Booking via Contact.PK_CB_PN_ID__c
+
+It is used during migration to associate BSC Event Bookings to Copntacts (Person)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>used as part of the migration from course booker to link the event booking to the correct contact</inlineHelpText>
+        <label>FK_CB_PN_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fee_Date__c</fullName>
+        <description>Updates to the Transfer cancellation date or if this is blank pulls in the event start date</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK(Transfer_Cancellation_Date__c ), Special_Event__r.StartDate__c ,Transfer_Cancellation_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This is the date on which revenues can be realised (i.e. event date for normal bookings and transfer / cancellation date for transfers / cancellations)</inlineHelpText>
+        <label>Fee Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Fee_Type__c</fullName>
+        <description>if the status is transferred or cancelled, updates to either Transfer Fee or Cancellation Fee else updates to booking fee</description>
+        <externalId>false</externalId>
+        <formula>IF(
+	ISPICKVAL(Status__c,&quot;Transferred&quot;),
+	&quot;Transfer Fee&quot;,
+		IF(
+			ISPICKVAL(Status__c, &quot;Cancelled&quot;),
+			&quot;Cancellation Fee&quot;,
+			&quot;Booking Fee&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>if the status is transferred or cancelled, updates to either Transfer Fee or Cancellation Fee else updates to booking fee</inlineHelpText>
+        <label>Fee Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <description>When related to an invoice, adds in the related invoice date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When related to an invoice, adds in the related invoice date</inlineHelpText>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Paid_Date__c</fullName>
+        <description>When related to an invoice, adds in the related invoice paid date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When related to an invoice, adds in the related invoice paid date</inlineHelpText>
+        <label>Invoice Paid Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <description>When related to an invoice, adds in the related invoice status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When related to an invoice, adds in the related invoice status</inlineHelpText>
+        <label>Invoice Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not-Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Joining_Instructions_Sent__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Joining Instructions Sent</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LOOP_Booking_Confirmation_Short_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Product__r.LOOP_Booking_Confirmation_Short_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOOP Booking Confirmation Short Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Confirmed_Bkgs__c</fullName>
+        <description>Used to populate in company training template with the number of event confirmed bookings, Auto popluated from related contact used in Drawloop booking confirmation DDPs. This can only be used for in company training templates.</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.No_of_Delegates_Booked__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Not shown on any page layout</inlineHelpText>
+        <label>LOOP Confirmed Bkgs</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Delegate_Name__c</fullName>
+        <description>Auto popluated from related contact used in Drawloop booking confirmation DDPs</description>
+        <externalId>false</externalId>
+        <formula>Contact__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto popluated from related contact used in Drawloop booking confirmation DDPs</inlineHelpText>
+        <label>LOOP Delegate Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Event_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Special_Event__r.EndDate__c )) + &apos; &apos; +
+CASE(MONTH(Special_Event__r.EndDate__c ),
+1, &apos;January&apos;,
+2, &apos;February&apos;,
+3, &apos;March&apos;,
+4, &apos;April&apos;,
+5, &apos;May&apos;,
+6, &apos;June&apos;,
+7, &apos;July&apos;,
+8, &apos;August&apos;,
+9, &apos;September&apos;,
+10, &apos;October&apos;,
+11, &apos;November&apos;,
+12, &apos;December&apos;,
+NULL) + &apos; &apos; +
+TEXT(YEAR(Special_Event__r.EndDate__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOOP_Event_End_Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Event_Product__c</fullName>
+        <description>Pulls Product from event, used in Drawloop booking confirmation DDPs</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Certificate_Course_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls Product from event, used in Drawloop booking confirmation DDPs</inlineHelpText>
+        <label>LOOP Event Product</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Event_Stage__c</fullName>
+        <description>Used by drawloop to filter event stage for automated document creation (booking confirmation)</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Special_Event__r.Stage__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populated from related event. Used in Drawloop booking confirmation DDPs</inlineHelpText>
+        <label>LOOP Event Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Event_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(DAY(Special_Event__r.StartDate__c )) + &apos; &apos; +
+CASE(MONTH(Special_Event__r.StartDate__c ), 
+1, &apos;January&apos;, 
+2, &apos;February&apos;, 
+3, &apos;March&apos;,
+4, &apos;April&apos;,
+5, &apos;May&apos;,
+6, &apos;June&apos;,
+7, &apos;July&apos;,
+8, &apos;August&apos;,
+9, &apos;September&apos;,
+10, &apos;October&apos;,
+11, &apos;November&apos;,
+12, &apos;December&apos;,
+NULL) + &apos; &apos; +
+TEXT(YEAR(Special_Event__r.StartDate__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOOP_Event_Start_Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_LRA_Available__c</fullName>
+        <description>Used by Drawloop to populate product web link in automated forms (booking confirmation)</description>
+        <externalId>false</externalId>
+        <formula>IF( Special_Event__r.Product__r.LOOP_Learner_Resource_Area__c, &quot;Yes&quot;, &quot;No&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto popluated from related product. Website link to product information. Used in Drawloop booking confirmation DDPs</inlineHelpText>
+        <label>LOOP LRA Available</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOOP_Product_Web_Link__c</fullName>
+        <description>Used by Drawloop to populate product web link in automated forms (booking confirmation)</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Product__r.Website_Product_Information__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto popluated from related product. Website link to product information. Used in Drawloop booking confirmation DDPs</inlineHelpText>
+        <label>LOOP Product Web Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Learner_Resource_Access__c</fullName>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Learner_Resource_Access__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Learner Resource Access</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Migrated_c__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the BSC Event Booking data was migrated from the Course Booker database</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether the BSC Event Booking data was migrated from the Course Booker database</inlineHelpText>
+        <label>Migrated</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>OPL_ID__c</fullName>
+        <description>18 digit opportunity product line id that the event booking relates to</description>
+        <externalId>true</externalId>
+        <inlineHelpText>18 digit opportunity product line id that the event booking relates to</inlineHelpText>
+        <label>OPL ID</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opp_Close_Date__c</fullName>
+        <description>Pulls in the related opportunity close date</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.CloseDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunity close date</inlineHelpText>
+        <label>Opp Close Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Opp_ID__c</fullName>
+        <description>Pulls in the related opportunity ID</description>
+        <externalId>false</externalId>
+        <formula>Opportunity_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunity ID</inlineHelpText>
+        <label>Opp ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_ID__c</fullName>
+        <description>NOTE: Formula references Opportunity Number not ID - used for In-Company Booking creation</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.Opportunity_Number__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Opportunity Number</inlineHelpText>
+        <label>Opportunity ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Owner__c</fullName>
+        <description>Looks at the Opportunity Owner&apos;s ID rather than the name</description>
+        <externalId>false</externalId>
+        <formula>Opportunity__r.OwnerId</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunity owner&apos;s ID</inlineHelpText>
+        <label>Opportunity Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Stage__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Opportunity__r.StageName )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>The stage of the opportunity that the Event Booking links too.</inlineHelpText>
+        <label>Opportunity Stage</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup field to related opportunity</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup field to related opportunity</inlineHelpText>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>BSC Event Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Override_Booking_Fee__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is unchecked the Booking Fee will be automatically updated from the Opportunity Line. Check this box to enter an manual booking fee which won&apos;t be updated automatically.</inlineHelpText>
+        <label>Override Booking Fee</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_ELEM_ID__c</fullName>
+        <description>This is the Primary Key of the Element (BSC Event Booking) from the source Elements  data and maps to Elements.ELEM_ID from the Elements  table in the CB database.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>This is a system admin field</inlineHelpText>
+        <label>PK_CB_ELEM_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Partial_Attendance_Flag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Partial Attendance Flag</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Booking__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Signifies whether this booking is Primary or not..</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Signifies whether this booking is Primary or not..</inlineHelpText>
+        <label>Primary Booking</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Product_ID__c</fullName>
+        <description>Used for Conga Transfer Form</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Product__r.Id</formula>
+        <inlineHelpText>Pulls in the related event product&apos;s id</inlineHelpText>
+        <label>Product ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <description>Pulls in the related events product name</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Product__r.Name</formula>
+        <inlineHelpText>Pulls in the related events product name</inlineHelpText>
+        <label>Product</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_Survey__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When ticked workflow sends survey to delegate</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When ticked workflow &quot;Send Booking Survey&quot; sends survey to delegate</inlineHelpText>
+        <label>Send Survey</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Special_Event__c</fullName>
+        <description>lookup to the event the event booking relates to</description>
+        <externalId>false</externalId>
+        <inlineHelpText>lookup to the event the event booking relates to</inlineHelpText>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>BSC Event Bookings (BSC Event)</relationshipLabel>
+        <relationshipName>R00N50000001mIaiEAE</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <description>Shows the status of the event booking</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Shows the status of the event booking</inlineHelpText>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Provisional</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Confirmed</fullName>
+                <color>#33CC00</color>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attended</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Show</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled - Provisional</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled - Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To Be Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To Be Transferred</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Transferred</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled - BSC</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attended - Fail</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attended - Pass</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attended - Merit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Attended - Distinction</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Survey_URL__c</fullName>
+        <description>Creates the URL to use with GetFeedback Survey</description>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Product__r.Survey_URL__c+
+&apos;?ContactID=&apos;+Contact_ID__c +
+&apos;&amp;Special_Event_Booking__c.id=&apos;+Id+
+&apos;&amp;Product2.id=&apos;+Product_ID__c+
+&apos;&amp;Name=&apos;+ LOOP_Delegate_Name__c+
+&apos;&amp;AccountId=&apos;+ Delegate_Account_ID__c+
+&apos;&amp;opportunityId=&apos;+ Opportunity__c+
+&apos;&amp;Product=&apos;+  LOOP_Event_Product__c</formula>
+        <inlineHelpText>URL used for get feedback survey</inlineHelpText>
+        <label>Survey URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TnC_Event_Units__c</fullName>
+        <externalId>false</externalId>
+        <label>TnC Event Units</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation_Date__c</fullName>
+        <description>The date on which the booking is transferred or cancelled</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date on which the booking is transferred or cancelled</inlineHelpText>
+        <label>Transfer / Cancellation Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation_Fee__c</fullName>
+        <description>Transfer / Cancellation Fees</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Transfer / Cancellation Fees</inlineHelpText>
+        <label>Transfer / Cancellation Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation_Notes__c</fullName>
+        <description>Notes entered in the transfer and cancellation reason VF Component.</description>
+        <externalId>false</externalId>
+        <label>Transfer / Cancellation Notes</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation_Process_Date__c</fullName>
+        <description>When the transfer / cancellation was processed by BSC</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When the transfer / cancellation was processed by BSC</inlineHelpText>
+        <label>Transfer / Cancellation Process Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation_Reason__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Transfer / Cancellation Reason</label>
+        <referenceTo>Transfer_Cancellation_Reasons__c</referenceTo>
+        <relationshipLabel>BSC Event Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_To__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used for transferring public bookings to a new event. Auto populated when transferring a public booking.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used for transferring public bookings to a new event. Auto populated when transferring a public booking.</inlineHelpText>
+        <label>Transfer to: Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>BSC Event Bookings (Transfer To)</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Transferred_From__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This field will be populated with the previous field if a booking is transferred</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field will be populated with the previous field if a booking is transferred</inlineHelpText>
+        <label>Transferred From</label>
+        <referenceTo>Special_Event_Booking__c</referenceTo>
+        <relationshipLabel>Previous Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Transferred_To__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This field indicates the subsequent booking if a booking is transferred</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field indicates the subsequent booking if a booking is transferred</inlineHelpText>
+        <label>Transferred to: Booking</label>
+        <referenceTo>Special_Event_Booking__c</referenceTo>
+        <relationshipLabel>Subsequent Bookings</relationshipLabel>
+        <relationshipName>BSC_Event_Bookings</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Defines the event booking type whether primary or additional etc</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Defines the event booking type whether primary or additional etc</inlineHelpText>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In-Company Primary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In-Company Additional</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>In-Company Additional - On the Day</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>User_Confirmed__c</fullName>
+        <description>To show the user id for the person who updated the status to confirmed. (Not shown on the page layout, purely for reporting purposes)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>To show the user id for the person who updated the status to confirmed.</inlineHelpText>
+        <label>User Confirmed</label>
+        <length>60</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Venue_Address__c</fullName>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Venue__r.Name &amp; BR()+
+Special_Event__r.Venue_Address__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Venue Address</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Venue_URL__c</fullName>
+        <externalId>false</externalId>
+        <formula>Special_Event__r.Venue__r.Venue_Website_Link__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Venue URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>BSC Event Booking</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Special_Event__c</columns>
+        <columns>Company__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Migrated_BSC_Event_Bookings</fullName>
+        <columns>Special_Event__c</columns>
+        <columns>NAME</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Migrated_c__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Migrated BSC Event Bookings</label>
+        <sharedTo>
+            <role>SystemAdministrator</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>TBAs</fullName>
+        <columns>NAME</columns>
+        <columns>Special_Event__c</columns>
+        <columns>Company__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Status__c</columns>
+        <columns>Event_Start_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Contact__c</field>
+            <operation>startsWith</operation>
+            <value>to</value>
+        </filters>
+        <label>TBAs</label>
+    </listViews>
+    <nameField>
+        <displayFormat>EB-{0000000}</displayFormat>
+        <label>Event Booking Number</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>BSC Event Bookings</pluralLabel>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>BSC_Event_Booking</fullName>
+        <active>true</active>
+        <label>BSC Event Booking</label>
+        <picklistValues>
+            <picklist>Attendee_Type__c</picklist>
+            <values>
+                <fullName>FOC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Speaker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Invoice_Status__c</picklist>
+            <values>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not-Invoiced</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Attended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Attended - Distinction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Attended - Fail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Attended - Merit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Attended - Pass</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled - BSC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled - Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancelled - Provisional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Show</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Provisional</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>To Be Cancelled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>To Be Transferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transferred</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>In-Company Additional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Company Additional - On the Day</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In-Company Primary</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Company__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Special_Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Company__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Special_Event__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Contact__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Company__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Special_Event__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Contact__c</searchFilterFields>
+        <searchFilterFields>Company__c</searchFilterFields>
+        <searchFilterFields>Special_Event__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Company__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Special_Event__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Chk_Overbooking_with_Confirmed_Status_N</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(ISNEW(),
+ISPICKVAL(Status__c, &quot;Confirmed&quot;),
+Special_Event__r.No_of_Delegates_Booked__c&gt;= Special_Event__r.Maximum_Places__c,
+NOT(Special_Event__r.Allow_Overbooking__c )
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Event does not allow overbooking. Number of confirmed bookings already equal to or greater than maximum places.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Chk_Overbooking_with_Confirmed_Status_U</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(NOT(ISNEW()), 
+ISPICKVAL(Status__c, &quot;Confirmed&quot;), 
+NOT(ISPICKVAL(PRIORVALUE( Status__c), &quot;Confirmed&quot;)),
+Special_Event__r.No_of_Delegates_Booked__c&gt;= Special_Event__r.Maximum_Places__c,
+ NOT(Special_Event__r.Allow_Overbooking__c ) 
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Event does not allow overbooking. Number of confirmed bookings already equal to or greater than maximum places.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Stop_field_changes_all_finance_statuses</fullName>
+        <active>false</active>
+        <description>If the Finance status is either Invoiced, Paid, Part Paid then some opp fields can&apos;t be changed.</description>
+        <errorConditionFormula>IF(
+   AND(
+      OR(
+         ISPICKVAL(Opportunity__r.StageName, &apos;Invoiced&apos;),
+         ISPICKVAL(Opportunity__r.StageName, &apos;Paid&apos;), 
+         ISPICKVAL(Opportunity__r.StageName, &apos;Part Paid&apos;),
+         ISPICKVAL(Opportunity__r.StageName, &apos;Part Invoiced&apos;)
+      ),
+      ISCHANGED(Booking_Fee__c),
+      Opportunity__r.Using_one_to_one_invoicing__c = &apos;Yes&apos;
+   ),
+   true,
+   false
+)</errorConditionFormula>
+        <errorDisplayField>Booking_Fee__c</errorDisplayField>
+        <errorMessage>You cannot change the booking fee when the opportunity has been Invoiced, Part Paid or Paid.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>BC_Pub</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>BC-Pub</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Special_Event_Booking__c.Id}&amp;ReportId=00O20000003qiuu?pv0={!Special_Event_Booking__c.Id}&amp;TemplateId=01H20000000PfjR</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Confirm_Public_Transfer</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Confirm Public Transfer</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/connection.js&quot;)}
+
+var status = &apos;{!Special_Event_Booking__c.Status__c}&apos;;
+var type = &apos;{!Special_Event_Booking__c.Type__c }&apos;;
+
+
+if(&apos;{!Special_Event_Booking__c.Transferred_To__c}&apos;!==&apos;&apos;)
+{
+    alert(&quot;You cannot transfer an already transferred booking&quot;);
+}
+else
+{
+
+   if(type != &apos;Public&apos;)
+   {
+       alert(&quot;Must be a public booking.&quot;);
+   }
+   else{
+      if( status == &apos;To Be Transferred&apos;)
+      {
+          var r=confirm(&quot;Are you sure you want to transfer it!&quot;);
+          if (r==true)
+          {
+             window.location.href = &quot;/apex/PublicBookingTransfer?id={!Special_Event_Booking__c.Id}&quot;;
+           }
+           else{
+              alert(&quot;You have cancelled the request to transfer!&quot;);
+           }
+      }
+      else
+      {
+         alert(&quot;Go through the Public Transfer process first!&quot;);
+      }
+   }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Conga_Composer</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Conga Composer</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx
+?SessionId={!API.Session_ID}
+&amp;ServerUrl={!API.Partner_Server_URL_80}
+&amp;Id={!Special_Event_Booking__c.Special_EventId__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Delete_Event_Bookings</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Delete Event Bookings</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/24.0/apex.js&quot;)}
+
+var url = parent.location.href;   // string for the URL of the current page
+var records = {!GETRECORDIDS($ObjectType.Special_Event_Booking__c)}; //grabs the records that the user is requesting to delete
+
+if (records[0] == null) {      //if the button was clicked but there was no record selected
+	alert(&quot;Please select at least one record to delete&quot;);     //alert the user that they didn&apos;t make a selection 
+}else{
+        if(confirm(&apos;Are you sure you want to delete &apos;+records.length+ &apos; event booking records? \n*** THIS CANNOT BE REVERSED ***&apos;)){
+             
+             result = sforce.connection.deleteIds(records);        //push the deleted records back to Salesforce
+             parent.location.href = url;
+       }
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>LOOP_Plus_Booking</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>LOOP Plus Booking</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/loop__looplus?sessionId={!$Api.Session_ID}&amp;eid={!Special_Event_Booking__c.Id}&amp;contactId={!Special_Event_Booking__c.ContactId__c}&amp;accountId={!Special_Event_Booking__c.CompanyId__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Mass_Edit</fullName>
+        <availability>online</availability>
+        <description>Allows user to mass edit event bookings</description>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Mass Edit</masterLabel>
+        <openType>sidebar</openType>
+        <page>MassEditEventBookings</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+    <webLinks>
+        <fullName>Public_Cancellation</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Public Cancellation</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/connection.js&quot;)}
+
+ var status =  &apos;{!Special_Event_Booking__c.Status__c}&apos;;
+ var type = &apos;{!Special_Event_Booking__c.Type__c }&apos;;
+   if(type !=&apos;Public&apos;)
+   {
+          alert(&quot;Must be a public booking.&quot;);
+    }else{
+                   if(  status == &apos;Provisional&apos; || status == &apos;Confirmed&apos; || status == &apos;To Be Cancelled&apos;)
+                   {
+                          if( status  == &apos;Confirmed&apos; || status == &apos;To Be Cancelled&apos;)
+                          {     
+                                  var r=confirm(&quot;Are you sure you want to cancel it!&quot;)
+                                  if (r==true)
+                                  {
+                                              window.location.href = &quot;/apex/PublicBookingCancellation?id={!Special_Event_Booking__c.Id}&quot;;
+                                  }
+                          }
+                          if( status  == &apos;Provisional&apos;)
+                          {
+                                  alert(&quot;There are no cancellation fees for provisional bookings. Just change the status to Provisional – Cancelled.&quot;);
+                          }
+                    }
+                    else
+                    {
+                                alert(&quot;You can only cancel confirmed bookings.&quot;);
+                    }
+              }</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Public_Cancellation_Letter</fullName>
+        <availability>online</availability>
+        <description>Generates cancellation confirmation letter
+CL-Pub</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Public Cancellation Letter</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Special_Event_Booking__c.Id}&amp;ReportID=00O20000003qOCU?pv0={!Special_Event_Booking__c.Special_EventId__c}&amp;ReportID=00O20000003qOCZ?pv0={!Special_Event_Booking__c.ContactId__c}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Public_Transfer</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Public Transfer</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/connection.js&quot;)}
+
+ var status =  &apos;{!Special_Event_Booking__c.Status__c}&apos;;
+ var type = &apos;{!Special_Event_Booking__c.Type__c }&apos;;
+  /* if(type ==&apos;Public&apos;)
+   {
+          alert(&quot;Must be a public booking.&quot;);
+    }
+   else{*/
+                 if(  status == &apos;Confirmed&apos; || status == &apos;To Be Transferred&apos; || status == &apos;No Show&apos;)
+                 {
+                       window.location.href = &quot;/apex/TransferBookingWizard?id={!Special_Event_Booking__c.Id}&quot;;
+                  }
+                   else{
+      
+                             if(  status == &apos;Provisional&apos;)       
+                              {
+                                      alert(&quot;There are no transfer fees for provisional bookings. Change the status of this booking to Provisional – Cancelled and create a new booking from the Opportunity.&quot;);
+                                }
+                                 else{
+                                          alert(&quot;You can only transfer confirmed or no show bookings.&quot;);
+                                          }  
+                            }</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Public_Transfer_Form</fullName>
+        <availability>online</availability>
+        <description>Generates Transfer Form for public booking
+TL-Pub</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Public Transfer Form</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Special_Event_Booking__c.Id}&amp;ReportID=00O20000003qNy1?pv0={!Special_Event_Booking__c.Special_EventId__c}&amp;ReportID=00O20000003qNzJ?pv0={!Special_Event_Booking__c.ContactId__c}&amp;ReportID=00O20000003qNy1?pv0={!Special_Event_Booking__c.Transfer_ToId__c}&amp;ReportID=00O20000003qNzi?pv0={!Special_Event_Booking__c.Product_ID__c}&amp;ReportID=00O20000003qOFO?pv0={!Special_Event_Booking__c.Id}</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>A junction object to track financial transactions intended to drive sales commissions and other financial reporting.  Trigger written by 2020 populate this object dynamically.  This captures line level transactions and looks up to the Financial Transactional Header Data object.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <description>Holds date the Invoice was created</description>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Reference__c</fullName>
+        <description>Holds the Invoice Name derived from Sales Invoice Financial Force Object</description>
+        <externalId>false</externalId>
+        <label>Invoice Reference</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <description>Holds the Invoice Status derived from Sales Invoice Financial Force Object</description>
+        <externalId>false</externalId>
+        <label>Invoice Status</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Exclude_From_Commission__c</fullName>
+        <description>Updates the field to true if the flag Exclude from Commission on the opportunity is true, else this is blank</description>
+        <externalId>false</externalId>
+        <formula>IF( Opportunity__r.Exclude_from_Commission__c = TRUE,&quot;TRUE&quot;,&quot;&quot;)</formula>
+        <inlineHelpText>Updates the field to true if the flag Exclude from Commission on the opportunity is true, else this is blank</inlineHelpText>
+        <label>Opportunity Exclude From Commission</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Looks up to Opportunity to capture data on Opportunity records. This is used for reports and also to drive visual force invoicing code / logic</description>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Financial Transactional Header Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Header_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Amount__c</fullName>
+        <description>Holds Outstanding amount derived from Cash Matching History Financial Force Object</description>
+        <externalId>false</externalId>
+        <label>Outstanding Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Amount__c</fullName>
+        <description>Holds payment amount derived frrm Cash Matching History Financial Force Object</description>
+        <externalId>false</externalId>
+        <label>Payment Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Date__c</fullName>
+        <description>Holds payment date from  XXX Financial Force object</description>
+        <externalId>false</externalId>
+        <label>Payment Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Status__c</fullName>
+        <description>Holds the Payment Status derived from Invoice Financial Force Object</description>
+        <externalId>false</externalId>
+        <label>Payment Status</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Credit_Note_Matched__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Informs whether a Sales Credit Note has been Matched or not</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Informs whether a Sales Credit Note has been Matched or not</inlineHelpText>
+        <label>Sales Credit Note Matched</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Credit_Note__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to Financial Force Credit note header.  We understand that we will not be able to drill down to credit note line level within Salesforce reports due to limitation of reporting.  We can however use SSRS alongside DBAmp to drill down.  There is no direct link between credit note line items and invoice line items, this is a design feature of Financial Force.</description>
+        <externalId>false</externalId>
+        <label>Sales Credit Note</label>
+        <referenceTo>c2g__codaCreditNote__c</referenceTo>
+        <relationshipLabel>Financial Transactional Header Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Header_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Invoice_Created_By__c</fullName>
+        <description>Pulls in the username of the person who created the invoice</description>
+        <externalId>false</externalId>
+        <formula>Sales_Invoice__r.CreatedBy.Username</formula>
+        <inlineHelpText>Pulls in the username of the person who created the invoice</inlineHelpText>
+        <label>Sales Invoice Created By</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to Financial Force invoices at header level, this allows us to report at this level.</description>
+        <externalId>false</externalId>
+        <label>Sales Invoice</label>
+        <referenceTo>c2g__codaInvoice__c</referenceTo>
+        <relationshipLabel>Financial Transactional Header Data</relationshipLabel>
+        <relationshipName>Financial_Transactional_Header_Data</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Financial Transactional Header Data</label>
+    <nameField>
+        <displayFormat>FH-{000000}</displayFormat>
+        <label>Financial Transactional Header Data Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Financial Transactional Header Data</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

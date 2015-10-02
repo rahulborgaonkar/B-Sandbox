@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Drawloop_Next__c</fullName>
+        <externalId>false</externalId>
+        <formula>if( 
+  isblank(Sales_Credit_Note__c ),
+  if (Sales_Invoice__r.Auto_Send_Invoice_By__c=&apos;Email&apos;, 
+      &quot;SFInvoice_History__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L7OpMAK;SFSales_Invoice__c:&quot; &amp; Sales_Invoice__c &amp;&quot;;Deploy:a3SD0000000LHYOMA4;SFContact:003D000001ZWRXYIA5&quot;,
+      &quot;SFInvoice_History__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L7OqMAK;SFSales_Invoice__c:&quot; &amp; Sales_Invoice__c &amp;&quot;;Deploy:a3SD0000000LHYPMA4;SFContact:003D000001ZWRXYIA5&quot;), 
+  &quot;CREDIT NOTES NOT SET FOR DDP&quot;
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Drawloop_Next</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Status__c</fullName>
+        <defaultValue>&apos;Waiting&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>Drawloop Status</label>
+        <length>10</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Email_to__c</fullName>
+        <description>Associated document will be emailed to this address</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Associated document will be emailed to this address</inlineHelpText>
+        <label>Email to</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Emailed_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Emailed on</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Evaluate_delivery_Workflow__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Evaluate delivery Workflow</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Failure_Message__c</fullName>
+        <externalId>false</externalId>
+        <label>Failure Message</label>
+        <length>3000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Invoice_Account__c</fullName>
+        <externalId>false</externalId>
+        <formula>Sales_Invoice__r.c2g__Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Account</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Credit_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice/Credit Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Stage__c</fullName>
+        <description>Opportunity Stage at Invoice / Credit Note creation</description>
+        <externalId>false</externalId>
+        <label>Opportunity Stage</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Invoice History</relationshipLabel>
+        <relationshipName>InvoiceHistory</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Printed_on__c</fullName>
+        <externalId>false</externalId>
+        <label>Printed on</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Credit_Note__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to Credit Notes</description>
+        <externalId>false</externalId>
+        <label>Sales Credit Note</label>
+        <referenceTo>c2g__codaCreditNote__c</referenceTo>
+        <relationshipLabel>Invoice History</relationshipLabel>
+        <relationshipName>Invoice_History</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Invoice__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Sales Invoice</label>
+        <referenceTo>c2g__codaInvoice__c</referenceTo>
+        <relationshipLabel>Invoice History</relationshipLabel>
+        <relationshipName>InvoiceHistory</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Sent__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(isblank( Emailed_on__c ), if (isblank( Printed_on__c ), &apos;Not Emailed/Printed&apos; , &apos;Printed&apos; ), &apos;Emailed&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sent</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited &amp; Cash Un-Matched</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Error</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>if this is a Invoice or a Credit</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Credit</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invoice</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Invoice History</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Sent__c</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Sales_Invoice__c</columns>
+        <columns>Sales_Credit_Note__c</columns>
+        <columns>Email_to__c</columns>
+        <columns>Emailed_on__c</columns>
+        <columns>Printed_on__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Invoice_Created_Today</fullName>
+        <columns>NAME</columns>
+        <columns>Opportunity__c</columns>
+        <columns>Email_to__c</columns>
+        <columns>Sent__c</columns>
+        <columns>Emailed_on__c</columns>
+        <columns>Printed_on__c</columns>
+        <columns>Sales_Invoice__c</columns>
+        <columns>Invoice_Credit_Amount__c</columns>
+        <columns>Sales_Credit_Note__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Created Today</label>
+    </listViews>
+    <nameField>
+        <displayFormat>IH-{0000}</displayFormat>
+        <label>Invoice History Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invoice History</pluralLabel>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Forward</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Opportunity__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sales_Credit_Note__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Sales_Invoice__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>Sales_Credit_Note__c</searchFilterFields>
+        <searchFilterFields>Sales_Invoice__c</searchFilterFields>
+        <searchFilterFields>Opportunity__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

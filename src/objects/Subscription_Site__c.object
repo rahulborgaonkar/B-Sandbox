@@ -1,0 +1,2381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to manage delivery of subscriptions to multiple sites</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Indicates if a site is currently active</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if a site is currently active</inlineHelpText>
+        <label>Active</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CE_Number_of_Site_Employees__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Employees</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Area__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Area</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Building__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Building</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_City__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site City</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Contact_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Contact Email</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Contact_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The name of the contact located on the site.</inlineHelpText>
+        <label>CE Site Contact Name</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Contact_Phone__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Contact Phone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Country__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Country</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Åland Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Albania</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Algeria</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>American Samoa</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Andorra</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Angola</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Anguilla</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Antarctica</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Antigua and Barbuda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Argentina</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Armenia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Aruba</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Australia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Austria</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Azerbaijan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bahamas</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bahrain</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bangladesh</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Barbados</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belarus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belgium</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Belize</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Benin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bermuda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bhutan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bolivia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bosnia &amp; Herzegovina</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Botswana</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bouvet Island</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brazil</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>British Indian Ocean Territory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Brunei Darussalam</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bulgaria</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Burkina Faso</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Burundi</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cambodia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cameroon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Canada</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cape Verde</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cayman Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Central African Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chad</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chile</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>China</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Christmas Island</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cocos (Keeling) Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Colombia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Comoros</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Congo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Congo, Democratic Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cook Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Costa Rica</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Côte d&amp;apos;Ivoire</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Croatia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cuba</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cyprus</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Czech Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Denmark</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Djibouti</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dominica</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dominican Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ecuador</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Egypt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>El Salvador</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Equatorial Guinea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Eritrea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Estonia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ethiopia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Falkland Islands (Malvinas)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Faroe Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Fiji</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Finland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>France</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>French Guiana</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>French Polynesia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>French Southern Territories</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gabon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gambia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Georgia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Germany</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ghana</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Gibraltar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Greece</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Greenland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grenada</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guadeloupe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guam</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guatemala</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guernsey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guinea-Bissau</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Guyana</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Haiti</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Heard Island &amp; McDonald Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Holy See (Vatican City State)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Honduras</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hong Kong</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Hungary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iceland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>India</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Indonesia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iran, Islamic Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Iraq</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ireland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Isle of Man</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Israel</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Italy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jamaica</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Japan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jersey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Jordan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kazakhstan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kenya</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kiribati</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korea, Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kuwait</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Kyrgyzstan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lao People&apos;s Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Latvia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lebanon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lesotho</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liberia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Libyan Arab Jamahiriya</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Liechtenstein</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lithuania</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Luxembourg</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Macao</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Macedonia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Madagascar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malawi</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malaysia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Maldives</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mali</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Malta</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Marshall Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Martinique</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mauritania</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mauritius</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mayotte</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mexico</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Micronesia, Federated States of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Moldova, Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Monaco</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mongolia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Montenegro</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Montserrat</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Morocco</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Mozambique</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Myanmar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Namibia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nauru</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nepal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Netherlands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Netherlands Antilles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Caledonia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Zealand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nicaragua</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Niger</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Nigeria</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Niue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Norfolk Island</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Northern Mariana Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Norway</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Oman</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pakistan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palau</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palestinian Territory</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Panama</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Papua New Guinea</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paraguay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Peru</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Philippines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pitcairn</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Poland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Portugal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Puerto Rico</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Qatar</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Réunion</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Romania</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Russian Federation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Rwanda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Barthélemy</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Helena</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Kitts and Nevis</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Lucia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Martin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Pierre &amp; Miquelon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Vincent &amp; the Grenadines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Samoa</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>San Marino</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sao Tome and Principe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saudi Arabia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Senegal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Serbia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Seychelles</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sierra Leone</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Singapore</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Slovakia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Slovenia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Solomon Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Somalia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South Africa</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South Georgia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Spain</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sri Lanka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sudan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Suriname</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Svalbard and Jan Mayen</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Swaziland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sweden</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Switzerland</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Syrian Arab Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Taiwan, Province of China</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tajikistan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tanzania, United Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Thailand</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Timor-Leste</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Togo</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tokelau</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tonga</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trinidad and Tobago</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tunisia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turkmenistan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Turks and Caicos Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Tuvalu</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uganda</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Ukraine</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United Arab Emirates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United Kingdom</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United States</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United States (Outlying Islands)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uruguay</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Uzbekistan</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vanuatu</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Venezuela, Bolivarian Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Vietnam</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Virgin Islands, British</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Virgin Islands, U.S.</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Wallis and Futuna</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Western Sahara</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Yemen</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zambia</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zimbabwe</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bolivia, Plurinational State of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Bosnia and Herzegovina</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Congo, the Democratic Republic of the</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Heard Island and McDonald Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Korea, Democratic People&amp;apos;s Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Lao People&amp;apos;s Democratic Republic</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Macedonia, the former Yugoslav Republic of</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Palestinian Territory, Occupied</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Helena, Ascension and Tristan da Cunha</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Pierre and Miquelon</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Saint Vincent and the Grenadines</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>South Georgia and the South Sandwich Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>United States Minor Outlying Islands</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Industry__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Industry</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Name__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The name of the site</inlineHelpText>
+        <label>CE Site Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Postal_Zip_code__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Postal/Zip code</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CE_Site_Street__c</fullName>
+        <externalId>false</externalId>
+        <label>CE Site Street</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancelled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Shows the site has been cancelled
+Field added by FF and I don&apos;t know what it does.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DO NOT USE (uncheck &quot;Active&quot; if the site is cancelled)</inlineHelpText>
+        <label>Cancelled</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_Printed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to define if cert has been printed for site</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If ticked, this site has had a certificate printed</inlineHelpText>
+        <label>Certificate Printed</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Credit Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Delivery_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This is the Delivery Address or &apos;Alternate Address&apos; requested by the Contact for a Subscription Site. i.e. if the Contact does not want the Subscription delivered to the Address associated with ther Account they can request a different Address</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This overrides the Account address, if populated</inlineHelpText>
+        <label>Delivery Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Subscription Sites</relationshipLabel>
+        <relationshipName>Subscription_Sites</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Do_Not_Renew_This_Site__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checked if don&apos;t want to renew this site when subscription renewal</description>
+        <externalId>false</externalId>
+        <label>Do Not Renew This Site</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Drawloop_Next_Print_Certficate__c</fullName>
+        <description>Defines DDP and deployment to use in DrawLoop as well as passing record id&apos;s</description>
+        <externalId>false</externalId>
+        <formula>&quot;SFSubscription_Site__c:&quot; &amp; Id &amp; &quot;;DDPId:a3TD0000000L6EP;SFContact:&quot; &amp; Site_Contact__c  &amp;&quot;;Deploy:a3SD0000000L6bg&quot;</formula>
+        <inlineHelpText>String used by Drawloop to work out what to do.</inlineHelpText>
+        <label>LOOP Print Certficate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>N/A</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not-Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Part Paid</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Credited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Main_Site__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Denotes that the site is the main site and renewal should be sent here - DG
+Actually, it doesn&apos;t seem to do anything and shouldn&apos;t be used - JJ</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DO NOT USE (use Type = Single Site or Multi-Site Primary instead. The renewal will go the account on the Subscription</inlineHelpText>
+        <label>Main Site</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Main_Subscription_Start_Date__c</fullName>
+        <description>Populates site start date with subscription start date</description>
+        <externalId>false</externalId>
+        <formula>Subscription__r.Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Main Subscription Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Migrated_Subscription_Site_Ref__c</fullName>
+        <description>This stores the valule of the Subscription Site Ref as it was in Course Booker. Moving forwards the value used will be a formula field on the Subscription Site.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Maps to Member_Location.MEL_Ref from CB</inlineHelpText>
+        <label>Migrated Subscription Site Ref</label>
+        <length>25</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This flag indictes whether the Subscription Site data has been migrated from Course Booker</description>
+        <externalId>false</externalId>
+        <label>Migrated</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>No_Magazine_Mailing__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>No Magazine Mailing</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_MEL_ID__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This is the Primary Key of the Subscription Site from the source Location data and maps to Member_Location.MEL_ID. From the Member_Location table in the CB database.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Maps to Member_Location.MEL_ID from CB</inlineHelpText>
+        <label>PK_CB_MEL_ID</label>
+        <length>15</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Password__c</fullName>
+        <description>The Password related to the Subscription Site.</description>
+        <externalId>false</externalId>
+        <label>Password</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Subscription_Site__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used code</description>
+        <externalId>false</externalId>
+        <label>Previous Subscription Site</label>
+        <referenceTo>Subscription_Site__c</referenceTo>
+        <relationshipLabel>Subscription Sites</relationshipLabel>
+        <relationshipName>Previous_Subscription_Sites</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Print_Certificate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This will force the workflow to print the certificate for this site as long as it hasn&apos;t been printed before.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This will force the workflow to print the certificate for this site as long as it hasn&apos;t been printed before.</inlineHelpText>
+        <label>Print Certificate</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_Area__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_Area__c ,
+ Delivery_Address__r.Address_Area__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: Area</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_Building__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_Building__c,
+ Delivery_Address__r.Address_Building__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: Building</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_City__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_City__c ,
+ Delivery_Address__r.Address_City__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: City</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_Country__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ TEXT(Site_Account__r.Principle_Address_Country__c) ,
+ TEXT(Delivery_Address__r.Address_Country__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: Country</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_State_Province__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_State_Province__c ,
+ Delivery_Address__r.Address_State_Province__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: State / Province</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_Street__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_Street__c,
+ Delivery_Address__r.Address_Street__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: Street</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Site_Address_ZIP_Postal_Code__c</fullName>
+        <description>Auto populates address info from subscription unless delivery address is populated</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Delivery_Address__c ),
+ Site_Account__r.Principle_Address_ZIP_Postal_Code__c ,
+ Delivery_Address__r.Address_ZIP_Postal_Code__c 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates address info from subscription unless delivery address is populated</inlineHelpText>
+        <label>S Site Address: ZIP / Postal Code</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Multi_Site_Subscription_Sites</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Site_Contact_Email__c</fullName>
+        <description>Populates field with email address of site contact</description>
+        <externalId>false</externalId>
+        <formula>Site_Contact__r.Email</formula>
+        <inlineHelpText>Email address of site contact</inlineHelpText>
+        <label>Site Contact Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Contact_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Site_Contact__r.Id</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Site Contact ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Contact_Job_Title__c</fullName>
+        <description>Populates field with job title of site contact</description>
+        <externalId>false</externalId>
+        <formula>Site_Contact__r.Title</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates with job title of site contact</inlineHelpText>
+        <label>Site Contact Job Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Contact_Tel__c</fullName>
+        <description>Populates field with phone of site contact</description>
+        <externalId>false</externalId>
+        <formula>Site_Contact__r.Phone</formula>
+        <inlineHelpText>Auto populates field with phone of site contact</inlineHelpText>
+        <label>Site Contact Tel</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Site Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Multi_Site_Subscription_Sites</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Site_End_Date__c</fullName>
+        <description>Populates filed with subscription end date</description>
+        <externalId>false</externalId>
+        <formula>Subscription__r.End_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates with subscription end date</inlineHelpText>
+        <label>Site End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Site_Start_Date__c</fullName>
+        <defaultValue>TODAY()</defaultValue>
+        <description>Start date of site - will default to date site added.  Can be overwritten for pro-rata additions.</description>
+        <externalId>false</externalId>
+        <label>Site Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Site_Start_date_from_CourseBooker__c</fullName>
+        <description>temp field</description>
+        <externalId>false</externalId>
+        <label>Site Start date from CourseBooker</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Site_Status__c</fullName>
+        <description>Populates site status from Subscription Status, unless the site is no longer active</description>
+        <externalId>false</externalId>
+        <formula>IF( OR(Cancelled__c =TRUE, Active__c=FALSE),
+ &quot;Inactive&quot;,
+TEXT(Subscription__r.Status__c )
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This is the same as the Subscription Status, unless the site is no longer active</inlineHelpText>
+        <label>Site Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Site_Address_Combined__c</fullName>
+        <description>Combines site address into one field</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(S_Site_Address_Building__c), &quot;&quot;,S_Site_Address_Building__c+ BR() ) +
+IF(ISBLANK(S_Site_Address_Street__c), &quot;&quot;,S_Site_Address_Street__c+ BR() ) +
+IF(ISBLANK(S_Site_Address_Area__c), &quot;&quot;,S_Site_Address_Area__c+ BR() ) +
+IF(ISBLANK(S_Site_Address_City__c), &quot;&quot;,S_Site_Address_City__c+ BR() ) +
+IF(ISBLANK(S_Site_Address_State_Province__c), &quot;&quot;,S_Site_Address_State_Province__c+ BR() ) +
+IF(ISBLANK(S_Site_Address_ZIP_Postal_Code__c), &quot;&quot;,S_Site_Address_ZIP_Postal_Code__c+ BR() ) +
+IF(S_Site_Address_Country__c = &quot;United Kingdom&quot;, &quot;&quot;,S_Site_Address_Country__c)</formula>
+        <inlineHelpText>Combines site address into one field</inlineHelpText>
+        <label>Subscription Site Address Combined</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Site_Product_Codes__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Site Product Codes</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Site_Ref__c</fullName>
+        <description>Creates site reference by using subscription.sub_ref + site postcode</description>
+        <externalId>false</externalId>
+        <formula>Subscription__r.Sub_Ref__c 
++
+&quot;-&quot;
++
+   SUBSTITUTE(Site_Account__r.Principle_Address_ZIP_Postal_Code__c, &quot; &quot;, &quot;&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto calculated using subscription reference and site postcode</inlineHelpText>
+        <label>Subscription Site Ref</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Site_Status__c</fullName>
+        <description>This is the Status of the Subscription site and is indipendant ofthe Subscription Status</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This indicates the migrated subscription site status and should not be used moving forward</inlineHelpText>
+        <label>Subscription Site Status (Migrated)</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Status__c</fullName>
+        <description>Populated from the Subscription</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Subscription__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>This is populated automatically from the Subscription</inlineHelpText>
+        <label>Subscription Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription</label>
+        <referenceTo>Subscription__c</referenceTo>
+        <relationshipName>Subscriptions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Single Site</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Multi-Site Primary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Multi-Site Subsidiary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Username__c</fullName>
+        <description>Stores Membership Username</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores Membership Username</inlineHelpText>
+        <label>Username</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Discount_Type__c</fullName>
+        <description>The type of discount which the voucher code attracts</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select the type of discount for voucher codes</inlineHelpText>
+        <label>Voucher Discount Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Voucher_Discount_Value__c</fullName>
+        <defaultValue>100</defaultValue>
+        <description>Value of the voucher, this is a numerical value but will be in the context of Voucher discount type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter value of the discount in context of Voucher discount type</inlineHelpText>
+        <label>Voucher Discount Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Expiry_Date__c</fullName>
+        <description>Converts Site End Date to text for voucher upload</description>
+        <externalId>false</externalId>
+        <formula>TEXT(YEAR(Site_End_Date__c)) + &apos;/&apos;  +
+
+IF  (LEN(TEXT (MONTH(Site_End_Date__c))) &lt; 2, 
+   &apos;0&apos;+(TEXT (MONTH(Site_End_Date__c))),
+   (TEXT (MONTH(Site_End_Date__c)))
+)
++ &apos;/&apos; +
+
+IF (LEN(TEXT (DAY(Site_End_Date__c))) &lt; 2, 
+   &apos;0&apos;+(TEXT (DAY(Site_End_Date__c))),
+   (TEXT (DAY(Site_End_Date__c)))
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Converts Site End Date to text for voucher upload</inlineHelpText>
+        <label>Voucher Expiry Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Max_Qty__c</fullName>
+        <defaultValue>100</defaultValue>
+        <description>Maximum number of products that can be purchases with this voucher</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the maximum number of products that can be purchases with this voucher</inlineHelpText>
+        <label>Voucher Max Qty</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Minimum_Order_Value__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Minimum order value of voucher</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter minimum order value</inlineHelpText>
+        <label>Voucher Minimum Order Value</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Number_Of_Uses__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>Number of times the voucher can be used</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of times voucher can be used, 0 = unlimited</inlineHelpText>
+        <label>Voucher Number Of Uses</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_Product_Codes__c</fullName>
+        <description>Online product code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select product code for voucher</inlineHelpText>
+        <label>Voucher Product Codes</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <inlineHelpText>The voucher for the subscription site which is created when the site is current and active.</inlineHelpText>
+        <label>Voucher</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Voucher_created_at__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>The date and time at which the voucher was created</inlineHelpText>
+        <label>Voucher created at</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>tmp_Subscription_start_date__c</fullName>
+        <description>Used when cleaning subscription start dates when data was set to import date in error. Populates from subscription start date</description>
+        <externalId>false</externalId>
+        <formula>Subscription__r.Start_Date__c</formula>
+        <inlineHelpText>For admin purposes</inlineHelpText>
+        <label>tmp NEW Subscription site start date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>Subscription Site</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Site_Account__c</columns>
+        <columns>Site_Contact__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Subscription_Status__c</columns>
+        <columns>Site_Start_Date__c</columns>
+        <columns>Site_End_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Migrated_Subscription_Sites</fullName>
+        <columns>NAME</columns>
+        <columns>PK_CB_MEL_ID__c</columns>
+        <columns>Migrated_Subscription_Site_Ref__c</columns>
+        <columns>Subscription__c</columns>
+        <columns>Subscription_Site_Ref__c</columns>
+        <columns>Subscription_Site_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Migrated__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Migrated Subscription Sites</label>
+        <sharedTo>
+            <role>SystemAdministrator</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Sites_not_set_up_correctly</fullName>
+        <booleanFilter>(1 OR 2 OR 3 OR 4) and 5</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Site_Account__c</columns>
+        <columns>Site_Contact__c</columns>
+        <columns>Site_Start_Date__c</columns>
+        <columns>Site_End_Date__c</columns>
+        <columns>Site_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Site_Account__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Site_Start_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Site_End_Date__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Site_Contact__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>Site_Status__c</field>
+            <operation>contains</operation>
+            <value>current</value>
+        </filters>
+        <label>Sites not set up correctly</label>
+    </listViews>
+    <nameField>
+        <displayFormat>SS-{0000000}</displayFormat>
+        <label>Site Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Subscription Sites</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Subscription__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subscription_Site_Ref__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Site_Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Site_Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Site_Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Site_End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subscription_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subscription_Site_Product_Codes__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Subscription__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subscription_Site_Ref__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Site_End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subscription_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Subscription_Site_Product_Codes__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>No_SubSit_Insrt_for_Accnt_DC_1_or_3_or_6</fullName>
+        <active>false</active>
+        <errorConditionFormula>AND (ISNEW(), OR( Site_Account__r.Data_Cleanse_1__c  == true, Site_Account__r.Data_Cleanse_3__c == true, Site_Account__r.Data_Cleanse_6__c == true))</errorConditionFormula>
+        <errorMessage>You can not insert new Subscription Site as this account will be deleted under Data Cleanse Project. Please contact IT team on 07789933270</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Auto_Print_Certificate</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Auto Print Certificate</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/18.0/apex.js&quot;)}
+
+var error = false;
+var status = &apos;xx{!Subscription_Site__c.Site_Status__c}&apos;;
+var loopUrl = &apos;/apex/loop__looplus?eid={!Subscription_Site__c.Id}&amp;accountId={!Subscription_Site__c.Site_AccountId__c}&amp;contactId={!Subscription_Site__c.Site_ContactId__c}&amp;sessionId={!$Api.Session_ID}&apos;;
+
+
+if (status.indexOf(&quot;Current&quot;) == -1){
+   if(confirm(&apos;This site doesn\&apos;t have a current subscription. Are you sure you want to create the certificate?&apos;)){
+      window.location.href = loopUrl;
+   }
+}else{
+   window.location.href = loopUrl;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>DD_MEM</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Direct Debit Mandate</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vYbD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HPw4</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Initial_Reminder_Guide</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Initial Reminder Guide</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vZAV?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HNZI</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Initial_Reminder_HSWA</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Initial Reminder HSWA</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vZAV?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HNZN</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Initial_Reminder_Membership</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Initial Reminder Membership</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vZAV?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HNZX</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Initial_Reminder_RCP</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Initial Reminder RCP</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vZAV?pv0={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HNZD</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Initial_Reminder_SMMG</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Initial Reminder  SMMG</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003vZAV?pv0={!Subscription_Site__c.Id}&amp;TemplateId=01HD0000000HNZS</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Renewed_Letter_Membership</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Renewed Letter: Membership</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HO6b</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Replacement_Certificate</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Replacement Certificate</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qj4Q?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HO6R</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_Membership</fullName>
+        <availability>online</availability>
+        <description>Welcome Letter for core Membership</description>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: Core Membership</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPws</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_Subscription_HSWA</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: Subscription-HSWA</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPwx</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_Letter_Subscription_SMMG</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome Letter: Subscription-SMMG</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPXY</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_letter_Info_Advice</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome letter Info  Advice</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPa3</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_letter_Info_Tools_Templates</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome letter Info Tools  Templates</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPZU</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Welcome_letter_Tools_Templates</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Welcome letter Tools  Templates</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx?sessionId={!API.Session_ID}&amp;serverUrl={!API.Partner_Server_URL_80}&amp;id={!Subscription_Site__c.Id}&amp;ReportId=00O20000003qiYD?pv0={!Subscription_Site__c.Id}&amp;ReportId=00OD0000003xeTQ?pv0={!Subscription_Site__c.SubscriptionId__c}&amp;TemplateId=01HD0000000HPZy</url>
+    </webLinks>
+</CustomObject>

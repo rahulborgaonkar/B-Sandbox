@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AUUDISRef__c</fullName>
+        <displayFormat>{00000000}</displayFormat>
+        <externalId>true</externalId>
+        <label>AUUDISRef</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Account Name</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Account_Number__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Account Number</label>
+        <length>8</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Bank_Sort_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Sort Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Collections_To_Be_Made__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(Payment_Schedule__r.Max__c = NULL, NULL,
+   IF (Payment_Schedule__r.Max__c  &gt;= 1, (Payment_Schedule__r.Max__c -  Number_Collected__c ), null
+)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Collections To Be Made</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Instructions</relationshipLabel>
+        <relationshipName>Instructions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Deferred_Collections__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Deferred Collections</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Final_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Final Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Final_Collection__c</fullName>
+        <externalId>false</externalId>
+        <label>Final Collection</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>First_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>First Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>First_Collection__c</fullName>
+        <externalId>false</externalId>
+        <label>First Collection</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Last_Collected__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Collected</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>Instructions</relationshipLabel>
+        <relationshipName>Instructions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Next_Collection__c</fullName>
+        <externalId>false</externalId>
+        <label>Next Collection</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Number_Collected__c</fullName>
+        <externalId>false</externalId>
+        <label>Number Collected</label>
+        <summaryFilterItems>
+            <field>DD_Collection__c.Fund_Transfer_Agent_Error__c</field>
+            <operation>contains</operation>
+            <value>First re-present, Second re-present, On going, Final collection, Penultimate collection, First collection</value>
+        </summaryFilterItems>
+        <summaryForeignKey>DD_Collection__c.Instruction__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Ongoing_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Ongoing Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Opportunity</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipLabel>Instructions</relationshipLabel>
+        <relationshipName>Instructions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Payment_Schedule__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Payment Schedule</label>
+        <referenceTo>Paysched__c</referenceTo>
+        <relationshipLabel>Instructions</relationshipLabel>
+        <relationshipName>Instructions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Short_Term_Amendment__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Short Term Amendment</label>
+        <referenceTo>Short_Amend__c</referenceTo>
+        <relationshipLabel>Instructions</relationshipLabel>
+        <relationshipName>Instructions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Status_Display__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New instruction</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>First collection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On going</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>On hold</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Next final collection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Expired</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>First re-present</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Second re-present</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Last re-present</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Account no. changed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Dormant</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Final collection</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Status_Indicator__c</fullName>
+        <externalId>false</externalId>
+        <formula>IMAGE( 
+CASE( Status_Display__c , 
+&quot;New instruction&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;First collection&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;On going&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;Penultimate collection&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;Final collection&quot;, &quot;/img/samples/light_green.gif&quot;, 
+&quot;First re-present&quot;, &quot;/img/samples/light_yellow.gif&quot;, 
+&quot;Second re-present&quot;, &quot;/img/samples/light_yellow.gif&quot;, 
+&quot;Last re-present&quot;, &quot;/img/samples/light_yellow.gif&quot;, 
+&quot;Account no. changed&quot;, &quot;/img/samples/light_yellow.gif&quot;, 
+&quot;Dormant&quot;, &quot;/img/samples/light_red.gif&quot;, 
+&quot;Closed&quot;, &quot;/img/samples/light_red.gif&quot;, 
+&quot;Expired&quot;, &quot;/img/samples/light_red.gif&quot;, 
+&quot;On hold&quot;, &quot;/img/samples/light_red.gif&quot;, 
+&quot;/img/samples/light_red.gif&quot;), 
+&quot;Status&quot;)</formula>
+        <label>Status Indicator</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Collected__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Amount Collected</label>
+        <summarizedField>DD_Collection__c.Amount__c</summarizedField>
+        <summaryForeignKey>DD_Collection__c.Instruction__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <label>Instruction</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>AUUDISRef__c</columns>
+        <columns>Status_Display__c</columns>
+        <columns>NAME</columns>
+        <columns>Next_Collection__c</columns>
+        <columns>Payment_Schedule__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Created_Today</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Created Today</label>
+    </listViews>
+    <nameField>
+        <displayFormat>DDI - {0}</displayFormat>
+        <label>Instruction Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Instructions</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>AUUDISRef__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ongoing_Amount__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>AUUDISRef__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ongoing_Amount__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>AUUDISRef__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Contact__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ongoing_Amount__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>AUUDISRef__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ongoing_Amount__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Account_Number_Check</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+NOT(CONTAINS(&quot;0123456789&quot;, LEFT( Bank_Account_Number__c , 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 2, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 3, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 4, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 5, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 6, 1))),
+
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 7, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Account_Number__c , 8, 1)))
+
+)</errorConditionFormula>
+        <errorDisplayField>Bank_Account_Number__c</errorDisplayField>
+        <errorMessage>Account Number should only contain numeric characters</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Deferred_Collections_Not_Less_Than_Zero</fullName>
+        <active>true</active>
+        <errorConditionFormula>Deferred_Collections__c  &lt; 0</errorConditionFormula>
+        <errorDisplayField>Deferred_Collections__c</errorDisplayField>
+        <errorMessage>The deferred collection must not be less than zero</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Final_Collection_Is_Null_When_Created</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND (NOT ISNULL (Final_Collection__c), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>Final_Collection__c</errorDisplayField>
+        <errorMessage>This date must be blank when you create a new Instruction</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>First_Collection_Is_Null_When_Created</fullName>
+        <active>true</active>
+        <description>This date field must be blank when a new Instruction is created. It is populated by the Payonomy DD process</description>
+        <errorConditionFormula>AND (NOT ISNULL (First_Collection__c), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>First_Collection__c</errorDisplayField>
+        <errorMessage>This date must be blank when you create a new Instruction</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Last_Collected_Is_Null_When_Created</fullName>
+        <active>true</active>
+        <description>This date field must be blank when a new Instruction is created. It is populated by the Payonomy DD process</description>
+        <errorConditionFormula>AND (NOT ISNULL (Last_Collected__c), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>Last_Collected__c</errorDisplayField>
+        <errorMessage>This date must be blank when you create a new Instruction</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Next_Collection_Is_Null_When_Created</fullName>
+        <active>true</active>
+        <description>This date field must be blank when a new Instruction is created. It is populated by the Payonomy DD process</description>
+        <errorConditionFormula>AND (NOT ISNULL (Next_Collection__c), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>Next_Collection__c</errorDisplayField>
+        <errorMessage>This date must be blank when you create a new Instruction</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Sort_Code_Check</fullName>
+        <active>true</active>
+        <errorConditionFormula>OR(
+
+NOT(CONTAINS(&quot;0123456789&quot;, LEFT( Bank_Sort_Code__c , 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Sort_Code__c , 2, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Sort_Code__c , 3, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Sort_Code__c, 4, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Sort_Code__c, 5, 1))),
+NOT(CONTAINS(&quot;0123456789&quot;, MID( Bank_Sort_Code__c , 6, 1)))
+)</errorConditionFormula>
+        <errorDisplayField>Bank_Sort_Code__c</errorDisplayField>
+        <errorMessage>Sort Code should only contain numeric characters</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_DD_Status</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND (NOT ISPICKVAL(Status_Display__c , &quot;New Instruction&quot; ), ISNEW( ))</errorConditionFormula>
+        <errorDisplayField>Status_Display__c</errorDisplayField>
+        <errorMessage>All New records should have the Status set to &quot;New Instruction&quot;.</errorMessage>
+    </validationRules>
+</CustomObject>

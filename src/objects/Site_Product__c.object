@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <description>Populates related subscription site account name + postcode</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Site__r.Site_Account__r.Name + &quot;, &quot; +  Subscription_Site__r.Site_Account__r.Principle_Address_ZIP_Postal_Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populated by site account plus postcode</inlineHelpText>
+        <label>Account</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Alternative_Address__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>If this Product should go not to the Subscription Site Address but to a different Address, that Address should go here. If this is populated, it will override the Subscription Site Address.</inlineHelpText>
+        <label>Alternative Address</label>
+        <referenceTo>Address__c</referenceTo>
+        <relationshipLabel>Subscription Product Sites</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Job_Title__c</fullName>
+        <description>If the Site Product Contact is populated, that person&apos;s Job Title appears here, otherwise the Subscription Site Contact is used and their Job Title appears</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Site_Product_Contact__c ),
+ Subscription_Site__r.Site_Contact_Job_Title__c ,
+ Site_Product_Contact__r.Title)</formula>
+        <inlineHelpText>If the Site Product Contact is populated, that person&apos;s Job Title appears here, otherwise the Subscription Site Contact is used and their Job Title appears</inlineHelpText>
+        <label>Contact Job Title</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_Name__c</fullName>
+        <description>If the Site Product Contact is populated, that name appears here, otherwise the Subscription Site Contact is used</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Site_Product_Contact__c ),
+ (TEXT(Subscription_Site__r.Site_Contact__r.Salutation) + &quot; &quot; + Subscription_Site__r.Site_Contact__r.FirstName + &quot; &quot; + Subscription_Site__r.Site_Contact__r.LastName),
+ 
+  (TEXT( 
+Site_Product_Contact__r.Salutation) + &quot; &quot; + Site_Product_Contact__r.FirstName + &quot; &quot; + Site_Product_Contact__r.LastName)
+ )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Site Product Contact is populated, that name appears here, otherwise the Subscription Site Contact is used</inlineHelpText>
+        <label>Contact Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mailing_Qty__c</fullName>
+        <description>The number of mailings per site product.  Created to support mailing reports</description>
+        <externalId>false</externalId>
+        <formula>1</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates</inlineHelpText>
+        <label>Mailing_Qty</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Membership_Product__c</fullName>
+        <description>Is this Product a Membership? (This will drive the Membership flag on the Subscription Site Account)</description>
+        <externalId>false</externalId>
+        <formula>IF (Subscription_Line__r.Product__r.Membership__c = TRUE,
+&quot;TRUE&quot;,&quot;FALSE&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Is this Product a Membership? (This will drive the Membership flag on the Subscription Site Account)</inlineHelpText>
+        <label>Membership Product</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Migrated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>flag indicates whether the Site Product data has been migrated from Course Booker</description>
+        <externalId>false</externalId>
+        <label>Migrated</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PK_CB_MEL_MEP__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>This is the Primary Key of the Subscription Site Product from the source data and maps to a compostite key Member_Location.MEL_ID  AND Member_Location.MEL_MEP_ID</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Maps to Member_Location.MEL_ID / Member_Location.MEL_MEP_ID from CB</inlineHelpText>
+        <label>PK_CB_MEL_MEP</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Previous_Site_Product__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Previous Site Product</label>
+        <referenceTo>Site_Product__c</referenceTo>
+        <relationshipLabel>Site Products</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Product_Type__c</fullName>
+        <description>Pulls Product type from product table relating to site product</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Subscription_Line__r.Product__r.Product_Type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populates product type</inlineHelpText>
+        <label>Product Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product__c</fullName>
+        <description>Product associated to this site product</description>
+        <externalId>false</externalId>
+        <formula>Subscription_Line__r.Product__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Product associated to this site product</inlineHelpText>
+        <label>Product</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_Area__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_Area__c ,
+Alternative_Address__r.Address_Area__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_Building__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_Building__c ,
+Alternative_Address__r.Address_Building__c )</formula>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: Building</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_City__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_City__c ,
+Alternative_Address__r.Address_City__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: City</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_Country__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_Country__c ,
+TEXT(Alternative_Address__r.Address_Country__c) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: Country</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_State_Province__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_State_Province__c ,
+Alternative_Address__r.Address_State_Province__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: State / Province</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_Street__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_Street__c ,
+Alternative_Address__r.Address_Street__c )</formula>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: Street</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_Prod_Address_ZIP_Postal_Code__c</fullName>
+        <description>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</description>
+        <externalId>false</externalId>
+        <formula>IF(
+ISBLANK( Alternative_Address__c),
+Subscription_Site__r.S_Site_Address_ZIP_Postal_Code__c ,
+Alternative_Address__r.Address_ZIP_Postal_Code__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>If the Alternative Address is populated, that address is used here. If it&apos;s not populated, the Subscription Site Address is used.</inlineHelpText>
+        <label>S Prod Address: ZIP / Postal Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Product_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>If the Product should NOT go to the Subscription Site Contact, but instead to a different Contact, select that Contact here</inlineHelpText>
+        <label>Site Product Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Site Products (there may be others  via Subscription Sites)</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Site_Product_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>Subscription_Site__r.Site_Status__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Site Product Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Status__c</fullName>
+        <description>Displays the Subscription Site Status, which will be the same as the Subscription Status, unless the Site is no longer active</description>
+        <externalId>false</externalId>
+        <formula>IF( Subscription_Site__r.Cancelled__c =FALSE,
+ TEXT( Subscription_Site__r.Subscription__r.Status__c),
+&quot;Inactive&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Displays the Subscription Site Status, which will be the same as the Subscription Status, unless the Site is no longer active</inlineHelpText>
+        <label>Site Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Subscription_Line__c</fullName>
+        <description>Master Detail</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Subscription line associated with the site product</inlineHelpText>
+        <label>Subscription Line</label>
+        <referenceTo>Subscription_Line__c</referenceTo>
+        <relationshipLabel>Site Products</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Subscription_Site__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Subscription site associated to this site product</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to Subscription Site</inlineHelpText>
+        <label>Subscription Site</label>
+        <referenceTo>Subscription_Site__c</referenceTo>
+        <relationshipLabel>Site Products</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Subscription__c</fullName>
+        <description>Master detail</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Subscription associated with this site product</inlineHelpText>
+        <label>Subscription</label>
+        <referenceTo>Subscription__c</referenceTo>
+        <relationshipLabel>Site Products</relationshipLabel>
+        <relationshipName>Site_Products</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Website_LMS_Active__c</fullName>
+        <description>Tracks whether the LMS website is active - Temporary field whilst LMS data cleanup is in progress</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tracks whether the LMS website is active - Temporary field whilst LMS data cleanup is in progress</inlineHelpText>
+        <label>Website LMS Active?</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unknown</fullName>
+                <default>true</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Site Product</label>
+    <nameField>
+        <displayFormat>SP-{0000000}</displayFormat>
+        <label>Site Product Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Site Products</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

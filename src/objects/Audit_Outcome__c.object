@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This houses the findings of an audit and is driven by the compliance areas object</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Audit Outcomes</relationshipLabel>
+        <relationshipName>Audit_Outcomes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Aggregated_Actual__c</fullName>
+        <externalId>false</externalId>
+        <label>Aggregated Actual</label>
+        <summarizedField>Audit_Section__c.Actual_Score__c</summarizedField>
+        <summaryForeignKey>Audit_Section__c.Audit_Outcome__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Aggregated_Max__c</fullName>
+        <externalId>false</externalId>
+        <label>Aggregated Max</label>
+        <summarizedField>Audit_Section__c.Max_Score__c</summarizedField>
+        <summaryForeignKey>Audit_Section__c.Audit_Outcome__c</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Reporting_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.EndDate__c + 28</formula>
+        <inlineHelpText>The End Date of the event plus 28 days used for reporting.</inlineHelpText>
+        <label>Audit Reporting Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Audit_Result__c</fullName>
+        <externalId>false</externalId>
+        <label>Audit Result</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Result not yet issued</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zero Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Certificated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Not Certificated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Maintained</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recommended For Progression</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not Recommended For Progression</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Audit_notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Audit notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Audited_to_old_spec__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Managed by the audit team to alert them</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Managed by the audit team to alert them</inlineHelpText>
+        <label>Audited to old spec</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auditor_Email__c</fullName>
+        <externalId>false</externalId>
+        <label>Auditor Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Auditor_Name__c</fullName>
+        <description>Pulls auditor information related event</description>
+        <externalId>false</externalId>
+        <formula>Auditor__r.FirstName +&apos; &apos;+ Auditor__r.LastName</formula>
+        <inlineHelpText>Auto populates auditor information</inlineHelpText>
+        <label>Auditor Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Auditor__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter Auditor</inlineHelpText>
+        <label>Auditor</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Audit_Outcomes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>BSC Event</label>
+        <lookupFilter>
+            <active>true</active>
+            <errorMessage>Audit outcomes can only be used as a result of an audit.</errorMessage>
+            <filterItems>
+                <field>Special_Event__c.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Audit</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>Audit Outcomes</relationshipLabel>
+        <relationshipName>Audit_Outcomes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Certificate_name_approved_by_customer__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Certificate name approved by customer</description>
+        <externalId>false</externalId>
+        <label>Certificate name approved by customer</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Extended_Submission_Date__c</fullName>
+        <description>Extension to the reporting date has been agreed, new due date</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If an Extension to the reporting date has been agreed, enter the date here and set the status to Extension with Auditor approved.</inlineHelpText>
+        <label>Extended Submission Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Formatter__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <inlineHelpText>Search for person to whom the report has been sent for formatting</inlineHelpText>
+        <label>Formatter</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Audit Outcomes</relationshipLabel>
+        <relationshipName>Audit_Outcomes</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Name_of_the_Certificate__c</fullName>
+        <externalId>false</externalId>
+        <label>Name of the Certificate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_owner_email__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity owner email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Overall_Audit_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <formula>if ( Aggregated_Max__c != 0 ,  Aggregated_Actual__c  / Aggregated_Max__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overall Audit Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Overall_FSA_score__c</fullName>
+        <description>Overall percentage score for the Five Star Audit</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Overall percentage score for the Five Star Audit</inlineHelpText>
+        <label>Overall Audit Score (%)</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Report_Chase_Email_text__c</fullName>
+        <description>This is used in email template which is sent to chase late audit reports</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.Name  + &apos; at &apos; + BSC_Event__r.Venue_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Report Chase Email text</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Not Started</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Awaiting Draft Report</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Chased Report</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to QA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to Formatter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admin Check</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>To be Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Report Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sent to be printed externally</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Certificate Sent</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Event Cancelled</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Event Transferred</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No report required</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Extension Agreed with Auditor</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Waiting_for_Draft__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+ISPICKVAL( Status__c ,&quot;Awaiting Draft Report&quot;),
+ TODAY()-BSC_Event__r.EndDate__c, 
+ NULL
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>How long have we been waiting for the Draft Report?</inlineHelpText>
+        <label>Waiting for Draft</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2nd_Audit_Result_If_Combined__c</fullName>
+        <description>Only applies for combined audits.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Only applies for combined audits.</inlineHelpText>
+        <label>2nd Audit Result (If Combined)</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Result not yet issued</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Zero Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5 Star</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Certificated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Not Certificated</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>OHSAS Maintained</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Not applicable</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Audit Outcome</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>Status__c</columns>
+        <columns>Name_of_the_Certificate__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_modified_today</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Auditor__c</columns>
+        <columns>Account__c</columns>
+        <columns>BSC_Event__c</columns>
+        <columns>Waiting_for_Draft__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>All Modified Toda</label>
+    </listViews>
+    <nameField>
+        <displayFormat>AO-{0000000}</displayFormat>
+        <label>Audit Outcome Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Audit Outcomes</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Account__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>BSC_Event__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Auditor__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Audit_Result__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>BSC_Event__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Auditor__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Audit_Result__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Extension_agreed_WO_extended_date_Set</fullName>
+        <active>true</active>
+        <description>If the status is changed to extension agreed with Auditor and Extended submission date is not set, error is displayed</description>
+        <errorConditionFormula>OR
+(
+  AND(
+     OR
+     (
+      ISCHANGED( Status__c ),
+      ISCHANGED (Extended_Submission_Date__c)
+      ),
+      TEXT(Status__c) = &apos;Extension Agreed with Auditor&apos;,
+      ISBLANK(Extended_Submission_Date__c)
+      ),
+  AND(
+      OR(
+      ISCHANGED( Status__c ),
+      ISCHANGED (Extended_Submission_Date__c)
+      ),
+       OR(      
+          TEXT(Status__c) = &apos;Not Started&apos;,
+          TEXT(Status__c) = &apos;Awaiting Draft Report&apos;,
+          TEXT(Status__c) = &apos;Chased Report&apos;
+          ),
+      !ISBLANK(Extended_Submission_Date__c)
+      )
+)</errorConditionFormula>
+        <errorMessage>You must enter an Extended Submission Date when setting the status to Extension Agreed with Auditor, in addition, if the Extended Submission Date is populated the status must not be &quot;Not Started&quot;, Awaiting Draft Report&quot; or &quot;Chased Report&quot;.</errorMessage>
+    </validationRules>
+</CustomObject>

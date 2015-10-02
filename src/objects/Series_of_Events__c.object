@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to link events together where a delegate may need to book onto multiple events to complete a course.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>BSC_Event_End_Date__c</fullName>
+        <description>Pulls in the BSC Event&apos;s End Date</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.EndDate__c</formula>
+        <inlineHelpText>Pulls in the BSC Event&apos;s End Date</inlineHelpText>
+        <label>BSC Event End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Start_Date__c</fullName>
+        <description>Pulls the BSC Event Start Date from the BSC Event</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.StartDate__c</formula>
+        <inlineHelpText>Pulls the BSC Event Start Date from the BSC Event</inlineHelpText>
+        <label>BSC Event Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>BSC_Event_Venue__c</fullName>
+        <description>Pulls in the BSC Event Venue Account Name</description>
+        <externalId>false</externalId>
+        <formula>BSC_Event__r.Venue__r.Name</formula>
+        <inlineHelpText>Pulls in the BSC Event Venue Account Name</inlineHelpText>
+        <label>BSC Event Venue</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BSC_Event__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>Lookup to the event</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to the event</inlineHelpText>
+        <label>BSC Event</label>
+        <referenceTo>Special_Event__c</referenceTo>
+        <relationshipLabel>Series of Events</relationshipLabel>
+        <relationshipName>Series_of_Events</relationshipName>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Event_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(BSC_Event__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Event Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Series__c</fullName>
+        <description>This is the name of the series</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the name of the series</inlineHelpText>
+        <label>Series</label>
+        <referenceTo>Series__c</referenceTo>
+        <relationshipLabel>Series of Events</relationshipLabel>
+        <relationshipName>Series_of_Events</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Series of Events</label>
+    <nameField>
+        <displayFormat>SE-{0000}</displayFormat>
+        <label>Series ID</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Series of Events</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

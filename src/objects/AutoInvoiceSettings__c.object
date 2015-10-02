@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AutoPost_CreditNotes__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Will the Credit notes be automatically posted?</description>
+        <externalId>false</externalId>
+        <label>AutoPost CreditNotes</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>AutoPost_Invoices__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Will the Invoices be automatically posted?</description>
+        <externalId>false</externalId>
+        <label>AutoPost Invoices</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Invoice_Delay__c</fullName>
+        <description>This will set the when a opp will be picked for invoicing, 0 is all eligible opps, 1 is all opps edited before hour and so on....</description>
+        <externalId>false</externalId>
+        <label>Auto Invoice Delay</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Complywise_Last_Execution__c</fullName>
+        <description>When was the last time comply wise auto invoice process triggered?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When was the last time comply wise auto invoice process triggered?</inlineHelpText>
+        <label>Complywise Last Execution</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Disable_Auto_Delivery_of_Credit_Notes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Credit notes will not be automatically delivered (emailed/printed)</description>
+        <externalId>false</externalId>
+        <label>Disable Auto Delivery of Credit Notes</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Disable_Auto_Delivery_of_Invoices__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Invoices will not be automatically delivered (emailed/printed)</description>
+        <externalId>false</externalId>
+        <label>Disable Auto Delivery of Invoices</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Email_Notification_To__c</fullName>
+        <description>Where will the start, stop or error messages be delivered</description>
+        <externalId>false</externalId>
+        <label>Email Notification To</label>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enable_Auto_Invoicing__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>will the auto invoicing run at all, removes the need to stop the schedule</description>
+        <externalId>false</externalId>
+        <label>Enable Auto Invoicing</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Evaluate_Delivery_Workflow__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Will the workflow be fired to email or print invoices/credit notes</description>
+        <externalId>false</externalId>
+        <label>Evaluate Delivery Workflow</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Force_Auto_Email_for_Credit_Notes__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Credit notes will be automatically set to be emailed. if no email address is available, it will be printed</description>
+        <externalId>false</externalId>
+        <label>Force Auto Email for Credit Notes</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Force_Auto_Email_for_Invoices__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Invoices will be automatically set to be emailed. if no email address is available, it will be printed</description>
+        <externalId>false</externalId>
+        <label>Force Auto Email for Invoices</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Stop_Opp_Controls__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Set this flag to stop opp controls from executing when doing bulk data updates</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set this flag to stop opp controls from executing when doing bulk data updates</inlineHelpText>
+        <label>Stop Opp Controls</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>AutoInvoiceSettings</label>
+</CustomObject>

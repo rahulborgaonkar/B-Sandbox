@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ChoosePricebook</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditAllProduct</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Assessment_Product_Email_Required_c__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Populated by Workflow Update Assessment Product Email Required which is used in opp roll up summary to flag count of Product.Update Assessment Product Email Required this type of product on an opportunity</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates the presnce of a product which has Update Assessment Product Email Required field ticked</inlineHelpText>
+        <label>Assessment Product Email Required</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Booking_form_total_price__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Qty_to_show_on_booking_form__c &gt; 0,
+    Qty_to_show_on_booking_form__c *  UnitPrice, 
+     Quantity * UnitPrice)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Booking form total price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cancellation_Fee_Product__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Cancellation_Fee_Product__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Cancellation Fee Product</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Qtr_1__c</fullName>
+        <description>Holds sales commission rate used when calculating sales commissions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter sales commission rate</inlineHelpText>
+        <label>Commission Rate Qtr 1</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Qtr_2__c</fullName>
+        <description>Holds sales commission rate used when calculating sales commissions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds sales commission rate used when calculating sales commissions</inlineHelpText>
+        <label>Commission Rate Qtr 2</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Qtr_3__c</fullName>
+        <description>Holds sales commission rate used when calculating sales commissions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds sales commission rate used when calculating sales commissions</inlineHelpText>
+        <label>Commission Rate Qtr 3</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Commission_Rate_Qtr_4__c</fullName>
+        <description>Holds sales commission rate used when calculating sales commissions</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Holds sales commission rate used when calculating sales commissions</inlineHelpText>
+        <label>Commission Rate Qtr 4</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Credit_Note_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>Financial_Transactional_Line_Data__r.Credit_Note_Status__c</formula>
+        <label>Credit Note Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DMS_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked by workflow if this product is DMS (used for calculation of DMS installation fee)</inlineHelpText>
+        <label>DMS Product</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>Dimension_1__c</fullName>
+        <description>To allow finance to see the dimension 1 code without clicking through to the product (Temporary until the Dimensions pull through to the Sales Invoices automatically)</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Dimension_1__r.Name</formula>
+        <inlineHelpText>To allow finance to see the dimension 1 code without clicking through to the product</inlineHelpText>
+        <label>Dimension 1</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dimension_2__c</fullName>
+        <description>To allow finance to see the dimension 2 code without clicking through to the product (Temporary until the Dimensions pull through to the Sales Invoices automatically)</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Dimension_2__r.Name</formula>
+        <inlineHelpText>To allow finance to see the dimension 2 code without clicking through to the product</inlineHelpText>
+        <label>Dimension 2</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Discount</fullName>
+    </fields>
+    <fields>
+        <fullName>Discounted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Discounted</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Duration_Years__c</fullName>
+        <description>Used in workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Duration of the subscription product in years (auto populates on save)</inlineHelpText>
+        <label>Duration (Years)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Algorithm_Price__c</fullName>
+        <description>Minimum Price for E-Delivery, (per licence) determined by pricing algorithm and total licence count</description>
+        <externalId>false</externalId>
+        <formula>IF(
+(Opportunity.License_Count_E_Delivery_Training__c &lt;&gt;0),
+((-1.64*(LN( Opportunity.License_Count_E_Delivery_Training__c ))+18)*0.9),
+1)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Minimum Price for E-Delivery, (per licence) determined by pricing algorithm and total licence count</inlineHelpText>
+        <label>E-Delivery: Algorithm Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Minimum_Price__c</fullName>
+        <externalId>false</externalId>
+        <label>E-Delivery: Minimum Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Number_of_Licences__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>Number of licenses (multiplied by Quantity to produce total count)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Do not confuse with Quantity!</inlineHelpText>
+        <label>E-Delivery: Number of Licences</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Override_Algorithm_Price__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick this if the product needs to be sold at a different price from the calculated price</inlineHelpText>
+        <label>E-Delivery: Override Algorithm Price</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Price_Variation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked if E-Delivery licenses are less than required price</inlineHelpText>
+        <label>E-Delivery: Price Variation</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Total_Licences__c</fullName>
+        <description>TOTAL E-Delivery Licences (Quantity * Number of Licences)</description>
+        <externalId>false</externalId>
+        <formula>Quantity * E_Delivery_Number_of_Licences__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>TOTAL E-Delivery Licences (Quantity * Number of Licences)</inlineHelpText>
+        <label>E-Delivery: Total Licences</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>E_Delivery_Training_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if Training Licenses roll-up to opportunity</inlineHelpText>
+        <label>E-Delivery: Training Product</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Events_Team_To_Admin_Booking__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This product line is associated to a special event product.  This drives a workflow Customer Approval Alert for Events Team</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This product line is associated to a special event product.  This drives a workflow Customer Approval Alert for Events Team</inlineHelpText>
+        <label>Events Team To Admin Booking</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Fake_Product__c</fullName>
+        <description>NOTE: This is used for Conga - ignore it for all other purposes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>System Field for Conga</inlineHelpText>
+        <label>Fake Product</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Financial_Transactional_Line_Data__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Links Opportunity Product to Financial Transactional Line Items.  Could not create this relationshipo as a lookup from Financial Transactional Line Items to Opportunity Product as thisis an outstanding isues with Salesofrce reported in c2008.</description>
+        <externalId>false</externalId>
+        <label>Financial Transactional Line Data</label>
+        <referenceTo>Financial_Transactional_Line_Data__c</referenceTo>
+        <relationshipLabel>Opportunity Product</relationshipLabel>
+        <relationshipName>Opportunity_Product</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>IC_Price_Difference__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if In-Company Price varies from Sales Manager Price - triggers approval on opportunity if true</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if In-Company Price varies from Sales Manager Price</inlineHelpText>
+        <label>In-Company: Price Difference</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>In_Company_Number_of_Days__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of Days</inlineHelpText>
+        <label>In Co: No. of Days</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>In_Company_Override_Audit_Day_Rate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick this box if the Audit / Advisory price should NOT be based upon the standard day rate</inlineHelpText>
+        <label>In-Company: Override Audit Day Rate</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Paid_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Paid Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>ListPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Membership_Automatic_Price__c</fullName>
+        <description>This field is populated if this Product has Automatic_Membership_Pricing__c
+ equal to TRUE. If this is false, this field is not populated and not important</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Automatic Membership price (for recording discounts)</inlineHelpText>
+        <label>Membership: Automatic Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Membership_Override_Automatic_Price__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checking this box overrides the workflow that sets the price, if the product has Automatic_Membership_Pricing__c equal to TRUE. If Automatic_Membership_Pricing__c is FALSE, this has box has no effect</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Override the automatic calculation of a Membership price</inlineHelpText>
+        <label>Membership: Override Automatic Price</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Number_of_Delegates__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>Number of Delegates for In-Company Courses</description>
+        <externalId>false</externalId>
+        <inlineHelpText>In-Company Training Courses Only</inlineHelpText>
+        <label>IC Training: No. of Delegates</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OpportunityId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Opportunity_LastModifiedById__c</fullName>
+        <description>Pulls in the related opportunities Last Modified by ID</description>
+        <externalId>false</externalId>
+        <formula>Opportunity.LastModifiedById</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunities Last Modified by ID</inlineHelpText>
+        <label>Opportunity_LastModifiedById</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_LastModifiedDate__c</fullName>
+        <description>Pulls in the related opportunities Last Modified Date</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Opportunity.LastModifiedDate)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls in the related opportunities Last Modified Date</inlineHelpText>
+        <label>Opportunity_LastModifiedDate</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_PK_CB_OPP_ID__c</fullName>
+        <description>Pull the PK_CB_OPP_ID__c field onto the Opportunity Product. This is for DEBUG only</description>
+        <externalId>false</externalId>
+        <formula>Opportunity.PK_CB_OPP_ID__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Opportunity_PK_CB_OPP_ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Opportunity_Product_Pack__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(true = true, &apos;TRUE&apos;, &apos;FALSE&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Opportunity Product Pack</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PK_CB_ID_c__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The Unique id from Course Booker of the Element from which the data was migrated.</description>
+        <externalId>true</externalId>
+        <label>PK_CB_ID__c</label>
+        <length>25</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Payment_Status__c</fullName>
+        <description>Pulls in the Payment Status from the Financial Transaction Line Data if there is one or updates to &quot;Not Invoiced&quot;</description>
+        <externalId>false</externalId>
+        <formula>IF( ISBLANK( Financial_Transactional_Line_Data__r.Payment_Status__c), &quot;Not Invoiced&quot;,Financial_Transactional_Line_Data__r.Payment_Status__c)</formula>
+        <inlineHelpText>Pulls in the Payment Status from the Financial Transaction Line Data if there is one or updates to &quot;Not Invoiced&quot;</inlineHelpText>
+        <label>Payment Status</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Price_Locked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Price Locked</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pricing_Exception__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox to mark cancellation reconciliation prices as exceptions to avoid triggering approval</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checkbox to mark cancellation reconciliation prices as exceptions to avoid triggering approval</inlineHelpText>
+        <label>Pricing Exception</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_Algorithm_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is a pro-rata product, and the current license price should apply, enter it here</inlineHelpText>
+        <label>Pro-Rata Algorithm Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_Discount__c</fullName>
+        <externalId>false</externalId>
+        <formula>(IF(
+	(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)
+	,((E_Delivery_Algorithm_Price__c* E_Delivery_Total_Licences__c)/ Quantity)
+	, PricebookEntry.UnitPrice
+	)
+)
+-
+(IF(
+		(Pro_Rata_Product__c = FALSE)
+		,0
+		,(IF(
+				(ISBLANK(PricebookEntry.Product2.Renewal_Multiplier__c))
+				,(((Pro_Rata_End_Date__c - Pro_Rata_Start_Date__c)/(365.25* PricebookEntry.Product2.Duration_Years__c ))*
+							(IF(
+									(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)
+									,((E_Delivery_Algorithm_Price__c* E_Delivery_Total_Licences__c)/ Quantity)
+									, PricebookEntry.UnitPrice
+							))
+				)
+				,((((Pro_Rata_End_Date__c - Pro_Rata_Start_Date__c)/(365.25* PricebookEntry.Product2.Duration_Years__c ))* PricebookEntry.Product2.Renewal_Multiplier__c*
+							(IF(
+								(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)
+								,((E_Delivery_Algorithm_Price__c* E_Delivery_Total_Licences__c)/ Quantity)
+								, PricebookEntry.UnitPrice
+							))
+				)
+					+ ((1-PricebookEntry.Product2.Renewal_Multiplier__c)*
+							(IF(
+								(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)
+								,((E_Delivery_Algorithm_Price__c* E_Delivery_Total_Licences__c)/ Quantity)
+								, PricebookEntry.UnitPrice
+							))
+						)
+)))))</formula>
+        <label>Pro-Rata Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_End_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is a pro-rata product, indicate the End Date</inlineHelpText>
+        <label>Pro-Rata End Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if this is a pro-rata subscription product, and enter the start and end dates</inlineHelpText>
+        <label>Pro-Rata Product</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Pro_Rata_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If this is a pro-rata product, indicate the Start Date</inlineHelpText>
+        <label>Pro-Rata Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Product2Id</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ProductCode</fullName>
+    </fields>
+    <fields>
+        <fullName>Product_Category__c</fullName>
+        <description>Used to allow reporting on product category</description>
+        <externalId>false</externalId>
+        <formula>TEXT(PricebookEntry.Product2.Product_Category__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Auto populated for reporting purposes</inlineHelpText>
+        <label>Product Category</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Correspondence_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Product Correspondence Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Discount__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(
+ 
+   NOT(ISBLANK( T_C_Price__c)),
+   T_C_Price__c - UnitPrice,
+   IF(
+      PricebookEntry.Product2.Requires_Sales_Manager_Price__c =TRUE, 
+      ((Sales_Manager_Price__c - TotalPrice) /  Quantity ),
+      IF(
+         PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE,
+         E_Delivery_Minimum_Price__c - TotalPrice,
+         ListPrice - UnitPrice
+      )
+   )
+)</formula>
+        <label>Product Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Product_Famity__c</fullName>
+        <description>pulls in the related product family</description>
+        <externalId>false</externalId>
+        <formula>TEXT(PricebookEntry.Product2.Family)</formula>
+        <inlineHelpText>pulls in the related product family</inlineHelpText>
+        <label>Product Famity</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Product_Name__c</fullName>
+        <description>Used to pull into templates for drawloop (NOT ON PAGE LAYOUTS)</description>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Name</formula>
+        <inlineHelpText>Used to pull into templates for drawloop (NOT ON PAGE LAYOUTS)</inlineHelpText>
+        <label>Product Name</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Qty_to_show_on_booking_form__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Keep blank to use the normal qty on the product line or enter a value to override the quantity value that is displayed on the booking form.</inlineHelpText>
+        <label>Qty to show on booking form</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity</fullName>
+    </fields>
+    <fields>
+        <fullName>Quantity_Credited__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Quantity Credited</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity_Invoiced__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Quantity Invoiced</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity_Paid__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Quantity Paid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Quantity_Part_Paid__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Quantity Part Paid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Renewal_Price_Exception__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Tick this box if product renewal is at a different price</inlineHelpText>
+        <label>Renewal Price Exception</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Renewal_Price__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Price at which subscription will renew</inlineHelpText>
+        <label>Renewal Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SM_Price_Needed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>In-Company: SM Price Needed</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Sales_Manager_Price__c</fullName>
+        <description>Price set by the Sales Manager for In-Company events - used in workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sales Manager enters the TOTAL PRICE (i.e. if Quantity is 3, this is the price for all 3)</inlineHelpText>
+        <label>In-Company: Sales Manager Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>ServiceDate</fullName>
+    </fields>
+    <fields>
+        <fullName>Set_an_Invoice_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Set an Invoice Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Show_Price_as_TBA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Shows the price as TBA on the customer booking forms.</inlineHelpText>
+        <label>Show Price as TBA</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Product_Type__c</fullName>
+        <description>Populated as true by workflow Update OPL Subscription Product Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Populated as true by workflow Update OPL Subscription Product Type</inlineHelpText>
+        <label>Subscription Product Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>LMS</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Membership</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>RCP</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Service Under Licence</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Product__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used in workflow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if this product is a subscription product</inlineHelpText>
+        <label>Subscription Product</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Subscription_Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Subscription Start Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Subtotal</fullName>
+    </fields>
+    <fields>
+        <fullName>T_C_Price_Variation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>T/C Price Variation</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>T_C_Price__c</fullName>
+        <description>Field automatically populated by Transfer / Cancellation trigger - used to track differences to require approval</description>
+        <externalId>false</externalId>
+        <label>T/C Price</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>TotalPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Transfer_Cancellation__c</fullName>
+        <description>Pulls Transfer cancellation flag from Opportunity used in Transfer and cancellation code - DO NOT REMOVE</description>
+        <externalId>false</externalId>
+        <formula>Opportunity.Transfer_Cancellation__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Pulls Transfer cancellation flag from Opportunity used in Transfer and cancellation code</inlineHelpText>
+        <label>Transfer Cancellation</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Transfer_Fee_Product__c</fullName>
+        <externalId>false</externalId>
+        <formula>PricebookEntry.Product2.Transfer_Fee_Product__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Transfer Fee Product</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UnitPrice</fullName>
+    </fields>
+    <fields>
+        <fullName>Upcoming_Courses__c</fullName>
+        <externalId>false</externalId>
+        <formula>HYPERLINK(
+(&quot;https://www.appextremes.com/apps/Conga/PointMerge.aspx?SessionID=&quot;
++$Api.Session_ID
++&quot;&amp;ServerURL=&quot;+$Api.Partner_Server_URL_80 
++&quot;&amp;Id=&quot;+Id
++&quot;&amp;ReportID=00O20000003qiv4?pv0=&quot;+Fake_Product__c
++&quot;&amp;OFN=Upcoming+Courses&amp;TemplateId=01H20000000Pfjl&quot;
+),&quot;Conga&quot;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Upcoming Courses</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Website_Tax_Amount__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the tax amount that the website calculated for this line. This is only used for website orders (usually it is blank)</inlineHelpText>
+        <label>Website Tax Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Website_Tax_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This field is only used for website orders to determine the tax percentage used for the product line.</inlineHelpText>
+        <label>Website Tax Percentage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>X18_Didgit_ID__c</fullName>
+        <description>Displays 18 digit record id used for data migration (case sensitive)</description>
+        <externalId>false</externalId>
+        <formula>CASESAFEID(Id)</formula>
+        <inlineHelpText>Displays 18 digit record id used for data migration (case sensitive)</inlineHelpText>
+        <label>18 Didgit ID</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>c2g__CODAGeneralLedgerAccount__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Override Product GLA</label>
+        <referenceTo>c2g__codaGeneralLedgerAccount__c</referenceTo>
+        <relationshipLabel>Opportunity Line Items</relationshipLabel>
+        <relationshipName>OpportunityLineItems</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>c2g__CODAUnitOfWork__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unit of Work</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <validationRules>
+        <fullName>Cant_have_TBA_set_positive</fullName>
+        <active>true</active>
+        <description>Stop people from setting the TBA field on the product line and have a value in the Sales price (if this isn&apos;t inforced the booking will show a TBA price on the line but the sales price will be included in the overall prices).</description>
+        <errorConditionFormula>IF( Show_Price_as_TBA__c &amp;&amp;  UnitPrice &gt; 0, true, false)</errorConditionFormula>
+        <errorDisplayField>Show_Price_as_TBA__c</errorDisplayField>
+        <errorMessage>You cannot have a sales price greater than 0 and have the TBA field checked.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Check_Booking_form_Qty_doesnt_exceed_Qty</fullName>
+        <active>true</active>
+        <description>Validation to make sure that if the Quantity to show on the booking form is amended, that it doesn&apos;t show a higher figure that then quantity on the opportunity product line.</description>
+        <errorConditionFormula>if(Qty_to_show_on_booking_form__c &gt; 0, if(Qty_to_show_on_booking_form__c &gt;  Quantity , true,false),false)</errorConditionFormula>
+        <errorDisplayField>ServiceDate</errorDisplayField>
+        <errorMessage>The Booking form quantity must not exceed the quantity of the opportunity.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Closed_Opps_No_change_to_Opp_Prod</fullName>
+        <active>true</active>
+        <description>Should not be able to update the amount, quantity, No. of Delegates, No. of Days or Number of Licenses if the opportunity is at Customer Approved or Closed Won.</description>
+        <errorConditionFormula>OR( 
+AND( 
+ISCHANGED(UnitPrice) , 
+Opportunity.IsWon =TRUE, 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED(Quantity) , 
+Opportunity.IsWon =TRUE, 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( In_Company_Number_of_Days__c ) , 
+Opportunity.IsWon =TRUE, 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( E_Delivery_Number_of_Licences__c ) , 
+Opportunity.IsWon =TRUE, 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( Number_of_Delegates__c ) , 
+Opportunity.IsWon =TRUE, 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED(UnitPrice) , 
+ISPICKVAL( Opportunity.StageName ,&quot;Customer Approved&quot;) , 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED(Quantity) , 
+ISPICKVAL( Opportunity.StageName ,&quot;Customer Approved&quot;), 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( In_Company_Number_of_Days__c ) , 
+ISPICKVAL( Opportunity.StageName ,&quot;Customer Approved&quot;), 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( E_Delivery_Number_of_Licences__c ) , 
+ISPICKVAL( Opportunity.StageName ,&quot;Customer Approved&quot;), 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;), 
+AND( 
+ISCHANGED( Number_of_Delegates__c ) , 
+ISPICKVAL( Opportunity.StageName ,&quot;Customer Approved&quot;), 
+$Setup.Workflow_Validation__c.Validation_Disabled__c =FALSE, 
+$User.ProfileId &lt;&gt; &quot;00e20000001Mkam&quot;, 
+$User.ProfileId &lt;&gt; &quot;00eD0000001PLci&quot;))</errorConditionFormula>
+        <errorMessage>You cannot update the opportunity product details after the stage has been updated to either Customer Approved or is at a won stage.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>LMS_Subscriptions_have_a_MAX_QTY_of_1</fullName>
+        <active>true</active>
+        <description>Each LMS product is sold at a quantity of 1 with number of licences to quantify licences.  If the user attempts to set the product qty to reflect the number of licences, multiple site products will be created in the subscription which we want to avoid.</description>
+        <errorConditionFormula>AND(
+   Product2.Subscription_Product__c  = True, 
+   Product2.E_Delivery_Subscription__c  = True, 
+   Quantity &gt; 1,
+   OR(
+      ISCHANGED(Quantity),
+      ISNEW()
+   )
+)</errorConditionFormula>
+        <errorDisplayField>Quantity</errorDisplayField>
+        <errorMessage>Subscription products are sold at a maximum quantity of 1. NOTE: Number of licences field must be used to capture number of licences</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Quantity_Credited_is_required</fullName>
+        <active>true</active>
+        <description>This can&apos;t be on the field level otherwise it will appear on the add product screen.</description>
+        <errorConditionFormula>ISBLANK(Quantity_Credited__c)</errorConditionFormula>
+        <errorDisplayField>Quantity_Credited__c</errorDisplayField>
+        <errorMessage>The Quantity Credited cannot be blank.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Quantity_Credited_not_to_exceed_Invoiced</fullName>
+        <active>true</active>
+        <description>To make sure that the quantity credited figure should not be more than the quantity invoiced</description>
+        <errorConditionFormula>Quantity_Credited__c  &gt;  Quantity_Invoiced__c</errorConditionFormula>
+        <errorMessage>You cannot add a quantity credited that is higher than the quantity invoiced, please re-enter.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Stop_field_changes_all_finance_statuses</fullName>
+        <active>false</active>
+        <description>If the Finance status is either Invoiced, Paid, Part Paid then some opp fields can&apos;t be changed.</description>
+        <errorConditionFormula>IF(
+   AND(
+      Opportunity.Using_one_to_one_invoicing__c = &apos;True&apos;,
+      OR( 
+         ISPICKVAL(Opportunity.StageName, &apos;Invoiced&apos;),
+         ISPICKVAL(Opportunity.StageName, &apos;Paid&apos;),
+         ISPICKVAL(Opportunity.StageName, &apos;Part Paid&apos;),
+         ISPICKVAL(Opportunity.StageName, &apos;Credited&apos;)
+      ),
+      OR(
+         ISCHANGED(CurrencyIsoCode),
+         ISCHANGED(Quantity),
+         ISCHANGED(TotalPrice),
+         ISCHANGED(UnitPrice),
+         ISCHANGED(ListPrice),
+         ISCHANGED(Sales_Manager_Price__c),
+         ISCHANGED(IC_Price_Difference__c),
+         ISCHANGED(Number_of_Delegates__c),
+         ISCHANGED(E_Delivery_Number_of_Licences__c),
+         ISCHANGED(E_Delivery_Total_Licences__c),
+         ISCHANGED(E_Delivery_Algorithm_Price__c),
+         ISCHANGED(E_Delivery_Minimum_Price__c),
+         ISCHANGED(E_Delivery_Price_Variation__c),
+         ISCHANGED(In_Company_Number_of_Days__c),
+         ISCHANGED(E_Delivery_Override_Algorithm_Price__c),
+/*
+         ISCHANGED(QUANTITY_INVOICED__C),
+         ISCHANGED(QUANTITY_PART_PAID__C),
+         ISCHANGED(QUANTITY_PAID__C),
+         ISCHANGED(QUANTITY_CREDITED__C),
+         ISCHANGED(In_Company_Override_Audit_Day_Rate__c),
+*/
+         ISCHANGED(Set_an_Invoice_Quantity__c),
+         ISCHANGED(Pro_Rata_Algorithm_Price__c),
+         ISCHANGED(Invoice_Date__c),
+/*
+         ISCHANGED(Invoice_Paid_Date__c),
+*/
+         ISCHANGED(Product_Discount__c),
+         ISCHANGED(Membership_Override_Automatic_Price__c),
+         ISCHANGED(Membership_Automatic_Price__c),
+/*
+         ISCHANGED(PAYMENT_STATUS__C),
+         ISCHANGED(Credit_Note_Status__c),
+*/
+         ISCHANGED(Website_Tax_Amount__c),
+         ISCHANGED(Website_Tax_Percentage__c),
+         ISCHANGED(Booking_form_total_price__c),
+         ISCHANGED(Dimension_1__c),
+         ISCHANGED(Dimension_2__c)
+      )
+   ),
+   true,
+   false
+)</errorConditionFormula>
+        <errorMessage>You cannot change this field(s) when the opportunity has the stage Invoiced, Paid, Part Paid or Credited.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Subscription_Quantity_validation</fullName>
+        <active>true</active>
+        <description>Check that the subscription products excluding RCP are within the allowed minimum and maximum for the product</description>
+        <errorConditionFormula>AND( 
+   Product2.Subscription_Product__c = TRUE, 
+   Product2.RCP_Product__c = FALSE, 
+   ISPICKVAL(Product2.Family , &quot;Memberships and Subscriptions&quot;), 
+   OR( 
+      Quantity &lt; Product2.Minimum_Attendees__c, 
+      Quantity &gt; Product2.Maximum_Attendees__c
+   ),
+   OR(
+      ISCHANGED(Quantity),
+      ISNEW()
+   )
+)</errorConditionFormula>
+        <errorMessage>This product only allows the specific number of sites, please check your product and try again.</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Generate_Product_Info_Email</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Generate Product Info Email</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>https://www.appextremes.com/apps/Conga/PointMerge.aspx
+?SessionID={!API.Session_ID} &amp;ServerURL={!API.Partner_Server_URL_80} &amp;Id={!OpportunityLineItem.Id}</url>
+    </webLinks>
+</CustomObject>
