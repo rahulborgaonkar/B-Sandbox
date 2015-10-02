@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Workflow Alert Credit control that a trans or Canx is to take place</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>test</letterhead>
+    <name>Interim Transfer / Cancellation Finance Notification HTML</name>
+    <style>freeForm</style>
+    <subject>A transfer or Cancellation is about to take place</subject>
+    <textOnly>Dear Credit Control 
+
+One or more services on my opportunity {!Opportunity.Name}, {!Opportunity.Opportunity_Number__c}, are about to be cancelled or transferred. 
+
+Best regards 
+
+Salesforce admin</textOnly>
+    <type>html</type>
+</EmailTemplate>

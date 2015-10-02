@@ -1,0 +1,14 @@
+Dear {!Contact.FirstName} {!Contact.LastName}, 
+
+Please find attached confirmation of your booking with the British Safety Council.
+
+Please read the contents of the attached document carefully and follow the web links which contain important information regarding your booking.
+
+Should you have any questions, please contact our Customer Service Team on +44 (0) 20 8741 1231 or by e-mail: customer.service@britsafe.org
+
+With Kind Regards,
+
+British Safety Council
+
+
+REF: {!Opportunity.Opportunity_Number__c}

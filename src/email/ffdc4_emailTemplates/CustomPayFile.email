@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="CustomPayFile" recipientType="User" relatedToType="c2g__codaPaymentMediaSummary__c">
+<messaging:htmlEmailBody >
+</messaging:htmlEmailBody>
+<messaging:attachment filename="CustomPayFile.csv">
+<apex:outputText value="{!relatedTo.c2g__PayeeName__c},"/>
+<apex:outputText value="{!relatedTo.c2g__BankSortCode__c},"/>
+<apex:outputText value="{!relatedTo.c2g__BankAccountNumber__c},"/>
+<apex:outputText value="{!-relatedTo.c2g__PaymentValue__c},"/>
+<apex:outputText value="{!relatedTo.c2g__PaymentMediaControl__r.c2g__PaymentControlNumber__c},99,/"/>
+</messaging:attachment>
+</messaging:emailTemplate>

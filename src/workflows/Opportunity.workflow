@@ -253,6 +253,15 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Opportunity_Booking_Received_Field_Updat</fullName>
+        <field>Joining_Instructions_Sent__c</field>
+        <literalValue>1</literalValue>
+        <name>Opportunity Booking Received Field Updat</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Price_Approval_Given_for_Online_User</fullName>
         <field>Price_Approval_Given__c</field>
         <literalValue>1</literalValue>
@@ -281,6 +290,16 @@
         <fullName>Reset_Product_Delivered</fullName>
         <field>Product_Delivered__c</field>
         <name>Reset Product Delivered</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Stage_to_Booking_Received</fullName>
+        <description>Sets opportunity stage to booking received</description>
+        <field>StageName</field>
+        <literalValue>Booking Received</literalValue>
+        <name>Set Stage to Booking Received</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -675,7 +694,7 @@ Credit Note Product Group</description>
         <description>When the opportunity changes to &quot;Booking Received&quot; update the To_Invoice_opp__c to true to allow Finance to invoice opportunity but when the opportunity doesn&apos;t need crediting first the other workflow rule will fire to also update the to_be_credited flag.</description>
         <formula>IF(
     AND(
-       ISCHANGED( StageName ) ,
+       ISCHANGED(StageName),
        ISPICKVAL(StageName, &apos;Booking Received&apos;) ,
        Finance_to_Invoice_Opp__c  = false,
        Invoice_Status__c != &apos;Invoiced&apos;,

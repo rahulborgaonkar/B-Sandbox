@@ -1,0 +1,5 @@
+Hi ,
+
+ {!Opportunity.OwnerFullName} has requested for the  Sales Manager price for the {!Opportunity.Name},  Account Name:- {!Opportunity.Account}.
+
+ Opportunity {!Opportunity.Link}.

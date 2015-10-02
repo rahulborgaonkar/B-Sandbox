@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Substitution at the time of training</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Delegate Substitution Email</name>
+    <style>none</style>
+    <subject>Substitute delegate added to event – please confirm if additional fees are necessary</subject>
+    <textOnly>Dear Colleague,
+
+Please find below details of a substitute delegate amended by the trainer as they completed the delegate information.
+
+Event Name - Event_Name__c
+Start Date - StartDate__c
+End Date - EndDate__c
+Account manager of booking account: Manager__c
+
+Table
+
+Please confirm if additional fees are necessary for this substitution.
+
+Kind regards</textOnly>
+    <type>custom</type>
+</EmailTemplate>

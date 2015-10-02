@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used in Drawloop package Email guidance for short written answer assessments</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>test</letterhead>
+    <name>Email guidance for short written answer assessments</name>
+    <style>freeForm</style>
+    <subject>Email guidance for short written answer assessments</subject>
+    <textOnly>Dear {!Contact.FirstName},
+
+Thank you please see instructions attached
+What other text?
+
+Signed of as who?</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Joining Instruction Booking Confirmed</name>
+    <style>none</style>
+    <subject>British Safety Council Booking Confirmation , Reference {!Contact.Opportunity_Number__c}</subject>
+    <textOnly>Dear {!Contact.FirstName},
+
+Your booking with the British Safety Council for the below Product(s) has been confirmed.
+
+{!Contact.Opportunity_Product_List__c}
+
+You will shortly receive an invoice for the cost of this booking.
+
+Please read the contents of the attached document carefully and follow the web links which contain important information regarding your booking, including location and course content information.
+
+If you have any questions regarding this matter please contact your British Safety Council Account Manager {!Account.OwnerFullName} ({!Account.OwnerPhone}) or the Customer Service Team on +44 (0)20 8741 1231 quoting your booking reference {!Contact.Opportunity_Number__c}.
+
+Kind regards,
+
+British Safety Council</textOnly>
+    <type>custom</type>
+</EmailTemplate>

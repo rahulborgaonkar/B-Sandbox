@@ -1,0 +1,15 @@
+<p>Dear {!Contact.FirstName},</p>
+
+<p>Your booking with the British Safety Council for the below Product(s) has been confirmed.</p>
+
+<p>{!Contact.Opportunity_Product_List__c}</p>
+
+<p>You will shortly receive an invoice for the cost of this booking.</p>
+
+<p>Please read the contents of the attached document carefully and follow the web links which contain important information regarding your booking, including location and course content information.</p>
+
+<p>If you have any questions regarding this matter please contact your British Safety Council Account Manager {!Account.OwnerFullName} ({!Account.OwnerPhone}) or the Customer Service Team on +44 (0)20 8741 1231 quoting your booking reference {!Contact.Opportunity_Number__c}.</p>
+
+<p>Kind regards,</p>
+
+<p>British Safety Council</p>

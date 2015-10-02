@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>29.0</apiVersion>
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Trainer Notification 14 days prior to event</name>
+    <style>none</style>
+    <subject>14 days to event</subject>
+    <type>visualforce</type>
+</EmailTemplate>

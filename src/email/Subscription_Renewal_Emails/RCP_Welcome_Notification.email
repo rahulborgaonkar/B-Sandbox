@@ -1,0 +1,10 @@
+Dear {!NullValue(Subscription__c.Contact__c, "Subscriber")}, 
+
+Thank you for renewing your qualification(s) approval.  Please find attached your invoice.
+
+Should you have any queries, please contact our Qualifications Team on 020 8741 1231; e-mail qualifications@britsafe.org
+
+
+Kind regards, 
+
+Renewals Team

@@ -1,0 +1,22 @@
+<table height="400" width="650" cellpadding="0" border="0" cellspacing="0" >
+<tr valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="460" >
+<table height="400" width="460" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<font face="arial" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><span style="font-size: 12pt;">Dear&nbsp;</span></font><font face="arial">{!Contact.FirstName},</font><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">Thank you for attending our event, please complete our survey</div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">{!Special_Event_Booking__c.Survey_URL__c}</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial">Kind regards</font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><font face="arial"><br></font></div><div style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;"><br></div>]]></td>
+</tr>
+</table>
+</td>
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="10" >
+<![CDATA[]]></td>
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="180" >
+<table height="400" width="180" cellpadding="5" border="0" cellspacing="5" >
+<tr height="100" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" width="180" tEditID="c2r1" locked="0" aEditID="c2r1" rowspan="3" >
+<![CDATA[]]></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>

@@ -1,0 +1,14 @@
+Hello,
+
+Case number[{!Case.CaseNumber}] has be raised against "{!Case.Subject}"
+
+Description:
+{!Case.Description}
+
+Please ensure all replies are sent to salesforce@britsafe.org.
+
+DO NOT ALTER THE SUBJECT TITLE failure to do so will create another case, and this will delay your case being addressed.
+
+Kind regards,
+
+Salesforce Support

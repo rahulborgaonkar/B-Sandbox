@@ -1,0 +1,64 @@
+<messaging:emailTemplate subject="14 days to event" recipientType="User" relatedToType="Special_Event__c">
+<messaging:htmlEmailBody > 
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+</head>
+
+<body>
+<table width="800" border="0" style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">
+  <tr>
+    <td colspan="2"><p>Dear {!relatedTo.Trainer_Name__c},</p>
+    <p>As you are aware, you are scheduled to deliver the following in-company/auditing service in two weeks time. Please make a courtesy call to the client to confirm final arrangements, even if the work is ongoing.</p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="100" style="width:100px"><strong>Start date: </strong></td>
+    <td width="700" style="width:700px"><apex:outputField value="{!relatedTo.StartDate__c}"/></td>
+  </tr>
+  <tr>
+    <td width="100" style="width:100px"><strong>End date: </strong></td>
+    <td width="700" style="width:700px"><apex:outputField value="{!relatedTo.EndDate__c}"/></td>
+  </tr>
+  <tr>
+    <td width="100" style="width:100px"><strong>Venue: </strong></td>
+    <td width="700" style="width:700px"><apex:outputField value="{!relatedTo.Venue_Name__c}"/></td>
+  </tr>
+  <tr>
+    <td valign="top"  width="100" style="width:100px"><strong>Venue address: </strong></td>
+    <td width="700" style="width:700px"><apex:outputField value="{!relatedTo.Venue_Address__c}"/></td>
+  </tr>
+  <tr>
+    <td valign="top"  width="100" style="width:100px"><strong>Event Reference: </strong></td>
+    <td width="700" style="width:700px"><apex:outputField value="{!relatedTo.Name}"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+        <c:ContactsForTrainerEmail evtId="{!relatedTo.Id}"/>
+    </td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><p>If you do not have a purchase order for this job or you are unable to make contact with the client, please call your usual contact in the Logistics Team as soon as possible.</p>
+      <p>Many thanks,<br />
+    Operations</p></td>
+  </tr>
+</table>
+<p><br />
+</p>
+
+
+</body>
+</html>
+
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>CourseNotesSent</name>
+    <style>none</style>
+    <subject>British Safety Council - Course notes have been sent</subject>
+    <textOnly>Dear {!Special_Event_Booking__c.Contact__c}
+
+Please be advised that the training materials for your upcoming course with the British Safety Council have been despatched. These have been despatched to you by courier, for courses taking place within the UK the estimated delivery time is within 3 working days. 
+
+Course date: {!Special_Event_Booking__c.Event_Start_Date__c} - {!Special_Event_Booking__c.Event_end_Date__c} 
+Course reference: {!Special_Event_Booking__c.Special_Event__c} 
+Course title: {!Special_Event__c.Product__c} 
+Course venue: 
+{!Special_Event__c.Venue__c} 
+
+You can track your package here: {!Special_Event__c.Course_Notes_Tracking_URL__c} 
+
+Please contact British Safety Council Customer Services on +44 (0)208 741 1231 if you do not receive these materials within 3 working days quoting your course reference. 
+
+Kind regards 
+
+British Safety Council</textOnly>
+    <type>custom</type>
+</EmailTemplate>

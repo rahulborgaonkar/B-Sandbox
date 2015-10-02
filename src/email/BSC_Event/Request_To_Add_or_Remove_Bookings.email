@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="Request to Add/Remove Bookings for Event: {!relatedTo.Name}" recipientType="User"  relatedToType="Special_Event__c">
+<messaging:htmlEmailBody >
+Please authorise to Add/Remove bookings on this Event: <a href="https://cs8.salesforce.com/{!relatedTo.Id}">{!relatedTo.Name}</a>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>New Instruction</name>
+    <style>none</style>
+    <subject>Direct Debit Instruction</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.LastName}
+ 
+IMPORTANT - Confirmation of the set up of your Direct Debit Instruction including future payment schedules.
+Reference: {!Payonomy_Instruction__c.Name}
+ 
+Thank you for opting to pay by Direct Debit to {!Organization.Name}. Please check all details in the notification carefully.
+ 
+The collection schedule is as follows:
+•	Account Name: {!Payonomy_Instruction__c.Bank_Account_Name__c}
+•	Account Number: {!Payonomy_Instruction__c.Bank_Account_Number__c}
+•	Sort Code: {!Payonomy_Instruction__c.Bank_Sort_Code__c}
+•	First Collection: {!Payonomy_Instruction__c.First_Amount__c}
+•	The Company Name that will appear against this Direct Debit will be {!Organization.Name}.
+Subsequent collections of {!Payonomy_Instruction__c.Ongoing_Amount__c} will be debited from this bank account on the same day {!01I80000000JBuK.00N80000003Gwb9}. Any changes to these arrangements will be notified to you at least 10 working days in advance.
+ 
+If you have any questions about this plan, please contact us and quote the reference number above. Please also retain a copy of this email as it contains your Direct Debit Guarantee below. You have the right to cancel your Direct Debit at any time.
+ 
+This guarantee should be retained by the Payer.
+ 
+ The Direct Debit Guarantee
+ 
+ 
+This Guarantee is offered by all Banks and Building Societies that take part in the Direct Debit Scheme.
+ 
+The efficiency and security of the Scheme is monitored and protected by your own Bank or Building Society.
+If the amounts to be paid or the payment dates change London and Quadrant Housing Trust will notify you 10 working days in advance of your account being debited or as otherwise agreed. If an error is made by London and Quadrant Housing or your Bank or Building Society, you are guaranteed a full and immediate refund. You can cancel a Direct Debit at any time by writing to your Bank or Building Society. Please also send a copy of your letter to us.
+ 
+Thank you once again for opting to pay by Direct Debit.
+ 
+Yours sincerely
+ 
+{!User.FirstName} {!User.Last}
+{!User.Title}
+ 
+Tel: {!User.Phone}
+Email: {!User.Email}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

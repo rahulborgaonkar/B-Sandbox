@@ -1,0 +1,15 @@
+Dear {!NullValue(Contact.FirstName, "Sir / Madam")},
+
+Please find attached a letter and invoice regarding the renewal of your British Safety Council subscription.
+
+Should you have any questions regarding this matter please feel free to contact the customer Service Team on +44(0)20 8741 1231.
+
+Kind regards
+
+
+Customer service team 
+
+BRITISH SAFETY COUNCIL
+TEL: +44 (0)20 8741 1231
+EMAIL: ask@britsafe.org
+www.britsafe.org

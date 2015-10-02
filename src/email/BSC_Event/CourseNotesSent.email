@@ -1,0 +1,41 @@
+<p><span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Dear {!Special_Event_Booking__c.Contact__c}</span></span></p>
+
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Please be advised that the training materials for your upcoming course with the British Safety Council have been dispatched to you by courier. &nbsp;For courses taking place within the United Kingdom the estimated delivery time is within 3 working days.</span></span></div>
+<div>
+	&nbsp;</div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;"><strong>Event details:</strong></span></span></div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Course date: {!Special_Event_Booking__c.Event_Start_Date__c} - {!Special_Event_Booking__c.Event_end_Date__c}&nbsp;</span></span></div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Course Reference: {!Special_Event_Booking__c.Special_Event__c}</span></span></div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Course Title: {!Special_Event_Booking__c.Product__c}</span></span></div>
+<div>
+	&nbsp;</div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;"><strong>Course Venue:&nbsp;</strong></span></span></div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">{!Special_Event_Booking__c.Event_Venue__c}</span></span></div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">{!Special_Event_Booking__c.Venue_Address__c}</span></span></div>
+<div>
+	&nbsp;</div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">You can track the progress of your notes via our courier's tracking service &nbsp;<a href="{!Special_Event__c.Course_Notes_Tracking_URL__c}">here</a></span></span>
+</div>
+<div>
+	&nbsp;</div>
+<div>
+	<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Please contact British Safety Council Customer Services on +44 (0)208 741 1231 if you do not receive these material within 3 working days quoting your course reference.</span></span></div>
+<div>
+	&nbsp;</div>
+<div>
+	<div>
+		<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">Kind regards&nbsp;</span></span></div>
+	<div>
+		&nbsp;</div>
+	<div>
+		<span style="font-size:11px;"><span style="font-family:arial,helvetica,sans-serif;">British Safety Council</span></span></div>
+</div>

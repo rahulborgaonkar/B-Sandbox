@@ -1,0 +1,26 @@
+Dear {!Contact.Salutation} {!Contact.LastName}
+ 
+Your account details are shown below along with your amended payment schedule: Reference: {!Payonomy_Instruction__c.Name}
+ 
+The collection schedule is as follows:
+ - Account Name: {!Payonomy_Instruction__c.Bank_Account_Name__c}
+ - Account Number: {!Payonomy_Instruction__c.Bank_Account_Number__c}
+ - Sort Code: {!Payonomy_Instruction__c.Bank_Sort_Code__c}
+ - Amended Collection Amount: {!Payonomy_Instruction__c.Ongoing_Amount__c}
+
+Subsequent collections of  will be debited from this bank account on the same day {!01I80000000JBuK.00N80000003Gwb9}. Any changes to these arrangements will be notified to you at least 10 working days in advance.
+ 
+Please check these details and if you have any queries about the information please contact us as soon as possible, otherwise the Direct Debit payments will be processed according to the above schedule.
+
+For your information, the collection will be made using these references;
+ - The Company Name that will appear against this Direct Debit will be {!Organization.Name}.
+ - Originator Identification Number:
+ - Reference Number: {!Payonomy_Instruction__c.Name}
+
+Yours sincerely
+ 
+{!User.FirstName} {!User.Last}
+{!User.Title}
+ 
+Tel: {!User.Phone}
+Email: {!User.Email}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>false</available>
+    <description>Used when the SM Price is required</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SM Price Required</name>
+    <style>none</style>
+    <subject>Sales Manager Price required for Opportunity: {!Opportunity.Opportunity_Number__c}</subject>
+    <textOnly>Hi ,
+
+ {!Opportunity.OwnerFullName} has requested for the Sales Manager price for the {!Opportunity.Name}, Account Name:- {!Opportunity.Account}.
+
+ Opportunity {!Opportunity.Link}.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

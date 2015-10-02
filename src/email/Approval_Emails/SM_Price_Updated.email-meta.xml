@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used when the SM Price has been entered</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SM Price Updated</name>
+    <style>none</style>
+    <subject>Sales Manager Price Entered for Opportunity: {!Opportunity.Opportunity_Number__c}</subject>
+    <textOnly>Hi,
+
+Your Sales Manager has entered a Sales Manager price for your Opportunity &quot;{!Opportunity.Name}&quot; {!Opportunity.Opportunity_Number__c}.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

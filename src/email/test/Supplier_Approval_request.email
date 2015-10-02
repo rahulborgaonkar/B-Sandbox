@@ -1,0 +1,29 @@
+You have just created an account in Salesforce and marked it as a supplier.  In order for this supplier to be approved you must forward this email to your line manager and then Will Murray-Jones to approve.
+
+Please ensure you have completed the following information on the account:
+
+Supplier Value
+
+Supplier One Off	
+ 
+Supplier Service Type	
+  
+Supplier Criticality	
+ 
+Supplier Comments	
+
+
+Note:  If the Supplier Evaluation Score is more than 11, you must also send the potential supplier the "supplier application" form which can be found in the Finance section of the BMS.
+
+
+Note to approver:
+
+Please follow the link below to review our potential supplier.
+
+Don't forget to check the attachments section in case there is a completed questionnaire for you review.
+
+https://eu1.salesforce.com/{!Account.Id}
+
+Many thanks
+
+{!Account.LastModifiedBy}

@@ -1,0 +1,3 @@
+Hi,
+
+Your Sales Manager has entered a Sales Manager price for your Opportunity "{!Opportunity.Name}" {!Opportunity.Opportunity_Number__c}.

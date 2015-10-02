@@ -49,7 +49,7 @@
         </recipients>
         <senderAddress>audit.reports@britsafe.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>BSC_Event/Send_Remider_to_Submit_Audit_Report</template>
+        <template>BSC_Event/Reminder_for_Audit_Report_event_end_date</template>
     </alerts>
     <alerts>
         <fullName>Email_Event_Owner</fullName>
@@ -147,6 +147,24 @@
         <field>Name</field>
         <formula>Product__r.ProductCode + &quot;/&quot;+ Event_Auto_Number__c</formula>
         <name>Populate Event Ref</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Date_Course_Notes_Sent_To_Customer</fullName>
+        <field>Date_Course_Notes_Sent_To_Customer__c</field>
+        <formula>TODAY()</formula>
+        <name>Set Date Course Notes Sent To Customer</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_Date_Course_Notes_Sent_To_Printer</fullName>
+        <field>Date_Course_Notes_Sent_To_Print__c</field>
+        <formula>TODAY()</formula>
+        <name>Set Date Course Notes Sent To Printer</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -501,6 +519,36 @@ ISPICKVAL( Type__c,&quot;Advisory&quot;),
 ISPICKVAL (Type__c,&quot;In-Company Training&quot;)
 
 ))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Date Course Notes Sent To Customer</fullName>
+        <actions>
+            <name>Set_Date_Course_Notes_Sent_To_Customer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Special_Event__c.Course_Notes_Sent_To_Customer__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Date Stamps event filed when course notes are sent to Customer</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>Set Date Course Notes Sent To Printer</fullName>
+        <actions>
+            <name>Set_Date_Course_Notes_Sent_To_Printer</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Special_Event__c.Course_Notes_Sent_To_Print__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Date Stamps event field when course notes are sent to printer</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

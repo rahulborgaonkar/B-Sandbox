@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Sample HTML Email about a new product</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Sample_Letterhead</letterhead>
+    <name>Contact: New Product Notification</name>
+    <style>freeForm</style>
+    <subject>Announcing the Alpha 2.0, our new product</subject>
+    <textOnly>Dear {!Receiving_User.FirstName},
+
+I&apos;m excited to announce our latest offering the Alpha 2.0.  After months of research and development, we finally have it.  
+
+Features of the Alpha 2.0 include:
+2x performance increase over the Alpha 1.0
+5x more reliable than the Alpha 1.0Available in new colorsLet me know if you&apos;re interested in the new product.
+
+Thank you,
+
+{!User.FirstName}
+{!User.Email}</textOnly>
+    <type>html</type>
+</EmailTemplate>

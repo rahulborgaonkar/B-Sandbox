@@ -1,0 +1,4 @@
+The opportunity {!Opportunity.Name} owned by {!Opportunity.OwnerFullName} has been submitted for approval. 
+
+Click here to view the opportunity
+{!Opportunity.Link}

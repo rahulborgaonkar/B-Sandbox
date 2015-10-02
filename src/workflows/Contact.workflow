@@ -40,6 +40,77 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <outboundMessages>
+        <fullName>Send_Email_From_DDP</fullName>
+        <apiVersion>34.0</apiVersion>
+        <endpointUrl>https://apps.drawloop.com/package/111</endpointUrl>
+        <fields>Drawloop_Next_Booking_Confirmation_Email__c</fields>
+        <fields>Id</fields>
+        <includeSessionId>true</includeSessionId>
+        <integrationUser>rahul.borgaonkar@britsafe.org</integrationUser>
+        <name>Send Email From DDP</name>
+        <protected>false</protected>
+        <useDeadLetterQueue>false</useDeadLetterQueue>
+    </outboundMessages>
+    <rules>
+        <fullName>Send Joining Instruction For Event</fullName>
+        <actions>
+            <name>Send_Email_From_DDP</name>
+            <type>OutboundMessage</type>
+        </actions>
+        <active>true</active>
+        <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 10)</booleanFilter>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>ISR|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>TAD|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>TAU|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>ICT|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>ICTLRA|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>JOMC|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>PUB|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>PUBLRA|</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Contact.Joining_Instruction_Documents__c</field>
+            <operation>contains</operation>
+            <value>INTPBLRA|</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
     <rules>
         <fullName>Update Data Check Fields</fullName>
         <actions>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email sent to LMS subscriber to accompany invoice</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>LMS Renewal Invoice Email</name>
+    <style>none</style>
+    <subject>British Safety Council - Renewal</subject>
+    <type>text</type>
+</EmailTemplate>

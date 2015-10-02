@@ -1,0 +1,11 @@
+Hi 
+
+The status of your Salesforce case "{!Case.Subject}" has changed to "{!Case.Status}".  
+
+If the status is "awaiting review", please check the case for comments and / or instructions and check the original issue. 
+
+Please notify the IT Helpesk stating whether the issue can be closed or requires more work.  Don't forget to quote the case reference number. 
+
+Regards
+
+Your Salesforce Team

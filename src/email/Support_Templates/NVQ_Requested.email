@@ -1,0 +1,3 @@
+Opportunity Name: {!Special_Event__c.Opportunity__c}
+Owner: {!Special_Event__c.OwnerFullName}
+Event Link: {!Special_Event__c.Link}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>EMail sent to opp owner when audit statues changed to report sent</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Audit report sent</name>
+    <style>none</style>
+    <subject>Audit report sent to your client for event {!Audit_Outcome__c.BSC_Event__c}</subject>
+    <type>text</type>
+</EmailTemplate>

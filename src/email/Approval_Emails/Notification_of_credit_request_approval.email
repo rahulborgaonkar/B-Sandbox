@@ -1,0 +1,11 @@
+Hi 
+
+Opportunity {!Opportunity.Name} has been submitted for credit request approval.
+
+Click here to view the opportunity:
+https://eu1.salesforce.com/{!Opportunity.Id}
+
+
+Regards
+
+Salesforce

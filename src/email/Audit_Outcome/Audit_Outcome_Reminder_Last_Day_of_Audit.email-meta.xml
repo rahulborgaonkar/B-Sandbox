@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Audit Outcome Reminder - Last Day of Audit</name>
+    <style>none</style>
+    <subject>{!Audit_Outcome__c.Name} - {!Audit_Outcome__c.BSC_Event__c} - {!Audit_Outcome__c.Account__c} - Report Reminder</subject>
+    <type>text</type>
+</EmailTemplate>

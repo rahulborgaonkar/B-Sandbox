@@ -1,0 +1,7 @@
+This is to notify you that Account: {!Opportunity.Account} has made the following order online:
+
+Opportunity Number: {!Opportunity.Opportunity_Number__c}
+Opportunity Amount: {!Opportunity.Amount}
+Opportunity Record Type: {!Opportunity.RecordType}
+Opportunity Type: {!Opportunity.RecordType}
+Website Order ID: {!Opportunity.Website_Order_Id__c}

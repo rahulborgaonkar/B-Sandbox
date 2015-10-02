@@ -1,0 +1,13 @@
+Dear {!NullValue(Subscription__c.Contact__c, "Subscriber")},
+
+According to our records your approval to deliver the qualification(s) detailed in the attached invoice is due for annual renewal on {!Subscription__c.Start_Date__c} at a fee of £100 + VAT per qualification.
+ 
+In order to continue with the qualification(s), payment needs to be made by {!Subscription__c.Start_Date__c}.  If payment is not made by this date you will no longer be able to purchase further assessments for associated qualification(s). 
+
+Please note that if you do not renew within three months of lapsing, you will be charged in full to register again, currently £250 (members) £350 (non-members).  
+ 
+Should you have any queries, please contact our Qualifications Team on 020 8741 1231; e-mail qualifications@britsafe.org
+
+Kind regards,
+
+Renewals Team

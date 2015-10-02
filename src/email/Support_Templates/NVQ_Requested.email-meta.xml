@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>NVQ Requested</name>
+    <style>none</style>
+    <subject>{!Special_Event__c.Name} has been requested</subject>
+    <type>text</type>
+</EmailTemplate>

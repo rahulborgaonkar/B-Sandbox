@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>When an opportunity is updated to Customer Approved and the Opportunity Name contains &quot;ISA-BT,APC,CF&quot; send an email to Events Team</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Customer Approval Alert for Events Team</name>
+    <style>none</style>
+    <subject>{!Opportunity.Opportunity_Number__c} - has been set to Customer Approved</subject>
+    <type>text</type>
+</EmailTemplate>

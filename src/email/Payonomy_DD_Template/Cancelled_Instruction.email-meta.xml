@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Cancelled Instruction</name>
+    <style>none</style>
+    <subject>Notification of cancelled Direct Debit Instruction</subject>
+    <textOnly>Dear {!Contact.Salutation} {!Contact.LastName}
+ 
+I am writing to advised you that your Direct Debit under the reference {!Payonomy_Instruction__c.Name} has been cancelled.
+ 
+The collection schedule was as follows:
+•	Account Name: {!Payonomy_Instruction__c.Bank_Account_Name__c}
+•	Account Number: {!Payonomy_Instruction__c.Bank_Account_Number__c}
+•	Sort Code: {!Payonomy_Instruction__c.Bank_Sort_Code__c}
+•	Ongoing Amount:{!Payonomy_Instruction__c.Ongoing_Amount__c}
+
+If you have any questions about this please contact us and quote the reference number above. 
+
+Yours sincerely
+ 
+{!User.FirstName} {!User.Last}
+{!User.Title}
+ 
+Tel: {!User.Phone}
+Email: {!User.Email}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

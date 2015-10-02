@@ -1,0 +1,11 @@
+<messaging:emailTemplate subject="{!relatedTo.Name} has been approved to Add/Remove Bookings" recipientType="User" relatedToType="Special_Event__c">
+<messaging:htmlEmailBody >
+Dear {!relatedTo.Owner.Name}, 
+<br/>
+<br/>
+Your Incompany event <a href="https://cs8.salesforce.com/{!relatedTo.Id}">{!relatedTo.Name}</a> has now been approved for you to add or remove bookings. 
+<br/>
+<br/>
+BSC
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

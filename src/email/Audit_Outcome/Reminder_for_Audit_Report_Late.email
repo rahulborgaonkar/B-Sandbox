@@ -1,0 +1,19 @@
+<messaging:emailTemplate subject="Late Audit/Advisory Report" recipientType="User" relatedToType="Audit_Outcome__c">
+<messaging:htmlEmailBody >Dear {!Relatedto.Auditor_Name__c},<br/>
+<br/>
+The draft audit /advisory report for {!Relatedto.Report_Chase_Email_text__c}  is now overdue.<br/>
+<br/>
+Please submit the report within the next 24 hours to audit.reports@britsafe.org or inform us as to why there is a delay and when we can expect the report.<br/>
+<br/>
+This draft report has yet to go through our QA and formatting processes and we must meet our service level deadline and inform our customers if there is going to be a delay.<br/>
+<br/>
+If you have already sent the report, please call us on 0208 741 1231, as we may not have received it. <br/>
+<br/>
+Your assistance in this matter is much appreciated. <br/>
+<br/>
+Kind regards, <br/>
+<br/>
+Operations Team - Audit <br/>
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

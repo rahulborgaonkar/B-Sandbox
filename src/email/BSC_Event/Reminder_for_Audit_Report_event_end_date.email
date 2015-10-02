@@ -1,0 +1,14 @@
+<messaging:emailTemplate subject="Pending Audit/Advisory Report" recipientType="User" relatedToType="Special_Event__c">
+<messaging:htmlEmailBody >Dear {!relatedTo.Trainer_Name__c},<br/>
+<br/>
+We hope your Audit/Advisory delivery {!relatedTo.Name} at {!relatedTo.Venue_Name__c} went well.<br/>
+<br/>
+The draft report relating to this Audit/Advisory is due to be submitted by
+ <apex:outputText value="{0, date, dd MMMM yyyy}"><apex:Param value="{!relatedTo.EndDate__c + 10}"/></apex:OutputText> (as per contract terms). <br/>
+<br/>
+Please email audit.reports@britsafe.org as soon as possible if there are any issues with the submission of this report in order that we can inform the customer of any possible delays and provide you with any assistance if required. <br/>
+<br/>
+Kind regards
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

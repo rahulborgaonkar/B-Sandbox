@@ -1,0 +1,3 @@
+https://test.salesforce.com/{!Opportunity.Id}
+
+{!URLFOR({!Opportunity.Id}}

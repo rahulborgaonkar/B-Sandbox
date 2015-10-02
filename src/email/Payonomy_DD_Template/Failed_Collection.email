@@ -1,0 +1,16 @@
+Dear {!Contact.Salutation} {!Contact.LastName}
+ 
+IMPORTANT - There has been a problem collecting against Direct Debit Instruction Reference: {!Payonomy_Instruction__c.Name}
+ 
+Please contact {!Organization.Name}. 
+ 
+If you have any questions about this plan, please contact us and quote the reference number above.
+
+ 
+Yours sincerely
+ 
+{!User.FirstName} {!User.Last}
+{!User.Title}
+ 
+Tel: {!User.Phone}
+Email: {!User.Email}

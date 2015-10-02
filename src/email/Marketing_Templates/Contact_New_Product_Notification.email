@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Dear {!Contact.FirstName},<br><br>I'm excited to announce our latest offering the <span style="font-weight: bold;">Alpha 2.0<span style="font-weight: bold;"><span style="font-weight: bold;">.&nbsp; </span></span></span>After months of research and development, we finally have it.&nbsp; <br><br>Features of the Alpha 2.0 include:<span style="font-weight: bold;"><span style="font-weight: bold;"><span style="font-weight: bold;"><br></span></span></span><ul><li>2x performance increase over the Alpha 1.0<br></li><li>5x more reliable than the Alpha 1.0</li><li>Available in new colors</li></ul>Let me know if you're interested in the new product.<br><br>Thank you,<br><br>{!User.FirstName}<br>{!User.Email}<br><br>]]></td>
+</tr>
+</table>

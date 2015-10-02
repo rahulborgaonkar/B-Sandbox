@@ -1,0 +1,5 @@
+Dear {!Contact.FirstName},
+
+Thank you for attending our event {!Special_Event__c.Name} on {!Special_Event__c.StartDate__c}, please take time to complete our survey:
+
+{!Special_Event_Booking__c.Survey_URL__c}
