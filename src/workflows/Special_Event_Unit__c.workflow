@@ -42,11 +42,7 @@ Duration_Hours__c&gt;5,1,0.5
         </actions>
         <active>true</active>
         <description>Populates the Duration in days (0.5 / 1 / 1+) on the BSC Event Units</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
-NOT(ISBLANK( Unit_Start_Time__c )),
-NOT(ISBLANK( Unit_End_Time__c ))
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, NOT(ISBLANK( Unit_Start_Time__c )), NOT(ISBLANK( Unit_End_Time__c )) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -61,10 +57,7 @@ NOT(ISBLANK( Unit_End_Time__c ))
         </actions>
         <active>true</active>
         <description>Populates fixed and delegate day rates from Venue to BSC Event Units</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Migration_Workflow_Validation_Disabled__c =FALSE,
- Override_Venue_Costs__c =FALSE,
-NOT(ISBLANK( Venue__c)))</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Migration_Workflow_Validation_Disabled__c =FALSE,  Override_Venue_Costs__c =FALSE, NOT(ISBLANK( Venue__c)))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

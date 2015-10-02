@@ -425,10 +425,7 @@ RIGHT(TEXT(YEAR( Start_Date__c )),2)</formula>
         <fullName>DO NOT ENABLE Set Subs Status%3A C-R</fullName>
         <active>false</active>
         <description>**DO NOT ENABLE** Sets status to current renewing  1 hour after first reminder date</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- ISPICKVAL( Status__c ,&quot;Current&quot;)
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  ISPICKVAL( Status__c ,&quot;Current&quot;) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -616,8 +613,7 @@ RIGHT(TEXT(YEAR( Start_Date__c )),2)</formula>
         </actions>
         <active>true</active>
         <description>Populates the Sub Ref with an auto number if it is a new subscription, or with the previous Sub Ref if it is a Renewal</description>
-        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Legacy_Subscription__c =FALSE)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Legacy_Subscription__c =FALSE)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

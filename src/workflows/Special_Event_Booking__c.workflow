@@ -116,9 +116,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND
-( Course_Notes_Sent__c = True,
- TEXT(Type__c) = &apos;In-Company Primary&apos;)</formula>
+        <formula>AND ( Course_Notes_Sent__c = True,  TEXT(Type__c) = &apos;In-Company Primary&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

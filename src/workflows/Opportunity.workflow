@@ -667,21 +667,7 @@ Credit Note Product Group</description>
         </actions>
         <active>true</active>
         <description>When the opportunity changes to &quot;Booking Received&quot; update the To_Invoice_opp__c &amp; to_credit_opp__c to true to allow Finance to credit &amp; invoice opportunity if an invoice has already been created.</description>
-        <formula>IF(
-    AND(
-       ISCHANGED( StageName ) ,
-       ISPICKVAL(StageName, &apos;Booking Received&apos;) ,
-       Finance_to_Invoice_Opp__c  = false,
-       Amount &gt; 0,
-       OR(
-          Invoice_Status__c = &apos;Invoiced&apos;,
-          Invoice_Status__c = &apos;Paid&apos;,
-          Invoice_Status__c = &apos;Part Paid&apos;
-       )
-    ),
-    true,
-    false 
-)</formula>
+        <formula>IF(     AND(        ISCHANGED( StageName ) ,        ISPICKVAL(StageName, &apos;Booking Received&apos;) ,        Finance_to_Invoice_Opp__c  = false,        Amount &gt; 0,        OR(           Invoice_Status__c = &apos;Invoiced&apos;,           Invoice_Status__c = &apos;Paid&apos;,           Invoice_Status__c = &apos;Part Paid&apos;        )     ),     true,     false  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -692,17 +678,7 @@ Credit Note Product Group</description>
         </actions>
         <active>true</active>
         <description>When the opportunity changes to &quot;Booking Received&quot; update the To_Invoice_opp__c to true to allow Finance to invoice opportunity but when the opportunity doesn&apos;t need crediting first the other workflow rule will fire to also update the to_be_credited flag.</description>
-        <formula>IF(
-    AND(
-       ISCHANGED(StageName),
-       ISPICKVAL(StageName, &apos;Booking Received&apos;) ,
-       Finance_to_Invoice_Opp__c  = false,
-       Invoice_Status__c != &apos;Invoiced&apos;,
-       Invoice_Status__c != &apos;Paid&apos;,
-       Invoice_Status__c != &apos;Part Paid&apos;,
-       Amount &gt; 0
-    ),    true,    false
- )</formula>
+        <formula>IF(     AND(        ISCHANGED(StageName),        ISPICKVAL(StageName, &apos;Booking Received&apos;) ,        Finance_to_Invoice_Opp__c  = false,        Invoice_Status__c != &apos;Invoiced&apos;,        Invoice_Status__c != &apos;Paid&apos;,        Invoice_Status__c != &apos;Part Paid&apos;,        Amount &gt; 0     ),    true,    false  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

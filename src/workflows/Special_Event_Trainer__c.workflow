@@ -51,10 +51,7 @@ Trainer__r.Day_Rate__c
         </actions>
         <active>true</active>
         <description>Updates the BSC Event Trainer Day Rate from the Trainer record, if specified, or from the Product if not specified, and updates the number of days from the Event, unless a non-standard fee is indicated. (NOT MIGRATED DATA)</description>
-        <formula>AND( Non_Standard_Trainer_Fee__c =FALSE,
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Migrated__c =FALSE
-)</formula>
+        <formula>AND( Non_Standard_Trainer_Fee__c =FALSE,  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Migrated__c =FALSE )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

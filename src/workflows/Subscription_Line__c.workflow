@@ -56,11 +56,7 @@
         </actions>
         <active>false</active>
         <description>**DO NOT ACTIVATE: REPLACED BY SUBLINE TRIGGER CODE** Checks Include E-Delivery Product on the **SUBSCRIPTION** if the Related Product has this checked</description>
-        <formula>AND( 
-$Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, 
- Product__r.E_Delivery_Subscription__c  =TRUE 
-
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,   Product__r.E_Delivery_Subscription__c  =TRUE   )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -71,11 +67,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
         </actions>
         <active>false</active>
         <description>**DO NOT ACTIVATE: REPLACED BY SUBLINE TRIGGER CODE** Checks Include Membership Product on the **SUBSCRIPTION** if the Related Product has this checked</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Product__r.Membership__c =TRUE
-
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Product__r.Membership__c =TRUE  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -86,10 +78,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
         </actions>
         <active>false</active>
         <description>**DO NOT ACTIVATE: REPLACED BY SUBLINE TRIGGER CODE** Checks Include RCP Product on the **SUBSCRIPTION** if the Related Product has this checked</description>
-        <formula>AND(
-$Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Product__r.RCP_Product__c =TRUE
-)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Product__r.RCP_Product__c =TRUE )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

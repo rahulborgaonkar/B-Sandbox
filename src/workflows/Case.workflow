@@ -78,9 +78,7 @@
         </actions>
         <active>true</active>
         <description>Sets Review date to Today + 7 when set to awaiting Review</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- ISPICKVAL(Status,&quot;Awaiting Review&quot;))</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  ISPICKVAL(Status,&quot;Awaiting Review&quot;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -91,8 +89,7 @@
         </actions>
         <active>true</active>
         <description>Notifies the case &apos;raised by&apos; user when case status is changed</description>
-        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c = False,
- ISCHANGED(Status))</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c = False,  ISCHANGED(Status))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

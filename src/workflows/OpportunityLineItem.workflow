@@ -471,37 +471,7 @@ ListPrice * PricebookEntry.Product2.Renewal_Multiplier__c,
         </actions>
         <active>true</active>
         <description>Ensures Discount box is not ticked if approval not required</description>
-        <formula>(AND(  	
-($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE) 	
-, 	
-NOT( 		
-(OR( 			
-(AND( 					
-(Pricing_Exception__c =TRUE) 					, 					(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE) 					, 					
-(UnitPrice &lt; E_Delivery_Minimum_Price__c) 			
-)) 			
-, 			
-(AND( 					
-(Pricing_Exception__c =FALSE) 					
-, 					
-(OR( 						
-(AND( 							
-(Product2.Discount_Permitted__c = TRUE) 							, 							
-(((ListPrice - UnitPrice) / ListPrice) &gt; Product2.Maximum_Discount__c) 						
-)) 						
-, 						
-(AND( 							
-(Product2.Discount_Permitted__c = FALSE) 							, 							
-(ListPrice &gt; UnitPrice) 						
-)) 					
-)) 			
-)) 			
-, 			
-(Pro_Rata_Product__c =TRUE) 			
-, 			
-(PricebookEntry.Product2.Requires_Sales_Manager_Price__c =TRUE) 	
-))) 
-))</formula>
+        <formula>(AND(  	 ($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE) 	 , 	 NOT( 		 (OR( 			 (AND( 					 (Pricing_Exception__c =TRUE) 					, 					(PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE) 					, 					 (UnitPrice &lt; E_Delivery_Minimum_Price__c) 			 )) 			 , 			 (AND( 					 (Pricing_Exception__c =FALSE) 					 , 					 (OR( 						 (AND( 							 (Product2.Discount_Permitted__c = TRUE) 							, 							 (((ListPrice - UnitPrice) / ListPrice) &gt; Product2.Maximum_Discount__c) 						 )) 						 , 						 (AND( 							 (Product2.Discount_Permitted__c = FALSE) 							, 							 (ListPrice &gt; UnitPrice) 						 )) 					 )) 			 )) 			 , 			 (Pro_Rata_Product__c =TRUE) 			 , 			 (PricebookEntry.Product2.Requires_Sales_Manager_Price__c =TRUE) 	 )))  ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -516,11 +486,7 @@ NOT(
         </actions>
         <active>true</active>
         <description>Sets Price of Audit+ to round up costs to 400 / 500* Sales Price</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-, E_Delivery_Override_Algorithm_Price__c = FALSE 
-,
- PricebookEntry.Product2.E_Delivery_Audit_Plus_Product__c =TRUE)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE , E_Delivery_Override_Algorithm_Price__c = FALSE  ,  PricebookEntry.Product2.E_Delivery_Audit_Plus_Product__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -539,10 +505,7 @@ NOT(
         </actions>
         <active>false</active>
         <description>Sets the DMS Pricing based on the bands at the Product Level</description>
-        <formula>AND(
-  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-, E_Delivery_Override_Algorithm_Price__c = FALSE 
-, PricebookEntry.Product2.E_Delivery_DMS_Product__c =TRUE)</formula>
+        <formula>AND(   $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE , E_Delivery_Override_Algorithm_Price__c = FALSE  , PricebookEntry.Product2.E_Delivery_DMS_Product__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -557,11 +520,7 @@ NOT(
         </actions>
         <active>false</active>
         <description>Sets the price for DMS Supplementary Prices</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-, E_Delivery_Override_Algorithm_Price__c = FALSE 
-,
- PricebookEntry.Product2.E_Delivery_DMS_Supplementary_Product__c =TRUE)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE , E_Delivery_Override_Algorithm_Price__c = FALSE  ,  PricebookEntry.Product2.E_Delivery_DMS_Supplementary_Product__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -584,9 +543,7 @@ NOT(
         </actions>
         <active>true</active>
         <description>Sets Minimum Price and flags Pricing Exception for E-Delivery Products</description>
-        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-,  E_Delivery_Override_Algorithm_Price__c  = FALSE
-, PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE ,  E_Delivery_Override_Algorithm_Price__c  = FALSE , PricebookEntry.Product2.E_Delivery_Training_Product__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -601,10 +558,7 @@ NOT(
         </actions>
         <active>true</active>
         <description>Sets Price for supplementary Products for E-Delivery Training</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
-E_Delivery_Override_Algorithm_Price__c = FALSE ,
-  PricebookEntry.Product2.E_Delivery_T_Supplementary_Product__c =TRUE)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, E_Delivery_Override_Algorithm_Price__c = FALSE ,   PricebookEntry.Product2.E_Delivery_T_Supplementary_Product__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -615,9 +569,7 @@ E_Delivery_Override_Algorithm_Price__c = FALSE ,
         </actions>
         <active>true</active>
         <description>Checks a box if an opportunity product has a Sales Manager price that differs from the Sales Price</description>
-        <formula>AND(
- TotalPrice  &lt;&gt; Sales_Manager_Price__c ,
- Product2.Requires_Sales_Manager_Price__c =TRUE)</formula>
+        <formula>AND(  TotalPrice  &lt;&gt; Sales_Manager_Price__c ,  Product2.Requires_Sales_Manager_Price__c =TRUE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -654,12 +606,7 @@ E_Delivery_Override_Algorithm_Price__c = FALSE ,
         </actions>
         <active>true</active>
         <description>Populates the Audit Price based on the day rate and number of days</description>
-        <formula>AND(
- ($Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE),
- (PricebookEntry.Product2.In_Company_Day_Rate_Applies__c =TRUE),
-(NOT(ISBLANK( In_Company_Number_of_Days__c ))),
-( In_Company_Override_Audit_Day_Rate__c =FALSE)
-)</formula>
+        <formula>AND(  ($Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE),  (PricebookEntry.Product2.In_Company_Day_Rate_Applies__c =TRUE), (NOT(ISBLANK( In_Company_Number_of_Days__c ))), ( In_Company_Override_Audit_Day_Rate__c =FALSE) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -685,10 +632,7 @@ E_Delivery_Override_Algorithm_Price__c = FALSE ,
         </actions>
         <active>true</active>
         <description>Populates Renewal Price if Renewal Multiplier is set on the Product</description>
-        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- NOT(ISBLANK(PricebookEntry.Product2.Renewal_Multiplier__c)),
- Renewal_Price_Exception__c =FALSE
-)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  NOT(ISBLANK(PricebookEntry.Product2.Renewal_Multiplier__c)),  Renewal_Price_Exception__c =FALSE )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -699,10 +643,7 @@ E_Delivery_Override_Algorithm_Price__c = FALSE ,
         </actions>
         <active>true</active>
         <description>Checks a box if a Sales Manager&apos;s Price is needed</description>
-        <formula>AND(
- PricebookEntry.Product2.Requires_Sales_Manager_Price__c =TRUE,
-ISBLANK( Sales_Manager_Price__c ),
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE)</formula>
+        <formula>AND(  PricebookEntry.Product2.Requires_Sales_Manager_Price__c =TRUE, ISBLANK( Sales_Manager_Price__c ),  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -713,10 +654,7 @@ ISBLANK( Sales_Manager_Price__c ),
         </actions>
         <active>true</active>
         <description>Unchecks the box if a SM price is given</description>
-        <formula>AND(
-NOT(ISBLANK( Sales_Manager_Price__c )),
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-)</formula>
+        <formula>AND( NOT(ISBLANK( Sales_Manager_Price__c )),  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -741,9 +679,7 @@ NOT(ISBLANK( Sales_Manager_Price__c )),
         </actions>
         <active>true</active>
         <description>Checks E-Delivery Price Variation if total price is less than total algorithm price</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE
-,  TotalPrice &lt; E_Delivery_Minimum_Price__c )</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE ,  TotalPrice &lt; E_Delivery_Minimum_Price__c )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -754,12 +690,7 @@ NOT(ISBLANK( Sales_Manager_Price__c )),
         </actions>
         <active>true</active>
         <description>Checks a checkbox if the T/C price is changed</description>
-        <formula>AND(
-(ISBLANK(T_C_Price__c) = FALSE)
-,
-
-( T_C_Price__c &lt;&gt; UnitPrice )
-)</formula>
+        <formula>AND( (ISBLANK(T_C_Price__c) = FALSE) ,  ( T_C_Price__c &lt;&gt; UnitPrice ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -770,13 +701,7 @@ NOT(ISBLANK( Sales_Manager_Price__c )),
         </actions>
         <active>true</active>
         <description>Unchecks the price variation field if the price is equal to the T/C price</description>
-        <formula>OR(
-
-(ISBLANK(T_C_Price__c)=TRUE),
-( T_C_Price__c = UnitPrice ) 
-
-
-)</formula>
+        <formula>OR(  (ISBLANK(T_C_Price__c)=TRUE), ( T_C_Price__c = UnitPrice )    )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -787,9 +712,7 @@ NOT(ISBLANK( Sales_Manager_Price__c )),
         </actions>
         <active>true</active>
         <description>Sets E-Delivery Pricing exception to FALSE if Total Price is equal to or greater than Total algorithm price</description>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- TotalPrice  &gt;=  E_Delivery_Minimum_Price__c )</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  TotalPrice  &gt;=  E_Delivery_Minimum_Price__c )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

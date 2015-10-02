@@ -381,9 +381,7 @@ Principle_Address_Building__c +&quot;, &quot; + Principle_Address_Street__c+ &qu
         </actions>
         <active>false</active>
         <description>Sets account type to Customer when it&apos;s blank (i.e for converted leads)</description>
-        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Migrated__c =FALSE,
- ISPICKVAL(Type,&quot;&quot;))</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Migrated__c =FALSE,  ISPICKVAL(Type,&quot;&quot;))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -414,33 +412,7 @@ Principle_Address_Building__c +&quot;, &quot; + Principle_Address_Street__c+ &qu
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-       OR(
-          ISNEW(),
-          ISCHANGED(Principle_Address_Country__c),
-          ISCHANGED( BillingCountry )
-        ),
-       OR(
-          AND(
-             ISBLANK ( BillingCountry ),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;United Kingdom&apos;)),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;England&apos;)),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Wales&apos;)),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Northern Ireland&apos;)),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Scotland&apos;)),
-             NOT(ISPICKVAL( Principle_Address_Country__c, &apos;UK&apos;))
-          ),
-          AND(
-             ISBLANK ( BillingCountry ) = FALSE,
-             BillingCountry != &apos;United Kingdom&apos;,
-             BillingCountry != &apos;England&apos;,
-             BillingCountry != &apos;Wales&apos;,
-             BillingCountry != &apos;Northern Ireland&apos;,
-             BillingCountry != &apos;Scotland&apos;,
-             BillingCountry != &apos;UK&apos;
-          )
-       )
-    )</formula>
+        <formula>AND(        OR(           ISNEW(),           ISCHANGED(Principle_Address_Country__c),           ISCHANGED( BillingCountry )         ),        OR(           AND(              ISBLANK ( BillingCountry ),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;United Kingdom&apos;)),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;England&apos;)),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Wales&apos;)),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Northern Ireland&apos;)),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;Scotland&apos;)),              NOT(ISPICKVAL( Principle_Address_Country__c, &apos;UK&apos;))           ),           AND(              ISBLANK ( BillingCountry ) = FALSE,              BillingCountry != &apos;United Kingdom&apos;,              BillingCountry != &apos;England&apos;,              BillingCountry != &apos;Wales&apos;,              BillingCountry != &apos;Northern Ireland&apos;,              BillingCountry != &apos;Scotland&apos;,              BillingCountry != &apos;UK&apos;           )        )     )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -519,10 +491,7 @@ Principle_Address_Building__c +&quot;, &quot; + Principle_Address_Street__c+ &qu
         </actions>
         <active>true</active>
         <description>When an account is created and the supplier box checked, or an existing account has supplier box checked. The user creating the account receives an email which they forward to their line manger requesting approval is set.</description>
-        <formula>AND( 
-$Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, 
- Supplier__c =TRUE
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,   Supplier__c =TRUE )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -613,31 +582,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
         </actions>
         <active>true</active>
         <description>If Billing address is not populated, populate with principle address.</description>
-        <formula>OR(
-   AND(
-      ISBLANK(BillingStreet),
-      ISBLANK(BillingCity),
-      ISBLANK(BillingCountry),
-      ISBLANK(BillingPostalCode),
-      ISBLANK(BillingState),
-      $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE
-   ),
-      AND(
-         ISBLANK(BillingStreet),
-         ISBLANK(BillingCity),
-         ISBLANK(BillingState),
-         !ISBLANK(BillingPostalCode),
-         $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE
-      ),
-         AND(
-            ISBLANK(BillingStreet),
-            ISBLANK(BillingCity),
-            !ISBLANK(BillingCountry),
-            ISBLANK(BillingPostalCode),
-            ISBLANK(BillingState),
-            $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE
-         )
-)</formula>
+        <formula>OR(    AND(       ISBLANK(BillingStreet),       ISBLANK(BillingCity),       ISBLANK(BillingCountry),       ISBLANK(BillingPostalCode),       ISBLANK(BillingState),       $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE    ),       AND(          ISBLANK(BillingStreet),          ISBLANK(BillingCity),          ISBLANK(BillingState),          !ISBLANK(BillingPostalCode),          $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE       ),          AND(             ISBLANK(BillingStreet),             ISBLANK(BillingCity),             !ISBLANK(BillingCountry),             ISBLANK(BillingPostalCode),             ISBLANK(BillingState),             $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE          ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

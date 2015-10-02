@@ -16,9 +16,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
- $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- User__r.CompanyName =&quot;2020 Management&quot;)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  User__r.CompanyName =&quot;2020 Management&quot;)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

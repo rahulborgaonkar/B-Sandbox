@@ -18,10 +18,7 @@
         </actions>
         <active>true</active>
         <description>Update the campaign to active automatically</description>
-        <formula>AND
-(IsActive = False,  
- RecordTypeId = &apos;012200000001cAQ&apos;,
-$Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE)</formula>
+        <formula>AND (IsActive = False,    RecordTypeId = &apos;012200000001cAQ&apos;, $Setup.Workflow_Validation__c.Workflows_Disabled__c  = FALSE)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>

@@ -17,26 +17,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>false</active>
-        <formula>AND(
-NOT(ISNEW())
-,
-OR(
-ISPICKVAL(Purchase_Order__r.Status__c, &quot;Approved&quot;),
-ISPICKVAL(Purchase_Order__r.Status__c, &quot;Part Paid&quot;),
-ISPICKVAL(Purchase_Order__r.Status__c, &quot;Rejected&quot;)
-)
-,
-AND(
-$Profile.Name&lt;&gt;&quot;System Administrator&quot;,
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgxe&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001PgxA&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgx5&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgx0&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgwv&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgwl&quot;, 
-$Profile.Id &lt;&gt;&quot;00eD0000001Pgdj&quot; 
-)
-)</formula>
+        <formula>AND( NOT(ISNEW()) , OR( ISPICKVAL(Purchase_Order__r.Status__c, &quot;Approved&quot;), ISPICKVAL(Purchase_Order__r.Status__c, &quot;Part Paid&quot;), ISPICKVAL(Purchase_Order__r.Status__c, &quot;Rejected&quot;) ) , AND( $Profile.Name&lt;&gt;&quot;System Administrator&quot;, $Profile.Id &lt;&gt;&quot;00eD0000001Pgxe&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001PgxA&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001Pgx5&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001Pgx0&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001Pgwv&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001Pgwl&quot;,  $Profile.Id &lt;&gt;&quot;00eD0000001Pgdj&quot;  ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

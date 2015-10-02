@@ -323,10 +323,7 @@
         </actions>
         <active>true</active>
         <description>Update the status of the new BSC Event to Confirmed when completing a Transfer.</description>
-        <formula>AND( 
-Transferred_From__c &lt;&gt;&quot;&quot; , 
-ISPICKVAL(Transferred_From__r.Stage__c , &quot;Cancelled&quot;) 
-)</formula>
+        <formula>AND(  Transferred_From__c &lt;&gt;&quot;&quot; ,  ISPICKVAL(Transferred_From__r.Stage__c , &quot;Cancelled&quot;)  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -337,14 +334,7 @@ ISPICKVAL(Transferred_From__r.Stage__c , &quot;Cancelled&quot;)
         </actions>
         <active>true</active>
         <description>sets international to true if venue is outside the UK</description>
-        <formula>AND( 
-$Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE
-,
-NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;United Kingdom&quot;)),
-NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Isle of Man&quot;)),
-NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Guernsey&quot;)),
-NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Jersey&quot;))
-)</formula>
+        <formula>AND(  $Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE , NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;United Kingdom&quot;)), NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Isle of Man&quot;)), NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Guernsey&quot;)), NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Jersey&quot;)) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -479,9 +469,7 @@ NOT(ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Jersey&quot;))
         </actions>
         <active>true</active>
         <description>Populate course Notes, Delegate Pack Cost, Minimum attendees and Maximum attendees (NOT MIGRATED DATA)</description>
-        <formula>AND(
-$Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,
- Migrated__c =FALSE)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,  Migrated__c =FALSE)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -496,9 +484,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,
         </actions>
         <active>true</active>
         <description>Populates Venue Cost if not overridden (NOT MIGRATED DATA)</description>
-        <formula>AND ($Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,
- Migrated__c =FALSE,
- Override_Venue_Cost__c = FALSE)</formula>
+        <formula>AND ($Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,  Migrated__c =FALSE,  Override_Venue_Cost__c = FALSE)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -509,16 +495,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE,
         </actions>
         <active>true</active>
         <description>Sets the Client Provisional Expiry Date when an event is created (NOT MIGRATED DATA)</description>
-        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Migrated__c =FALSE,
-ISPICKVAL(Status__c,&quot;Agreed&quot;),
- $User.Event_Operations__c =TRUE,
-OR(
-ISPICKVAL( Type__c ,&quot;Audit&quot;),
-ISPICKVAL( Type__c,&quot;Advisory&quot;),
-ISPICKVAL (Type__c,&quot;In-Company Training&quot;)
-
-))</formula>
+        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Migrated__c =FALSE, ISPICKVAL(Status__c,&quot;Agreed&quot;),  $User.Event_Operations__c =TRUE, OR( ISPICKVAL( Type__c ,&quot;Audit&quot;), ISPICKVAL( Type__c,&quot;Advisory&quot;), ISPICKVAL (Type__c,&quot;In-Company Training&quot;)  ))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -559,18 +536,7 @@ ISPICKVAL (Type__c,&quot;In-Company Training&quot;)
         </actions>
         <active>true</active>
         <description>Sets the Sales Provisional Expiry Date when an event is created (NOT MIGRATED DATA)</description>
-        <formula>AND
-($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
-  Migrated__c =FALSE,
- ISPICKVAL(Status__c,&quot;Resourced&quot;),
-OR(
-ISPICKVAL(Type__c,&quot;Advisory&quot;),
-ISPICKVAL(Type__c,&quot;Audit&quot;),
-ISPICKVAL(Type__c,&quot;In-Company Training&quot;)
-),
- $User.Event_Operations__c =TRUE
-
-)</formula>
+        <formula>AND ($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,   Migrated__c =FALSE,  ISPICKVAL(Status__c,&quot;Resourced&quot;), OR( ISPICKVAL(Type__c,&quot;Advisory&quot;), ISPICKVAL(Type__c,&quot;Audit&quot;), ISPICKVAL(Type__c,&quot;In-Company Training&quot;) ),  $User.Event_Operations__c =TRUE  )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -581,10 +547,7 @@ ISPICKVAL(Type__c,&quot;In-Company Training&quot;)
         </actions>
         <active>true</active>
         <description>Sets Provisional In-Company Events to Timed Out when the time out date is reached (NOT MIGRATED DATA)</description>
-        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, 
- Migrated__c =FALSE,
-ISPICKVAL(Status__c ,&quot;Resourced&quot;),
- Sales_Provisional_Extension_Granted__c =FALSE)</formula>
+        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,   Migrated__c =FALSE, ISPICKVAL(Status__c ,&quot;Resourced&quot;),  Sales_Provisional_Extension_Granted__c =FALSE)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <offsetFromField>Special_Event__c.Sales_Provisional_Expiry_Date__c</offsetFromField>
@@ -596,10 +559,7 @@ ISPICKVAL(Status__c ,&quot;Resourced&quot;),
         <fullName>Time Out Provisional Event_2</fullName>
         <active>true</active>
         <description>Sets Provisional In-Company Events to Timed Out when the time out date is reached (NOT MIGRATED DATA)</description>
-        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, 
- Migrated__c =FALSE,
-ISPICKVAL(Status__c ,&quot;Resourced&quot;),
- Sales_Provisional_Extension_Granted__c =FALSE)</formula>
+        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,   Migrated__c =FALSE, ISPICKVAL(Status__c ,&quot;Resourced&quot;),  Sales_Provisional_Extension_Granted__c =FALSE)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -618,15 +578,7 @@ ISPICKVAL(Status__c ,&quot;Resourced&quot;),
         </actions>
         <active>true</active>
         <description>Set international to false if venue is in the UK</description>
-        <formula>AND( 
-	$Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE , 
-	OR(
-		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;United Kingdom&quot;),
-		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Isle of Man&quot;),
-		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Guernsey&quot;),
-		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Jersey&quot;)
-	)
-)</formula>
+        <formula>AND(  	$Setup.Workflow_Validation__c.Workflows_Disabled__c = FALSE ,  	OR( 		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;United Kingdom&quot;), 		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Isle of Man&quot;), 		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Guernsey&quot;), 		ISPICKVAL( Venue__r.Principle_Address_Country__c , &quot;Jersey&quot;) 	) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -658,9 +610,7 @@ ISPICKVAL(Status__c ,&quot;Resourced&quot;),
         </actions>
         <active>false</active>
         <description>Updates the Event Ref with the Product Code / Auto Number</description>
-        <formula>AND(
-$Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
- Migrated__c =FALSE)</formula>
+        <formula>AND( $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,  Migrated__c =FALSE)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -671,8 +621,7 @@ $Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
         </actions>
         <active>true</active>
         <description>If the Target contribution has not been set at the Event level, this populates it from the Product</description>
-        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE,
-ISNULL( Target_Contribution_Event__c ))</formula>
+        <formula>AND($Setup.Workflow_Validation__c.Workflows_Disabled__c =FALSE, ISNULL( Target_Contribution_Event__c ))</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <tasks>
