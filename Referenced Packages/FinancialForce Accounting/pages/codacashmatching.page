@@ -1,3 +1,0 @@
-<!-- codacashmatching --> 
-<apex:page controller="c2g.CODACashMatchingController" action="{!newCashMatchingRedirection}">
-</apex:page>

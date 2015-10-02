@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
-    <body>&lt;script type=&quot;text/javascript&quot; src=&quot;https://cti.redmatter.com/dojo.js&quot;&gt;&lt;/script&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;https://cti.redmatter.com/cti.css&quot;&gt;&lt;script type=&quot;text/javascript&quot;&gt;ctidojo.require(&quot;rmcti.salesforce&quot;);&lt;/script&gt;&lt;div id=&quot;cti-header&quot;&gt; &lt;/div&gt;&lt;div id=&quot;cti-main&quot;&gt;&lt;div id=&quot;cti-login&quot;&gt;&lt;table&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Username:&lt;/td&gt;&lt;td&gt;&lt;input id=&quot;username&quot; type=&quot;text&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Password:&lt;/td&gt;&lt;td&gt;&lt;input id=&quot;password&quot; type=&quot;password&quot;&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;&lt;button id=&quot;login&quot; class=&quot;cti-button cti-green&quot;&gt;Log In&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;div id=&quot;cti-render&quot;&gt; &lt;/div&gt;&lt;div id=&quot;cti-info&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;div id=&quot;cti-footer&quot;&gt; &lt;/div&gt;</body>
-    <pageComponentType>htmlArea</pageComponentType>
-    <width>narrow</width>
-</HomePageComponent>

@@ -1,3 +1,0 @@
-<apex:page standardController="ffirule__IntegrationRuleSourceTest__c" recordSetVar="records" extensions="ffirule.IntegrationRuleEngine" action="{!convert}">
-	<c:IntegrationRule engine="{!engine}"/>
-</apex:page>

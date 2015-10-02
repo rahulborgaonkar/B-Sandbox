@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Journal Import Setup</label>
-    <mobileReady>false</mobileReady>
-    <motif>Custom67: Gears</motif>
-    <page>journalimportsetup</page>
-</CustomTab>

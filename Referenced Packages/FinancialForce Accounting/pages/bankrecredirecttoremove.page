@@ -1,3 +1,0 @@
-<apex:page standardController="c2g__codaBankReconciliationLineItem__c" extensions="c2g.BankRecLineItemRedirectController" recordSetVar="recs" action="{!redirectToRemove}">
-
-</apex:page>
