@@ -1,0 +1,7 @@
+<apex:page standardController="Lead" extensions="DaddyAnalytics.DaddyAnalyticsLeadUpdateFromClicky" action="{!retrieveDataFromClicky}">              
+    <apex:pageMessages /> 
+    <br/>
+    <apex:form >
+        <apex:commandLink value="Back" action="{!back}"/> 
+    </apex:form>         
+</apex:page>

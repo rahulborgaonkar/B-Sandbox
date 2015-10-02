@@ -1,0 +1,7 @@
+<apex:component controller="c2g.CODASalesInvoiceScheduleLSortController" access="global">
+    <apex:attribute name="salesInvoice" access="global" description="The sales invoice to pass to the component." type="c2g__codaInvoice__c" assignTo="{!salesInvoiceAttr}"/>
+    <apex:attribute name="var" access="global" description="The sorted schedule lines returned.." type="String"/>
+    <apex:componentBody >
+        <apex:variable var="{!var}" value="{!InstallmentLineItems}"/>
+    </apex:componentBody>   
+</apex:component>

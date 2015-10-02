@@ -1,0 +1,665 @@
+<!-- codapurchaseinvoiceedit -->
+<apex:page standardController="c2g__codaPurchaseInvoice__c" extensions="c2g.CODAPurchaseInvoiceController" action="{!canEdit}">
+	<script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+	<script>
+		CODA.documentFunctionTimer("keyup", CODA.executeQueue, 1500);
+		CODA.documentFunctionTimer("click", CODA.executeQueue, 1500);
+	</script>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<style>
+	.extracollapsed
+	{
+		BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+	}
+
+	.extraexpanded
+	{
+		BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+	}
+
+	.extracollapsed_h
+	{
+		BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+	}
+
+	.extraexpanded_h
+	{
+		BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+	}
+
+	.newlinebutton
+	{
+		background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/add.gif')});
+	}
+
+	.pbError
+	{
+		background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+	}
+	.informationerrorblock
+	{
+		background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIconsm.gif')});
+	}
+	</style>
+	<script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+	<script src="{!URLFOR($Resource.front,'front/base/frameworks/ext-core-3.1.0.js')}" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<script>
+		var $FFDC = jQuery.noConflict();
+	            
+        $FFDC(function () {
+            CODA.prettifySalesforceRunTimeError();
+        });
+	</script>
+	<script type="text/javascript">
+		var CODA2GoButtons = new CODA2GoPage();
+		var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+	</script>
+	<apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+
+		<apex:actionFunction name="calculateTax" oncomplete="CODA.prettifySalesforceRunTimeError(); CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,taxTotal,invTotal,dtTaxSummary,headerDimensionBlock,lineItemVATDimensionBlock,lineItemSUTDimensionBlock"/>
+
+		<DIV id="indicator"><img src="{!URLFOR($Resource.coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/><span id="indicatortext"></span></DIV>
+		<!-- Header -->
+		<apex:sectionHeader title="{!$Label.codaPurchaseInvoice}" subtitle="{!$Label.codaEditButton}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1050')}"/>
+		<!-- Back to Listing -->
+		<DIV class="goBreadcrumb">
+		&nbsp;&#171;<a href="{!URLFOR($Action.codaPurchaseInvoice__c.Tab,$ObjectType.codaPurchaseInvoice__c)}">{!$Label.codaBackToListPurchaseInvoice}</a>
+		</DIV>
+		<!-- Invoice Detail -->
+		<apex:pageBlock title="{!$Label.codaPurchaseInvoiceDetail}" id="invoiceBlock" mode="edit">
+			<!-- Buttons -->
+			<apex:pageBlockButtons >
+				<!-- Hidden Buttons -->
+				<apex:commandButton value="{!$Label.codaSaveButton}" action="{!save}" id="save_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaSaveAndNewButton}" action="{!saveAndNew}" id="save_new_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaSaveAndPostButton}" action="{!saveAndPost}" id="save_post_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaCancelButton}" action="{!cancel}" id="cancel_h" styleclass="hiddensubmit" immediate="true" reRender=""/>
+				<!-- End of Hidden Buttons-->
+				<apex:commandButton value="{!$Label.codaSaveButton}" id="save" onclick="if(!CODA.queing()){document.getElementById('{!$Component.save_h}').click()};return false;" rerender="" />
+				<apex:commandButton value="{!$Label.codaSaveAndNewButton}" id="save_new" onclick="if(!CODA.queing()){document.getElementById('{!$Component.save_new_h}').click()};return false;" rerender="" />
+				<apex:commandButton value="{!$Label.codaSaveAndPostButton}" id="save_post" onclick="if(!CODA.queing()){document.getElementById('{!$Component.save_post_h}').click()};return false;" rerender="" />
+				<apex:commandButton value="{!$Label.codaCancelButton}" id="cancel" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;"/>
+				<script>
+	                CODA2GoButtons.initButtons(["{!$Component.save}", "{!$Component.save_new}", "{!$Component.save_post}", "{!$Component.cancel}"]);
+				</script>
+			</apex:pageBlockButtons>
+			<!-- Messages -->
+			<apex:outputPanel id="warningPagePanel">
+            	<apex:pageMessage title="{!$Label.codaAccountTradingCurNotNull}" severity="warning" strength="2" rendered="{!viewstate.AccountCurrencyWarning}"/>
+            </apex:outputPanel>
+			<apex:include pageName="c2g__codacompanymismatchwarning"  rendered="{!viewstate.ownerCmpErr}"/>
+			<apex:outputPanel id="messagePanel" layout="block">
+				<apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.showErrorMessages}">
+					<!--apex:messages/-->
+					<apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+						<apex:outputText value="{!errorMessage}"/><br/>
+					</apex:repeat>
+				</apex:outputPanel>
+
+				<apex:pageMessages id="showWarningMessages" rendered="{!showWarningPanel}"/>
+			</apex:outputPanel>
+
+			<!-- Account Detail -->
+			<apex:pageBlockSection title="{!$Label.codaAccountDetail}" >
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__Account__c.label}" for="account"/>
+
+					<apex:outputPanel styleClass="holder">
+						<apex:outputPanel id="accountPanel">
+							<apex:outputText value="{!viewstate.purchaseinvoice.accountName}" rendered="{!viewstate.CurrencyLocked}"/>
+							<apex:inputField id="account" value="{!viewstate.purchaseinvoice.dto.c2g__Account__c}" rendered="{!!viewstate.CurrencyLocked}"/>
+							<apex:actionFunction name="onChangeAccount" action="{!updateAccountFields}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="dueDate,accountPanel,messagePanel,warningPagePanel,address,vatRegistrationNumber,ecCountryCode,currency,suttaxcodes,suttaxcode1panel,suttaxrate1,suttaxcode2panel,suttaxrate2,suttaxcode3panel,suttaxrate3,pricebooksearch,searchProductsField,productsList,netValue,netTotal,taxTotal,invTotal,dtTaxSummary,newLineSUT,newExpenseLineVAT,newExpenseLineVAT,newLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock,purchaseInvoiceHeaderBlock"/>
+							<script>
+								if ({!viewstate.CurrencyLocked} != true)
+								{
+									CODA.addQueuedOnBlurEvent(null, "{!$Component.account}", "{!$Label.codaRetrievingAccountInformation}", onChangeAccount, true);
+								}
+							</script>
+						</apex:outputPanel>
+						<a href="#" onclick="CODA.toggleHeaderExpand(this,'myex');return false;" title="{!$Label.codaToggleAnalysisArea}">
+							<img src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.codaToggleAnalysisArea}"/>
+						</a>
+						<DIV id="myex" class="headerexpander">
+							<apex:outputPanel id="headerDimensionBlock">
+								<c:SubAnalysis record="{!viewstate.purchaseinvoice.dto}" title="{!$Label.codaAnalysis}" id="subAnalDimensionBlock" readOnly="false"/>
+							</apex:outputPanel>
+						</DIV>
+
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem rendered="{!viewstate.isVat}">
+					<apex:outputLabel for="ecCountryCode" value="{!$Label.codaECCountryCode}"/>
+					<apex:outputText id="ecCountryCode" value="{!viewstate.purchaseinvoice.ecCountryCode}"/>
+				</apex:pageBlockSectionItem>
+
+				<apex:outputLabel value="" rendered="{!!viewstate.isVat}"/>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.codaAddress}"/>
+					<apex:outputPanel >
+					<apex:outputText id="address" value="{!viewstate.purchaseinvoice.address.fullAddress}"/>
+					&nbsp;
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem rendered="{!viewstate.isVat}">
+					<apex:outputLabel for="vatRegistrationNumber" value="{!$Label.codaVATRegistrationNumber}"/>
+					<apex:outputText id="vatRegistrationNumber" value="{!viewstate.purchaseinvoice.vatRegistrationNumber}"/>
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+
+			<!-- Invoice Header -->
+			<apex:pageBlockSection id="purchaseInvoiceHeaderBlock" title="{!$Label.codaPurchaseInvoice}" collapsible="true" >
+				<apex:outputField value="{!viewstate.purchaseinvoice.dto.Name}"/>
+				<apex:outputText value=" "/>
+
+				<apex:pageBlockSectionItem id="invoiceDateBlock">
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__InvoiceDate__c.label}" for="invoiceDate"/>
+					<apex:outputPanel >
+						<apex:inputField id="invoiceDate" value="{!viewstate.purchaseinvoice.dto.c2g__InvoiceDate__c}"/>
+						<apex:actionFunction name="onChangeInvoiceDate" action="{!updateInvoiceDate}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,warningPagePanel,dueDate,dtLineItemsSUT,dtLineItemsVAT,netTotal,taxTotal,invTotal,dtTaxSummary,suttaxrate1,suttaxrate2,suttaxrate3,headerDimensionBlock,lineItemVATDimensionBlock,lineItemSUTDimensionBlock,period,purchaseInvoiceHeaderBlock,taxValueVAT,taxValueVATReadOnly,dtLineItemsVAT"/>
+						<script>
+							CODA.addToFocusEvent("{!$Component.invoiceDate}");
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.invoiceDate}", "{!$Label.codaPagePurchaseInvoiceEditCalculatingDueDate}", onChangeInvoiceDate, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:inputField value="{!viewstate.purchaseinvoice.dto.c2g__Period__c}" id="period"/>
+
+				<apex:pageBlockSectionItem id="dueDateBlock">
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__DueDate__c.label}" for="dueDate"/>
+					<apex:outputPanel >
+						<apex:inputField id="dueDate" value="{!viewstate.purchaseinvoice.dto.c2g__DueDate__c}"/>
+						<script>
+							CODA.addToFocusEvent("{!$Component.dueDate}");
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="accountInvoiceNumberBlock">
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__AccountInvoiceNumber__c.label}" for="accountInvoiceNumber"/>
+					<apex:outputPanel >
+						<apex:inputField id="accountInvoiceNumber" value="{!viewstate.purchaseinvoice.dto.c2g__AccountInvoiceNumber__c}"/>
+						<script>
+							var elm1 = document.getElementById("{!$Component.accountInvoiceNumber}");
+							CODA.addLoadEvent(function()
+							{
+								if(document.getElementById("datePicker"))
+								{
+									document.getElementById('datePicker').style.display="none";
+									document.getElementById('datePicker').style.visibility="hidden";
+									elm1.focus();
+									elm1.select();
+									setTimeout("document.getElementById('datePicker').style.left='-300px';document.getElementById('datePicker').style.visibility='visible';CODA.hideIE6iframes();",1);
+								}
+							});
+						</script>
+						<apex:actionFunction name="onChangeAccountInvoiceNumber" action="{!validateAccountInvoiceNumber}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,warningPagePanel"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.accountInvoiceNumber}", "", onChangeAccountInvoiceNumber, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="registeredDateBlock">
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__RegisteredDate__c.label}" for="registeredDate"/>
+					<apex:outputPanel >
+						<apex:inputField id="registeredDate" value="{!viewstate.purchaseinvoice.dto.c2g__RegisteredDate__c}"/>
+						<script>
+							CODA.addToFocusEvent("{!$Component.registeredDate}");
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:inputField value="{!viewstate.purchaseinvoice.dto.c2g__Reference1__c}"/>
+
+				<apex:pageBlockSectionItem id="currencyblock">
+					<apex:outputLabel value="{!$Label.codaInvoiceCurrency}" for="selectCur"/>
+					<apex:outputPanel id="currency" layout="block" styleClass="currencyHolder">
+						<DIV id="currencyValueArea" style="display:block;">
+							<apex:outputText id="currencyvalue" value="{!viewstate.purchaseinvoice.Currency}"/>
+							<c:ExchangeRateOverrides id="currencyRates" rateData="{!viewstate.purchaseinvoice.exchangeRateData}" readOnly="false"/>
+						</DIV>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:inputField value="{!viewstate.purchaseinvoice.dto.c2g__Reference2__c}"/>
+
+				<apex:pageBlockSectionItem rendered="{!viewstate.purchaseInvoice.reportable1099}" id="incomeTaxTypeSection">
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__IncomeTaxType__c.label}" for="incomeTaxType"/>
+					<apex:outputPanel >
+						<apex:inputField id="incomeTaxType" value="{!viewstate.purchaseinvoice.dto.c2g__IncomeTaxType__c}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem id="incomeTaxTypeSectionEmpty" rendered="{!!viewstate.purchaseInvoice.reportable1099}"/>
+
+				<apex:pageBlockSectionItem id="accountInvoiceTotalBlock">
+					<apex:outputLabel for="accountInvoiceTotal" value="{!$Label.codaAccountInvoiceTotal}"/>
+					<apex:inputText id="accountInvoiceTotal"  value="{!viewstate.accountInvoiceTotal}" styleClass="alignright"/>
+				</apex:pageBlockSectionItem>
+
+				<apex:outputText value=" "/>
+				<apex:inputField value="{!viewstate.purchaseinvoice.dto.c2g__InvoiceDescription__c}" style="height:60px;width:90%;"/>
+
+			</apex:pageBlockSection>
+			<apex:actionFunction name="onChangeExpenseNetSUT" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsSUT}');" reRender="messagePanel,glaSUT,invTotal,netTotal,newExpenseLineSUT,dtExpenseLineItemsSUT,headerDimensionBlock"/>
+			<apex:actionFunction name="removeExpenseLineItemSUT"  action="{!viewstate.removeExpenseLineItemSUT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtExpenseLineItemsSUT,netTotal,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newExpenseLineSUT">
+				<apex:param name="removeExpenseLineItemSUTIndex" assignTo="{!viewstate.removeExpenseLineItemSUTIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeExpenseNetVat" action="{!viewstate.updateExpenseTaxValueVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.expenseLineItemSection.dtExpenseLineItemsVAT}');" reRender="messagePanel,glaVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newExpenseLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock">
+				<apex:param name="updateExpenseTaxValueVATIndex" assignTo="{!viewstate.updateExpenseTaxValueVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeExpenseTaxCodeVAT" action="{!viewstate.updateExpenseTaxValueByTaxCodeVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.expenseLineItemSection.dtExpenseLineItemsVAT}');" reRender="messagePanel,glaVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newExpenseLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock">
+				<apex:param name="updateExpenseTaxValueByTaxCodeVATIndex" assignTo="{!viewstate.updateExpenseTaxValueByTaxCodeVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeExpenseTaxTotal" action="{!doNothing}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.expenseLineItemSection.dtExpenseLineItemsVAT}');" reRender="messagePanel,glaVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newExpenseLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock"/>
+			<apex:actionFunction name="editExpenseTaxValueItem"  action="{!viewstate.updateExpenseTaxValueFieldVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtExpenseLineItemsVAT,netTotal,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newExpenseLineVAT,taxValueVAT,taxValueVATReadOnly">
+				<apex:param name="updateExpenseTaxValueFieldVATIndex" assignTo="{!viewstate.updateExpenseTaxValueFieldVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="removeExpenseLineItemVAT"  action="{!viewstate.removeExpenseLineItemVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtExpenseLineItemsVAT,netTotal,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newExpenseLineVAT">
+				<apex:param name="removeExpenseLineItemVATIndex" assignTo="{!viewstate.removeExpenseLineItemVATIndex}" value="" />
+			</apex:actionFunction>
+			<!-- Purchase Invoice Expense Line Items -->
+			<apex:pageBlockSection title="{!$Label.codaExpenseLines}" id="expenseLineItemSection" columns="1" collapsible="true" >
+
+				<!-- SUT -->
+				<apex:dataTable id="dtExpenseLineItemsSUT" rendered="{!viewstate.isSalesAndUse}" value="{!viewstate.purchaseInvoice.expenseLineItems}" var="expenseLineItemSUT" rowClasses="odd,even" headerClass="listheader" styleClass="list detailListnoPadding" border="0" onRowMouseOver="if (window.hiOn){hiOn(this);}" onRowMouseOut="if (window.hiOff){hiOff(this);}">
+					<apex:column styleClass="widthlinenumbers">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<apex:outputPanel styleClass="holder">
+							<nobr>
+								<apex:outputField value="{!expenseLineItemSUT.dto.c2g__LineNumber__c}"/>
+								<a href="#" onclick="CODA.toggleExtraArea('{!$Component.extraSUT}','{!$Component.dtExpenseLineItemsSUT}',this,'dtExpenseLineItemsSUT');return false" title="{!$Label.codaToggleNotesAndAnalysisArea}">
+									<apex:image id="expandcollapseSUT" value="/s.gif" width="16" height="16" styleClass="extracollapsed"/>
+								</a>
+							</nobr>
+							<apex:outputPanel layout="block" styleClass="extra" id="extraSUT">
+							<apex:outputPanel layout="block" styleClass="headerdetails">
+								<c:SubAnalysis record="{!expenseLineItemSUT.dto}" title="{!$Label.codaNotesAndAnalysis}" id="expenseLineItemSUTDimensionBlock" readOnly="false"/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthauto">
+						<apex:facet name="header">{!$Label.codaGeneralLedgerAccount}</apex:facet>
+						<apex:outputField id="glaSUT" value="{!expenseLineItemSUT.dto.c2g__GeneralLedgerAccount__c}"/>
+					</apex:column>
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">{!$Label.codaTotalValue}</apex:facet>
+						<apex:inputField id="netValueSUT" value="{!expenseLineItemSUT.dto.c2g__NetValue__c}" styleClass="alignright"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.netValueSUT}", "{!$Label.codaCalculatingLine}",onChangeExpenseNetSUT,true);
+
+							CODA.prettifySalesforceRunTimeError();
+						</script>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<a href="javascript:CODA.addEventToQueueWithParam('removeExpenseLineItem{!expenseLineItemSUT.LineNumber}', removeExpenseLineItemSUT, {!expenseLineItemSUT.sequenceNo}, '{!$Label.codaRemovingLine}', true);">
+							<apex:image value="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/delete.gif')}" width="16" height="16" title="{!$Label.codaRemoveLine}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+				</apex:dataTable>
+
+				<!-- VAT -->
+				<apex:dataTable id="dtExpenseLineItemsVAT" rendered="{!viewstate.isVat}" value="{!viewstate.purchaseInvoice.expenseLineItems}" var="expenseLineItemVAT" rowClasses="odd,even" headerClass="listheader" styleClass="list detailListnoPadding" border="0" onRowMouseOver="if (window.hiOn){hiOn(this);}" onRowMouseOut="if (window.hiOff){hiOff(this);}">
+					<apex:column styleClass="widthlinenumbers">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<apex:outputPanel styleClass="holder">
+							<nobr>
+								<apex:outputField value="{!expenseLineItemVAT.dto.c2g__LineNumber__c}"/>
+								<a href="#" onclick="CODA.toggleExtraArea('{!$Component.extraVAT}','{!$Component.dtExpenseLineItemsVAT}',this,'dtExpenseLineItemsVAT');return false" title="{!$Label.codaToggleNotesAndAnalysisArea}">
+									<apex:image id="expandcollapseVAT" value="/s.gif" width="16" height="16" styleClass="extracollapsed"/>
+								</a>
+							</nobr>
+							<apex:outputPanel layout="block" styleClass="extra" id="extraVAT">
+							<apex:outputPanel layout="block" styleClass="headerdetails">
+								<c:SubAnalysis record="{!expenseLineItemVAT.dto}" title="{!$Label.codaNotesAndAnalysis}" id="expenseLineItemVATDimensionBlock" readOnly="false"/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthauto">
+						<apex:facet name="header">{!$Label.codaGeneralLedgerAccount}</apex:facet>
+						<apex:outputField id="glaVAT" value="{!expenseLineItemVAT.dto.c2g__GeneralLedgerAccount__c}"/>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium">
+						<apex:facet name="header">{!$Label.codaNetValue}</apex:facet>
+						<apex:inputField id="netValueVAT" value="{!expenseLineItemVAT.dto.c2g__NetValue__c}" styleClass="alignright"/>
+						<script>
+							CODA.addQueuedOnBlurEventWithParam(null, "{!$Component.netValueVAT}", "{!$Label.codaCalculatingTaxValue}", onChangeExpenseNetVat, {!expenseLineItemVAT.LineNumber-1},true);
+						</script>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">{!$Label.codaTaxCode}</apex:facet>
+						<apex:inputField id="taxCodeVAT" value="{!expenseLineItemVAT.dto.c2g__InputVATCode__c}"/>
+						<script>
+							CODA.addQueuedOnBlurEventWithParam(null, "{!$Component.taxCodeVAT}", "{!$Label.codaCalculatingTaxValue}", onChangeExpenseTaxCodeVAT, {!expenseLineItemVAT.LineNumber-1},true);
+						</script>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">{!$Label.codaTaxValue}</apex:facet>
+						<apex:inputText id="taxValueVAT" value="{!expenseLineItemVAT.TaxValue1}" rendered="{!expenseLineItemVAT.editTaxValue}" styleClass="widthmedium alignright"/>
+						<apex:outputText id="taxValueVATReadOnly" value="{!expenseLineItemVAT.TaxValue1}" rendered="{!!expenseLineItemVAT.editTaxValue}" styleClass="widthmedium alignright"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.taxValueVAT}", "{!$Label.codaCalculatingTaxTotal}", onChangeExpenseTaxTotal, true);
+						</script>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<a href="javascript:CODA.addEventToQueueWithParam('editExpenseTaxValueItem{!expenseLineItemVAT.LineNumber}', editExpenseTaxValueItem, {!expenseLineItemVAT.LineNumber-1}, '{!$Label.codaEditTaxValue}', true);">
+							<apex:image url="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/CODA2goEditIcon.gif')}" width="16" height="16" title="{!$Label.codaEditTaxValue}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<a href="javascript:CODA.addEventToQueueWithParam('removeExpenseLineItem{!expenseLineItemVAT.LineNumber}', removeExpenseLineItemVAT, {!expenseLineItemVAT.sequenceNo}, '{!$Label.codaRemoveLine}', true);">
+							<apex:image value="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/delete.gif')}" width="16" height="16" title="{!$Label.codaRemovingLine}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+				</apex:dataTable>
+			</apex:pageBlockSection>
+
+			<apex:outputPanel id="addExpenseLine" >
+				<apex:actionFunction name="addExpenseLineItemSUT" action="{!addExpenseLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsSUT}','{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsSUT.glaSUT}')" reRender="messagePanel,glaSUT,glaNameSUT,invTotal,netTotal,newExpenseLineSUT,defaultExpenseLineSUT,dtExpenseLineItemsSUT,headerDimensionBlock,addExpenseLine"/>
+				<apex:actionFunction name="addDefaultExpenseLineItemSUT" action="{!addDefaultExpenseLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsSUT}','{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsSUT.glaSUT}')" reRender="messagePanel,glaSUT,glaNameSUT,invTotal,netTotal,newExpenseLineSUT,defaultExpenseLineSUT,dtExpenseLineItemsSUT,headerDimensionBlock,addExpenseLine"/>
+
+				<apex:actionFunction name="addExpenseLineItemVAT" action="{!addExpenseLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsVAT}','{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsVAT.glaVAT}')" reRender="messagePanel,glaVAT,glaNameVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newExpenseLineVAT,defaultExpenseLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock,dtTaxSummary,addExpenseLine"/>
+				<apex:actionFunction name="addDefaultExpenseLineItemVAT" action="{!addDefaultExpenseLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsVAT}','{!$Component.creditNoteBlock.expenseLineItemSection.dtExpenseLineItemsVAT.glaVAT}')" reRender="messagePanel,glaVAT,glaNameVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newExpenseLineVAT,defaultExpenseLineVAT,dtExpenseLineItemsVAT,headerDimensionBlock,dtTaxSummary,addExpenseLine"/>
+
+				<apex:outputPanel id="glaNamePanelSUT" rendered="{!viewstate.isSalesAndUse}">
+					<apex:inputField id="glaNameSUT" value="{!viewstate.GLA.dto.c2g__GeneralLedgerAccount__c}"/>
+					<apex:message for="glaNameSUT" styleClass="errorMsg"/>
+				</apex:outputPanel>
+				<apex:outputPanel id="newExpenseLineSUT" rendered="{!viewstate.isSalesAndUse}">
+					<input type="button"  class="newlinebutton" onclick="CODA.addEventToQueue('addExpenseLineItemSUT',addExpenseLineItemSUT,'{!$Label.codaAddingLine}',true); this.disabled=true;"  value="{!$Label.codaNewLine}"/>
+				</apex:outputPanel>
+				<apex:outputPanel id="defaultExpenseLineSUT" rendered="{!viewstate.isSalesAndUse}">
+					<input type="button"  class="newlinebutton" onclick="CODA.addEventToQueue('addDefaultExpenseLineItemSUT',addDefaultExpenseLineItemSUT,'{!$Label.codaAddingDefaultLine}',true); this.disabled=true;"  value="{!$Label.codaDefaultLine}"/>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="glaNamePanelVAT" rendered="{!viewstate.isVAT}">
+					<apex:inputField id="glaNameVAT" value="{!viewstate.GLA.dto.c2g__GeneralLedgerAccount__c}"/>
+					<apex:message for="glaNameVAT" styleClass="errorMsg"/>
+				</apex:outputPanel>
+				<apex:outputPanel id="newExpenseLineVAT" rendered="{!viewstate.isVAT}">
+					<input type="button"  class="newlinebutton" onclick="CODA.addEventToQueue('addExpenseLineItemVAT',addExpenseLineItemVAT,'{!$Label.codaAddingLine}',true); this.disabled=true;"  value="{!$Label.codaNewLine}"/>
+				</apex:outputPanel>
+				<apex:outputPanel id="defaultExpenseLineVAT" rendered="{!viewstate.isVAT}">
+					<input type="button"  class="newlinebutton" onclick="CODA.addEventToQueue('addDefaultExpenseLineItemVAT',addDefaultExpenseLineItemVAT,'{!$Label.codaAddingDefaultLine}',true); this.disabled=true;"  value="{!$Label.codaDefaultLine}"/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<div class="clearboth"></div>
+			<apex:actionFunction name="onProductChangeLineSUT" action="{!viewstate.updateProductTaxValueSUT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.lineItemSection.dtLineItemsSUT}');" reRender="messagePanel,productSUT,invTotal,netTotal,accountPanel,currency,unitPriceSUTPanel,newLineSUT,dtLineItemsSUT,headerDimensionBlock">
+				<apex:param name="updateProductTaxValueSUTIndex" assignTo="{!viewstate.updateProductTaxValueSUTIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="removeProductLineItemSUT"  action="{!viewstate.removeLineItemSUT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtLineItemsSUT,netTotal,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newLineSUT">
+				<apex:param name="removeLineItemSUTIndex" assignTo="{!viewstate.removeLineItemSUTIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeProductLineVAT" action="{!viewstate.updateProductTaxValueVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.lineItemSection.dtLineItemsVAT}');" reRender="messagePanel,glaVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newLineVAT,dtLineItemsVAT,headerDimensionBlock">
+				<apex:param name="updateProductTaxValueVATIndex" assignTo="{!viewstate.updateProductTaxValueVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeProductTaxCodeVAT" action="{!viewstate.updateProductTaxValueByTaxCodeVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.lineItemSection.dtLineItemsVAT}');" reRender="messagePanel,taxCodePanelVAT,taxPanelValueVAT,taxTotal,invTotal,dtTaxSummary,headerDimensionBlock,lineItemVATDimensionBlock">
+				<apex:param name="updateProductTaxValueByTaxCodeVATIndex" assignTo="{!viewstate.updateProductTaxValueByTaxCodeVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="onChangeProductTaxTotal" action="{!doNothing}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocusOnLookUp('{!$Component.invoiceBlock.lineItemSection.dtLineItemsVAT}');" reRender="messagePanel,glaVAT,taxValueVATReadOnly,taxTotal,invTotal,netTotal,dtTaxSummary,accountPanel,currency,unitPriceVATPanel,newLineVAT,dtLineItemsVAT,headerDimensionBlock,taxPanelValueVAT,taxValueVAT"/>
+			<apex:actionFunction name="editProductTaxValueItemVAT"  action="{!viewstate.updateTaxValueFieldVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtlineItemsVAT,netTotal,taxPanelValueVAT,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newlineVAT,taxValueVAT,taxValueVATReadOnly">
+				<apex:param name="updateTaxValueFieldVATIndex" assignTo="{!viewstate.updateTaxValueFieldVATIndex}" value="" />
+			</apex:actionFunction>
+			<apex:actionFunction name="removeProductLineItemVAT"  action="{!viewstate.removeLineItemVAT}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');" reRender="messagePanel,dtLineItemsVAT,netTotal,taxTotal,invTotal,dtTaxSummary,currency,accountPanel,newLineVAT">
+				<apex:param name="removeLineItemVATIndex" assignTo="{!viewstate.removeLineItemVATIndex}" value="" />
+			</apex:actionFunction>
+			<!-- Purchase Invoice Line Items -->
+			<apex:pageBlockSection title="{!$Label.codaProductLines}" id="lineItemSection" columns="1" collapsible="true" >
+				<!-- SUT -->
+				<apex:dataTable id="dtLineItemsSUT" rendered="{!viewstate.isSalesAndUse}" value="{!viewstate.purchaseinvoice.lineItems}" var="lineItemSUT" rowClasses="odd,even" headerClass="listheader" styleClass="list detailListnoPadding" border="0" onRowMouseOver="if (window.hiOn){hiOn(this);}" onRowMouseOut="if (window.hiOff){hiOff(this);}">
+					<apex:column styleClass="widthlinenumbers">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<apex:outputPanel styleClass="holder">
+							<nobr><apex:outputField value="{!lineItemSUT.dto.c2g__LineNumber__c}"/><a href="#" onclick="CODA.toggleExtraArea('{!$Component.extraSUT}','{!$Component.dtLineItemsSUT}',this,'dtLineItemsSUT');return false" title="{!$Label.codaToggleNotesAndAnalysisArea}">
+								<apex:image id="expandcollapseSUT" value="/s.gif" width="16" height="16" styleClass="extracollapsed"/></a></nobr>
+							<apex:outputPanel layout="block" styleClass="extra" id="extraSUT">
+							<apex:outputPanel layout="block" styleClass="headerdetails" id="lineItemSUTDimensionBlock">
+								<c:SubAnalysis record="{!lineItemSUT.dto}" title="{!$Label.codaNotesAndAnalysis}" id="subAnalSUTDimensionBlock" readOnly="false"/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthauto">
+						<apex:facet name="header">{!$Label.codaProductName}</apex:facet>
+						<apex:outputField id="productSUT" value="{!lineItemSUT.dto.c2g__Product__c}"/>
+					</apex:column>
+
+					<apex:column styleClass="widthsmall">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__Quantity__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:inputText id="quantitySUT" disabled="{!!lineItemSUT.isProductSet}" value="{!lineItemSUT.Quantity}" required="false" styleClass="alignright"/>
+						<script>
+							CODA.addQueuedOnBlurEventWithParam("onChangeLine{!lineItemSUT.LineNumber}", "{!$Component.quantitySUT}", "{!$Label.codaCalculatingLine}",onProductChangeLineSUT, {!lineItemSUT.LineNumber-1});
+
+							CODA.prettifySalesforceRunTimeError();
+						</script>
+						<apex:message for="quantitySUT" styleClass="errorMsg"/>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__UnitPrice__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:outputPanel id="unitPriceSUTPanel">
+							<apex:inputText id="unitPriceSUT" disabled="{!!lineItemSUT.isProductSet}" value="{!lineItemSUT.UnitPrice}" required="false" styleClass="alignright"/>
+							<script>
+								CODA.addQueuedOnBlurEventWithParam("onChangeLine{!lineItemSUT.LineNumber}", "{!$Component.unitPriceSUT}", "{!$Label.codaCalculatingLine}", onProductChangeLineSUT, {!lineItemSUT.LineNumber-1});
+
+								CODA.prettifySalesforceRunTimeError();
+							</script>
+							<apex:message for="unitPriceSUT" styleClass="errorMsg"/>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$Label.codaTotalValue}</apex:outputPanel>
+						</apex:facet>
+						<apex:outputText id="netValueSUT" value="{!lineItemSUT.NetValue}"/>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<a href="javascript:CODA.addEventToQueueWithParam('removeLineItem{!lineItemSUT.LineNumber}', removeProductLineItemSUT, {!lineItemSUT.sequenceNo}, '{!$Label.codaRemovingLine}', true);">
+							<apex:image value="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/delete.gif')}" width="16" height="16" title="{!$Label.codaRemoveLine}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+				</apex:dataTable>
+
+				<!-- VAT -->
+				<apex:dataTable id="dtLineItemsVAT" rendered="{!viewstate.isVat}" value="{!viewstate.purchaseinvoice.lineItems}" var="lineItemVAT" rowClasses="odd,even" headerClass="listheader" styleClass="list detailListnoPadding" border="0" onRowMouseOver="if (window.hiOn){hiOn(this);}" onRowMouseOut="if (window.hiOff){hiOff(this);}">
+					<apex:column styleClass="widthlinenumbers">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<apex:outputPanel styleClass="holder">
+							<nobr><apex:outputField value="{!lineItemVAT.dto.c2g__LineNumber__c}"/><a href="#" onclick="CODA.toggleExtraArea('{!$Component.extraVAT}','{!$Component.dtLineItemsVAT}',this,'dtLineItemsVAT');return false" title="{!$Label.codaToggleNotesAndAnalysisArea}">
+								<apex:image id="expandcollapseVAT" value="/s.gif" width="16" height="16" styleClass="extracollapsed"/></a></nobr>
+							<apex:outputPanel layout="block" styleClass="extra" id="extraVAT">
+							<apex:outputPanel layout="block" styleClass="headerdetails" id="lineItemVATDimensionBlock">
+								<c:SubAnalysis record="{!lineItemVAT.dto}" title="{!$Label.codaNotesAndAnalysis}" id="subAnalVATDimensionBlock" readOnly="false"/>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthauto">
+						<apex:facet name="header">{!$Label.codaProductName}</apex:facet>
+						<apex:outputField id="glaVAT" value="{!lineItemVAT.dto.c2g__Product__c}"/>
+					</apex:column>
+
+					<apex:column styleClass="widthsmall">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__Quantity__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:inputText id="quantityVAT" disabled="{!!lineItemVAT.isProductSet}" value="{!lineItemVAT.Quantity}" required="false" styleClass="alignright"/>
+						<script>
+							CODA.addQueuedOnBlurEventWithParam("onChangeLine{!lineItemVAT.LineNumber}", "{!$Component.quantityVAT}", "{!$Label.codaCalculatingLine}", onChangeProductLineVAT, {!lineItemVAT.LineNumber-1});
+
+							CODA.prettifySalesforceRunTimeError();
+						</script>
+						<apex:message for="quantityVAT" styleClass="errorMsg"/>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__UnitPrice__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:outputPanel id="unitPriceVATPanel">
+							<apex:inputText id="unitPriceVAT" disabled="{!!lineItemVAT.isProductSet}" value="{!lineItemVAT.UnitPrice}" required="false" styleClass="alignright"/>
+							<script>
+								CODA.addQueuedOnBlurEventWithParam("onChangeLine{!lineItemVAT.LineNumber}", "{!$Component.unitPriceVAT}", "{!$Label.codaCalculatingLine}", onChangeProductLineVAT, {!lineItemVAT.LineNumber-1});
+
+								CODA.prettifySalesforceRunTimeError();
+							</script>
+							<apex:message for="unitPriceVAT" styleClass="errorMsg"/>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium">
+						<apex:facet name="header">{!$Label.codaTaxCode}</apex:facet>
+						<apex:outputPanel id="taxCodePanelVAT">
+							<apex:inputField id="taxCodeVAT" rendered="{!lineItemVAT.isProductSet}" value="{!lineItemVAT.dto.c2g__InputVATCode__c}"/>
+							<!-- The below input text is dummy for taxcode1. It is rendered when there is no product set on line. It is always disable. -->
+							<apex:inputText rendered="{!!lineItemVAT.isProductSet}" disabled="true"/>
+							<script>
+								CODA.addQueuedOnBlurEventWithParam(null, "{!$Component.taxCodeVAT}", "{!$Label.codaCalculatingTax}", onChangeProductTaxCodeVAT, {!lineItemVAT.LineNumber-1});
+							</script>
+						</apex:outputPanel>
+					</apex:column>
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__TaxValue1__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:outputPanel id="taxPanelValueVAT">
+							<apex:inputText id="taxValueVAT" value="{!lineItemVAT.TaxValue1}" styleClass="widthmedium alignright" rendered="{!lineItemVAT.EditTaxValue}"/>
+							<apex:outputText id="taxValueVATReadOnly" value="{!lineItemVAT.TaxValue1}" styleClass="widthmedium alignright" rendered="{!!lineItemVAT.EditTaxValue}"/>
+		                    <script>
+    			            	CODA.addQueuedOnBlurEventWithParam(null, "{!$Component.taxValueVAT}", "{!$Label.codaCalculatingTaxTotal}", onChangeProductTaxTotal, true);
+							</script>
+							<apex:message for="taxValueVAT" styleClass="errorMsg"/>
+						</apex:outputPanel>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						
+						<a href="javascript:CODA.addEventToQueueWithParam('editTaxValueItem{!lineItemVAT.LineNumber}', editProductTaxValueItemVAT, {!lineItemVAT.LineNumber-1}, '{!$Label.codaEditTaxValue}', true);">
+							<apex:image url="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/CODA2goEditIcon.gif')}" width="16" height="16" title="{!$Label.codaEditTaxValue}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+
+					<apex:column styleClass="widthmedium alignright">
+						<apex:facet name="header">
+							<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__NetValue__c.label}</apex:outputPanel>
+						</apex:facet>
+						<apex:outputText id="netValueVAT" value="{!lineItemVAT.NetValue}"/>
+					</apex:column>
+
+					<apex:column styleClass="widthicon alignright">
+						<apex:facet name="header">&nbsp;</apex:facet>
+						<a href="javascript:CODA.addEventToQueueWithParam('removeLineItem{!lineItemVAT.LineNumber}', removeProductLineItemVAT, {!lineItemVAT.sequenceNo}, '{!$Label.codaRemovingLine}', true);">
+							<apex:image value="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/delete.gif')}" width="16" height="16" title="{!$Label.codaRemoveLine}" styleClass="absMiddle"/>
+						</a>
+					</apex:column>
+				</apex:dataTable>
+			</apex:pageBlockSection>
+
+			<apex:outputPanel id="addProductLine" >
+				<apex:actionFunction name="addLineItemSUT" action="{!addLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.invoiceBlock.lineItemSection.dtLineItemsSUT}','{!$Component.invoiceBlock.lineItemSection.dtLineItemsSUT.productSUT}'); CODA.prettifySalesforceRunTimeError();" reRender="messagePanel,currency,purchaseInvoiceHeaderBlock,period,dtLineItemsSUT,accountPanel,newLineSUT,productNameVAT,headerDimensionBlock,addProductLine"/>
+				<apex:actionFunction name="addLineItemVAT" action="{!addLineItem}" oncomplete="CODA.resumeQueueProcessing();CODA.setExpanderIconState('edit');CODA.setFocus('{!$Component.invoiceBlock.lineItemSection.dtLineItemsVAT}','{!$Component.invoiceBlock.lineItemSection.dtLineItemsVAT.productVAT}'); CODA.prettifySalesforceRunTimeError();" reRender="messagePanel,currency,purchaseInvoiceHeaderBlock,period,dtLineItemsVAT,accountPanel,newLineVAT,productNameVAT,headerDimensionBlock,addProductLine"/>
+
+				<apex:outputPanel id="productNamePanelSUT" rendered="{!viewstate.isSalesAndUse}">
+					<apex:inputField id="productNameSUT" value="{!viewstate.Product.dto.c2g__Product__c}"/>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="newLineSUT" rendered="{!viewstate.isSalesAndUse}">
+					<input type="button"  class="newlinebutton" onclick="if({!viewstate.showNewLineButton} == false) return false; CODA.addEventToQueue('addLineItemSUT',addLineItemSUT,'{!$Label.codaAddingLine}',true); this.disabled=true;"  value="{!$Label.codaNewLine}"/>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="productNamePanelVAT" rendered="{!viewstate.isVat}">
+					<apex:inputField id="productNameVAT" value="{!viewstate.Product.dto.c2g__Product__c}"/>
+				</apex:outputPanel>
+
+				<apex:outputPanel id="newLineVAT" rendered="{!viewstate.isVat}">
+					<input type="button"  class="newlinebutton" onclick="if({!viewstate.showNewLineButton} == false) return false; CODA.addEventToQueue('addLineItemVAT',addLineItemVAT,'{!$Label.codaAddingLine}',true); this.disabled=true;"  value="{!$Label.codaNewLine}"/>
+				</apex:outputPanel>
+			</apex:outputPanel>
+			<div class="clearboth"></div>
+
+			<!-- Summary -->
+			<apex:pageBlockSection title="{!$Label.codaSummary}" columns="2" collapsible="false" >
+				<!-- Tax Summary -->
+				<apex:outputPanel layout="block" styleClass="taxsummaryarea">
+				<apex:pageBlockSection title="{!$Label.codaTaxSummary}" columns="1" collapsible="false" rendered="{!viewstate.isVAT}">
+					<apex:dataTable id="dtTaxSummary" value="{!viewstate.purchaseinvoice.taxSummaryItems}" var="taxSummary" rowClasses="odd,even" headerClass="listheader" styleClass="list detailListnoPadding" border="0" onRowMouseOver="if (window.hiOn){hiOn(this);}" onRowMouseOut="if (window.hiOff){hiOff(this);}">
+						<apex:column >
+							<apex:facet name="header">
+								<apex:outputPanel layout="block">{!viewstate.purchaseinvoice.TaxSummaryTaxCodeHeading}</apex:outputPanel>
+							</apex:facet>
+							<apex:outputText value="{!taxSummary.TaxCode}"/>
+						</apex:column>
+
+						<!-- Below column rendered depending on Tax Method - Sales and Use Tax -->
+						<apex:column styleClass="widthmed alignright" headerclass="alignright" rendered="{!viewstate.isVat}">
+						<apex:facet name="header">
+								<apex:outputPanel layout="block">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__TaxRate1__c.label}</apex:outputPanel>
+							</apex:facet>
+							<apex:outputText value="{!taxSummary.TaxRate}"/>
+						</apex:column>
+
+						<apex:column styleClass="alignright" rendered="{!viewstate.isVat}">
+							<apex:facet name="header">
+								<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__NetValue__c.label}</apex:outputPanel>
+							</apex:facet>
+							<apex:outputText value="{!taxSummary.NetValue}"/>
+						</apex:column>
+						<apex:column styleClass="alignright">
+							<apex:facet name="header">
+								<apex:outputPanel layout="block" styleClass="alignright">{!$ObjectType.c2g__codaPurchaseInvoiceLineItem__c.fields.c2g__TaxValue1__c.label}</apex:outputPanel>
+							</apex:facet>
+							<apex:outputText value="{!taxSummary.TaxValue}"/>
+						</apex:column>
+					</apex:dataTable>
+				</apex:pageBlockSection>
+				</apex:outputPanel>
+				<apex:panelGrid columns="4" border="0" width="100%" styleClass="detailList detailListnoPadding" columnClasses="labelCol widthauto,labelCol widthmedium,dataCol alignright widthmedium,labelCol widthspacer">
+					<apex:outputLabel value=" " rendered="{!viewstate.isVAT}"/>
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__NetTotal__c.label}" rendered="{!viewstate.isVAT}"/>
+					<apex:outputText id="netTotal" value="{!viewstate.purchaseinvoice.NetTotal}" rendered="{!viewstate.isVAT}"/>
+					<apex:outputLabel value=" " rendered="{!viewstate.isVAT}"/>
+
+					<apex:outputLabel value=" " rendered="{!viewstate.isVAT}"/>
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__TaxTotal__c.label}" rendered="{!viewstate.isVAT}"/>
+					<apex:outputText id="taxTotal" value="{!viewstate.purchaseinvoice.TaxTotal}" rendered="{!viewstate.isVAT}"/>
+					<apex:outputLabel value=" " rendered="{!viewstate.isVAT}"/>
+
+					<apex:outputLabel value=" "/>
+					<apex:outputLabel value="{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__InvoiceTotal__c.label}"/>
+					<apex:outputText id="invTotal" value="{!viewstate.purchaseinvoice.InvoiceTotal}"/>
+					<apex:outputLabel value=" "/>
+				</apex:panelGrid>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+		<script>
+			CODA.setExpanderIconState('edit');
+		</script>
+	</apex:form>
+</apex:page>

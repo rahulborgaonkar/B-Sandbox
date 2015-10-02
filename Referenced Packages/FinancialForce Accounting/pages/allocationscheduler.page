@@ -1,0 +1,250 @@
+<apex:page showHeader="true" controller="c2g.AllocationScheduleController" sidebar="false">
+
+	<!-- Use Static Resource -->
+	<c:ffa_extBootstrap applicationName="AllocationScheduler" staticResource="{!$Resource.c2g__AllocationScheduler}" developmentPrefix="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}" frameworkPath="../../ext">
+
+		<script type="text/javascript">
+
+			window['$RemoteAction'] = window['$RemoteAction'] || {};
+			window['$Params'] = window['$Params'] || {};
+			window['$Label'] = window['$Label'] || {};
+
+			/** Remote Actions **/
+			$RemoteAction.AllocationScheduleController = $RemoteAction.AllocationScheduleController || {};
+			$RemoteAction.AllocationScheduleController.deleteAllocationSchedule = '{!$RemoteAction.AllocationScheduleController.deleteAllocationSchedule}';
+			$RemoteAction.AllocationScheduleController.getAllAllocationSchedules = '{!$RemoteAction.AllocationScheduleController.getAllAllocationSchedules}';
+			$RemoteAction.AllocationScheduleController.getAllTemplates = '{!$RemoteAction.AllocationScheduleController.getAllTemplates}';
+			$RemoteAction.AllocationScheduleController.runNow = '{!$RemoteAction.AllocationScheduleController.runNow}';
+			$RemoteAction.AllocationScheduleController.save = '{!$RemoteAction.AllocationScheduleController.save}';
+
+			/** General Labels **/
+			$Label.AllocationScheduleExpiresDate = '{!JSENCODE($Label.AllocationScheduleExpiresDate)}';
+			$Label.AllocationScheduleFirstAvailableTransactionSummaryDetailDisplay = '{!JSENCODE($Label.AllocationScheduleFirstAvailableTransactionSummaryDetailDisplay)}';
+			$Label.AllocationScheduleFirstAvailTrans = '{!JSENCODE($Label.AllocationScheduleFirstAvailTrans)}';
+			$Label.AllocationScheduleOccurrence = '{!JSENCODE($Label.AllocationScheduleOccurrence)}';
+			$Label.AllocationScheduleOccurrences = '{!JSENCODE($Label.AllocationScheduleOccurrences)}';
+			$Label.AllocationSchedulerActiveLabel = '{!JSENCODE($Label.AllocationSchedulerActiveLabel)}';
+			$Label.AllocationSchedulerDaysOffset = '{!JSENCODE($Label.AllocationSchedulerDaysOffset)}';
+			$Label.AllocationSchedulerDeleteScheduleTooltipLabel = '{!JSENCODE($Label.AllocationSchedulerDeleteScheduleTooltipLabel)}';
+			$Label.AllocationSchedulerDescriptionLabel = '{!JSENCODE($Label.AllocationSchedulerDescriptionLabel)}';
+			$Label.AllocationScheduleRibbonToolbarScheduleName = '{!JSENCODE($Label.AllocationScheduleRibbonToolbarScheduleName)}';
+			$Label.AllocationSchedulerLogsLinkLabel = '{!JSENCODE($Label.AllocationSchedulerLogsLinkLabel)}';
+			$Label.AllocationSchedulerPeriodHeader = '{!JSENCODE($Label.AllocationSchedulerPeriodHeader)}';
+			$Label.AllocationSchedulerPeriodOffset = '{!JSENCODE($Label.AllocationSchedulerPeriodOffset)}';
+			$Label.AllocationSchedulerPeriodRunDate = '{!JSENCODE($Label.AllocationSchedulerPeriodRunDate)}';
+			$Label.AllocationSchedulerPeriodTransactionDate = '{!JSENCODE($Label.AllocationSchedulerPeriodTransactionDate)}';
+			$Label.AllocationSchedulerRunDetailsSpecificDate = '{!JSENCODE($Label.AllocationSchedulerRunDetailsSpecificDate)}';
+			$Label.AllocationSchedulerSetScheduleFrequency = '{!JSENCODE($Label.AllocationSchedulerSetScheduleFrequency)}';
+			$Label.AllocationSchedulerSetPostingDetails = '{!JSENCODE($Label.AllocationSchedulerSetPostingDetails)}';
+			$Label.AllocationSchedulerRetrieveTransactions = '{!JSENCODE($Label.AllocationSchedulerRetrieveTransactions)}';
+			$Label.AllocationSchedulerSelectTemplates = '{!JSENCODE($Label.AllocationSchedulerSelectTemplates)}';
+			$Label.AllocationSchedulerPostingDate = '{!JSENCODE($Label.AllocationSchedulerPostingDate)}';
+			$Label.AllocationSchedulerTransactionDateOffset = '{!JSENCODE($Label.AllocationSchedulerTransactionDateOffset)}';
+			$Label.AllocationScheduleRunDetailsDailyDescription = '{!JSENCODE($Label.AllocationScheduleRunDetailsDailyDescription)}';
+			$Label.AllocationScheduleRunDetailsDateDescription = '{!JSENCODE($Label.AllocationScheduleRunDetailsDateDescription)}';
+			$Label.AllocationScheduleRunDetailsHourly = '{!JSENCODE($Label.AllocationScheduleRunDetailsHourly)}';
+			$Label.AllocationScheduleRunDetailsMonthlyRadioByDay = '{!JSENCODE($Label.AllocationScheduleRunDetailsMonthlyRadioByDay)}';
+			$Label.AllocationScheduleRunDetailsMonthlyRadioByWeekDay = '{!JSENCODE($Label.AllocationScheduleRunDetailsMonthlyRadioByWeekDay)}';
+			$Label.AllocationScheduleRunDetailsMonthlyScheduleRepeat = '{!JSENCODE($Label.AllocationScheduleRunDetailsMonthlyScheduleRepeat)}';
+			$Label.AllocationScheduleRunDetailsRepeatInterval = '{!JSENCODE($Label.AllocationScheduleRunDetailsRepeatInterval)}';
+			$Label.AllocationScheduleRunDetailsStartOffset = '{!JSENCODE($Label.AllocationScheduleRunDetailsStartOffset)}';
+			$Label.AllocationScheduleRunDetailsStartTime = '{!JSENCODE($Label.AllocationScheduleRunDetailsStartTime)}';
+			$Label.AllocationScheduleRunDetailsWeeklyScheduleRepeat = '{!JSENCODE($Label.AllocationScheduleRunDetailsWeeklyScheduleRepeat)}';
+			$Label.AllocationScheduleScheduleExpires = '{!JSENCODE($ObjectType.AllocationSchedule__c.fields.ScheduleExpiresOption__c.label)}';
+			$Label.AllocationScheduleStaticDateDescription = '{!JSENCODE($Label.AllocationScheduleStaticDateDescription)}';
+			$Label.AllocationScheduleToggleFullscreen = '{!JSENCODE($Label.AllocationScheduleToggleFullscreen)}';
+			$Label.AllocationScheduleTransactionPeriodContinuousDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodContinuousDate)}';
+			$Label.AllocationScheduleTransactionPeriodDateRangeType = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodDateRangeType)}';
+			$Label.AllocationScheduleTransactionPeriodDefaultCardSentence = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodDefaultCardSentence)}';
+			$Label.AllocationScheduleTransactionPeriodFromRadioCalculatedDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodFromRadioCalculatedDate)}';
+			$Label.AllocationScheduleTransactionPeriodFromRadioSpecificDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodFromRadioSpecificDate)}';
+			$Label.AllocationScheduleTransactionPeriodNoRunDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodNoRunDate)}';
+			$Label.AllocationScheduleTransactionPeriodOffSetDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodOffSetDate)}';
+			$Label.AllocationScheduleTransactionPeriodToRadioCalculatedDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodToRadioCalculatedDate)}';
+			$Label.AllocationScheduleTransactionPeriodToRadioContinuousDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodToRadioContinuousDate)}';
+			$Label.AllocationScheduleTransactionPeriodToRadioOffSetDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodToRadioOffSetDate)}';
+			$Label.AllocationScheduleTransactionPeriodToRadioSpecificDate = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodToRadioSpecificDate)}';
+			$Label.CronSpecHourMessageLabel = '{!JSENCODE($Label.CronSpecHourMessageLabel)}';
+			$Label.CronSpecHoursMessageLabel = '{!JSENCODE($Label.CronSpecHoursMessageLabel)}';
+			$Label.Daily = '{!JSENCODE($Label.Daily)}';
+			$Label.Fri = '{!JSENCODE($Label.Fri)}';
+			$Label.Hourly = '{!JSENCODE($Label.hourly)}';
+			$Label.Mon = '{!JSENCODE($Label.Mon)}';
+			$Label.Monthly = '{!JSENCODE($Label.Monthly)}';
+			$Label.Sat = '{!JSENCODE($Label.Sat)}';
+			$Label.Sun = '{!JSENCODE($Label.Sun)}';
+			$Label.Thu = '{!JSENCODE($Label.Thu)}';
+			$Label.Tue = '{!JSENCODE($Label.Tue)}';
+			$Label.Wed = '{!JSENCODE($Label.Wed)}';
+			$Label.Weekly = '{!JSENCODE($Label.Weekly)}';
+
+			/** Title Labels **/
+			$Label.AllocationScheduleDeleteScheduleTitle = '{!JSENCODE($Label.AllocationScheduleDeleteScheduleTitle)}';
+			$Label.AllocationScheduleDynamicDateDescription = '{!JSENCODE($Label.AllocationScheduleDynamicDateDescription)}';
+			$Label.AllocationSchedulerAllocationScheduleColumnTitle = '{!JSENCODE($Label.AllocationSchedulerAllocationScheduleColumnTitle)}';
+			$Label.AllocationSchedulerCreatedByColumnTitle = '{!JSENCODE($Label.AllocationSchedulerCreatedByColumnTitle)}';
+			$Label.AllocationSchedulerCreatedDateColumnTitle = '{!JSENCODE($Label.AllocationSchedulerCreatedDateColumnTitle)}';
+			$Label.AllocationSchedulerIdColumnTitle = '{!JSENCODE($Label.AllocationSchedulerIdColumnTitle)}';
+			$Label.AllocationSchedulerInfoSelectMonthTitle = '{!JSENCODE($Label.AllocationSchedulerInfoSelectMonthTitle)}';
+			$Label.AllocationSchedulerInfoSelectPeriodTitle = '{!JSENCODE($Label.AllocationSchedulerInfoSelectPeriodTitle)}';
+			$Label.AllocationSchedulerInfoSelectTemplateTitle = '{!JSENCODE($Label.AllocationSchedulerInfoSelectTemplateTitle)}';
+			$Label.AllocationSchedulerLastRunColumnTitle = '{!JSENCODE($Label.AllocationSchedulerLastRunColumnTitle)}';
+			$Label.AllocationSchedulerListGridTitle = '{!JSENCODE($Label.AllocationSchedulerListGridTitle)}';
+			$Label.AllocationSchedulerListViewTitle = '{!JSENCODE($Label.AllocationSchedulerListViewTitle)}';
+			$Label.AllocationSchedulerLogsColumnTitle = '{!JSENCODE($Label.AllocationSchedulerLogsColumnTitle)}';
+			$Label.AllocationSchedulerNextRunColumnTitle = '{!JSENCODE($Label.AllocationSchedulerNextRunColumnTitle)}';
+			$Label.AllocationSchedulerSequenceColumnLabel = '{!JSENCODE($Label.AllocationSchedulerSequenceColumnLabel)}';
+			$Label.AllocationSchedulerSortColumnLabel = '{!JSENCODE($Label.AllocationSchedulerSortColumnLabel)}';
+			$Label.AllocationSchedulerTemplateColumnLabel = '{!JSENCODE($Label.AllocationSchedulerTemplateColumnLabel)}';
+			$Label.AllocationSchedulerTitle = '{!JSENCODE($Label.AllocationSchedulerTitle)}';
+			$Label.AllocationSchedulerUnsavedChangesWarningTitle = '{!JSENCODE($Label.AllocationSchedulerUnsavedChangesWarningTitle)}';
+			$Label.AllocationScheduleScheduleRunsTitle = '{!JSENCODE($Label.AllocationScheduleScheduleRunsTitle)}';
+			$Label.AllocationScheduleTransactionPeriodFromTitle = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodFromTitle)}';
+			$Label.AllocationScheduleTransactionPeriodNoPreviousToDateTitle = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodNoPreviousToDateTitle)}';
+			$Label.AllocationScheduleTransactionPeriodToTitle = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodToTitle)}';
+			$Label.AllocationScheduleTransactionsDynamicDateLabel = '{!JSENCODE($Label.AllocationScheduleTransactionsDynamicDateLabel)}';
+			$Label.AllocationScheduleWarningLabel = '{!JSENCODE($Label.AllocationScheduleWarningLabel)}';
+			$Label.AllocationScheduleWarningsLabel = '{!JSENCODE($Label.AllocationScheduleWarningsLabel)}';
+			$Label.Error = '{!JSENCODE($Label.Error)}';
+			$Label.Success = '{!JSENCODE($Label.Success)}';
+
+			/** Button Labels **/
+			$Label.AllocationSchedulerButtonReturnToList = '{!JSENCODE($Label.AllocationSchedulerButtonReturnToList)}';
+			$Label.AllocationSchedulerClose = '{!JSENCODE($Label.AllocationSchedulerClose)}';
+			$Label.AllocationSchedulerCreateScheduleButtonLabel = '{!JSENCODE($Label.AllocationSchedulerCreateScheduleButtonLabel)}';
+			$Label.AllocationScheduleRibbonToolbarBack = '{!JSENCODE($Label.AllocationScheduleRibbonToolbarBack)}';
+			$Label.AllocationScheduleRibbonToolbarRunNow = '{!JSENCODE($Label.AllocationScheduleRibbonToolbarRunNow)}';
+			$Label.AllocationScheduleRibbonToolbarSave = '{!JSENCODE($Label.AllocationScheduleRibbonToolbarSave)}';
+			$Label.AllocationSchedulerRefreshButtonLabel = '{!JSENCODE($Label.AllocationSchedulerRefreshButtonLabel)}';
+			$Label.AllocationSchedulerRemoveTemplateButtonTooltip = '{!JSENCODE($Label.AllocationSchedulerRemoveTemplateButtonTooltip)}';
+			$Label.Cancel = '{!JSENCODE($Label.Cancel)}';
+
+			/** Message Labels **/
+			$Label.AllocationScheduleDeleteScheduleDialog = '{!JSENCODE($Label.AllocationScheduleDeleteScheduleDialog)}';
+			$Label.AllocationSchedulerAllocationDescriptionEmptyText = '{!JSENCODE($Label.AllocationSchedulerAllocationDescriptionEmptyText)}';
+			$Label.AllocationSchedulerDatefieldInvalidText = '{!JSENCODE($Label.AllocationSchedulerDatefieldInvalidText)}';
+			$Label.AllocationSchedulerInfoCurrentMonthDescription = '{!JSENCODE($Label.AllocationSchedulerInfoCurrentMonthDescription)}';
+			$Label.AllocationSchedulerInfoCurrentPeriodDescription = '{!JSENCODE($Label.AllocationSchedulerInfoCurrentPeriodDescription)}';
+			$Label.AllocationSchedulerInfoLast3MonthsDescription = '{!JSENCODE($Label.AllocationSchedulerInfoLast3MonthsDescription)}';
+			$Label.AllocationSchedulerInfoLast3PeriodsDescription = '{!JSENCODE($Label.AllocationSchedulerInfoLast3PeriodsDescription)}';
+			$Label.AllocationSchedulerInfoLastMonthDescription = '{!JSENCODE($Label.AllocationSchedulerInfoLastMonthDescription)}';
+			$Label.AllocationSchedulerInfoLastPeriodDescription = '{!JSENCODE($Label.AllocationSchedulerInfoLastPeriodDescription)}';
+			$Label.AllocationSchedulerInfoSelectTemplateMessage = '{!JSENCODE($Label.AllocationSchedulerInfoSelectTemplateMessage)}';
+			$Label.AllocationSchedulerInfoSpecialPeriodsDescription = '{!JSENCODE($Label.AllocationSchedulerInfoSpecialPeriodsDescription)}';
+			$Label.AllocationSchedulerSelectTemplateEmptyText = '{!JSENCODE($Label.AllocationSchedulerSelectTemplateEmptyText)}';
+			$Label.AllocationScheduleRunNowCantBeInactive = '{!JSENCODE($Label.AllocationScheduleRunNowCantBeInactive)}';
+			$Label.AllocationSchedulerUnsavedChangesWarningMessage = '{!JSENCODE($Label.AllocationSchedulerUnsavedChangesWarningMessage)}';
+			$Label.AllocationScheduleRunSuccessfulMessage = '{!JSENCODE($Label.AllocationScheduleRunSuccessfulMessage)}';
+			$Label.AllocationScheduleRunTriggeredMessage = '{!JSENCODE($Label.AllocationScheduleRunTriggeredMessage)}';
+			$Label.AllocationScheduleSaveSuccessfulMessage = '{!JSENCODE($Label.AllocationScheduleSaveSuccessfulMessage)}';
+			$Label.AllocationScheduleSuccessfulDeletion = '{!JSENCODE($Label.AllocationScheduleSuccessfulDeletion)}';
+			$Label.AllocationScheduleTransactionPeriodNoPreviousToDateMessage = '{!JSENCODE($Label.AllocationScheduleTransactionPeriodNoPreviousToDateMessage)}';
+			$Label.AllocationScheduleWarningQuestionMessage = '{!JSENCODE($Label.AllocationScheduleWarningQuestionMessage)}';
+			$Label.CronSpecMinutesMessageLabel = '{!JSENCODE($Label.CronSpecMinutesMessageLabel)}';
+
+			/** Combobox / checkbox Labels **/
+			$Label.AllocationScheduleAdvancedDate = '{!JSENCODE($Label.AllocationScheduleAdvancedDate)}';
+			$Label.AllocationScheduleAfter = '{!JSENCODE($Label.AllocationScheduleAfter)}';
+			$Label.AllocationScheduleBy = '{!JSENCODE($Label.AllocationScheduleBy)}';
+			$Label.AllocationScheduleCurrentMonth = '{!JSENCODE($Label.AllocationScheduleCurrentMonth)}';
+			$Label.AllocationScheduleCurrentPeriod = '{!JSENCODE($Label.AllocationScheduleCurrentPeriod)}';
+			$Label.AllocationScheduleDynamicDate = '{!JSENCODE($Label.AllocationScheduleDynamicDate)}';
+			$Label.AllocationScheduleLast3Months = '{!JSENCODE($Label.AllocationScheduleLast3Months)}';
+			$Label.AllocationScheduleLast3Periods = '{!JSENCODE($Label.AllocationScheduleLast3Periods)}';
+			$Label.AllocationScheduleLastMonth = '{!JSENCODE($Label.AllocationScheduleLastMonth)}';
+			$Label.AllocationScheduleLastPeriod = '{!JSENCODE($Label.AllocationScheduleLastPeriod)}';
+			$Label.AllocationScheduleNever = '{!JSENCODE($Label.AllocationScheduleNever)}';
+			$Label.AllocationSchedulerDateRangeMonthOption = '{!JSENCODE($Label.AllocationSchedulerDateRangeMonthOption)}';
+			$Label.AllocationSchedulerDateRangePeriodOption = '{!JSENCODE($Label.AllocationSchedulerDateRangePeriodOption)}';
+			$Label.AllocationSchedulerWeek = '{!JSENCODE($Label.AllocationSchedulerWeek)}';
+			$Label.AllocationScheduleStaticDate = '{!JSENCODE($Label.AllocationScheduleStaticDate)}';
+			$Label.first = '{!JSENCODE($Label.first)}';
+			$Label.second = '{!JSENCODE($Label.second)}';
+			$Label.third = '{!JSENCODE($Label.third)}';
+			$Label.fourth = '{!JSENCODE($Label.fourth)}';
+			$Label.fifth = '{!JSENCODE($Label.fifth)}';
+			$Label.sixth = '{!JSENCODE($Label.sixth)}';
+			$Label.seventh = '{!JSENCODE($Label.seventh)}';
+			$Label.eighth = '{!JSENCODE($Label.eighth)}';
+			$Label.ninth = '{!JSENCODE($Label.ninth)}';
+			$Label.tenth = '{!JSENCODE($Label.tenth)}';
+			$Label.eleventh = '{!JSENCODE($Label.eleventh)}';
+			$Label.twelfth = '{!JSENCODE($Label.twelfth)}';
+			$Label.thirteenth = '{!JSENCODE($Label.thirteenth)}';
+			$Label.fourteenth = '{!JSENCODE($Label.fourteenth)}';
+			$Label.fifthteenth = '{!JSENCODE($Label.fifthteenth)}';
+			$Label.sixteenth = '{!JSENCODE($Label.sixteenth)}';
+			$Label.seventeenth = '{!JSENCODE($Label.seventeenth)}';
+			$Label.eighteenth = '{!JSENCODE($Label.eighteenth)}';
+			$Label.nineteenth = '{!JSENCODE($Label.nineteenth)}';
+			$Label.twentieth = '{!JSENCODE($Label.twentieth)}';
+			$Label.twentyfirst = '{!JSENCODE($Label.twentyfirst)}';
+			$Label.twentysecond = '{!JSENCODE($Label.twentysecond)}';
+			$Label.twentythird = '{!JSENCODE($Label.twentythird)}';
+			$Label.twentyfourth = '{!JSENCODE($Label.twentyfourth)}';
+			$Label.twentyfifth = '{!JSENCODE($Label.twentyfifth)}';
+			$Label.twentysixth = '{!JSENCODE($Label.twentysixth)}';
+			$Label.twentyseventh = '{!JSENCODE($Label.twentyseventh)}';
+			$Label.twentyeighth = '{!JSENCODE($Label.twentyeighth)}';
+			$Label.twentyninth = '{!JSENCODE($Label.twentyninth)}';
+			$Label.thirtieth = '{!JSENCODE($Label.thirtieth)}';
+			$Label.last = '{!JSENCODE($Label.last)}';
+			$Label.Monday = '{!JSENCODE($Label.Monday)}';
+			$Label.Tuesday = '{!JSENCODE($Label.Tuesday)}';
+			$Label.Wednesday = '{!JSENCODE($Label.Wednesday)}';
+			$Label.Thursday = '{!JSENCODE($Label.Thursday)}';
+			$Label.Friday = '{!JSENCODE($Label.Friday)}';
+			$Label.Saturday = '{!JSENCODE($Label.Saturday)}';
+			$Label.Sunday = '{!JSENCODE($Label.Sunday)}';
+
+			/** Summary Details **/
+			$Label.AllocationScheduleSummaryDetailsExecuteDate = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsExecuteDate)}';
+			$Label.AllocationScheduleSummaryDetailsHeader = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsHeader)}';
+			$Label.AllocationScheduleSummaryDetailsInvalidDate = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsInvalidDate)}';
+			$Label.AllocationScheduleSummaryDetailsTemplatesSelected = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsTemplatesSelected)}';
+			$Label.AllocationScheduleSummaryDetailsTransactions = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsTransactions)}';
+			$Label.AllocationScheduleSummaryDetailsTransactionsFrom = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsTransactionsFrom)}';
+			$Label.AllocationScheduleSummaryDetailsTransactionsPosted = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsTransactionsPosted)}';
+			$Label.AllocationScheduleSummaryDetailsTransactionsTo = '{!JSENCODE($Label.AllocationScheduleSummaryDetailsTransactionsTo)}';
+
+			/** Params from apex controller **/
+			$Params.After = '{!JSENCODE(AFTER)}';
+			$Params.ByDate = '{!JSENCODE(BY_DATE)}';
+			$Params.ByMonth = '{!JSENCODE(BY_MONTH)}';
+			$Params.ByPeriod = '{!JSENCODE(BY_PERIOD)}';
+			$Params.CurrentMonth = '{!JSENCODE(CURRENT_MONTH)}';
+			$Params.CurrentPeriod = '{!JSENCODE(CURRENT_PERIOD)}';
+			$Params.Daily = '{!JSENCODE(DAILY)}';
+			$Params.EndBy = '{!JSENCODE(END_BY)}';
+			$Params.FromDaysPriorToToDate = '{!JSENCODE(FROM_DAYS_PRIOR_TO_TO_DATE)}';
+			$Params.FromFirstTransaction = '{!JSENCODE(FROM_FIRST_TRANSACTION)}';
+			$Params.FromLastDates = '{!JSENCODE(FROM_LAST_DATES)}';
+			$Params.Hourly = '{!JSENCODE(HOURLY)}';
+			$Params.Last3Months = '{!JSENCODE(LAST_3_MONTH)}';
+			$Params.Last3Periods = '{!JSENCODE(LAST_3_PERIOD)}';
+			$Params.LastDay = '{!JSENCODE(LAST_DAY)}';
+			$Params.LastMonth = '{!JSENCODE(LAST_MONTH)}';
+			$Params.LastPeriod = '{!JSENCODE(LAST_PERIOD)}';
+			$Params.MonthlyByMonthDay = '{!JSENCODE(MONTHLY_BY_MONTH_DAY)}';
+			$Params.MonthlyByWeekDay = '{!JSENCODE(MONTHLY_BY_WEEK_DAY)}';
+			$Params.Never = '{!JSENCODE(NEVER)}';
+			$Params.PeriodOffsetDate = '{!JSENCODE(PERIOD_OFFSET_DATE)}';
+			$Params.PeriodRunDate = '{!JSENCODE(PERIOD_RUN_DATE)}';
+			$Params.PeriodTransactionDate = '{!JSENCODE(PERIOD_TRANSACTION_DATE)}';
+			$Params.StaticDate = '{!JSENCODE(SPECIFIC_DATES)}';
+			$Params.TransactionDateOffsetDate = '{!JSENCODE(TRANSACTION_DATE_OFFSET_DATE)}';
+			$Params.TransactionDateSpecificDate = '{!JSENCODE(TRANSACTION_DATE_SPECIFIC_DATE)}';
+			$Params.UserLocale = '{!JSENCODE(USER_LOCALE)}';
+			$Params.WarningPrefix = '{!JSENCODE(WARNING_PREFIX)}';
+			$Params.Weekly = '{!JSENCODE(WEEKLY)}';
+
+			/** Params (local) **/
+			$Params.AdvancedDate = 'AdvancedDate';
+			$Params.DynamicDate = 'DynamicDate';
+			$Params.Monthly = 'Monthly';
+
+		</script>
+
+	</c:ffa_extBootstrap>
+
+</apex:page>

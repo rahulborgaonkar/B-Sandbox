@@ -1,0 +1,17 @@
+<apex:page standardController="c2g__codaPurchaseInvoice__c" extensions="ffbext.CODABEPostDocumentsController" recordSetVar="doc" action="{!bulkPostPayableInvoices}" >
+	<apex:sectionHeader title="{!$Label.codaBulkPostPageTitle}" />
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:pageMessages />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:commandButton value="{!$Label.codaBulkPostPageBackButton}" action="{!cancel}"/>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -5,19 +5,33 @@
     <description>International Address Lookup</description>
     <namespacePrefix>pca</namespacePrefix>
     <types>
+        <members>AddressExtension</members>
+        <members>AddressFieldIndex</members>
+        <members>CountryIndex</members>
+        <members>EditAddressExtension</members>
+        <members>EditAddressFieldExtension</members>
         <members>SettingsController</members>
+        <members>SetupController</members>
+        <members>TestCases</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>Address</members>
+        <members>AddressFinder</members>
         <name>ApexComponent</name>
     </types>
     <types>
+        <members>AccountAddressFinder</members>
         <members>Component</members>
+        <members>ContactAddressFinder</members>
+        <members>EditAddress</members>
+        <members>EditAddressField</members>
         <members>EditPageSettings</members>
         <members>Instructions</members>
         <members>JavascriptAPI</members>
+        <members>LeadAddressFinder</members>
         <members>Management</members>
+        <members>PersonAccountAddressFinder</members>
         <name>ApexPage</name>
     </types>
     <types>
@@ -92,6 +106,15 @@
         <members>Payment_Integration__c.Setting__c</members>
         <members>Payment_Integration__c.Sort_Code_Field__c</members>
         <members>Payment_Integration__c.Status_Field__c</members>
+        <members>PostcodeAnywhereAddresses__c.Label__c</members>
+        <members>PostcodeAnywhereAddresses__c.Object__c</members>
+        <members>PostcodeAnywhereCountries__c.Index__c</members>
+        <members>PostcodeAnywhereFields__c.Address__c</members>
+        <members>PostcodeAnywhereFields__c.Field__c</members>
+        <members>PostcodeAnywhereFields__c.Value__c</members>
+        <members>PostcodeAnywhereSettings__c.CountryByIP__c</members>
+        <members>PostcodeAnywhereSettings__c.CustomFieldNumber__c</members>
+        <members>PostcodeAnywhereSettings__c.Key__c</members>
         <members>Setting__c.Account_Code__c</members>
         <members>Setting__c.BACS_Validation__c</members>
         <members>Setting__c.Click_License__c</members>
@@ -125,6 +148,10 @@
         <members>Business__c</members>
         <members>Email_Integration__c</members>
         <members>Payment_Integration__c</members>
+        <members>PostcodeAnywhereAddresses__c</members>
+        <members>PostcodeAnywhereCountries__c</members>
+        <members>PostcodeAnywhereFields__c</members>
+        <members>PostcodeAnywhereSettings__c</members>
         <members>Setting__c</members>
         <name>CustomObject</name>
     </types>
@@ -161,6 +188,17 @@
         <members>PostcodeAnywhere</members>
         <members>PostcodeAnywhereIcon</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>Account.Address_Finder</members>
+        <members>Account.Address_Finder_Link</members>
+        <members>Account.Person_Address_Finder</members>
+        <members>Account.Person_Address_Finder_Link</members>
+        <members>Contact.Address_Finder</members>
+        <members>Contact.Address_Finder_Link</members>
+        <members>Lead.Address_Finder</members>
+        <members>Lead.Address_Finder_Link</members>
+        <name>WebLink</name>
     </types>
     <version>31.0</version>
 </Package>

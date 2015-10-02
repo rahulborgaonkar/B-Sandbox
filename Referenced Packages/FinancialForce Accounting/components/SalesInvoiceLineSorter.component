@@ -1,0 +1,14 @@
+<apex:component controller="c2g.CODASalesInvoiceLineSorterController" access="global">
+    <apex:attribute name="salesInvoice" access="global" description="The sales invoice to pass to the component." type="c2g__codaInvoice__c" assignTo="{!salesInvoiceAttr}"/>
+    <apex:attribute name="salesInvoiceLineItems" access="global" description="The sales invoice line items to pass to the component." type="c2g__codaInvoiceLineItem__c[]" assignTo="{!salesInvoiceLineItemsAttr}"/>
+    <apex:attribute name="var" access="global" description="The sorted document lines returned." type="String"/>
+    <apex:attribute name="styleClass" access="global" description="The style class to format the table." type="String"/>
+    <apex:attribute name="firstId" access="global" description="The Id of the first line." type="String"/>
+    <table class="{!styleClass}">
+        <apex:repeat value="{!salesInvoiceLines}" var="line">
+            <apex:componentBody >
+                <apex:variable var="{!var}" value="{!line}"/>
+            </apex:componentBody>
+        </apex:repeat>
+    </table>
+</apex:component>

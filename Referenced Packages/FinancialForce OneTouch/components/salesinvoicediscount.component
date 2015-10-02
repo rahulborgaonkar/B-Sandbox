@@ -1,0 +1,9 @@
+<apex:component controller="ffbext.SalesInvoiceDiscountController" access="global">
+    <apex:attribute name="transId" access="global" description="" type="Id" assignTo="{!transId}"/>
+    <apex:attribute name="discountSummariesVar" access="global" description="" type="String"/>
+    <apex:attribute name="anyValueVar" access="global" description="" type="Boolean"/>
+    <apex:componentBody rendered="{!anyValue}" >
+        <apex:variable var="{!discountSummariesVar}" value="{!DiscountSummaries}"/>
+        <apex:variable var="{!anyValueVar}" value="{!AnyValue}"/>
+    </apex:componentBody>   
+</apex:component>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>BatchProcess__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>NOT TO PACKAGE. Only for unit test</description>
+        <externalId>false</externalId>
+        <label>Batch Process</label>
+        <referenceTo>fflib_BatchProcess__c</referenceTo>
+        <relationshipLabel>Opportunities</relationshipLabel>
+        <relationshipName>Opportunities</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CODAUnitOfWork__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Unit of Work</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <webLinks>
+        <fullName>CreateInvoice</fullName>
+        <availability>online</availability>
+        <description>Creates an Invoice or many Invoices (Recurring Invoices) using VF technology instead of JavaScript one.</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <height>600</height>
+        <linkType>url</linkType>
+        <masterLabel>Create Invoice</masterLabel>
+        <openType>sidebar</openType>
+        <protected>false</protected>
+        <url>/apex/c2g__codaopportunity2invoice?id={!Opportunity.Id}&amp;src=declarativeOpportunity</url>
+    </webLinks>
+    <webLinks>
+        <fullName>CreateInvoices</fullName>
+        <availability>online</availability>
+        <description>Converts a list of opportunities to invoices</description>
+        <displayType>massActionButton</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Create Invoices</masterLabel>
+        <openType>sidebar</openType>
+        <page>codaopportunityCreateInvoices</page>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+    </webLinks>
+</CustomObject>

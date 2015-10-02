@@ -1,0 +1,13 @@
+<apex:page standardController="c2g__codaRecordLockGroup__c" extensions="c2g.RecordLockGroupController">
+   
+    <apex:form >
+        <apex:pageMessages />
+        <apex:pageMessage summary="{!UnlockConfirmMessage}" severity="warning"/>
+        <div style="text-align:center">
+            <apex:commandButton action="{!doUnlock}" value="{!$Label.Yes}"/>
+            <apex:commandButton action="{!cancel}" value="{!$Label.No}"/>
+        </div>
+        
+    </apex:form>
+    
+</apex:page>

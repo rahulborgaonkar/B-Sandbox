@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Protected</customSettingsVisibility>
+    <description>Configure client-side development environment per developer workflow (mbingham@financialforce.com)</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ResourcePrefix__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This is be used to qualify a relative URLFOR() path into an absolute path. Example value: https://localhost/ffc/dev</description>
+        <externalId>false</externalId>
+        <label>Static resource prefix</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>Client developer settings</label>
+</CustomObject>

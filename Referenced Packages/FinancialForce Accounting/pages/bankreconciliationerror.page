@@ -1,0 +1,10 @@
+<apex:page standardController="c2g__codaBankReconciliation__c" extensions="c2g.BankReconciliationConfimationController">
+   
+    <apex:form >
+        <apex:pageMessages />
+        <div style="text-align:center">
+            <apex:commandButton action="{!returnFromError}" value="{!$Label.Ok}"/>
+        </div>        
+    </apex:form>
+    
+</apex:page>

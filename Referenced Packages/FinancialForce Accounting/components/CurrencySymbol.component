@@ -1,0 +1,13 @@
+<apex:component controller="c2g.CODACurrencySymbolController" access="global">
+    <apex:attribute name="iso" description="The currency ISO code to pass to the component." access="global" type="String" assignTo="{!isoAttr}"/>
+    <apex:attribute name="symbolVar" access="global" description=" The currency symbol for the defined ISO code." type="String"/>
+    <apex:attribute name="format2dpVar" access="global" description="The number format, including decimal and thousands separator characters." type="String"/>
+    <apex:attribute name="format2dpVar0Absent" access="global" description="The number format, including decimal and thousands separator characters. If 0, a blank value is returned." type="String"/>
+    <apex:attribute name="format0dpVar" access="global" description="The number format, including decimal and thousands separator characters, for numbers with no decimal places." type="String"/>
+    <apex:attribute name="localeDateFormat" access="global" description="The date format to be applied according to the org locale." type="String"/>    
+    <apex:variable var="{!symbolVar}" value="{!symbol}"/>
+    <apex:variable var="{!format2dpVar}" value="{!format2dp}"/>
+    <apex:variable var="{!format2dpVar0Absent}" value="{!format2dp0Absent}"/>
+    <apex:variable var="{!format0dpVar}" value="{!format0dp}"/>
+    <apex:variable var="{!localeDateFormat}" value="{!dateFormat}"/>
+</apex:component>

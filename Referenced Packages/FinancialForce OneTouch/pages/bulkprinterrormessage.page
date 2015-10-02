@@ -1,0 +1,26 @@
+<apex:page controller="ffbext.BulkPrintErrorMessageController">    
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>    
+    <style>
+        .pbError{
+            background-image:url({!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+            text-align:center;
+        }        
+        .pbError ul{
+            margin:0px;
+            padding:0px;
+            list-style:none;
+        }
+    </style>    
+    <apex:form >        
+    <apex:outputPanel layout="block" styleClass="pbError">
+        <apex:messages />
+    </apex:outputPanel>     
+    <apex:pageBlock >       
+        <apex:pageBlockButtons location="top">
+            <apex:outputpanel id="buttonPanel">
+                <apex:commandButton action="{!goBack}" value="Back"/>
+            </apex:outputpanel>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>  
+    </apex:form>
+</apex:page>

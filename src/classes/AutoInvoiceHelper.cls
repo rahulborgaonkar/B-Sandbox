@@ -4,7 +4,7 @@ global without sharing class AutoInvoiceHelper {
     static final Boolean isTest = false;
     static set<id> subscriptions;
     static Map<Id,list<Subscription_Line__c>> oppLineSubLineList;
-    
+
     
     public class invoiceException extends Exception{}
     
@@ -490,6 +490,9 @@ global without sharing class AutoInvoiceHelper {
      */
     public static List<Id> createCreditNotes(List<id> invoiceIds, boolean postCreditNote, string invoiceCompany){
         
+        system.debug('Inside createCreditNotes');
+        system.debug('boolean postCreditNote - ' + postCreditNote);
+        
         list<c2g.CODAAPICreditNoteTypes_9_0.CreditNote> creditNotes = new list<c2g.CODAAPICreditNoteTypes_9_0.CreditNote>();
        
         list<id> retList = new list<id>();
@@ -503,7 +506,7 @@ global without sharing class AutoInvoiceHelper {
         
         
         id periodId = [SELECT Id,Name FROM c2g__codaPeriod__c WHERE c2g__StartDate__c <= TODAY AND c2g__EndDate__c >= TODAY AND c2g__OwnerCompany__r.name = :invoiceCompany].Id;
-        system.debug('Period/Company' + periodId + '/' + invoiceCompany);
+        system.debug('Period/Company - ' + periodId + ' / ' + invoiceCompany);
         list<c2g__codaInvoice__c> invoices = [select  Id 
                                                     ,c2g__Account__c
                                                     ,c2g__InvoiceCurrency__c
@@ -676,9 +679,9 @@ global without sharing class AutoInvoiceHelper {
                 cnCFList.add((c2g.CODAAPICreditNoteTypes_9_0.CustomField)addCustomField('CreditNote','Processed__c', 'Manually'));
             else
                 cnCFList.add((c2g.CODAAPICreditNoteTypes_9_0.CustomField)addCustomField('CreditNote','Processed__c', 'Automatically'));
-            
+
             if (postCreditNote)
-                cnCFList.add((c2g.CODAAPICreditNoteTypes_9_0.CustomField)AddCustomField('CreditNote','Match_Invoice__c', 'true'));
+                cnCFList.add((c2g.CODAAPICreditNoteTypes_9_0.CustomField)addCustomField('CreditNote','Match_Invoice__c', 'true'));
             
             creditnote.CustomFields = cnCFList;
             system.debug('Credit Notes: ' + creditnote );
@@ -700,6 +703,7 @@ global without sharing class AutoInvoiceHelper {
             }
                                                                
             list<c2g__codaCreditNote__c> listCreditNotes =  [select id, 
+                                                                    match_invoice__c,
                                                                     c2g__Opportunity__r.Credit_Note_Reason__c, 
                                                                     c2g__Opportunity__r.Product_Delivered__c, 
                                                                     c2g__Opportunity__r.Credit_Note_Product_Group__c,
@@ -714,14 +718,14 @@ global without sharing class AutoInvoiceHelper {
                                                                     c2g__Invoice__r.c2g__Period__c
                                                                from c2g__codaCreditNote__c 
                                                               where id in :cnIds];
-            
+
+
             for (c2g__codaCreditNote__c cn : listCreditNotes){
                 cn.c2g__CreditNoteReason__c = cn.c2g__Opportunity__r.Credit_Note_Reason__c;
                 oppIds.Add(cn.c2g__Opportunity__c);                    
             }
 
             update listCreditNotes;      
-                  
             for (c2g__codaInvoice__c inv : invoices){
                 boolean createdCN = false;
                  
@@ -871,11 +875,13 @@ global without sharing class AutoInvoiceHelper {
             c2g.CODAAPICreditNoteTypes_9_0.CustomField cfl =  new c2g.CODAAPICreditNoteTypes_9_0.CustomField(); 
             cfl.FieldName = fldName;
             cfl.value = val;                
+            system.debug('CreditNote c2g.CODAAPICreditNoteTypes_9_0.CustomField cfl - ' + cfl);
             return cfl;
         } if (objType =='Invoice'){ 
             c2g.CODAAPIInvoiceTypes_9_0.CustomField cfl =  new c2g.CODAAPIInvoiceTypes_9_0.CustomField(); 
             cfl.FieldName = fldName;
             cfl.value = val;                
+            system.debug('Invoice c2g.CODAAPICreditNoteTypes_9_0.CustomField cfl - ' + cfl);
             return cfl;
         } else {
             return null;

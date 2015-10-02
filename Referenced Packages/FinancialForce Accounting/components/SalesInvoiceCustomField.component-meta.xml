@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexComponent xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>32.0</apiVersion>
+    <description>This component returns a list of custom fields on the document.</description>
+    <label>Sales Invoice Custom Field</label>
+</ApexComponent>

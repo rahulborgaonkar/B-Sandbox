@@ -1,0 +1,8 @@
+<apex:component controller="c2g.CODASalesCreditNoteTaxTotalsController" access="global">
+	<apex:attribute name="creditNote" access="global" description="The sales credit note to pass to the component." type="c2g__codaCreditNote__c" assignTo="{!creditNoteAttr}"/>
+	<apex:attribute name="creditNoteLineItems" access="global" description="The sales credit note line items to pass to the component." type="c2g__codaCreditNoteLineItem__c[]" assignTo="{!creditNoteLineItemsAttr}"/>
+	<apex:attribute name="summariesVar" access="global" description="The tax data returned." type="String"/>
+	<apex:componentBody >
+		<apex:variable var="{!summariesVar}" value="{!taxSummaries}"/>
+	</apex:componentBody>
+</apex:component>

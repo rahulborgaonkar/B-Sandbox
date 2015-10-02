@@ -5,7 +5,7 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>FFShortLink__c</fullName>
-        <defaultValue>&quot;http://fastfor.ms&quot;</defaultValue>
+        <defaultValue>&quot;https://fastfor.ms&quot;</defaultValue>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
         <label>FFShortLink</label>

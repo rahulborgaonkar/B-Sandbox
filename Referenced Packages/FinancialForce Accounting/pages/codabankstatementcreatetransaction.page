@@ -1,0 +1,101 @@
+<apex:page sidebar="false" showheader="false" controller="c2g.CODABankStatementCreateTransController">
+<html>
+	<head>
+		<title>Create Transaction</title>
+		<link type="text/css" href="{!URLFOR($Resource.front_bankrec,'front_bankrec/pages/autorec/createtransaction.css')}" rel="stylesheet"/>
+	    <script type="text/javascript" src="{!URLFOR($Resource.front_bankrec,'front_bankrec/base/frameworks/jquery-1.10.2.min.js')}"></script>
+		<script type="text/javascript">
+				var $FFDC = jQuery.noConflict();
+		</script>
+		<script type="text/javascript" src="{!URLFOR($Resource.front_bankrec,'front_bankrec/pages/autorec/createtransaction.js')}"></script>
+</head>
+<body>
+
+	<ul class="tabs">
+		<li class="current">{!$Label.codaCreateTransactionCashEntryTab}</li>
+		<li>{!$Label.codaCreateTransactionJournalTab}</li>
+	</ul>
+	
+	<ul class="tabForms">
+		<li class="current cashEntryFormItem">
+			<!-- CASH ENTRY FORM -->
+			<apex:form id="cashEntryForm" onsubmit="parent.showOverlayWrapper();">
+				
+				<apex:pageBlock mode="view" tabStyle="codaCashEntry__c">
+					
+					<apex:pageBlockSection columns="2">
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!$Label.codaCreateTransactionCashEntryType}" for="cashEntryType"/>
+							<apex:outputPanel >
+								<apex:selectList id="cashEntryType" value="{!viewstate.BankStatementLine.cashEntryType}" multiselect="false" size="1">
+									<apex:selectOptions value="{!viewstate.BankStatementLine.cashEntryTypes}"/>
+								</apex:selectList>
+							</apex:outputPanel>
+						</apex:pageBlockSectionItem>
+						
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!$Label.codaCreateTransactionReference}" for="CElineReference"/>
+							<apex:inputText id="CElineReference" value="{!viewstate.BankStatementLine.lineReference}" >
+								<apex:message />
+							</apex:inputText>
+						</apex:pageBlockSectionItem>
+						
+						
+						<apex:inputField id="CEaccount" value="{!viewstate.BankStatementLine.account.dto.c2g__Account__c}" >
+							<apex:message />
+						</apex:inputField>
+						
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!$Label.codaCreateTransactionAmount}" for="CElineAmount"/>
+							
+							<apex:outputText id="CElineAmount" value="{0,number,###############0.00}" styleClass="amount {!IF(viewstate.BankStatementLine.lineAmount<0,'debit','credit')}">
+								<apex:param value="{!viewstate.BankStatementLine.lineAmount}"/>
+							</apex:outputText>
+							
+						</apex:pageBlockSectionItem>
+						
+					</apex:pageBlockSection>
+					
+				</apex:pageBlock>
+				<div class="buttonWrapper">
+					<apex:commandButton action="{!createCashEntryTransaction}" value="{!$Label.codaCreateTransactionButton}" rerender="cashEntryForm, pageMessages" oncomplete="checkTransaction('.cashEntryFormItem');"/>
+				</div>
+			</apex:form>
+		</li>
+		<li class="journalFormItem">
+			<!-- JOURNAL FORM -->
+			<apex:form id="journalForm" onsubmit="parent.showOverlayWrapper();">
+				
+				<apex:pageBlock mode="view" tabStyle="codaJournal__c">
+					<apex:pageBlockSection columns="2">
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!$Label.codaCreateTransactionReference}" for="JlineReference"/>
+							<apex:inputText id="JlineReference" value="{!viewstate.BankStatementLine.lineReference}" />
+						</apex:pageBlockSectionItem>
+						
+						<apex:pageBlockSectionItem >&nbsp;</apex:pageBlockSectionItem>
+						
+						<apex:inputField id="Jaccount" value="{!viewstate.BankStatementLine.gla.dto.c2g__GeneralLedgerAccount__c}" />
+						
+						<apex:pageBlockSectionItem >
+							<apex:outputLabel value="{!$Label.codaCreateTransactionAmount}" for="JlineAmount"/>
+							
+							<apex:outputText id="JlineAmount" value="{0,number,###############0.00}" styleClass="amount {!IF(viewstate.BankStatementLine.lineAmount<0,'debit','credit')}">
+								<apex:param value="{!viewstate.BankStatementLine.lineAmount}"/>
+							</apex:outputText>
+						</apex:pageBlockSectionItem>
+						
+					</apex:pageBlockSection>
+				</apex:pageBlock>
+				<div class="buttonWrapper">
+					<apex:commandButton action="{!createJournalTransaction}" value="{!$Label.codaCreateTransactionButton}" rerender="journalForm, pageMessages" oncomplete="checkTransaction('.journalFormItem');"/>
+				</div>
+			</apex:form>		
+		</li>
+	</ul>
+	
+	<apex:pagemessages id="pageMessages"/>
+			
+</body>	
+</html>
+</apex:page>

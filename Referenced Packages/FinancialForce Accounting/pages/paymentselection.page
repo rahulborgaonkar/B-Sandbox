@@ -1,0 +1,98 @@
+<!-- paymentselection -->
+<apex:page controller="c2g.PaymentSelectionController" sidebar="false">
+
+    <c:fflib_analytics startEndLabels="{
+            'start_timeOnFilterSelection':'end_timeOnFilterSelection',
+            'start_timeOnTransactionsSelection':'end_timeOnTransactionsSelection',
+            'start_selectingField':'end_selectingField',
+            'start_timeOnApplication':'end_timeOnApplication'
+            }"
+        onReadyCallback="$Setup.metricsCallback"/>
+
+    <c:ffa_extBootstrap applicationName="PaySel" staticResource="{!$Resource.c2g__PaySel}" developmentPrefix="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}" frameworkPath="../../ext">
+		<script>
+			window.$RemoteAction = window.$RemoteAction || {};
+			window.$Params = window.$Params || {};
+			window.$Label = window.$Label || {};
+			window.$Setup = window.$Setup || {};
+
+			//This function will be executed twice (on metrics ready & on app ready)
+			$Setup.metricsCallback = function(){
+				if($Params.metricsReady){
+					PaySel.app.onMetricsReady();
+				}
+				$Params.metricsReady = true;
+			};
+
+			/** Remote Actions **/
+			$RemoteAction.PaymentSelectionController = $RemoteAction.PaymentSelectionController || {};
+			$RemoteAction.PaymentSelectionController.getFilters = "{!$RemoteAction.PaymentSelectionController.getFilters}";
+			$RemoteAction.PaymentSelectionController.getFiltersWithValues = "{!$RemoteAction.PaymentSelectionController.getFiltersWithValues}";
+			$RemoteAction.PaymentSelectionController.retrieveTransactionLineItemsInfo = "{!$RemoteAction.PaymentSelectionController.retrieveTransactionLineItemsInfo}";
+			$RemoteAction.PaymentSelectionController.createPayment = "{!$RemoteAction.PaymentSelectionController.createPayment}";
+
+			/** Params **/
+			$Params.dateFormat = "{!JSENCODE(SenchaDateLocaleFormat)}";
+			$Params.paymentHomeURL = "{!JSENCODE(PaymentHomeURL)}";
+			$Params.PopupFieldNamePayCurrency = "{!JSENCODE(POPUP_FIELDNAME_PAYCURRENCY)}";
+			$Params.PopupFieldNamePaymentDate = "{!JSENCODE(POPUP_FIELDNAME_PAYMENTDATE)}";
+			$Params.PopupFieldNameBankAccount = "{!JSENCODE(POPUP_FIELDNAME_BANKACCOUNT)}";
+			$Params.PopupFieldNameSettlementGLA = "{!JSENCODE(POPUP_FIELDNAME_SETTLEMENTGLA)}";
+			$Params.PopupFieldNameWriteOffGLA = "{!JSENCODE(POPUP_FIELDNAME_WRITEOFFGLA)}";
+			$Params.FilterNameDocumentCurrency = "{!JSENCODE(FILTER_NAME_DOCCURRENCY)}";
+			$Params.FilterNamePaymentMethod = "{!JSENCODE(FILTER_NAME_PAYMENTMETHOD)}";
+			$Params.PopupFieldNamePayMediaType = "{!JSENCODE(POPUP_FIELDNAME_PAYMEDIATYPE)}";
+			$Params.PopupPayMediaTypeCheck = "{!JSENCODE(PAYMENT_MEDIA_CHECK)}";
+			$Params.PopupPayMediaTypeElectronic = "{!JSENCODE(PAYMENT_MEDIA_ELECTRONIC)}";
+
+			/** labels **/
+			/** General Labels **/
+			$Label.PaymentSelectionTitle = "{!JSENCODE($Label.PaymentSelectionTitle)}";
+			$Label.PaymentSelectionFilterCriteria = "{!JSENCODE($Label.PaymentSelectionFilterCriteria)}";
+			$Label.PaymentSelectionSelectAvalue = "{!JSENCODE($Label.PaymentSelectionSelectAvalue)}";
+			$Label.PaymentSelectionTypeToSearch = "{!JSENCODE($Label.PaymentSelectionTypeToSearch)}";
+			$Label.PaymentSelectionTypeAValue = "{!JSENCODE($Label.PaymentSelectionTypeAValue)}";
+			$Label.PaymentSelectionLookupNRecordsOfX = "{!JSENCODE($Label.paymentSelectionLookupNRecordsOfX)}";
+			$Label.PaymentSelectionDocsSelected = "{!JSENCODE($Label.paymentSelectionDocsSelected)}";
+			$Label.PaymentSelectionTotalAmount = "{!JSENCODE($Label.paymentSelectionTotalAmount)}";
+			$Label.PaymentSelectionSubtotal = "{!JSENCODE($Label.paymentSelectionSubtotal)}";
+			$Label.PaymentSelectionXFromYDocumentsSelected = "{!JSENCODE($Label.PaymentSelectionXFromYDocumentsSelected)}";
+			$Label.PaymentSelectionPUTitle = "{!JSENCODE($Label.PaymentSelectionPUTitle)}";
+
+			/** Buttons Labels **/
+			$Label.PaymentSelectionFilterButton = "{!JSENCODE($Label.PaymentSelectionFilterButton)}";
+			$Label.PaymentSelectionRetrieveButton = "{!JSENCODE($Label.PaymentSelectionRetrieveButton)}";
+			$Label.PaymentSelectionCreatePaymentButton = "{!JSENCODE($Label.PaymentSelectionCreatePaymentButton)}";
+			$Label.PaymentSelectionClearButton = "{!JSENCODE($Label.PaymentSelectionClearButton)}";
+			$Label.PaymentSelectionPUCreateButton = "{!JSENCODE($Label.PaymentSelectionPUCreateButton)}";
+			$Label.PaymentSelectionPUCancelButton = "{!JSENCODE($Label.PaymentSelectionPUCancelButton)}";
+			$Label.PaymentSelectionLoading = "{!JSENCODE($Label.PaymentSelectionLoading)}";
+			$Label.PaymentSelectionSaving = "{!JSENCODE($Label.PaymentSelectionSaving)}";
+
+			/** Error Labels **/
+			$Label.PaymentSelectionMustEntervalueError = "{!JSENCODE($Label.PaymentSelectionMustEntervalueError)}";
+			$Label.PaymentSelectionFromToMinorError = "{!JSENCODE($Label.PaymentSelectionFromToMinorError)}";
+			$Label.PaymentSelectionFromToMaxError = "{!JSENCODE($Label.PaymentSelectionFromToMaxError)}";
+			$Label.PaymentSelectionNoMatchingError = "{!JSENCODE($Label.PaymentSelectionNoMatchingError)}";
+			$Label.PaymentSelectionTooManySelectedError = "{!JSENCODE($Label.PaymentSelectionTooManySelectedError)}";
+			$Label.PaymentSelectionPUTLIElectronicWarning = "{!JSENCODE($Label.PaymentSelectionPUTLIElectronicWarning)}";
+
+			/** Popup Labels **/
+			$Label.PaymentSelectionPUPayCurrency = "{!$ObjectType.codaPayment__c.fields.PaymentCurrency__c.label}";
+			$Label.PaymentSelectionPUPaymentDate = "{!$ObjectType.codaPayment__c.fields.PaymentDate__c.label}";
+			$Label.PaymentSelectionPUPaymentMediaTypes = "{!$ObjectType.codaPayment__c.fields.PaymentMediaTypes__c.label}";
+			$Label.PaymentSelectionPUBankAccount = "{!$ObjectType.codaPayment__c.fields.BankAccount__c.label}";
+			$Label.PaymentSelectionPUSettlementDiscountGLA = "{!$ObjectType.codaPayment__c.fields.SettlementDiscountReceived__c.label}";
+			$Label.PaymentSelectionPUWriteOffGLA = "{!$ObjectType.codaPayment__c.fields.CurrencyWriteOff__c.label}";
+			$Label.PaymentSelectionPUCheck = "{!JSENCODE($Label.PaymentSelectionPMTCheck)}";
+			$Label.PaymentSelectionPUElectronic = "{!JSENCODE($Label.PaymentSelectionPMTElectronic)}";
+			$Label.PaymentSelectionDateFormatError = "{!JSENCODE($Label.PaymentSelectionDateFormatError)}";
+
+			/** Confirm Popup Labels **/
+			$Label.PaymentSelectionCPCreateMorePaymentsButton = "{!JSENCODE($Label.PaymentSelectionCPCreateMorePaymentsButton)}";
+			$Label.PaymentSelectionCPGoToPaymentHome = "{!JSENCODE($Label.PaymentSelectionCPGoToPaymentHome)}";
+			$Label.PaymentSelectionCPCreatedSuccessfully = "{!JSENCODE($Label.PaymentSelectionCPCreatedSuccessfully)}";
+
+		</script>
+    </c:ffa_extBootstrap>
+</apex:page>

@@ -1,0 +1,26 @@
+<messaging:emailTemplate subject="FinancialForce.com Journal Create Report" recipientType="User" relatedToType="ffirule__IntegrationRuleLog__c">
+    <messaging:htmlEmailBody >
+        <html>          
+            <body style="font-family:Trebuchet MS, Arial, Helvetica, sans-serif;">          
+                <apex:outputPanel rendered="{!IF(relatedTo.ffirule__Errors__c = 0, true, false)}">              
+                    <p>Journal creation completed successfully.</p>             
+                </apex:outputPanel>             
+                <apex:outputPanel rendered="{!IF(relatedTo.ffirule__Errors__c > 0, true, false)}">              
+                    <p>Journal creation completed, with errors.</p>                     
+                    <table style="width:100%;border-collapse:collapse;font-family:Trebuchet MS, Arial, Helvetica, sans-serif;">                 
+                        <tr>
+                            <th style="border:1px solid #98bf21;text-align:left;padding-top:5px;padding-bottom:4px;background-color:#A7C942;color:#fff;">Error Message</th>
+                            <th style="border:1px solid #98bf21;text-align:left;padding-top:5px;padding-bottom:4px;background-color:#A7C942;color:#fff;">Journal Import Record</th>
+                        </tr>                       
+                        <apex:repeat value="{!relatedTo.ffirule__IntegrationRuleLogLineItems__r}" var="logline">
+                            <tr>
+                                <td style="border:1px solid #98bf21;padding:3px 7px 2px 7px;">{!logline.ffirule__Message__c}</td>
+                                <td style="border:1px solid #98bf21;padding:3px 7px 2px 7px;"><a href="https://eu1.salesforce.com/{!logline.JournalImportData__r.Id}">{!logline.JournalImportData__r.Name}</a></td>
+                            </tr>
+                        </apex:repeat>                      
+                    </table>                
+                </apex:outputPanel>         
+            </body>         
+        </html> 
+    </messaging:htmlEmailBody>  
+</messaging:emailTemplate>

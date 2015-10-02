@@ -1,0 +1,9 @@
+<apex:component controller="c2g.CODASalesCreditNoteCustomFieldController" access="global">
+    <apex:attribute name="creditNote" access="global" description="The sales credit note to pass to the component." type="c2g__codaCreditNote__c" assignTo="{!creditNoteAttr}"/>
+    <apex:attribute name="headerFields" access="global" description="True to get the custom fields from the header. False to get the custom fields from the details. " type="Boolean" assignTo="{!headerFieldsAttr}"/>
+    <apex:attribute name="customFieldsVar" access="global" description="The list of custom fields returned by the component." type="String"/>
+    <apex:attribute name="lineId" access="global" description="The sales credit note line item to pass to the component." type="Id" assignTo="{!lineIdAttr}"/>
+    <apex:componentBody rendered="{!shouldRender}">
+        <apex:variable var="{!customFieldsVar}" value="{!CustomFields}"/>
+    </apex:componentBody>   
+</apex:component>

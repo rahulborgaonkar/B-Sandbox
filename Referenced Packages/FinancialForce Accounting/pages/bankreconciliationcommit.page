@@ -1,0 +1,17 @@
+<apex:page standardController="c2g__codaBankReconciliation__c" extensions="c2g.BankReconciliationConfimationController">
+	
+	<apex:form >
+		<apex:pageBlock mode="maindetail">
+
+			<apex:pageMessages showDetail="true"/>
+			<apex:pageMessage title="{!$Label.BankRecConfirmCommitTitle}" detail="{!CommitConfirmMessage}" severity="warning" strength="2"/>
+			
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!doCommit}" value="{!$Label.BankRecConfirmCommitOKBtn}"/>
+				<apex:commandButton action="{!cancel}" value="{!$Label.BankRecConfirmCommitGoBackBtn}"/>
+			</apex:pageBlockButtons>
+            
+        	</apex:pageBlock>		
+	</apex:form>
+	
+</apex:page>

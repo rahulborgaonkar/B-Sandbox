@@ -1,0 +1,17 @@
+<apex:page standardController="c2g__codaBankReconciliation__c" extensions="c2g.BankReconciliationConfimationController"> 
+
+	<apex:form >
+		<apex:pageBlock mode="maindetail">
+	
+			<apex:pageMessages showDetail="true"/>
+			<apex:pagemessage title="{!$Label.BankRecConfirmReopenTitle}" detail="{!ReopenConfirmMessage}" severity="warning" strength="2"/>		
+			
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton action="{!doReopen}" value="{!$Label.BankRecConfirmReopenOKBtn}"/>
+				<apex:commandButton action="{!cancel}" value="{!$Label.BankRecConfirmReopenGoBackBtn}"/>		
+			</apex:pageBlockButtons>
+            
+        	</apex:pageBlock>
+	</apex:form>
+	
+</apex:page>

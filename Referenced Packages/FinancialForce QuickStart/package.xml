@@ -51,6 +51,7 @@
         <members>CODAXMLCompanyState</members>
         <members>CODAXMLGLAState</members>
         <members>CODAXMLParser</members>
+        <members>CODAXMLParserTest</members>
         <members>CODAXMLService</members>
         <members>CODAXMLServiceTest</members>
         <name>ApexClass</name>
@@ -272,6 +273,8 @@
         <members>codawzfinancialcalendaryearname</members>
         <members>codawzfinancialcalendaryearnamehelp</members>
         <members>codawzfinancialcalendaryearnamemandatory</members>
+        <members>queueName</members>
+        <members>queuenameerror</members>
         <name>CustomLabel</name>
     </types>
     <types>

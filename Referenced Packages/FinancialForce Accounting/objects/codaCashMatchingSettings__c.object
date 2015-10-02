@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Cash Matching Settings (FF)</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>AsynchMatchingThreshold__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Asynch Matching Threshold</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AsynchUndoMatchThreshold__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Asynch Undo Match Threshold</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BackgroundMatchingBatchSize__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Background Matching Batch Size</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EnableExtendedCashMatching__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Enables Extended Cash Matching. Redirects users from the Classic Cash Matching pages.</description>
+        <externalId>false</externalId>
+        <label>DEPRECATED:Enable Extended Cash Matching</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowAnalysisSectionByDefault__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Show Analysis Section by Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowDiscountValues__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates that you want to show Discount values on the Extended Cash Matching page (Other Transactions pane).</description>
+        <externalId>false</externalId>
+        <label>Show Discount Values</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowRemainingValues__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates that you want to show Remaining values on the Extended Cash Matching page (Other Transactions pane).</description>
+        <externalId>false</externalId>
+        <label>Show Remaining Values</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ShowWriteoffValues__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates that you want to show Write-off values on the Extended Cash Matching page (Other Transactions pane).</description>
+        <externalId>false</externalId>
+        <label>Show Write-off Values</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Cash Matching Settings (FF)</label>
+</CustomObject>

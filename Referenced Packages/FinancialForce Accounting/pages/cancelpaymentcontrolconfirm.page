@@ -1,0 +1,15 @@
+<!-- cancelpaymentcontrolconfirm -->
+<apex:page standardController="c2g__CancelPayment__c" extensions="c2g.CancelPaymentControlController">
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.voidPaymentResubmitConfirmationResubmitJob}"/>
+		<apex:pageBlock >
+			<apex:pageBlockButtons >
+				<apex:commandButton value="{!$Label.voidPaymentResubmitConfirmationResubmit}" action="{!resubmit}"/>
+				<apex:commandButton value="{!$Label.voidPaymentResubmitConfirmationGoBack}" action="{!cancel}"/>
+			</apex:pageBlockButtons>
+			
+			<apex:pageMessages />
+			<apex:pageMessage summary="{!$Label.voidPaymentResubmitConfirmationMessage}" severity="info" strength="2" />
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

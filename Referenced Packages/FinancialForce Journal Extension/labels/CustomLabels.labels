@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AccountCurrencyNotInCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountCurrencyNotInCurrentCompany</shortDescription>
+        <value>The currency for the chosen Account does not exist as an Accounting Currency within the current Company.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNotFound</shortDescription>
+        <value>Account &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>AddNewLine</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add New Line</shortDescription>
+        <value>Add New Line</value>
+    </labels>
+    <labels>
+        <fullName>AlertPostJournalSpecialPeriod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AlertPostJournalSpecialPeriod</shortDescription>
+        <value>You are posting a document into a special period, click Post if you are sure you want to do it. Note the year end process cannot be run if you post into period 101.</value>
+    </labels>
+    <labels>
+        <fullName>AlertPostingJournalSpecialPeriod</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AlertPostingJournalSpecialPeriod</shortDescription>
+        <value>You are posting a document into a special period, click Save and Post if you are sure you want to do it. Note the year end process cannot be run if you post into period 101.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotCancelReverseJournal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotCancelReverseJournal</shortDescription>
+        <value>You cannot reverse or cancel a journal that has not been posted.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotCancelReverseJournalWithoutPeriod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotCancelReverseJournalWithoutPeriod</shortDescription>
+        <value>Your financial calendar does not include the proposed reversal period. Add new periods to your financial calendar and try again.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotInsertNoManualJNL</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotInsertNoManualJNL</shortDescription>
+        <value>Manual Journal is the only valid journal type in this context.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotModifiedJNLStatus</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotModifyJNLStatus</shortDescription>
+        <value>In Progress is the only valid status in this context.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotModifyCompletedJournal</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotModifyCompletedJournal</shortDescription>
+        <value>You can not modify a completed Journal</value>
+    </labels>
+    <labels>
+        <fullName>CanNotModifyDiscardedJournal</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotModifyDiscardedJournal</shortDescription>
+        <value>You can not modify a discarded Journal</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CancellingJournalNumber</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CancellingJournalNumber</shortDescription>
+        <value>Cancelling Journal Number {0}</value>
+    </labels>
+    <labels>
+        <fullName>CannotEditSourceJournal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CannotEditSourceJournal</shortDescription>
+        <value>You cannot modify the source journal associated with a reversing journal.</value>
+    </labels>
+    <labels>
+        <fullName>CannotInsertUpdateIntercompanyLineWithoutDestinationCompany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CannotInsertUpdateIntercompanyLineWithoutDestinationCompany</shortDescription>
+        <value>You cannot create or modify a journal line item of type intercompany without filling destination company</value>
+    </labels>
+    <labels>
+        <fullName>Credits</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Credits</shortDescription>
+        <value>Credits</value>
+    </labels>
+    <labels>
+        <fullName>Debits</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Debits</shortDescription>
+        <value>Debits</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>FinancialCalendarDoesNotInclude</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FinancialCalendarDoesNotInclude</shortDescription>
+        <value>The financial calendar does not include {0}.</value>
+    </labels>
+    <labels>
+        <fullName>GLARequiredBeforeSave</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GLARequiredBeforeSave</shortDescription>
+        <value>Failed to save: General Ledger Account field: You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>GLAYouMustEnterAValue</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GLAYouMustEnterAValue</shortDescription>
+        <value>Failed to post transaction: Journal Line Item &apos;&apos;{0}&apos;&apos;: General Ledger Account field: You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>Information</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Information</shortDescription>
+        <value>Information</value>
+    </labels>
+    <labels>
+        <fullName>Item</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Item</shortDescription>
+        <value>Item</value>
+    </labels>
+    <labels>
+        <fullName>JournalAlreadyPosted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalAlreadyPosted</shortDescription>
+        <value>Journal Already Posted &apos;&apos;{0}&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>JournalCannotBeDeleted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalCannotBeDeleted</shortDescription>
+        <value>Journals cannot be deleted.</value>
+    </labels>
+    <labels>
+        <fullName>JournalDetail</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalDetail</shortDescription>
+        <value>Journal Detail</value>
+    </labels>
+    <labels>
+        <fullName>JournalLines</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalLines</shortDescription>
+        <value>Journal Lines</value>
+    </labels>
+    <labels>
+        <fullName>JournalNotInProgress</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalNotInProgress</shortDescription>
+        <value>Journal not in Progress</value>
+    </labels>
+    <labels>
+        <fullName>JournalTypeModified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JournalTypeModified</shortDescription>
+        <value>Journal type cannot be modified</value>
+    </labels>
+    <labels>
+        <fullName>ManageJournalLines</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ManageJournalLines</shortDescription>
+        <value>Manage Lines</value>
+    </labels>
+    <labels>
+        <fullName>MultipleCompanies</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultipleCompanies</shortDescription>
+        <value>Multiple current companies.</value>
+    </labels>
+    <labels>
+        <fullName>NoCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoCurrentCompany</shortDescription>
+        <value>No current company.</value>
+    </labels>
+    <labels>
+        <fullName>PeriodRequiredBeforeSaveInCurrentCompany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PeriodRequiredBeforeSaveInCurrentCompany</shortDescription>
+        <value>Period field: You must enter a period that belongs to the current company.</value>
+    </labels>
+    <labels>
+        <fullName>PostJournal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PostJournal</shortDescription>
+        <value>Post</value>
+    </labels>
+    <labels>
+        <fullName>ProductNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProductNotFound</shortDescription>
+        <value>Product &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>RemoveLine</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveLine</shortDescription>
+        <value>Remove Line</value>
+    </labels>
+    <labels>
+        <fullName>RemoveOriginalJournalBeforeToSave</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveOriginalJournalBeforeToSave</shortDescription>
+        <value>You must remove original journal number before saving</value>
+    </labels>
+    <labels>
+        <fullName>RemoveSourceJournalBeforeToSave</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveSourceJournalBeforeToSave</shortDescription>
+        <value>You must remove source journal number before saving</value>
+    </labels>
+    <labels>
+        <fullName>RemoveTransactionNumberBeforeToSave</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveTransactionNumberBeforeToSave</shortDescription>
+        <value>You must remove transaction number before saving</value>
+    </labels>
+    <labels>
+        <fullName>Reverse</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Reverse</shortDescription>
+        <value>Reverse</value>
+    </labels>
+    <labels>
+        <fullName>ReverseCancel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ReverseCancel</shortDescription>
+        <value>Reverse / Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ReversingJournalNumber</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ReversingJournalNumber</shortDescription>
+        <value>Reversing Journal Number {0}</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>SaveandPost</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SaveandPost</shortDescription>
+        <value>Save and Post</value>
+    </labels>
+    <labels>
+        <fullName>TaxCodeNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TaxCodeNotFound</shortDescription>
+        <value>Tax Code &apos;&apos;{0}&apos;&apos; does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>ToPostJournalMustHaveLines</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ToPostJournalMustHaveLines</shortDescription>
+        <value>The journal you are trying to post has no journal line items.</value>
+    </labels>
+    <labels>
+        <fullName>Total</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Total</shortDescription>
+        <value>Total</value>
+    </labels>
+    <labels>
+        <fullName>TransactionDoesNotBalance</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TransactionDoesNotBalance</shortDescription>
+        <value>The transaction does not balance</value>
+    </labels>
+    <labels>
+        <fullName>Type</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetRelatedJournal</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetRelatedJournal</shortDescription>
+        <value>Unable To Get Related Journal</value>
+    </labels>
+</CustomLabels>

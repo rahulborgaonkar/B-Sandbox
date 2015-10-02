@@ -54,6 +54,7 @@ function returnJson(elem) {
                     var name = '';
                     var datatype = '';
                     var picklistvalues = '';
+                    var refObjectType='';
                     $.each(item.getElementsByTagName("label"), function (index, subitem) {
 
                         label = $(subitem).text();
@@ -70,10 +71,14 @@ function returnJson(elem) {
 
                         datatype = $(subitem).text();
                     });
-                    $.each(item.getElementsByTagName("picklistValues"), function (index, subitem) {
+                    $.each(item.getElementsByTagName("refObjectType"), function (index, subitem) {
 
-                        if (subitem.childNodes.length > 0) {
-                            var temppicklistvalues = [];
+                        refObjectType = $(subitem).text();
+                    });
+                    
+                    $.each(item.getElementsByTagName("picklistValues"), function (index, subitem) {
+                        var temppicklistvalues = [];
+                        if (subitem.childNodes.length > 0) {                            
                             $.each(subitem.getElementsByTagName("value"), function (i, valueitem) {
 
                                 temppicklistvalues.push($(valueitem).text());
@@ -84,7 +89,7 @@ function returnJson(elem) {
                         picklistvalues = temppicklistvalues.join(";");
                     });
 
-                    data.push(createJSONFieldObj(label, elemid, name, datatype, picklistvalues));
+                    data.push(createJSONFieldObj(label, elemid, name, datatype, picklistvalues,refObjectType));
                 }
             });
         }
@@ -112,8 +117,9 @@ function getFieldValueByFieldName(elementid, tagname) {
     });
     return returnstr;
 }
-function createJSONFieldObj(label, elemid, name, datatype, picklistvalues) {
-    var dataobj = { "label": label, "elemId": elemid, "name": name, "datatype": datatype, "picklistvalues": picklistvalues };
+
+function createJSONFieldObj(label, elemid, name, datatype, picklistvalues,refobjtype) {
+    var dataobj = { "label": label, "elemId": elemid, "name": name, "datatype": datatype, "picklistvalues": picklistvalues,"refObj":refobjtype };
 
 
     return dataobj;
@@ -163,15 +169,7 @@ function DeleteRule(delId) {
         title: "Save",
         height: "auto",
         width: 413,
-        buttons: {
-            "No": {
-                click: function () {
-                    $(this).dialog('close');
-                    callback(false);
-                },
-                text: 'No',
-                'class': 'vabutton2'
-            },
+        buttons: {            
             "Yes": {
                 click: function () {
                     $(this).dialog('close');
@@ -179,7 +177,15 @@ function DeleteRule(delId) {
                 },
                 text: 'Yes',
                 'class': 'vabutton1'
-            }
+            },
+            "No": {
+                click: function () {
+                    $(this).dialog('close');
+                    callback(false);
+                },
+                text: 'No',
+                'class': 'vabutton2'
+            }            
         },
 
         open: function (event, ui) {
@@ -265,10 +271,10 @@ function toggleThenSections(mainThenConditionElem, enableSections) {
         }
         $(optgroup).find('option').each(function (indx, optionelem) {
 
-            if ($(optionelem).val().indexOf("ffSection") == 0 || ($(optionelem).val().indexOf("GENERALTEXT") == 0 || $(optionelem).val().indexOf("FileUploadArea") == 0 || $(optionelem).val().indexOf("CAPTCHA") == 0)) {
+            if ($(optionelem).val().indexOf("ffSection") == 0 || isGeneralFieldElement($(optionelem).val())) {
                 if (enableSections) {
                     $(optionelem).removeAttr('disabled');
-                    if (($(optionelem).val().indexOf("GENERALTEXT") == 0 || $(optionelem).val().indexOf("FileUploadArea") == 0 || $(optionelem).val().indexOf("CAPTCHA") == 0) && $(optionelem).hasClass('display-none')) {
+                    if (isGeneralFieldElement($(optionelem).val()) && $(optionelem).hasClass('display-none')) {
                         $(optionelem).removeClass('display-none');
                     }
 
@@ -276,7 +282,7 @@ function toggleThenSections(mainThenConditionElem, enableSections) {
                 else {
                     //FileUploadArea //CAPTCHA
                     $(optionelem).attr('disabled', 'disabled');
-                    if (($(optionelem).val().indexOf("GENERALTEXT") == 0 || $(optionelem).val().indexOf("FileUploadArea") == 0 || $(optionelem).val().indexOf("CAPTCHA") == 0) && (!$(optionelem).hasClass('display-none'))) {
+                    if ( isGeneralFieldElement($(optionelem).val()) && (!$(optionelem).hasClass('display-none'))) {
                         $(optionelem).addClass('display-none');
                     }
                     if ($(optionelem).is(':selected')) {
@@ -302,7 +308,17 @@ function toggleThenSections(mainThenConditionElem, enableSections) {
 
 
 }
+function isGeneralFieldElement(elementvalue)
+{
+var isgeneral=false;
+   if(elementvalue.indexOf("GENERALTEXT") == 0 || elementvalue.indexOf("FileUploadArea") == 0 || elementvalue.indexOf("CAPTCHA") == 0 || elementvalue.indexOf("PAYPALPAYMENT")==0)
+   {
+isgeneral=true;
+   }
+   return isgeneral;
+}
  /* General helper function*/
+
 function hideBlock(mainElem) {
     if ($(mainElem).hasClass('display-none')) {
     }
@@ -456,7 +472,9 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
             $(htmlElem).addClass("display-none");
         }
     });
-
+    var textBoxStaticElement=$(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox');
+$(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-then-value-field-wrapper a').hide();
+             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-then-value-field-wrapper img').hide();
 
     switch (vattDatatype) {
         case "STRING":
@@ -473,7 +491,8 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
             // console.log(' textbox class- display none removed ');
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker("destroy");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').val("");
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             break;
         case "TEXTAREA":
@@ -495,7 +514,8 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker("destroy");
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').removeClass("display-none");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').val("");
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker({ showTimepicker: false, changeMonth: true, changeYear: true });
             break;
@@ -503,7 +523,8 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker("destroy");
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').removeClass("display-none");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').val("");
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker({ showTimepicker: true, changeMonth: true, changeYear: true });
             break;
@@ -523,12 +544,29 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
                 populatePicklist(multiselectElement, semicolSeperatedValues.split(';'), true, '.sfff-rule-then-static-value-box');
             }
             break;
+        case "REFERENCE":
+            $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').removeClass("display-none");
+             console.log(' in reference class- display none removed ');
+             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-then-value-field-wrapper a').show();
+             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-then-value-field-wrapper img').show();
+             var refObjType = getFieldValueByFieldName(selectedelemenid, "refObj");
+               
+             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-then-value-field-wrapper a').bind( "click", function() {
+              openLookupPopupForRule(this,refObjType,'');
+            });
+            $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker("destroy");
+            if (isAutoSave) {
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
+            }
+            break;
         default:
         $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').removeClass("display-none");
             // console.log(' textbox class- display none removed ');
             $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').datetimepicker("destroy");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-then-static-value-box .sfff-textbox').val("");
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
              break;
     }/*switch statement ends*/
@@ -545,7 +583,9 @@ function populateValueFields(mainRuleStThirdElement, fieldid, vattDatatype, isAu
             $(htmlElem).addClass("display-none");
         }
     });
-
+    var textBoxStaticElement=$(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox');
+$(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-st-value-field-wrapper a').hide();
+             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-st-value-field-wrapper img').hide();
 
     switch (vattDatatype) {
         case "STRING":
@@ -563,8 +603,8 @@ function populateValueFields(mainRuleStThirdElement, fieldid, vattDatatype, isAu
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').datetimepicker("destroy");
 
             if (isAutoSave) {
-
-                $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').val("");
+            $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             break;
         case "TEXTAREA":
@@ -584,7 +624,8 @@ function populateValueFields(mainRuleStThirdElement, fieldid, vattDatatype, isAu
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').datetimepicker("destroy");
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').removeClass("display-none");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').val("");
+               $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').datetimepicker({ showTimepicker: false, changeMonth: true, changeYear: true });
 
@@ -594,7 +635,8 @@ function populateValueFields(mainRuleStThirdElement, fieldid, vattDatatype, isAu
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').datetimepicker("destroy");
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').removeClass("display-none");
             if (isAutoSave) {
-                $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').val("");
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
             }
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').datetimepicker({ showTimepicker: true, changeMonth: true, changeYear: true });
             break;
@@ -614,6 +656,21 @@ function populateValueFields(mainRuleStThirdElement, fieldid, vattDatatype, isAu
                 populatePicklist(multiselectElement, semicolSeperatedValues.split(';'), true, '.sfff-rule-st-static-value-box');
             }
             break;
+        case "REFERENCE":
+        $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-st-value-field-wrapper a').show();
+             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-st-value-field-wrapper img').show();
+            $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').removeClass("display-none");
+            var refObjType = getFieldValueByFieldName(selectedelemenid, "refObj");
+               
+             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-st-value-field-wrapper a').bind( "click", function() {
+              openLookupPopupForRule(this,refObjType,'');
+            });
+            $(textBoxStaticElement).datetimepicker("destroy");
+            if (isAutoSave) {
+                $(textBoxStaticElement).val("");
+                $(textBoxStaticElement).attr("data-refId","");
+            }
+            break;
         default:
             $(mainRuleStThirdElement).find('.sfff-rule-st-static-value-box .sfff-textbox').removeClass("display-none");
             break;
@@ -627,6 +684,7 @@ function populatePicklist(selectElement, arrValues, isMultiPicklist, parentValue
     if (isMultiPicklist) {
         $(selectElement).attr('multiple', 'multiple');
     }
+    $(selectElement).append($('<option value="">-select an item-</option>'));
     $.each(arrValues, function (n, val) {
         //console.log(' selectElement- val '+val);
         $(selectElement).append($("<option></option>").attr("value", val).text(val));
@@ -671,6 +729,7 @@ function getValidOperators(vatt) {
     return validoperators;
 }
 function callSaveRule(elemSource, isAutosave) {
+Intercom('trackEvent', 'edited-rule');
 if(($(elemSource).parent().hasClass('sfff-rule-st-existing-field-box') || $(elemSource).parent().hasClass('sfff-rule-then-existing-field-box')) &&  ( elemSource.type == 'select-one' || elemSource.type == 'select-multiple'))
 {
 console.log(" Selec box change event for 3rd column ");
@@ -684,10 +743,10 @@ console.log(" Selec box change event for 3rd column ");
 
         var rulexml = generateXML(mainRuleElem);
         console.log(' rule xml ------\n rule id' + ruleid + ' \n xml--\n' + rulexml);
-        saveRule(ruleid, rulexml);
+        var escapedRuleXML = rulexml.replace(/&/g, "&amp;").replace(/'/g, "&#39;");///$("<div>").text(rulexml).html();
+        saveRule(ruleid, escapedRuleXML);
 
-        isChangesMadeInForm = true;
-        autosaveTriggered();
+       triggerAutoSave();
     }
 }
 function setSelectColorTag(elemSource)
@@ -700,8 +759,7 @@ $(parentRuleColumn).find("div.select2-container a.select2-choice").attr("class",
 
 }
 function triggerAutoSave() {
-    isChangesMadeInForm = true;
-    autosaveTriggered();
+    
 }
 function callSaveRuleByMainElem(mainRuleElem, isAutosave) {
     if (isAutosave) {
@@ -716,8 +774,7 @@ function callSaveRuleByMainElem(mainRuleElem, isAutosave) {
         saveRule(ruleid, rulexml);
 
 
-        isChangesMadeInForm = true;
-        autosaveTriggered();
+        triggerAutoSave();
     }
 }
 
@@ -738,7 +795,7 @@ function ifThenBlockIsValid() {
     $('.pnlFormainRuleRepeaterCSS .sfff-then-block-rule-statement-').each(function (i, thenBlockElement) {
         if (!$(thenBlockElement).find('.sfff-rule-then-field-list').hasClass('display-none')) {
             console.log(' Then section list is visible ');
-            if ($(thenBlockElement).find('select.select-then-fields').val() == 'undefined' || $(thenBlockElement).find('select.select-then-fields') == '') {
+            if ($(thenBlockElement).find('select.select-then-fields').val() == 'undefined' || $(thenBlockElement).find('select.select-then-fields').val() == '') {
                 console.log(' Then section list value is null ');
                 returnflag = false;
             }
@@ -789,6 +846,7 @@ function generateXML(mainRuleElem) {
                 $(ifblockSectionElem).find('.sfff-if-block-rule-statements .sfff-if-block-rule-statement-').each(function (indexRuleSt, ifblockRuleStElem) {
                     var valOperand1 = '';
                     var valOperand2 = '';
+                    var valOperand2RefId = '';
                     var conditionOperator = '';
                     var attrIsDynamic = 'true';
 
@@ -822,6 +880,11 @@ function generateXML(mainRuleElem) {
                                     if (this.type == 'text' && (!$(this).hasClass('display-none'))) {
                                         if ($(this).val() != '') {
                                             valOperand2 = $(this).val();
+
+                                            console.log(' textbox- ' + valOperand2);
+                                        }
+                                        if (!isNullOrEmpty($(this).attr('data-refid'))) {
+                                            valOperand2RefId = $(this).attr('data-refid');
 
                                             console.log(' textbox- ' + valOperand2);
                                         }
@@ -859,8 +922,23 @@ function generateXML(mainRuleElem) {
 
                     ruleXML += '<condition operator="' + conditionOperator + '">';
 
-                    ruleXML += '<operand1>' + valOperand1.replace(/'/g, "\\'") + '</operand1>';
-                    ruleXML += '<operand2 isdynamic="' + attrIsDynamic + '">' + valOperand2.replace(/'/g, "\\'") + '</operand2>';
+                    ruleXML += '<operand1>' + valOperand1 + '</operand1>';
+                    var valOperand2STR='';
+                    if(valOperand2 instanceof Array )
+                    {
+                    $.each( valOperand2, function( index, value ) {
+                                 if(index>0)
+                                 {
+                                    valOperand2STR+=",";
+                                 }
+                                 valOperand2STR+=value;//.replace(/'/g, "\\'");
+                                });
+                    }
+                    else
+                    {
+                        valOperand2STR=  valOperand2;//.replace(/'/g, "\\'");
+                    }
+                    ruleXML += '<operand2 refId="'+valOperand2RefId+'" isdynamic="' + attrIsDynamic + '">' + valOperand2STR + '</operand2>';
                     ruleXML += '</condition>';
 
 
@@ -887,6 +965,7 @@ function generateXML(mainRuleElem) {
         var thenTargetIsDynamic = 'true';
         var thenOther = '';
         var thenOtherPopulate = 'false';
+        var thenOtherRefId = '';
         var thenOtherIsDynamic = '';
 
         var selectAction = $(ifblockRuleStElem).find('.rule-st-1 select.select-elem');
@@ -930,6 +1009,10 @@ function generateXML(mainRuleElem) {
 
                             console.log(' textbox thenOther- ' + thenOther);
                         }
+                        if (!isNullOrEmpty($(this).attr('data-refid'))) {
+                                            thenOtherRefId = $(this).attr('data-refid');
+ 
+                                        }
                     }
                     if (this.type == 'checkbox' && (!$(this).hasClass('display-none'))) {
                         console.log(' Type - ' + this.type + ' value ' + $(this).is(":checked"));
@@ -971,7 +1054,7 @@ function generateXML(mainRuleElem) {
         ruleXML += '<action>' + thenAction + '</action>';
 
         ruleXML += '<target isdynamic="' + thenTargetIsDynamic + '">' + thenTarget + '</target>';
-        ruleXML += '<other isdynamic="' + thenOtherIsDynamic + '"   populate="' + thenOtherPopulate + '">' + thenOther + '</other>';
+        ruleXML += '<other refId="'+thenOtherRefId+'" isdynamic="' + thenOtherIsDynamic + '"   populate="' + thenOtherPopulate + '">' + thenOther + '</other>';
         ruleXML += '</result>';
 
 
@@ -1004,30 +1087,12 @@ $.fn.slideFadeToggle = function (speed, easing, callback) {
     }, speed, easing, callback);
 };
 
-function switchClass(elem) {
-    // console.log('here i am');
-    if ($(elem).attr('data-rule-data') != undefined && $(elem).attr('data-rule-data') == 'norule') {
-        $(elem).attr('data-rule-data', 'ruleexists');
-        $(elem).parents('.create-rule-header-block').find('.no-rule-text').fadeOut('slow');
-        $(elem).parents('.create-rule-header-block').find('.no-rule-block').removeClass("no-rule-block-show", 500);
-        createANewRule('1');
 
-    }
-    else if ($(elem).attr('data-rule-data') != undefined && $(elem).attr('data-rule-data') == 'ruleexists') {
-
-        createANewRule('1');
-
-    }
-    else {
-
-    }
-
-
-}
 
 
 
 function addNewRuleHTML(elem) {
+    Intercom('trackEvent', 'added-rule');
     var ruleindex = '1';
     if ($(elem).attr('data-rule-index') != 'undefined') {
         console.log(' Rule Index=  ' + $(elem).attr('data-rule-index'));
@@ -1036,14 +1101,7 @@ function addNewRuleHTML(elem) {
     createANewRule(ruleindex);
 }
 
-function addNewRuleSectionHTML(elem) {
-    var newElem = getNewIfRuleSectionHTML();
-    $(elem).parent().before(newElem).fadeIn('slow');
-    $(newElem).find('.sfff-rule-delete').css('display', '');
-   
-    resetSelect2Element(newElem);
-     populateBlockSelect(newElem,true);
-}
+
 
 
 function addNewRuleIfHTML(elem) {

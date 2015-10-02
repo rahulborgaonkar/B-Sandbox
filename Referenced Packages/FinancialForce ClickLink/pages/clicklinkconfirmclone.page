@@ -1,0 +1,17 @@
+<apex:page standardController="ffirule__IntegrationRule__c" extensions="ffirule.ConfirmCloneController">
+    <apex:form >
+        <apex:sectionHeader title="{!$Label.CloneClickLinkRule}" subtitle="{!RuleName}"/>
+        <apex:pageBlock >
+            <apex:pagemessages />
+            <apex:pageMessage summary="{!ConfirmationMessage}" severity="Info" rendered="{!renderClone}"/>
+            <apex:pageBlockButtons location="bottom">
+
+                <apex:commandButton action="{!continueClone}" value="{!$Label.Continue}" rendered="{!renderClone}"/>
+                <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+
+        <!-- Hidde fields for binding -->
+        <apex:inputField value="{!ffirule__IntegrationRule__c.Name}" rendered="false"/>
+    </apex:form>
+</apex:page>

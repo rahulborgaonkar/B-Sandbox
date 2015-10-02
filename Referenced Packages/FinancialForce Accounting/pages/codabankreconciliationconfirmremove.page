@@ -1,0 +1,17 @@
+<apex:page standardController="c2g__codaBankReconciliationLineItem__c" extensions="c2g.CODABankReconciliationLineItemExtension" recordSetVar="codaBankReconciliationLineItems">
+
+	<apex:form >
+		<apex:pageBlock mode="maindetail">
+		
+			<apex:pageMessages showDetail="true"/>
+			<apex:pageMessage title="{!$Label.BankReconciliationRemoveLinesTitle}" severity="warning" detail="{!confirmMessage}" rendered="{!render}" strength="2"/>
+			
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton value="{!$Label.BankReconciliationRemoveLinesRemoveBtn}" action="{!onRemoveSelectedLineItems}" rendered="{!render}"/>
+				<apex:commandButton value="{!$Label.BankReconciliationRemoveLinesCancelBtn}" action="{!onCancelRemove}" rendered="{!render}"/>
+				<apex:commandButton value="{!$Label.Ok}" action="{!onCancelRemove}" rendered="{!render == false}"/>
+			</apex:pageBlockButtons>
+            
+        	</apex:pageBlock>
+	</apex:form>
+</apex:page>

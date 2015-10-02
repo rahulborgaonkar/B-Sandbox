@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Announcements_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Announcements Call To Action</shortDescription>
+        <value>View announcements</value>
+    </labels>
+    <labels>
+        <fullName>Announcements_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Announcements Caption</shortDescription>
+        <value>Latest announcements</value>
+    </labels>
+    <labels>
+        <fullName>Go_Case</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Case</shortDescription>
+        <value>Log a Case</value>
+    </labels>
+    <labels>
+        <fullName>Go_Community</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Visit Community</shortDescription>
+        <value>Visit Community</value>
+    </labels>
+    <labels>
+        <fullName>Go_Idea</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Create Idea</shortDescription>
+        <value>Share an Idea</value>
+    </labels>
+    <labels>
+        <fullName>Go_License</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Buy Licenses</shortDescription>
+        <value>Need more FinancialForce licenses?</value>
+    </labels>
+    <labels>
+        <fullName>Ideas_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Ideas Call To Action</shortDescription>
+        <value>Browse ideas</value>
+    </labels>
+    <labels>
+        <fullName>Ideas_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Ideas Caption</shortDescription>
+        <value>Latest Community ideas</value>
+    </labels>
+    <labels>
+        <fullName>News_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>News Call To Action</shortDescription>
+        <value>Read press releases</value>
+    </labels>
+    <labels>
+        <fullName>News_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>News Caption</shortDescription>
+        <value>Latest company news</value>
+    </labels>
+    <labels>
+        <fullName>Solutions_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Solutions Call To Action</shortDescription>
+        <value>Browse solutions</value>
+    </labels>
+    <labels>
+        <fullName>Solutions_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Solutions Caption</shortDescription>
+        <value>Latest Community solutions</value>
+    </labels>
+    <labels>
+        <fullName>Tutorials_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tutorials Call To Action</shortDescription>
+        <value>Browse tutorials</value>
+    </labels>
+    <labels>
+        <fullName>Tutorials_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tutorials Caption</shortDescription>
+        <value>Latest tutorials</value>
+    </labels>
+    <labels>
+        <fullName>Welcome</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welcome</shortDescription>
+        <value>Welcome to FinancialForce Central</value>
+    </labels>
+    <labels>
+        <fullName>Xtra_Call_To_Action</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Xtra Call To Action</shortDescription>
+        <value>Visit Xtra</value>
+    </labels>
+    <labels>
+        <fullName>Xtra_Caption</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Xtra Caption</shortDescription>
+        <value>FinancialForce Xtra</value>
+    </labels>
+</CustomLabels>

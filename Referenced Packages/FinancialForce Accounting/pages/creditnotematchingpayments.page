@@ -1,0 +1,5 @@
+<apex:page standardController="c2g__codaCreditNote__c" extensions="c2g.CreditNotePaymentController">
+	<apex:pageBlock >
+		<c:MatchedPayments payments="{!payments}" showTitle="false"/>
+	</apex:pageBlock>
+</apex:page>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <customHelpPage>codahelpworkerloggroup</customHelpPage>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>NotificationType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(AND(TotalNumberOfErrors__c=0,TotalNumberOfAborts__c=0,TotalNumberOfExternal__c=0), 
+&apos;Successful&apos;, 
+IF(TotalNumberOfErrors__c = TotalNumberOfLogs__c, 
+&apos;Failure&apos;, 
+IF(TotalNumberOfAborts__c &gt; 0, 
+&apos;Failure&apos;, 
+IF( TotalNumberOfExternal__c &gt; 0, 
+&apos;Failure&apos;, 
+&apos;Mixed&apos; 
+) 
+) 
+) 
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Notification Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TotalNumberOfAborts__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Total Number of Aborts</label>
+        <summaryFilterItems>
+            <field>WorkerLog__c.LogType__c</field>
+            <operation>equals</operation>
+            <value>Abort</value>
+        </summaryFilterItems>
+        <summaryForeignKey>WorkerLog__c.WorkerLogGroup__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>TotalNumberOfErrors__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Total Number of Errors</label>
+        <summaryFilterItems>
+            <field>WorkerLog__c.LogType__c</field>
+            <operation>equals</operation>
+            <value>Error</value>
+        </summaryFilterItems>
+        <summaryForeignKey>WorkerLog__c.WorkerLogGroup__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>TotalNumberOfExternal__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Total Number of External</label>
+        <summaryFilterItems>
+            <field>WorkerLog__c.LogType__c</field>
+            <operation>equals</operation>
+            <value>External</value>
+        </summaryFilterItems>
+        <summaryForeignKey>WorkerLog__c.WorkerLogGroup__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>TotalNumberOfLogs__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Total Number of Logs</label>
+        <summaryForeignKey>WorkerLog__c.WorkerLogGroup__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>WorkerLogGroups</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Worker__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Worker</label>
+        <referenceTo>Worker__c</referenceTo>
+        <relationshipLabel>Worker Log Groups</relationshipLabel>
+        <relationshipName>WorkerLogGroups</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Worker Log Group</label>
+    <nameField>
+        <displayFormat>{0}</displayFormat>
+        <label>Worker Log Group Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Worker Log Groups</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

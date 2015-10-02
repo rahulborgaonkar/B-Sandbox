@@ -14,10 +14,10 @@
         return pos;
     }
 })(jQuery);
-			
+            
     function resetselect() {
     console.log(' reset select ');
-        $(".MainTabContainer select").select2();
+        $(".MainTabContainer select.select-publish").select2();
     }
     var clientelement = "";
     var clientelement2 = "";
@@ -40,22 +40,22 @@
             $('#defaultLookupValueHidden').val($('.selectELLookup').find(":selected").value);
         }
     }
-	function validateLookupField(elemid)
-	{
-		 
-		var elem=document.getElementById(elemid);
-		if(elemid=='defaultLookupValue' && $(elem).val()=='')
-		{
-		console.log('value is empty 1');
-		$('#defaultLookupValueHidden').val('');
-		}
-		if(elemid=='defaultSBELookupValue' && $(elem).val()=='')
-		{
-		console.log('value is empty 2');
-		$('#defaultSBELookupValueHidden').val('');
-		}
+    function validateLookupField(elemid)
+    {
+         
+        var elem=document.getElementById(elemid);
+        if(elemid=='defaultLookupValue' && $(elem).val()=='')
+        {
+        console.log('value is empty 1');
+        $('#defaultLookupValueHidden').val('');
+        }
+        if(elemid=='defaultSBELookupValue' && $(elem).val()=='')
+        {
+        console.log('value is empty 2');
+        $('#defaultSBELookupValueHidden').val('');
+        }
 
-	}
+    }
     function CopyToClipBoard() {
         var hostedformtextinputid = $('.hostedFormScriptTextareaClass').attr('id');
         $('.HostedFormText').attr('data-clipboard-target', hostedformtextinputid);
@@ -76,15 +76,29 @@
             }
         );
         
-             clipEmbed.addEventListener('complete',function(client,text) {             	
+             clipEmbed.addEventListener('complete',function(client,text) {              
                 //message copy 
                 switch(this.id) {
-                    case 'clip_copyEmbedCodeText':
+                    case 'clip_copyEmbedCodeText':                        
+                        var metadata = {
+                          embed_code: $('.embedCodeTextAreaClass').text()
+                        };
+                        Intercom('trackEvent', 'copied-embed-code', metadata);                          
                         $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your embed code was copied to the clipboard! </div><br /><div class='secondary'>Simply paste the code into your website using <b>Command+V</b> on Mac or <b>Ctrl+V</b> on Windows.</div></div>");
                         break;
                     case 'clip_copyHostedFormText':
+                        var metadata = {
+                          form_link: $('#hostedFormScriptTextarea').text()
+                        };
+                        Intercom('trackEvent', 'copied-hosted-form-link', metadata);                    
                         $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your hosted form link code was copied to the clipboard! </div></div>");
                         break;
+                        case 'clip_copyPublicKeyText':
+                         $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your secret key was copied to the clipboard! </div></div>");
+                        break;
+                        default:
+                        $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your language code was copied to the clipboard! </div></div>");
+                         break;
                 }                
                 
                 
@@ -96,20 +110,63 @@
                     height: 150,
                     width: 455,
                     buttons: {
-                    	"Close": {
-	                    click: function () {
-	                        $(this).dialog("close");
-	                    },
-	                    text: 'Close',
-	                    class: 'vabutton1'
-						}
-				  }
-				  });
+                        "Close": {
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        text: 'Close',
+                        class: 'vabutton1'
+                        }
+                  }
+                  });
               
             });     
            
     }
+function CopyToClipBoardForLanguages() {
+    
+ 
 
+         var clipCopyCode = new ZeroClipboard($('.prefill-code-lang-tabs').find('.copy-code-text').each(function () { }), {
+moviePath: "{!URLFOR($Resource.Clipboard,'ZeroClipboard.swf')}"
+});
+var clipPublicKey = new ZeroClipboard(
+            $('.PublicKeyText'), {
+                moviePath: "{!URLFOR($Resource.Clipboard,'ZeroClipboard.swf')}"
+            }
+        );
+        
+        
+             clipCopyCode.addEventListener('complete',function(client,text) {              
+            
+                 
+                     console.log('Clipboard event ');
+                        $("#dialog-confirm").html("<div class='dialogHeader'><div class='dialogIcon dialogIconOK'>&nbsp;</div></div><div class='dialogFont'><div class='primary'>Your language code was copied to the clipboard! </div></div>");
+                                  
+                
+                
+                // Define the Dialog and its properties.
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    modal: true,
+                    title: "Close",
+                    height: 150,
+                    width: 455,
+                    buttons: {
+                        "Close": {
+                        click: function () {
+                            $(this).dialog("close");
+                        },
+                        text: 'Close',
+                        class: 'vabutton1'
+                        }
+                  }
+                  });
+              
+            });  
+          
+           
+    }
     function openLookupPopup(Ltype, Rtype) {
         var left = (screen.width / 2) - (600 / 2);
         var top = 250
@@ -132,10 +189,10 @@
 
     function lookupPick2(a, b, c, d, e, f, g, h) {
         if($("#defaultLookupValue").attr('name') == undefined || $("#defaultValue").attr('name') == '')
-		{
+        {
             $("input[id='" + c + "']").val(e);
         }
-		else {
+        else {
             var activetab = activeTab();
             if(activetab == 3)
             {
@@ -172,6 +229,7 @@
     }
 
     function exportLinks() {
+        Intercom('trackEvent', 'exported-links');
         var lookupvalue = $('#defaultLookupValueHidden').val();
          console.log(' lookupval is ' + lookupvalue +' select list '+$('.vertical-tab-content .active select').length);
        
@@ -225,24 +283,118 @@
             }
         });
    
-	try{
-		   $('#email-content-editor').freshereditor({
-							toolbar_selector: "#email-editor-toolbar",
-							excludes: ['removeFormat', 'insertheading4',  'strikethrough',   'backcolor','insertorderedlist', 'insertunorderedlist', 'insertparagraph', 'blockquote', 'code', 'superscript', 'subscript']
-						});
-						$("#email-content-editor").freshereditor("edit", true);
-		 }
-		 catch(err)
-		 {
-		 console.log(' FresherEditor toolbar error: '+err.message);
-		 }
-		       
-		 
-		 
-    }
-
     
+          // setEmailEditorToolbar();    
+         
+         
+    }
+function setEmailEditorToolbar()
+{
+    
+     var parentEMailBox=$('#email-content-editor-textarea').parent();
+        $(parentEMailBox).find('#email-editor-toolbar').hide();
+//$(parentEMailBox).find('#email-editor-custom-toolbar').hide();
+$(parentEMailBox).find('#email-content-editor').hide(); 
+         var selectItems=[]; 
+         $('select.selectSBELookup>option').each(function(i,optionElem){
+          
+         selectItems.push([$(optionElem).html(),$(optionElem).val()]);
+          
+          });
+         $('select.selectSBELookup optgroup').each(function(i,optGrpElem){
+         selectItems.push([$(optGrpElem).attr('label'),'']);
         
+ $(optGrpElem).find('>option').each(function(indx,optionElem){
+         selectItems.push([$(optionElem).html(),$(optionElem).val()]);
+         });
+          }); 
+         
+       // var editor = CKEDITOR.instances.ckeditortext;
+           
+          
+         try{
+ CKEDITOR.plugins.addExternal( 'fftoken', FFCKEditorurlroot+'/plugins/fftoken/', 'plugin.js' );
+        CKEDITOR.replace( 'ckeditortext', {
+        extraPlugins: 'fftoken',
+            availableTokens: selectItems,
+            customConfig: FFCKEditorurlroot+'/config.js'
+             
+        } );
+         }
+         catch(err)
+         {
+         console.log(' CKEditor toolbar error: '+err.message);
+         }
+         
+        
+}
+ 
+    
+  function promptWebsiteLink(elementSource,linkType) {
+     
+        var fieldhtml = $(elementSource).attr('data-fieldname');
+        
+        if (linkType == 'embed'){
+            var dialogBody = "<div class='dialogHeader'></div><div class='dialogFont'><div class='primary'></div><div class='secondary'>Please provide your link details below:<br /><br /><div class='form-block'><div class='dialog-row-group pb20'><div class='form-col-1' style='line-height:30px;'>Link text:</div><div class='form-col-2'><input class='dialogTextbox' style='margin-left:20px;' id='dialogWebsiteLinkTitle' type='text'></div></div><div class='dialog-row-group pb20'><div class='form-col-1' style='line-height:30px;'>Your page URL: <span></span></div><div class='form-col-2'><input class='dialogTextbox' style='margin-left:20px;' id='dialogWebsiteLink' type='text' value='https://fastfor.ms/'></div></div></div></div></div>";
+        } else {
+            var dialogBody = "<div class='dialogHeader'></div><div class='dialogFont'><div class='primary'></div><div class='secondary'>Please provide your link details below:<br /><br /><div class='form-block'><div class='dialog-row-group pb20'><div class='form-col-1' style='line-height:30px;'>Link text:</div><div class='form-col-2'><input class='dialogTextbox' style='margin-left:20px;' id='dialogWebsiteLinkTitle' type='text'></div></div></div></div></div>";
+        }
+        $("#dialog-confirm").html(dialogBody);
+
+        // Define the Dialog and its properties.
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            modal: true,
+            title: "Save",
+            height: "auto",
+            width: 435,
+            buttons: {
+                "Yes": {
+                    click: function() {
+                        $(this).dialog('close');
+                        var websitelinkTitle = $('#dialogWebsiteLinkTitle').val();
+                        if(!isNullOrEmpty(websitelinkTitle))
+                        {
+                            fieldhtml=fieldhtml.substring(0,fieldhtml.lastIndexOf('|'));
+                            fieldhtml=  fieldhtml+'|'+websitelinkTitle+']]';
+                        }                        
+                        if (linkType == 'embed'){                            
+                            var websitelink = $('#dialogWebsiteLink').val();
+                            try{
+                                if(!isNullOrEmpty(websitelink))
+                                {
+                                    fieldhtml=  fieldhtml.replace('|localhost|','|'+websitelink+'|');
+                                }
+
+                            }
+                            catch(err){
+
+                            }
+                        }
+                        insertContentInEditor(fieldhtml);
+                    },
+                    text: 'Add Link',
+                    'class': 'vabutton1'
+                },
+                "No": {
+                    click: function() {
+                        $(this).dialog('close');
+
+                    },
+                    text: 'Cancel',
+                    'class': 'vabutton2'
+                }
+                
+
+            },
+            open: function(event, ui) {
+                $('.ui-dialog :button').blur();
+            }
+        });
+     
+
+
+}      
 
 
 
@@ -250,7 +402,9 @@
 
     function emailWizardbtnClick(elem)
     {
+        Intercom('trackEvent', 'sent-email-blast');
         var nextlink = $(elem).attr('data-next-link');
+        var parentPublishMainWrapper=$(elem).parents('.publish-box-main-wrapper');
 
 
         if((nextlink != 'undefined' || nextlink == '') && dataprocess != 'undefined' )
@@ -278,7 +432,8 @@
                 {
                     console.log('  process first step data 1 lookup value-' + $('#defaultSBELookupValueHidden').val());
                     hideAlert('alertEmailValidation');
-                    emailProcessFirstStep(nextlink);
+                     setEmailEditorToolbar();
+                    emailProcessFirstStep(nextlink,parentPublishMainWrapper);
 
                 }
                 else
@@ -287,72 +442,32 @@
 
                 }
             }
-			else if(dataprocess != 'undefined' && dataprocess == "go-back")
+            else if(dataprocess != 'undefined' && dataprocess == "go-back")
             {
-				if(nextlink!='undefined' && nextlink!='')
-				{
-				 console.log(' in emailProcessGoBack');
-				emailProcessGoBack(nextlink);
-				}
-				else
-				{
-				   console.log('  emailProcessGoBack nextlink undefined ');
-				}
-			}
-        }
-    }
-	function emailWizardbtnClickORIGINAL(elem)
-    {
-        var nextlink = $(elem).attr('data-next-link');
-
-
-        if(nextlink == undefined || nextlink == '' || dataprocess != 'undefined')
-        {
-            var dataprocess = $(elem).attr('data-process');
-            if(dataprocess != 'undefined' && dataprocess == "saveasdraft")
-            {
-                processEmailData(true);
-            }
-            else if(dataprocess != 'undefined' && dataprocess == "send")
-            {
-                processEmailData(false);
-            }
-            else if(dataprocess != 'undefined' && dataprocess == "pass-to-next")
-            {
-                console.log('  process first step data');
-                if($('#emailfirsttab .vertical-tab-content .active select').length == 1)
+                if(nextlink!='undefined' && nextlink!='')
                 {
-
-                    var emaillookupvaluetemp = $('#emailfirsttab .vertical-tab-content .active').find('select.selectSBELookupObj').find(":selected").val();
-                    $('#defaultSBELookupValueHidden').val(emaillookupvaluetemp);
-
-                }
-                if(isFirstStepDataValid())
-                {
-                    console.log('  process first step data 1 lookup value-' + $('#defaultSBELookupValueHidden').val());
-                    hideAlert('alertEmailValidation');
-                    emailProcessFirstStep(nextlink);
-
+                 console.log(' in emailProcessGoBack');
+                emailProcessGoBack(nextlink);
                 }
                 else
                 {
-                    showAlert('alertEmailValidation', 'Please select an audience');
-
+                   console.log('  emailProcessGoBack nextlink undefined ');
                 }
             }
         }
     }
+     
     var isemailprefill = false;
     var isemaillookupisalist = false;
     var emaillookupvalue = '';
 
-	function emailProcessGoBack(nextlink)
+    function emailProcessGoBack(nextlink)
     {
-		$('.nav-wizard-container>.navbar>.horizontal-tab-content>.tab-pane').each(function(index, obj) {
-		console.log('  emailProcessGoBack data body class  nextlink '+nextlink);
+        $('.nav-wizard-container>.navbar>.horizontal-tab-content>.tab-pane').each(function(index, obj) {
+        console.log('  emailProcessGoBack data body class  nextlink '+nextlink);
             if(nextlink != 'undefined' && nextlink != '')
             {
-			console.log('  emailProcessGoBack data body class added nextlink '+nextlink);
+            console.log('  emailProcessGoBack data body class added nextlink '+nextlink);
                 $(obj).removeClass('active');
                 if(nextlink == index)
                 {
@@ -361,25 +476,41 @@
             }
 
         });
-	}
-    function emailProcessFirstStep(nextlink)
+    }
+    function refreshRelatedObjectInfo(parentPublishMainWrapper){
+
+    var selectHTML =generatePublishSelectHtml('.selectSBELookupTempWrapper');
+        restructurePublishSelectElement($(parentPublishMainWrapper).find('select.selectSBELookup'), selectHTML);
+        var selectHTMLEmailTo =generatePublishSelectHtml('.selectSBEEmailToTEMPWrapper');
+        restructurePublishSelectElement($(parentPublishMainWrapper).find('select.selectSBEEmailTo'), selectHTMLEmailTo);
+        $('.mainEmailWrapperCSS').find('select.select-publish').select2();
+       // setEmailEditorToolbar();
+    }
+    function emailProcessFirstStep(nextlink,parentPublishMainWrapper)
     {
-        /*$('.nav-wizard-container ul.nav-wizard>li').each(function(index, obj) {
-		 console.log('  emailProcessFirstStep data index '+index);
+  
+  /* var selectHTML =generatePublishSelectHtml('.selectSBELookupTempWrapper');
+        restructurePublishSelectElement($(parentPublishMainWrapper).find('select.selectSBELookup'), selectHTML);
+        var selectHTMLEmailTo =generatePublishSelectHtml('.selectSBEEmailToTEMPWrapper');
+        restructurePublishSelectElement($(parentPublishMainWrapper).find('select.selectSBEEmailTo'), selectHTMLEmailTo);*/
+refreshRelatedObjectInfo(parentPublishMainWrapper);
+
+         $('#sendemailsection .nav-wizard-container ul.nav-wizard>li').each(function(index, obj) {
+         console.log('  emailProcessFirstStep data index '+index);
             if(nextlink != undefined && nextlink != '')
             {
                 $(obj).removeClass('active');
                 if(nextlink == index)
                 {
-				console.log('  emailProcessFirstStep data class added nextlink '+nextlink);
+                console.log('  emailProcessFirstStep data class added nextlink '+nextlink);
                     $(this).addClass('active');
                 }
             }
-        });*/
-        $('.nav-wizard-container>.navbar>.horizontal-tab-content>.tab-pane').each(function(index, obj) {
+        }); 
+        $('#sendemailsection .nav-wizard-container>.navbar>.horizontal-tab-content>.tab-pane').each(function(index, obj) {
             if(nextlink != undefined && nextlink != '')
             {
-			console.log('  emailProcessFirstStep data body class added nextlink '+nextlink);
+            console.log('  emailProcessFirstStep data body class added nextlink '+nextlink);
                 $(obj).removeClass('active');
                 if(nextlink == index)
                 {
@@ -388,7 +519,7 @@
             }
 
         });
-        var emaillookupvalue = $('#defaultSBELookupValueHidden').val();
+        var emaillookupvalue = $(parentPublishMainWrapper).find('#defaultSBELookupValueHidden').val();
 
         if($('#emailfirsttab .vertical-tab-content .active select').length == 1)
         {
@@ -401,18 +532,75 @@
         {
             isemaillookupisalist = false;
         }
-
-        if($('#chkbxSBEEmailUpdate').prop('checked'))
+        
+        //if($('#chkbxSBEEmailUpdate').prop('checked'))
+        if($(parentPublishMainWrapper).find('.prefill-mode-box-inner').hasClass('mode-active'))
         {
             isemailprefill = true;
-            $('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
-              console.log(' emailProcessFirstStep isprefill true-'+isemailprefill);
+            $(parentPublishMainWrapper).find('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
+              
         }
         else
         {
          isemailprefill = false;
-            $('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
-             console.log(' emailProcessFirstStep isprefill false-'+isemailprefill); 
+            $(parentPublishMainWrapper).find('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
+             
+        }
+        getRemoteEmailTemplateJs();
+    }
+    function emailProcessFirstStepORIGINAL(nextlink,parentPublishMainWrapper)
+    {
+
+         $('#sendemailsection .nav-wizard-container ul.nav-wizard>li').each(function(index, obj) {
+         console.log('  emailProcessFirstStep data index '+index);
+            if(nextlink != undefined && nextlink != '')
+            {
+                $(obj).removeClass('active');
+                if(nextlink == index)
+                {
+                console.log('  emailProcessFirstStep data class added nextlink '+nextlink);
+                    $(this).addClass('active');
+                }
+            }
+        }); 
+        $('#sendemailsection .nav-wizard-container>.navbar>.horizontal-tab-content>.tab-pane').each(function(index, obj) {
+            if(nextlink != undefined && nextlink != '')
+            {
+            console.log('  emailProcessFirstStep data body class added nextlink '+nextlink);
+                $(obj).removeClass('active');
+                if(nextlink == index)
+                {
+                    $(this).addClass('active');
+                }
+            }
+
+        });
+        var emaillookupvalue = $(parentPublishMainWrapper).find('#defaultSBELookupValueHidden').val();
+
+        if($('#emailfirsttab .vertical-tab-content .active select').length == 1)
+        {
+
+            emaillookupvalue = $('#emailfirsttab .vertical-tab-content .active').find('select.selectSBELookupObj').find(":selected").val();
+            $('#defaultSBELookupValueHidden').val(emaillookupvalue);
+            isemaillookupisalist = true;
+        }
+        if($('#emailfirsttab .vertical-tab-content .active .lookupInput').length == 1)
+        {
+            isemaillookupisalist = false;
+        }
+        
+        //if($('#chkbxSBEEmailUpdate').prop('checked'))
+        if($(parentPublishMainWrapper).find('.prefill-mode-box-inner').hasClass('mode-active'))
+        {
+            isemailprefill = true;
+            $(parentPublishMainWrapper).find('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
+              
+        }
+        else
+        {
+         isemailprefill = false;
+            $(parentPublishMainWrapper).find('#chkbxSBEEmailUpdateHidden').val(isemailprefill);
+             
         }
         getRemoteEmailTemplateJs();
     }
@@ -440,7 +628,7 @@
                 xmlfields += '<emailto>' + $('select.selectSBEEmailTo').select2("val") + '</emailto>';
             }
             xmlfields += '</emailfields>';
-            var emailtemplate = $("#email-content-editor").html();
+            var emailtemplate = CKEDITOR.instances['email-content-editor-textarea'].getData();////$("#email-content-editor").html();
 
             console.log(' processEmailData xmlfields' + xmlfields + ' isdraft-' + isdraft + ' isemailprefill- ' + isemailprefill + ' is lookuplist -' + isemaillookupisalist + ' is email lookup -' + emaillookupvalue + ' emailtemplate-' + emailtemplate);
             if($('#defaultSBELookupValueHidden').val() != undefined && $('#defaultSBELookupValueHidden').val() != '')
@@ -613,7 +801,7 @@ var position;
     function insertContentInEditor(html)
     {
 
-        if(focusElement !== undefined) {
+       /* if(focusElement !== undefined) {
             console.log(' focusElement text added' + addedText);
             $(focusElement).after(addedText);
         } else if(selectionRange !== undefined) { //IE7 and IE8
@@ -625,30 +813,41 @@ var position;
             $("#email-content-editor").html(currentContent + html);
         }
 
-
+*/
+var editor = CKEDITOR.instances['email-content-editor-textarea'];
+editor.insertHtml( html );
 
     }
 
     function enableInsertField() {
        var selecttext = $('.selectSBELookup').select2("val");
-	        console.log(' Selected text ' + selecttext);
-	        if(selecttext != '')
-	        {
-	             $('#email-editor-custom-toolbar').find('#insert-field-btn').attr('data-fieldname',' {{' + selecttext + '}} ');
-	        }
-	        else
-	        {
-	        $('#email-editor-custom-toolbar').find('#insert-field-btn').attr('data-fieldname','');
-	        }
-	 }
+            console.log(' Selected text ' + selecttext);
+            if(selecttext != '')
+            {
+                 $('#email-editor-custom-toolbar').find('#insert-field-btn').attr('data-fieldname','[[' + selecttext + ']]');
+            }
+            else
+            {
+            $('#email-editor-custom-toolbar').find('#insert-field-btn').attr('data-fieldname','');
+            }
+     }
     function insertfieldtoHtml(elem) {
         /*insert selected option from fieldlist  to html editor*/
         
         if($(elem).attr('data-fieldname') != undefined && $(elem).attr('data-fieldname') != '')
         {
             
-            
+            if($(elem).attr('data-fieldname')=='[[-FFEmbedLink-|localhost|Embed Link]]')
+            {
+                promptWebsiteLink(elem,'embed');
+            } else if($(elem).attr('data-fieldname')=='[[-FastFormsLink-|Fast form Link]]')
+            {
+                promptWebsiteLink(elem,'hosted');
+            }
+            else
+            {
             insertContentInEditor($(elem).attr('data-fieldname')); 
+            }
          
         }
     } 
@@ -668,6 +867,295 @@ var position;
         }
 
     }
+
+//selectSBELookupTempWrapper//selectSBEEmailToTEMPWrapper
+function generatePublishSelectHtml(selecteElemClass) {
+
+    var tempSelectElementDiv = $(selecteElemClass);
+     
+
+    var sectionGrp = [];
+    var sectionStart = false;
+    var fieldsStart = 0;
+    var fieldEnds = false;
+    var genfieldsStart = 0;
+    var genfieldEnds = false;
+    var currentIndex = 0;
+    var html = '';
+    var groupPrefix = 'FieldOption';
+    var fieldItemPrefix = '';
+    var totalItems = $(tempSelectElementDiv).find('select > option').length;
+
+    
+    var fieldGrpStart = false;
+    var genfieldGrpStart = false;
+//html += '<option class="fielditem" name="field-item" value="">--select an item--</option>';
+
+    $(tempSelectElementDiv).find('select > option').each(function (index) {
+
+        var optionText = $(this).text();
+        var optionValue = $(this).val();
+        
+        if (optionText == '--insert merge field--' || optionText == '--select an email field--') {
+             html += '<option class="fielditem" name="field-item" value="' + optionValue + '">' + optionText + ' </option>';
+            
+            fieldsStart++;
+        }
+        
+         
+        if (fieldsStart >= 0 && optionText.indexOf('Fields for') >= 0) {
+
+             
+            if (fieldsStart > 0) {
+                if (fieldEnds) {
+                    // console.log('In fieldEnds - optionText :' + optionText);
+                    html += '</optgroup>';
+                    fieldEnds = false;
+                }
+                fieldsStart++;
+            } 
+            html += '<optgroup class="' + groupPrefix + '" label="' + optionText + '">';
+
+        }
+        
+
+         
+        if (   fieldsStart >0 && optionValue != '' && optionText.indexOf('Fields for') < 0) {
+            /*looping through field items */ 
+            fieldEnds = true;
+            fieldItemPrefix='fielditem';
+            if (optionValue=='-FastFormsLink-|Fast form Link') {
+                fieldItemPrefix += ' fflink' ;
+
+            }
+            if (optionValue=='-FFEmbedLink-|localhost|Embed Link') {
+                fieldItemPrefix += ' fflink embed-link' ;
+
+            }
+            html += '<option class="'+fieldItemPrefix+'" name="field-item" value="' + optionValue + '">' + optionText + ' </option>';
+
+        }
+        
+        
+        if (index === totalItems - 1) {
+            // this is the last one
+            html += '</optgroup>';
+        }
+    });
+    return html;
+}
+function restructurePublishSelectElement(selectElement,selecthtml)
+    {
+        var selectedValue=$(selectElement).select2("val");
+        var elemClass=$(selectElement).attr("class");
+         
+        $(selectElement).empty();
+        $(selectElement).append(selecthtml);
+        $(selectElement).select2("val", selectedValue);
+    }
+/*Dynamic porefill methods start*/
+
+function setPrefillModeDisplay(prefillMode,elemSource)
+{
+   var prefillModeParent=$(elemSource).parents('.prefill-mode-box-inner');
+   
+  if(prefillMode)
+  {
+    $(prefillModeParent).find('.prefill-mode-status').html('Dynamic Prefill Enabled');
+    $(prefillModeParent).addClass('mode-active');
+  $(prefillModeParent).parents('.MainTabContainer').find('.prefill-object-list-box-outer').slideDown(500);
+    remoteGetObjectNameListJS( $(prefillModeParent).parents('.MainTabContainer'));
+    $(prefillModeParent).parents('.MainTabContainer').find('.prefill-enabled-options-block').slideDown(200);
+
+    CopyToClipBoardForLanguages();
+  }
+  else
+  {
+   $(prefillModeParent).find('.prefill-mode-status').html('Dynamic Prefill Disabled');
+   $(prefillModeParent).parents('.MainTabContainer').find('.prefill-object-list-box-outer').slideUp(500);
+   $(prefillModeParent).parents('.MainTabContainer').find('.prefill-enabled-options-block').slideUp(200);
+    $(prefillModeParent).removeClass('mode-active');
+  } 
+} 
+function CreateOnePrefillOption(elemMainTabContainer)
+{
+var prefillObjectsElement=$(elemMainTabContainer).find('.prefill-object-list-box-inner');
+$(prefillObjectsElement).html('');
+    $(prefillObjectsElement).append(getNewObjectListRowHTML());
+         $(prefillObjectsElement).find('select.sel-object-list').select2();
+    resetPrefillOptionsRowIcon( prefillObjectsElement);
+}
+function addNewObjectItemRowHTML(elemSource)
+{
+ var prefillObjectsElement=$(elemSource).parents('.prefill-object-list-box-inner');
+  if(!isNullOrEmpty($(elemSource).attr('data-prefill-link')) && $(elemSource).attr('data-prefill-link')=='first')
+  {
+  prefillObjectsElement=$(elemSource).parents('.prefill-objectlist').find('.prefill-object-list-box-inner');
+  }
+    if($('#objectItemrowHtmlTEMP').find('select option').length>1)
+    {
+   var tempDiv=$('<div/>').html(getNewObjectListRowHTML());
+    
+     $(prefillObjectsElement).append($(tempDiv).html()); 
+     $(prefillObjectsElement).find('select.sel-object-list:last').select2();
+      resetPrefillOptionsRowIcon( prefillObjectsElement);
+    }
+    else
+    {
+     commonAlertMessage("You do not have any other related lookup objects available in your form.","");
+    }
+
+      
+}
+function dynamicPrefillSave(elemSource,isAutoSave)
+{
+var metadata = {
+  object_name: elemSource.value
+};
+Intercom('trackEvent', 'added-dynamic-prefill-object', metadata);
+  var objectNameArr=[];
+    var prefillObjectsElement=$(elemSource).parents('.prefill-object-list-box-inner');
+    dynamicPrefillSaveByParent(prefillObjectsElement);
+
+}
+function regenerateKey(elemSource)
+{
+    remoteGetPrefillKeyJS(elemSource);
+}
+function remoteGetPrefillKeyJSCall(result,prefillObjectsElement){
+    var generatekey=false;
+    var resultObject=result.ResultSObject;
+                   if(isNullOrEmpty(resultObject.Prefill_Key__c))
+                   {
+                    generatekey=true;
+                   
+                 }
+                 remoteGetPrefillKeyJS(resultObject.Id,generatekey,prefillObjectsElement);
+                
+}
+function dynamicPrefillSaveByParent(prefillObjectsElement,isAutoSave)
+{
+  var objectNameArr=[];
+   
+    $(prefillObjectsElement).find('.sfff-object-row').each(function(indx , objectRowElem){
+     var selectedValue= $(objectRowElem).find('select.sel-object-list').select2("val");
+     if(!isNullOrEmpty(selectedValue))
+     {
+      objectNameArr.push(selectedValue);
+     }
+    });
+    var prefillObjectListC='';
+    if(objectNameArr!=null && objectNameArr.length>0)
+    {
+     prefillObjectListC= objectNameArr.join(",");
+    }
+    
+  var previousFormC={};
+  
+   var prefill_Object_list__c=getPrefixedOrgFieldName(orgPrefix,'Prefill_Object_list__c');
+   previousFormC[prefill_Object_list__c]=prefillObjectListC; 
+   if(previousFormC!=null && Object.keys(previousFormC).length !== 0)
+    {
+    remoteUpdateFormPrefillInfoJS(previousFormC,prefillObjectsElement);
+    }
+     
+}
+function resetPrefillOptionsRowIcon(sfffObjectRowsParentElem)
+{
+resetAvailablePrefillSelectLookupOption();
+var numberOfLookupOptions=0;
+   var numObjectRowElem =$(sfffObjectRowsParentElem).children().size() ;
+    
+try{
+  numberOfLookupOptions=  $(sfffObjectRowsParentElem).find('select').first().find('option').length-1;
+}
+catch(err){}
+  $(sfffObjectRowsParentElem).find('.sfff-delete-action').show();
+  // $(sfffObjectRowsParentElem).find('.sfff-addnew-action').hide();
+      
+     if (numObjectRowElem==0 || numObjectRowElem < numberOfLookupOptions) {
+    $(sfffObjectRowsParentElem).parent().find('.sfff-addnew-action').show();
+    }
+    else
+    {
+    $(sfffObjectRowsParentElem).parent().find('.sfff-addnew-action').hide();
+    }
+
+}
+function deleteObjectItemRowHTML(elem) {
+    $('.sfff-delete-action').hide();
+    var sfffObjectRowsParentElem = $(elem).parents('.prefill-object-list-box-inner');
+    
+ 
+   $(elem).parents('.sfff-object-row').fadeOut().remove();
+   resetPrefillOptionsRowIcon(sfffObjectRowsParentElem);
+
+      dynamicPrefillSaveByParent(sfffObjectRowsParentElem,true);
+     
+}
+function populatePrefillOption(elemMainTabContainer,objectListCSV)
+{
+  if(!isNullOrEmpty(objectListCSV))
+  {
+    var prefillObjectsElement=$(elemMainTabContainer).find('.prefill-object-list-box-inner');
+$(prefillObjectsElement).html('');
+var objectNamesArray=objectListCSV.split(',');
+     if(objectNamesArray!=undefined)
+     {
+     objectNamesArray.filter(Boolean);// remove empty string item from array
+       $.each(objectNamesArray,function(indx,objectName){
+         $(prefillObjectsElement).append(getNewObjectListRowHTML());
+         $(prefillObjectsElement).find('select.sel-object-list:last').select2();
+         $(prefillObjectsElement).find('select.sel-object-list:last').select2('val',objectName);
+         
+       });
+      
+     }
+      resetPrefillOptionsRowIcon( prefillObjectsElement);
+     }
+}
+
+function getNewObjectListRowHTML() {
+     
+    return $('#objectItemrowHtmlTEMP').html();
+}
+function resetAvailablePrefillSelectLookupOption()
+    {
+      var lookupSelected=[];
+      $('.prefill-object-list-box-inner .sfff-object-item-1 select').each(function (indx, selectElement) {
+        if($(selectElement).find('option:selected'))
+        {
+         // lookupSelected.push({"order":indx,"svalue":$(selectElement).val()});
+          lookupSelected.push($(selectElement).val());
+        }
+      });
+      $('.prefill-object-list-box-inner .sfff-object-item-1 select option').each(function (indx, optionelem) {
+         
+          $(optionelem).removeAttr('disabled', 'disabled');
+           $(optionelem).removeClass('display-none');
+        
+      });
+       
+      $('.prefill-object-list-box-inner .sfff-object-item-1 select').each(function (selindx, selectElement) {
+      
+        $(selectElement).find('option').each(function (indx, optionelem) {
+ 
+            if((!$(optionelem).is(':selected')  && $.inArray($(optionelem).val(), lookupSelected)>=0) || isNullOrEmpty($(optionelem).val())) {
+                 
+                 
+                    $(optionelem).attr('disabled', 'disabled');
+                       $(optionelem).addClass('display-none');
+                    
+            }
+            else{
+             
+            }
+        });
+        
+      });
+    }
+/*dynamic prefill methods end*/
+  
 
 function showNotification(elemid, textmsg)
     {

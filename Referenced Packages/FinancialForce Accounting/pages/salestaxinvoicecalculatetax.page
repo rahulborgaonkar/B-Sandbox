@@ -1,0 +1,3 @@
+<apex:page standardController="c2g__codaInvoice__c" action="{!URLFOR($Page.salestaxcalculatetax,'',[id=codaInvoice__c.Id, type="SalesInvoice"])}">
+  <h1>Something has to be between the apex:page tags it seems</h1>
+</apex:page>

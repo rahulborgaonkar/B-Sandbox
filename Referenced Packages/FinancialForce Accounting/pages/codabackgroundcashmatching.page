@@ -1,0 +1,360 @@
+<apex:page id="page" Controller="c2g.CODABackgroundMatchingController" sidebar="false" >
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/codabackgroundmatching.css')}"/>
+    <style type="text/css">
+      /*The external URLs for the images are here because the URL cannot be constructed in the external css file*/
+      .popupimgWarning
+      {
+          background-image: url("{!URLFOR($Resource.coda2go, 'coda2go/web/images/warning_icon64.png')}");    
+      }
+      .popupimgSummary
+      {
+          background-image: url("{!URLFOR($Resource.coda2go, 'coda2go/web/images/info_icon.png')}");
+      }
+
+      .buttonLook .actionButton,
+      .buttonLook .actionButton:hover
+      {
+        width: 133px;
+        background: url("{!URLFOR($Resource.coda2go, 'coda2go/web/images/bm_process_btn_bg.png')}");
+      }
+
+      .buttonLook .cancelBtn,
+      .buttonLook .cancelBtn:hover
+      {
+        width: 100px;
+        background: url("{!URLFOR($Resource.coda2go, 'coda2go/web/images/bm_cancel.png')}");
+      }
+
+      .buttonLook .disabledButton,
+      .buttonLook .disabledButton:hover
+      {
+        width: 133px;
+        background: url("{!URLFOR($Resource.coda2go, 'coda2go/web/images/BM_header_disabled.png')}");
+      }
+    </style>
+
+    <!-- The labels used by the Javascript -->
+    <script>
+      window['$Label'] = window['$Label'] || {};
+      $Label.BackgroundMatchingProcessSummaryHeader = '{!JSENCODE($Label.BackgroundMatchingProcessSummaryHeader)}';
+      $Label.BackgroundMatchingMatchByReference = '{!JSENCODE($Label.BackgroundMatchingMatchByReference)}';
+      $Label.BackgroundMatchingMatchByDocNumber = '{!JSENCODE($Label.BackgroundMatchingMatchByDocNumber)}';
+      $Label.BackgroundMatchingProcessWarningHeader = '{!JSENCODE($Label.BackgroundMatchingProcessWarningHeader)}';
+      $Label.Yes = '{!JSENCODE($Label.Yes)}';
+      $Label.No = '{!JSENCODE($Label.No)}';
+    </script>
+    
+    <apex:form id="form">
+        <!-- Actions called by javascript to run process --> 
+        <apex:actionFunction name="getMatchesString" action="{!estimatedRecordCount}" />
+        <apex:actionFunction name="runProcessAction" action="{!runProcess}" />
+
+        <!-- Header Section -->
+        <div id="headerContainer" class="headerContainer">
+
+            <!-- The help link -->
+            <div id="helpContainer" class="helpContainer">
+                <apex:image id="helpIcon" styleClass="helpImage" value="/img/alohaSkin/help_orange.png"/>
+                <apex:outputLink styleClass="helplabel" value="{!URLFOR('/apex/c2g__codahelploader?topicid=1063')}" target="_blank" >{!$Label.HelpLink}</apex:outputLink>
+            </div>
+
+            <!-- The Header Image -->
+            <div id="headerImageContainer" class="image headerImage">
+                <apex:image id="headerImage" value="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/bm_header_icon.png')}"/>
+            </div>
+
+            <!-- The Header Title -->
+            <div id="headerTextContainer" class="bLabelLook header">
+                <apex:outputLabel value="{!$Label.codaBackgroundCashMatchingSection}"/>
+            </div>
+
+            <!-- The Header Action Button  -->
+            <div id="headerButtonContainer" class="headerButtonContainer">
+                <!-- Button State ENABLED -->
+                <div id="headerActionButtonEnabled" class="buttonLook" > 
+                    <button type="button" class="bLabelLook buttonLabel buttonLabelAction actionButton buttonLook:hover actionButton:hover" onclick="getMatchesString(); return false;">{!$Label.BackgroundMatchingRunProcess}</button>
+                </div>
+            </div>
+
+            <!-- Job Status progress bar and completed time -->
+            <div id="headerRemote" class="headerRemoteContainer">
+                <div id="jobStatusBar">
+                    <c:fflib_batchInfo id="jobStatus" batchControlRecordId="{!workerId}" batchJobClass="BackgroundMatchingBatch"/>
+                </div>
+                <div id="jobStatusComplete" class="completedTime" style="display: none;">
+                    <apex:outputLabel title="{!WorkerModifiedDate}" value="{!WorkerModifiedDate}" />
+                </div>
+            </div>
+
+        </div> <!-- end Header Section -->
+      
+        <!-- The main block containing the selection criteria -->
+        <!-- Currently the only criteria that the user can select is the match type and the partial matching option -->
+        <!-- In the future more options will be available (eg matching date, currency etc) -->
+        <apex:pageBlock id="bmBlock">
+          <!-- Use salesforce standard messaging panel to display any errors -->
+          <apex:pageMessages id="Messages" />
+          
+          <div id="Errored">
+            <apex:pageMessage id="ErrorMessage" title="Warning:" severity="Warning" strength="2" rendered="true" detail="{!$Label.BackgroundMatchingLastRunErrored}" />
+          </div>
+
+          
+        
+          <!-- Criteria Section -->
+          <apex:pageBlockSection id="criteriaSection" title="{!$Label.BackgroundMatchingCriteriaSection}" collapsible="false">      
+            <!-- The Radio Buttons for the Match Type -->
+            <apex:outputPanel id="criteriaPanel" styleClass="criteriaContainer">
+                <apex:outputPanel id="radioPanel">
+                  <apex:outputLabel styleClass="radioLabel" value="{!$Label.BackgroundMatchingMatchBy}"/>
+                  <apex:selectRadio id="matchModeSelector" value="{!matchMode}">
+                    <apex:selectOption id="modeReference" itemValue="modeReference" itemLabel="{!$Label.BackgroundMatchingMatchByReference}"/>
+                    <apex:selectOption id="modeDocumentNumber" itemValue="modeDocumentNumber" itemLabel="{!$Label.BackgroundMatchingMatchByDocNumber}"/> 
+                  </apex:selectRadio>
+                </apex:outputPanel>
+
+                <!-- The CheckBox for the Allow Partial Payments Option -->
+                <apex:outputPanel id="allowPartialPaymentPanel" styleClass="allowPartialContainer">
+                  <apex:inputCheckbox id="allowPartialCheckbox" value="{!allowPartialPayment}"/>
+                  <apex:outputLabel value="{!$Label.BackgroundMatchingPartialPaymentCheckBox}"/>
+                </apex:outputPanel>
+            </apex:outputPanel>
+          </apex:pageBlockSection><!-- end Criteria Section -->
+
+        </apex:pageBlock>
+
+        <!-- Summary Popup window -->
+        <!-- To be Displayed when the Run process button in the header section is pressed to show the summury information about the process-->
+        <div id="popupBackground" class="popupBackground">
+          <div id="popupOuter" class="outerPanel" >
+            <div id="popupInner" class="innerPanel {!popupInnerPanelStyleClass}">
+                  
+                  <!-- The popup Header -->
+                <div id="popupHeader"  class="panelHeader">
+                  <span id="popupHeaderLabel"></span>
+                </div>
+
+                <!-- The Content Container -->
+                <div id="panelContent">
+                    <!-- The Image -->
+                    <div id="image" class="image headerImage popupImg "></div>
+
+                    <!--  Warning Content --> 
+                    <div id="warningContent" class="warningContent">
+                      <h2><apex:outputLabel styleClass="warningLabel" value="{!$Label.DataViewWarning}"/></h2>
+                      <p id="matchableInvoiceAndCashEntries" class="warningText"></p>
+                      <p><apex:outputLabel styleClass="warningText" value="{!$Label.BackgroundMatchingCannotCancelWarning}"/></p>
+                      <p><apex:outputLabel styleClass="warningText" value="{!$Label.ProcessCompleteEmailNotification}"/></p>
+                      <p><apex:outputLabel styleClass="warningText" value="{!$Label.BackgroundMatchingUndoWarning}"/></p>
+                    </div>
+
+                    <!--  Summary Content --> 
+                    <div id="detailsContent" class="summaryContainer">
+
+                        <!-- Summary Labels -->
+                        <div id="contentLabels" class="summaryLabelsContainer" > 
+                            <div id="labelMatchedMode">
+                                <apex:outputLabel value="{!$Label.BackgroundMatchingSummaryCompanyName}"/>
+                            </div>
+                            <div id="labelMatchBy">
+                                <apex:outputLabel value="{!$Label.BackgroundMatchingSummaryMatchedBy}"/>
+                            </div>
+                            <div id="labelAllowpartial">   
+                                <apex:outputLabel value="{!$Label.BackgroundMatchingSummaryAllowPartialPayment}"/>
+                            </div>
+                        </div>
+
+                        <!-- Summary Data -->
+                        <div id="contentData" class="summaryDataContainer" > 
+                            <div id="dataMatchedMode">
+                                <span id="companyName"></span>
+                            </div>
+                            <div id="dataMatchBy">
+                                <span id="popupDataMatchBy"></span>
+                            </div>
+                            <div id="dataAllowpartial">   
+                                <span id='allowPartialPayment'></span>
+                            </div>
+                        </div>
+
+                    </div> <!--  end Summary Content -->   
+                </div> <!-- end Content Container -->
+
+            <!-- The Popup buttons  -->
+            <div id="panelButtons" class="popupButtonsContainer" >
+                <!-- Cancel button -->
+                <div id="cancelBtnPanel" class="buttonLook">
+                    <button type="button" class="bLabelLook buttonLabel buttonLabelCancel  cancelBtn popupButton" onclick="hideAllPopups();">{!$Label.BankRecConfirmCommitGoBackBtn}</button>
+                </div>
+
+                <!-- Run button -->
+                <div id="runBtnPanel" class="buttonLook" > 
+                    <button id="popupRunButton" type="button" class="bLabelLook buttonLabel buttonLabelAction actionButton popupButton" onclick="showPanelAction(); return false;">{!$Label.BackgroundMatchingProceed}</button>
+                </div>
+            </div>
+
+            </div> <!-- end Popup Inner -->
+          </div> <!-- end Popup Outer -->
+        </div> <!-- end Popup Background -->
+
+        <!-- The Javascript code to control the page -->
+        <script>
+
+        /*
+        * Sets the visibility of the specified panel, by default sets display to block
+        * @param {String} panelId The HTML ID of the panel to be toggled
+        * @param {Boolean} visible Passing true will show the panel and false will hide it
+        * @param {String} displayStyle The style to be set to the display property, optional
+        */
+        function setPanelVisible(panelId, visible, displayStyle){
+          var element = document.getElementById(panelId);
+
+          //If no element with the specified ID is found then return without doing anything
+          if(!element){
+            return;
+          }
+
+          if(visible){
+            //Show element, set display to displayStyle if passed in or block
+            element.style.display = displayStyle ? displayStyle : 'block';
+          }
+          else{
+            //Hide the element
+            element.style.display = 'none';
+          }
+        }
+
+        /*
+        * Called once ExtJS has initialised and started up
+        */
+        Ext.onReady(function () {
+          var p = Ext.ComponentQuery.query('progressbar[renderTo=' + $Component.jobStatus + ']')[0],
+              d = document,
+              b = d.getElementById('headerActionButtonEnabled');
+              
+          /*
+          * Event handler for Job Status update
+          */
+          p.on('update', function(p, v, t, eOpts) {
+            var msg = (p.text || '').toLowerCase(),
+                done = (v === 1);
+
+            if(done)
+            {
+              setPanelVisible('jobStatusBar', false);
+              setPanelVisible('jobStatusComplete', true, 'inline-block');
+              setPanelVisible('page:form:bmBlock:Messages', false);
+            }
+
+            if(msg.indexOf('error') === 0)
+            {
+              setPanelVisible('Errored', true);
+            }
+            else if(msg.indexOf('...') === -1) 
+            {
+              setPanelVisible('jobStatusBar', true, 'inline-block');
+              b.setAttribute('disabled', 'disabled');
+            }
+
+          });
+
+        });
+
+        function showPanelAction(){
+          var popupHeaderDiv = document.getElementById('popupHeader'),
+              popupHeaderLabel = document.getElementById('popupHeaderLabel'),
+              image = document.getElementById('image'),
+              warningTextEl = document.getElementById('matchableInvoiceAndCashEntries'),
+              popupRunButtonEl = document.getElementById('popupRunButton'),
+              numCashEntries = '{!CashEntries}',
+              numSalesInvoices = '{!SalesInvoices}';
+
+          //Change the labels and styles on the panel accordingly
+          popupHeaderDiv.innerHTML = $Label.BackgroundMatchingProcessWarningHeader;
+          popupHeaderDiv.className = 'panelHeader warningHeaderBackground';
+          image.className = 'image popupImg popupimgWarning';
+          warningTextEl.innerHTML = '{!RecordCount}';
+          popupRunButton.setAttribute('onclick', 'runProcessAction(); return false;');
+          
+          if(numCashEntries === '0' && numSalesInvoices === '0'){
+            //No cash matching to do so disable button
+            popupRunButtonEl.setAttribute('disabled', 'disabled');
+            popupRunButtonEl.className = 'bLabelLook buttonLabel buttonLabelAction disabledButton popupButton';
+          }
+          else{
+            popupRunButtonEl.removeAttribute('disabled');
+            popupRunButtonEl.className = 'bLabelLook buttonLabel buttonLabelAction actionButton popupButton';
+          }
+
+          //Show the panel
+          setPanelVisible('warningContent', true, 'inline-block');
+          setPanelVisible('detailsContent', false);
+        }
+
+
+        /*
+        * Sets up the text and styles in a panel and prepares it to be shown
+        */
+        function showSummaryAction(){
+          var companyName = '{!CurrentCompany}',
+              companyNameEl = document.getElementById('companyName'),
+              popupDataMatchByEl = document.getElementById('popupDataMatchBy'),
+              selectionRef = document.getElementById('page:form:bmBlock:criteriaSection:matchModeSelector:0'),
+              selectionDoc = document.getElementById('page:form:bmBlock:criteriaSection:matchModeSelector:1'),
+              partialPaymentCheckbox = document.getElementById('page:form:bmBlock:criteriaSection:allowPartialCheckbox'),
+              partialPaymentEl = document.getElementById('allowPartialPayment'),
+              popupHeaderDiv = document.getElementById('popupHeader'),
+              popupHeaderLabel = document.getElementById('popupHeaderLabel'),
+              popupImage = document.getElementById('image');
+
+          //Set appropriate labels on the panel
+          companyNameEl.innerHTML = companyName;
+          if(selectionRef.checked){
+            popupDataMatchByEl.innerHTML = $Label.BackgroundMatchingMatchByReference;
+          }
+          else{
+            popupDataMatchByEl.innerHTML = $Label.BackgroundMatchingMatchByDocNumber;
+          }
+          partialPaymentCheckbox.checked ? partialPaymentEl.innerHTML = $Label.Yes : partialPaymentEl.innerHTML = $Label.No;
+
+          //Set the popup header style, label and the image
+          popupHeaderDiv.innerHTML = $Label.BackgroundMatchingProcessSummaryHeader;
+          popupHeaderDiv.className = 'panelHeader summaryHeaderBackground';
+          image.className = 'image popupImg popupimgSummary popupImgSummaryTopMargin';
+
+          //Show the panel
+          setPanelVisible('popupBackground', true, 'inline-block');
+          setPanelVisible('detailsContent', true, 'inline-block');
+        }
+
+        /*
+        * Hides all of the popups
+        */
+        function hideAllPopups(){
+          setPanelVisible('Errored', false);
+          setPanelVisible('popupBackground',false);
+          setPanelVisible('detailsContent', false);
+          setPanelVisible('warningContent', false);
+        }
+
+        /*
+        * Re-opens any popups that were present before a refresh
+        */
+        function reopenPopups(){
+          //Check if popup was open
+          if('{!PopupOpened}' == 'true'){
+            showSummaryAction();
+          }
+        }
+
+        /*
+        * Page initialisation code
+        */
+        //Hide elements not ready to be seen
+        hideAllPopups();
+        reopenPopups();
+        
+      </script>
+
+    </apex:form>
+</apex:page>

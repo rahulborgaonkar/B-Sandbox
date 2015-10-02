@@ -1,0 +1,17 @@
+<apex:page standardController="ffirule__IntegrationRuleJob__c" extensions="ffirule.IntegrationRuleJobController" action="{!schedule}">
+    <apex:sectionHeader title="{!$ObjectType.ffirule__IntegrationRuleJob__c.Label} Scheduling" subtitle="{!ffirule__IntegrationRuleJob__c.Name}"/>
+    <apex:form >
+	    <apex:outputField value="{!ffirule__IntegrationRuleJob__c.ffirule__ScheduledApexJobID__c}" rendered="false"/>
+	    <apex:outputField value="{!ffirule__IntegrationRuleJob__c.ffirule__ScheduledApexJobCronExpression__c}" rendered="false"/>
+	    <apex:outputField value="{!ffirule__IntegrationRuleJob__c.ffirule__IntegrationRule__c}" rendered="false"/>
+	    <apex:outputField value="{!ffirule__IntegrationRuleJob__c.IntegrationRule__r.Id}" rendered="false"/> 
+    	<apex:pageBlock >
+	    	<apex:pageBlockButtons location="bottom">
+	                <apex:commandButton value="Back" action="{!view}"/>
+			</apex:pageBlockButtons>
+	    	<apex:pageBlockSection columns="1">
+	    		 <apex:pageMessages />
+	    	</apex:pageBlockSection>
+	    </apex:pageBlock>
+    </apex:form>
+</apex:page>

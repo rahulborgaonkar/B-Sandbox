@@ -1,0 +1,5 @@
+<apex:component layout="none" selfClosing="true">
+	<apex:attribute name="datetimeValue" type="Datetime" description="Datetime" required="true" />
+	<apex:attribute name="outputTextValue" type="String" description="String" required="true" />
+	<apex:outputText styleClass="date" value="{!outputTextValue}"><apex:param value="{!datetimeValue}" /></apex:outputText>
+</apex:component>

@@ -1,0 +1,34 @@
+<apex:page controller="ffps_jrnlimp.JournalImportSetupController" action="{!setup}">
+	<apex:sectionHeader title="Journal Import" subtitle="Journal Import Setup" />
+    <apex:form id="mainForm">
+        <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:pageBlockSection columns="1" title="Analysis Line">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="General Ledger Account"/>
+                    <apex:inputField required="true" value="{!journalLine.c2g__GeneralLedgerAccount__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Dimension 1"/>
+                    <apex:inputField value="{!journalLine.c2g__Dimension1__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Dimension 2"/>
+                    <apex:inputField value="{!journalLine.c2g__Dimension2__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Dimension 3"/>
+                    <apex:inputField value="{!journalLine.c2g__Dimension3__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Dimension 4"/>
+                    <apex:inputField value="{!journalLine.c2g__Dimension4__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                	<apex:outputLabel value=""/>
+                    <apex:commandButton value="Save" action="{!save}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>	
+</apex:page>

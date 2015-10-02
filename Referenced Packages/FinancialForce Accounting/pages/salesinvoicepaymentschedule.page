@@ -1,0 +1,11 @@
+<apex:page standardController="c2g__codaInvoiceInstallmentLineItem__c" extensions="c2g.ffb_PayScheduleLineItemExt" recordSetVar="payScheLis" action="{!calculatePaymentSchedule}">	
+    <apex:form >
+    	<apex:sectionHeader title="{!$ObjectType.c2g__codaInvoiceInstallmentLineItem__c.Label}" subtitle="{!c2g__codaInvoiceInstallmentLineItem__c.Name}"/>
+    	<apex:pageBlock >
+    		<apex:pagemessages />
+    		<apex:pageBlockButtons >
+    			<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>  
+    		</apex:pageBlockButtons>
+    	</apex:pageBlock>   
+    </apex:form>        
+</apex:page>

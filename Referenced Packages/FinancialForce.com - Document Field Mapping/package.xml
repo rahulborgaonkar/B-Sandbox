@@ -26,6 +26,7 @@
     <types>
         <members>DocumentMappingField__c.DestinationField__c</members>
         <members>DocumentMappingField__c.DocumentMapping__c</members>
+        <members>DocumentMappingField__c.Multiplier__c</members>
         <members>DocumentMappingField__c.SourceField__c</members>
         <members>DocumentMapping__c.SourceObject__c</members>
         <name>CustomField</name>

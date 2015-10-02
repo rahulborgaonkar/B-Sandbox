@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AccountCreditTermsNotDefined</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountCreditTermsNotDefined</shortDescription>
+        <value>The credit terms for the selected account on this document are not correctly defined.</value>
+    </labels>
+    <labels>
+        <fullName>AccountCurrencyNotInCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountCurrencyNotInCurrentCompany</shortDescription>
+        <value>The currency for the selected Account does not exist as an accounting currency within the current Company.</value>
+    </labels>
+    <labels>
+        <fullName>AccountMustHaveDefaultGLA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountMustHaveDefaultGLA</shortDescription>
+        <value>The account must have an associated default general ledger account.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNoSUTStatus</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNoSUTStatus</shortDescription>
+        <value>Sales Tax Status not specified on Account &apos;&apos;{0}&apos;&apos; .</value>
+    </labels>
+    <labels>
+        <fullName>AccountNoVATStatus</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNoVATStatus</shortDescription>
+        <value>Tax Status not specified on Account &apos;&apos;{0}&apos;&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNotFound</shortDescription>
+        <value>Account &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNotSpecified</shortDescription>
+        <value>Account Id has not been specified.</value>
+    </labels>
+    <labels>
+        <fullName>AccountTaxCalculationMethodUndefined</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountTaxCalculationMethodUndefined</shortDescription>
+        <value>You must designate an account with a defined tax calculation method.</value>
+    </labels>
+    <labels>
+        <fullName>ActionNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ActionNotFound</shortDescription>
+        <value>Action not specified or unexpected.</value>
+    </labels>
+    <labels>
+        <fullName>ActionNotValid</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ActionNotValid</shortDescription>
+        <value>Action name  &apos;&apos;{0}&apos;&apos; is invalid.</value>
+    </labels>
+    <labels>
+        <fullName>AddNewLine</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Add New Line</shortDescription>
+        <value>Add New Line</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CannotDeleteInvoice</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CannotDeleteInvoice</shortDescription>
+        <value>You cannot delete this invoice.</value>
+    </labels>
+    <labels>
+        <fullName>DateFromValidation</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DateFromValidation</shortDescription>
+        <value>Date From must be greater than Date To.</value>
+    </labels>
+    <labels>
+        <fullName>DualCurrencyNotSet</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DualCurrencyNotSet</shortDescription>
+        <value>You must set the dual currency for the company.</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>ErrorGlaDefault</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorGlaDefault</shortDescription>
+        <value>You must enter a general ledger account before adding a new line.</value>
+    </labels>
+    <labels>
+        <fullName>ExpenseLinesTotal</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Expense Lines Total</shortDescription>
+        <value>Expense Lines Total</value>
+    </labels>
+    <labels>
+        <fullName>FinancialCalendarDoesNotInclude</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FinancialCalendarDoesNotInclude</shortDescription>
+        <value>The financial calendar does not include {0}.</value>
+    </labels>
+    <labels>
+        <fullName>GLANotFound1</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GLANotFound1</shortDescription>
+        <value>General Ledger Account 1 not found.</value>
+    </labels>
+    <labels>
+        <fullName>GLANotFound2</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>GLANotFound2</shortDescription>
+        <value>General Ledger Account 2 not found.</value>
+    </labels>
+    <labels>
+        <fullName>HeaderDetailsTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HeaderDetailsTitle</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
+        <fullName>HideHeaderDetailsButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HideHeaderDetailsButton</shortDescription>
+        <value>Hide Header Details</value>
+    </labels>
+    <labels>
+        <fullName>HomeCurrencyNotSet</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HomeCurrencyNotSet</shortDescription>
+        <value>You must set the home currency for the company.</value>
+    </labels>
+    <labels>
+        <fullName>InternalErrorNoService</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InternalErrorNoService</shortDescription>
+        <value>Internal error, service &apos;&apos;{0}&apos;&apos; already registered.</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceAlreadyPosted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvoiceAlreadyPosted</shortDescription>
+        <value>Invoice Already Posted &apos;&apos;{0}&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceIdNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvoiceIdNotSpecified</shortDescription>
+        <value>You must specify an Invoice Id.</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceLines</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Invoice Lines</shortDescription>
+        <value>Invoice Lines</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvoiceNotFound</shortDescription>
+        <value>Invoice &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>InvoiceNotInProgress</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvoiceNotInProgress</shortDescription>
+        <value>You cannot modify this invoice.</value>
+    </labels>
+    <labels>
+        <fullName>ManageExpenseLines</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Manage Expense Lines</shortDescription>
+        <value>Manage Expense Lines</value>
+    </labels>
+    <labels>
+        <fullName>ManageExpensesLinesHeader</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ManageExpensesLinesHeader</shortDescription>
+        <value>Manage Expenses Lines</value>
+    </labels>
+    <labels>
+        <fullName>ManageProductLines</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Manage Product Lines</shortDescription>
+        <value>Manage Product Lines</value>
+    </labels>
+    <labels>
+        <fullName>MessageObjectIdDoesNotExist</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Object Id not specified</shortDescription>
+        <value>ObjectIdNotSpecified</value>
+    </labels>
+    <labels>
+        <fullName>MultipleCompanies</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultipleCompanies</shortDescription>
+        <value>Multiple current companies.</value>
+    </labels>
+    <labels>
+        <fullName>MustEnterGLA</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MustEnterGLA</shortDescription>
+        <value>You need to enter a GLA.</value>
+    </labels>
+    <labels>
+        <fullName>NoCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoCurrentCompany</shortDescription>
+        <value>No current company.</value>
+    </labels>
+    <labels>
+        <fullName>NoServiceRegistered</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoServiceRegistered</shortDescription>
+        <value>No service has been registered for action &apos;&apos;{0}&apos;&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>NoTaxRate</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoTaxRate</shortDescription>
+        <value>{0} : Tax Rate does not exist for {1}</value>
+    </labels>
+    <labels>
+        <fullName>PayableCreditLines</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PayableCreditLines</shortDescription>
+        <value>Payable Credit Lines</value>
+    </labels>
+    <labels>
+        <fullName>PayableCreditNoteAlreadyPosted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PayableCreditNoteAlreadyPosted</shortDescription>
+        <value>Payable Credit Note Already Posted {0}</value>
+    </labels>
+    <labels>
+        <fullName>PayableCreditNoteIdNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PayableCreditNoteIdNotSpecified</shortDescription>
+        <value>Payable Credit Note Id has not been specified.</value>
+    </labels>
+    <labels>
+        <fullName>PayableCreditNoteNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PayableCreditNoteNotFound</shortDescription>
+        <value>Payable Credit Note &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>PayableCreditNoteNotInProgress</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PayableCreditNoteNotInProgress</shortDescription>
+        <value>You cannot modify this payable credit note.</value>
+    </labels>
+    <labels>
+        <fullName>ProductAmbiguous</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProductAmbiguous</shortDescription>
+        <value>Product &apos;&apos;{0}&apos;&apos; is ambiguous.</value>
+    </labels>
+    <labels>
+        <fullName>ProductLinesTotal</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Product Lines Total</shortDescription>
+        <value>Product Lines Total</value>
+    </labels>
+    <labels>
+        <fullName>ProductNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProductNotFound</shortDescription>
+        <value>Product &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>ProductNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProductNotSpecified</shortDescription>
+        <value>Product has not been specified.</value>
+    </labels>
+    <labels>
+        <fullName>PurchaseInvoiceAlreadyPosted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PurchaseInvoiceAlreadyPosted</shortDescription>
+        <value>Purchase Invoice Already Posted &apos;&apos;{0}&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>RemoveLine</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Remove Line</shortDescription>
+        <value>Remove Line</value>
+    </labels>
+    <labels>
+        <fullName>RemoveTransactionNumberBeforeSaving</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveTransactionNumberBeforeSaving</shortDescription>
+        <value>You must remove transaction number before saving.</value>
+    </labels>
+    <labels>
+        <fullName>RemoveTransactionNumberBeforeToSave</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveTransactionNumberBeforeToSave</shortDescription>
+        <value>You must remove transaction number before saving</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>ShowHeaderDetailsButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ShowHeaderDetailsButton</shortDescription>
+        <value>Show Header Details</value>
+    </labels>
+    <labels>
+        <fullName>TaxCodeAmbiguous</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TaxCodeAmbiguous</shortDescription>
+        <value>Tax Code &apos;&apos;{0}&apos;&apos; is ambiguous.</value>
+    </labels>
+    <labels>
+        <fullName>TaxCodeNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TaxCodeNotFound</shortDescription>
+        <value>Tax Code &apos;&apos;{0}&apos;&apos; does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>TaxCodeNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TaxCodeNotSpecified</shortDescription>
+        <value>Tax Code not specified.</value>
+    </labels>
+    <labels>
+        <fullName>TransactionAllowedOnlyOnComplete</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TransactionAllowedOnlyOnComplete</shortDescription>
+        <value>You must remove transaction number before saving.</value>
+    </labels>
+    <labels>
+        <fullName>UnableToDeriveGLA</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToDeriveGLA</shortDescription>
+        <value>General Ledger Account not specified on selected account.</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetPricebookEntry</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetPricebookEntry</shortDescription>
+        <value>Unable To Get Related Price Book Entry</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetPurchaseCreditNote</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetPurchaseCreditNote</shortDescription>
+        <value>Unable To Get Related Payable Credit Note</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetPurchaseInvoice</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetPurchaseInvoice</shortDescription>
+        <value>Purchase invoice does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetUnitPrice</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetUnitPrice</shortDescription>
+        <value>Unit Price not specified on selected product.</value>
+    </labels>
+    <labels>
+        <fullName>UnableToInsertExpenseLine</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToInsertExpenseLine</shortDescription>
+        <value>You cannot add an expense line to a payable invoice that has been posted or discarded.</value>
+    </labels>
+    <labels>
+        <fullName>addDefaultLineButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>addDefaultLineButton</shortDescription>
+        <value>Add Default Line</value>
+    </labels>
+    <labels>
+        <fullName>codaAccountTradingCurNotNull</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaAccountTradingCurNotNull</shortDescription>
+        <value>The account trading currency is not defined. You must go to the related Account to enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>taxValueTaxRateWithoutTaxCode</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>taxValueTaxRateWithoutTaxCode</shortDescription>
+        <value>You must enter a tax code when you enter a tax value.</value>
+    </labels>
+</CustomLabels>

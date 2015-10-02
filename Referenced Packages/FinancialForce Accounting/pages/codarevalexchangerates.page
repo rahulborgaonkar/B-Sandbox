@@ -1,0 +1,2 @@
+<apex:page controller="c2g.CODACurrencyRevalController" tabStyle="c2g__codaCurrencyRevaluation__c">
+</apex:page>

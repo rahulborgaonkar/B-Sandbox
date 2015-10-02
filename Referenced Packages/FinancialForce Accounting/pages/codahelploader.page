@@ -1,0 +1,1 @@
+<apex:page controller="c2g.CODAHelpLoaderController" action="{!doRedirect}"/>

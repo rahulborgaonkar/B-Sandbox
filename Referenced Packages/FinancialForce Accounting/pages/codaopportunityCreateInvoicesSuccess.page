@@ -1,0 +1,21 @@
+<!-- codaopportunityCreateInvoicesSuccess -->
+<apex:page standardController="Opportunity" recordSetVar="selectedOpportunities" extensions="c2g.CODAOpportunityController">
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<style>
+	.pbError { background-image:url({!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+	</style>
+	<!--locale configuration management -->
+	<c:CODALocaleJS />
+	<apex:sectionHeader title="{!$Label.codaOpportunityToInvoceTitle}" subtitle="{!$Label.codaOpportunityToInvoceSubTitle}"  help="{!URLFOR('/apex/c2g__codahelploader?topicid=1322')}"/>
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageMessage summary="{!SuccessfulInvoicesLabel}" severity="info" strength="2"/>
+			<apex:pageBlockButtons location="bottom">
+				<apex:outputpanel id="buttonPanel">
+					<!-- Hidden Buttons -->
+					<apex:commandButton value="{!$Label.codaInvoiceOkay}" action="{!confirm}"/>
+				</apex:outputpanel>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,267 @@
+<apex:page controller="c2g.CODACurrencyRevalController" tabStyle="c2g__codaCurrencyRevaluation__c">
+
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/base/base.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/wizard_steps/wizard_steps.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/percentage_bar/percentage_bar.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/pages/currency_reval/currency_reval.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/ffdcTable/ffdcTable.css')}"/>   
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+    
+    <script src="{!URLFOR($Resource.front,'front/base/frameworks/jquery-1.4.2.min.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/base/base.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/components/wizard_steps/wizard_steps.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/pages/currency_reval/currency_reval.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>      
+
+	<apex:sectionHeader title="{!$Label.codaRevalWizardTitle}" subtitle="{!$Label.codaRevalWizardStep6Title}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1150')}"/>
+
+    <div class="wizardSteps">
+        <ul class="steps steps3">
+            <li class="firstChild on {!ViewState.ConfirmPageStep1Class}">
+                <div>
+                    <span class="step">1</span>
+                    <span class="title">{!$Label.codaRevalWizardStep1Title}</span>
+                </div>
+            </li>
+            <li class="on {!ViewState.ConfirmPageStep2Class}"> 
+                <div>
+                    <span class="step">2</span>
+                    <span class="title">{!$Label.codaRevalWizardStep3Title}</span>
+                </div>
+            </li>
+            <li class="lastChild current">
+                <div>
+                    <span class="step">{!ViewState.ConfirmPageLastStepNumber}</span>
+                    <span class="title">{!$Label.codaRevalWizardStep6Title}</span>
+                </div> 
+            </li>
+        </ul>
+    </div>
+	<script>
+		var CODA2GoButtons = new CODA2GoPage();
+		 var CODA2GoBtnSaveValue = "{!$Label.codaPageCashEntryNewProcessing}";
+	</script>
+    <apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+   
+        <apex:pageBlock mode="edit">        
+            <apex:outputPanel id="messagePanel" layout="block">
+                <apex:outputPanel id="informationPanel" layout="block" styleClass="informationArea" rendered="{!!submitted}" >
+                	<h3>{!ViewState.RatesInfoMessage}</h3>
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="errorPanel" layout="block" styleClass="errorArea" rendered="{!viewstate.showErrorMessages}">
+                    <apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+                        <h3><apex:outputText value="{!errorMessage}"/></h3>
+                    </apex:repeat>
+                </apex:outputPanel>
+            
+            </apex:outputPanel>
+        
+            <apex:pageBlockSection columns="1">
+         
+                <apex:pageBlockSectionItem >
+
+                    <apex:dataTable value="{!viewstate.DocumentRates}" var="rate" rowClasses="odd,even" styleClass="ffdcTable" id="doc_rates">
+                    
+                        <apex:column >
+                            <apex:facet name="header">
+                            	<apex:outputPanel >
+                            		<apex:inputCheckbox styleClass="rateSelectAllChkBox" value="{!viewstate.selectAll}" id="currSelectAll" />
+                            		<apex:outputLabel for="dualSelectAll" value="{!$Label.DocToHome}"/>
+                            	</apex:outputPanel>
+                            </apex:facet>
+                            <apex:inputCheckbox value="{!rate.selected}" styleClass="rateChkBox" id="rateSelectChkBox" onclick="FFORCE.CurrencyReval.showHomeRateField(this);"/>
+                        </apex:column>
+                    
+                        <apex:column >
+                            <apex:facet name="header"><apex:outputLabel value="{!$Label.codaCurrencyRevaluationDocumentCurrency}"/></apex:facet>
+                            <apex:outputLabel value="{!rate.CurrencyPairLabel}" id="txtHomeDocLab" styleClass="calcHomeDoc"/>
+                    		<apex:outputLabel value="({!$Label.DualCurrency})" id="txtHomeDocDual" styleClass="calcHomeDoc" rendered="{!rate.isDual}"/> 
+                    		<apex:outputLabel value="({!$Label.HomeCurrency})" id="txtHomeDocHome" styleClass="calcHomeDoc" rendered="{!rate.isHome}"/> 
+                        </apex:column>
+                    
+                        <apex:column >
+                            <apex:facet name="header"><apex:outputLabel value="{!$Label.codaCurrencyRevaluationDocumentRate}"/></apex:facet>
+                            <apex:inputtext value="{!rate.SourceCurrencyRate}" maxlength="19" id="txtHomeDoc" styleClass="calcHomeDoc" disabled="{!rate.isDisabled}" />
+                        </apex:column>
+                    
+                        <apex:column >
+                            <apex:facet name="header"><apex:outputLabel value="{!$Label.codaCurrencyRevaluationOriginalRate}"/></apex:facet>
+                            <apex:outputLabel value="{!rate.SourceOriginalCurrencyRate}" id="txtCurrentRate" styleClass="calcHomeDoc"/>
+                        </apex:column>
+                    
+                        <apex:column >
+                            <apex:facet name="header"><apex:outputLabel value="{!$Label.codaCurrencyRevaluationConversion}"/></apex:facet>
+                            <span>(1 {!rate.SourceCurrencyCode} = <span class="calculation">{!rate.ConvertedRate}</span> {!viewstate.homeCurrency})</span>
+                        </apex:column>
+
+                        <apex:column >
+                        	<apex:facet name="header">
+	                        	<apex:outputPanel >
+	                        		<apex:inputCheckbox styleClass="rateSelectAllChkBoxDual" title="selectAllDual" value="{!viewstate.selectAllDual}" id="selectAllDual" label="DualCurrency" selected="true" rendered="true" onclick="FFORCE.CurrencyReval.showDualRateField(this);"/>
+	                        		<apex:outputLabel for="selectAllDual" value="{!$Label.HomeToDual}"/>
+	                        	</apex:outputPanel>
+                        	</apex:facet>
+                        	<apex:inputCheckbox value="{!rate.selectedDual}" styleClass="rateChkBoxDual" id="dualSelectChkBox" selected="true" onclick="FFORCE.CurrencyReval.showDualRateField(this);" />
+                        </apex:column>                   
+                    </apex:dataTable>
+                    
+               	</apex:pageBlockSectionItem>
+           </apex:pageBlockSection>
+                
+           <apex:pageBlockSection columns="2">
+				<apex:pageBlockSectionItem >
+                    <apex:outputPanel styleClass="fieldLevelHelp">
+                    	<apex:outputLabel value="{!$Label.NewDualRate}"/>
+                    	<img src="/s.gif" alt="" class="helpIcon" title="{!HTMLENCODE($Label.codaCurrencyRevaluationNewDualRateHelp)}"/>
+                    </apex:outputPanel>
+                    <apex:inputText styleClass="newDualRateField" value="{!ViewState.NewDualRate}" id="NewDualRate" maxlength="{!ViewState.GroupNameMaxLength}"/>
+                </apex:pageBlockSectionItem>
+
+                 <apex:pageBlockSectionItem >
+                    <apex:outputPanel styleClass="fieldLevelHelp">
+                    	<apex:outputLabel value="{!$Label.codaRevalWizardGroupName}" for="groupName"/>    
+                    	<img src="/s.gif" alt="" class="helpIcon" title="{!HTMLENCODE($Label.codaRevalWizardGroupNameHelp)}"/>
+                    </apex:outputPanel>
+                    <apex:inputText value="{!ViewState.GroupName}" id="groupName" maxlength="{!ViewState.GroupNameMaxLength}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel styleClass="fieldLevelHelp">
+                    	<apex:outputLabel value="{!$Label.codaCurrencyRevaluationPostOnSubmit}" for="postOnSubmit"/>
+                    	<img src="/s.gif" alt="" class="helpIcon" title="{!HTMLENCODE($Label.codaCurrencyRevaluationPostOnSubmitHelp)}"/>
+                    </apex:outputPanel>
+                    <apex:inputCheckbox value="{!ViewState.PostOnSubmit}" id="postOnSubmit" selected="false"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                
+                	<apex:outputPanel styleClass="fieldLevelHelp">
+                		<apex:outputLabel value="{!$Label.codaRevalWizardScheduledTime}" for="scheduledTime"/>	
+                		<img src="/s.gif" alt="" class="helpIcon" title="{!HTMLENCODE($Label.codaRevalWizardScheduledTimeHelp)}"/>
+                	</apex:outputPanel>
+                	<apex:inputField value="{!viewstate.dto.c2g__ScheduledTime__c}" id="scheduledTime" required="false" onChange="{!viewstate.dto.c2g__ScheduledTime__c}"   >
+                		<apex:param value=""/>
+                	</apex:inputField>
+		   		</apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel styleClass="fieldLevelHelp">
+                        <apex:outputLabel value="{!$Label.codaCurrencyRevaluationIgnoreUnusedCurrencies}" for="ignoreUnusedCurrencies"/>
+                        <img src="/s.gif" alt="" class="helpIcon" title="{!HTMLENCODE($Label.codaCurrencyRevaluationIgnoreUnusedCurrenciesHelp)}"/>
+                    </apex:outputPanel>
+                    <apex:inputCheckbox value="{!ViewState.IgnoreUnusedCurrencies}" id="ignoreUnusedCurrencies"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons id="buttonSet" location="bottom">
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonPrevious}" id="previousPage_h" action="{!previousPage}" styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonCancel}"   id="cancel_h"       action="{!cancel}"       styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonSubmit}"   id="submit_h"       action="{!submit}"       styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonPrevious}" id="previousPage"   onclick="if(!CODA.queing()){document.getElementById('{!$Component.previousPage_h}').click()};return false;" rerender=""/>
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonCancel}"   id="cancel"         onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;" rerender=""/> 
+                <apex:commandButton value="{!$Label.codaCurrRevaluationButtonSubmit}"   id="submit"         onclick="if(!CODA.queing()){document.getElementById('{!$Component.submit_h}').click()};return false;" rerender=""/>                
+                <script>
+                    CODA2GoButtons.initButtons(["{!$Component.previousPage}", "{!$Component.cancel}", "{!$Component.submit}"]);
+                </script>                    
+            </apex:pageBlockButtons>                        
+       
+       </apex:pageBlock>
+       
+       <apex:pageBlock >
+       
+            <apex:pageBlockSection columns="2" title="{!$Label.codaRevalWizardSettingsSection}">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardRevaluationType}" for="revalType" />
+                    <apex:outputLabel value="{!viewState.revalType}" id="revalType" />
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardGainsLosses}" for="GLAinput" />
+                    <apex:outputLabel value="{!ViewState.CriteriaGlaName}" id="GLAinput" />
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardAnalysis}" for="GroupLevel" />
+                    <apex:outputLabel value="{!viewState.groupingLevel}" id="GroupLevel" />
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem rendered="{!skipPages}">
+                    <apex:outputLabel value="{!$Label.codaRevalWizardActionGLAs}" for="glaBehaviourAuto"/>
+                    <apex:outputLabel value="{!$Label.codaRevalWizardActionGLAsAuto}" id="glaBehaviourAuto"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!!skipPages}">
+                    <apex:outputLabel value="{!$Label.codaRevalWizardActionGLAs}" for="glaBehaviourManual"/>
+                    <apex:outputLabel value="{!$Label.codaRevalWizardActionGLAsManual}" id="glaBehaviourManual"/>
+                </apex:pageBlockSectionItem>
+
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2" title="{!$Label.codaRevalWizardPeriodsIS}" rendered="{!ViewState.isIncomeStatement}">
+              
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPeriodFrom}" for="fromPeriodIS"/>
+                    <apex:outputLabel value="{!ViewState.FromPeriodISName}" id="fromPeriodIS"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPeriodTo}" for="toPeriodIS"/>
+                    <apex:outputLabel value="{!ViewState.ToPeriodISName}" id="toPeriodIS"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPostingPeriod}" for="postingPeriodIS"/>    
+                    <apex:outputLabel value="{!ViewState.PostingPeriodISName}" id="postingPeriodIS"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardReversalPeriod}" for="reversalPeriodIS"/>    
+                    <apex:outputLabel value="{!ViewState.ReversalPeriodISName}" id="reversalPeriodIS"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+                    
+            <apex:pageBlockSection columns="2" title="{!$Label.codaRevalWizardPeriodsBS}" rendered="{!ViewState.IsBalanceSheet}">
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPeriodFrom}" for="fromPeriodBS"/>                
+                    <apex:outputLabel value="{!$Label.codaRevalWizardBeginningOfTime}" id="fromPeriodBS"  />
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPeriodTo}" for="toPeriodBS"/>
+                    <apex:outputLabel value="{!ViewState.ToPeriodBSName}" id="toPeriodBS"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardPostingPeriod}" for="postingPeriodBS"/>    
+                    <apex:outputLabel value="{!ViewState.PostingPeriodBSName}" id="postingPeriodBS"/>
+                </apex:pageBlockSectionItem>
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaRevalWizardReversalPeriod}" for="reversalPeriodBS"/>    
+                    <apex:outputLabel value="{!ViewState.ReversalPeriodBSName}" id="reversalPeriodBS"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2" title="{!$Label.codaRevalWizardGLAs}" rendered="{!!skipPages}">
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value=""/><!-- for alignment -->
+                    <apex:outputPanel layout="block" styleClass="chkTableWrapperScroll">
+                        <ul style="padding-left:0">
+                            <apex:repeat value="{!Viewstate.SelectedGLAs}" var="gla" id="glaRepeat">
+                                <li>{!gla}</li>
+                            </apex:repeat>
+                        </ul>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>
+                     
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

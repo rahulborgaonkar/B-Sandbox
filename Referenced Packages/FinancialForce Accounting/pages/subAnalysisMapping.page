@@ -1,0 +1,281 @@
+<apex:page id="subAnalysisMapping" controller="c2g.SubAnalysisMappingController" rendered="{!isProfitabilityReportingAvailable}">
+
+	<!-- Included Javascript and CSS Styling -->
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<style>
+
+		.sectionField{
+			width:60%;
+		}
+
+		.hidden{
+			display:none;
+		}
+
+		.deleteIcon{
+			float:right;
+			cursor:pointer;
+			margin-right:5px;
+			height: 16px;
+			width: 16px;
+			background-image: url({!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/bin_icon16.png')});
+		}
+
+		.pbSubheader{
+			margin-top:10px;
+		}
+
+	</style>
+
+	<!-- Page Content -->
+	<apex:sectionHeader title="Sub-Analysis Mapping" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1344')}"/>
+	<apex:form id="pageForm">
+		<apex:pageBlock id="pageBlock">
+			<!-- The buttons at the top of the page block (new, save) -->
+			<apex:pageBlockButtons id="commandButtons">
+				<apex:commandButton action="{!createNewMapping}" value="{!$Label.codaNewButton}" />
+				<apex:commandButton action="{!save}" value="{!$Label.codaSaveButton}" />
+				<apex:commandButton action="{!deleteMapping}" value="{!$Label.codaDeleteButton}" id="deleteButton" styleClass="hidden" />
+				<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" />
+			</apex:pageBlockButtons>
+
+			<!-- Message box at top of screen to show error messages -->
+			<apex:outputPanel id="messagePanel" layout="block">
+				<apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.showErrorMessages}">
+					<apex:messages />
+					<apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+							<apex:outputText value="{!errorMessage}"/><br/>
+					</apex:repeat>
+				</apex:outputPanel>
+			</apex:outputPanel>
+
+			<!-- Mapping sections -->
+			<apex:repeat id="mapLoop" value="{!viewstate.mappingViews}" var="mapView" >
+				<apex:pageBlockSection id="map" collapsible="true" columns="1" html-autoCollapse="{!mapView.collapsed}">
+
+					<!-- Override the header to add the delete button -->
+					<apex:facet name="header">
+						<span>{!mapView.mapping.MappingName}</span>
+						<span class="deleteIcon" onclick="markForDelete('{!$Component.mapDeleteCheck}','{!$Component.subAnalysisMapping.pageForm.pageBlock.commandButtons.deleteButton}', '{!mapView.deleteMessage}');"></span>
+					</apex:facet>
+
+					<apex:pageBlockSection id="mappingInfo">
+						<apex:pageBlockSectionItem id="mapNameContainer">
+							<apex:outputLabel value="{!$Label.SubAnalysisMappingName}" for="mapName"/>
+							<apex:inputText id="mapName" value="{!mapView.mapping.MappingName}" />
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="mapHeaderToLineContainer">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__UseHeaderValueAsLineDefault__c.Label}" for="mapHeaderToLine" />
+							<apex:inputCheckbox id="mapHeaderToLine" value="{!mapView.mapping.DeriveLineItemFromHeader}" />
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Sales Invoice Fields -->
+					<apex:pageBlockSection id="salesInvoiceFields">
+						<apex:pageBlockSectionItem id="salesInvoiceHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__SalesInvoiceField__c.Label}" for="mapSalesInvoiceHeader" />
+							<apex:selectList id="mapSalesInvoiceHeader" value="{!mapView.mapping.SalesInvoiceField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.salesInvoiceHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="salesInvoiceLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__SalesInvoiceLineItemField__c.Label}" for="mapSalesInvoiceLineItem" />
+							<apex:selectList id="mapSalesInvoiceLineItem" value="{!mapView.mapping.SalesInvoiceLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.salesInvoiceLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Sales Credit Note Fields -->
+					<apex:pageBlockSection id="salesCreditNoteFields">
+						<apex:pageBlockSectionItem id="salesCreditNoteHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__SalesCreditNoteField__c.Label}" for="mapSalesCreditNoteHeader" />
+							<apex:selectList id="mapSalesCreditNoteHeader" value="{!mapView.mapping.SalesCreditNoteField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.salesCreditNoteHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="salesCreditNoteLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__SalesCreditNoteLineItemField__c.Label}" for="mapSalesCreditNoteLineItem" />
+							<apex:selectList id="mapSalesCreditNoteLineItem" value="{!mapView.mapping.SalesCreditNoteLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.salesCreditNoteLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Purchase Invoice Fields -->
+					<apex:pageBlockSection id="purchaseInvoiceFields">
+						<apex:pageBlockSectionItem id="purchaseInvoiceHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseInvoiceField__c.Label}" for="mapPurchaseInvoiceHeader" />
+							<apex:selectList id="mapPurchaseInvoiceHeader" value="{!mapView.mapping.PurchaseInvoiceField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseInvoiceHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="purchaseInvoiceLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseInvoiceLineItemField__c.Label}" for="mapPurchaseInvoiceLineItem" />
+							<apex:selectList id="mapPurchaseInvoiceLineItem" value="{!mapView.mapping.PurchaseInvoiceLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseInvoiceLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem >
+							<span>&nbsp;</span>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="purchaseInvoiceExpLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseInvoiceExpenseLineItemField__c.Label}" for="mapPurchaseInvoiceExpense" />
+							<apex:selectList id="mapPurchaseInvoiceExpense" value="{!mapView.mapping.PurchaseInvoiceExpenseLineField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseInvoiceExpenseSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+					</apex:pageBlockSection>
+
+					<!-- Purchase Credit Note Fields -->
+					<apex:pageBlockSection id="purchaseCreditNoteFields">
+						<apex:pageBlockSectionItem id="purchaseCreditNoteHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseCreditNoteField__c.Label}" for="mapPurchaseCreditNoteHeader" />
+							<apex:selectList id="mapPurchaseCreditNoteHeader" value="{!mapView.mapping.PurchaseCreditNoteField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseCreditNoteHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="purchaseCreditNoteLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseCreditNoteExpenseLineItemField__c.Label}" for="mapPurchaseCreditNoteExpense" />
+							<apex:selectList id="mapPurchaseCreditNoteExpense" value="{!mapView.mapping.PurchaseCreditNoteExpenseLineField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseCreditNoteExpenseSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem >
+							<span>&nbsp;</span>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="purchaseCreditNoteExpLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__PurchaseCreditNoteLineItemField__c.Label}" for="mapPurchaseCreditNoteLineItem" />
+							<apex:selectList id="mapPurchaseCreditNoteLineItem" value="{!mapView.mapping.PurchaseCreditNoteLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.purchaseCreditNoteLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Journal Fields -->
+					<apex:pageBlockSection id="journalFields">
+						<apex:pageBlockSectionItem id="journalHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__JournalField__c.Label}" for="mapJournalHeader" />
+							<apex:selectList id="mapJournalHeader" value="{!mapView.mapping.JournalField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.journalHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+						
+						<apex:pageBlockSectionItem id="journalLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__JournalLineItemField__c.Label}" for="mapJournalLineItem" />
+							<apex:selectList id="mapJournalLineItem" value="{!mapView.mapping.JournalLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.journalLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Transaction Fields -->
+					<apex:pageBlockSection id="transactionFields">
+						<apex:pageBlockSectionItem id="transactionHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__TransactionField__c.Label}" for="mapTransactionHeader" />
+							<apex:selectList id="mapTransactionHeader" value="{!mapView.mapping.TransactionField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.transactionHeaderSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="transactionLine">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__TransactionLineItemField__c.Label}" for="mapTransactionLineItem" />
+							<apex:selectList id="mapTransactionLineItem" value="{!mapView.mapping.TransactionLineItemField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.transactionLineItemSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Currency Revaluation -->
+					<apex:pageBlockSection id="currencyRevaluationFields">
+						<apex:pageBlockSectionItem id="currencyRevaluationHeader">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.c2g__CurrencyRevaluationField__c.Label}" for="mapCurrencyRevaluation" />
+							<apex:selectList id="mapCurrencyRevaluation" value="{!mapView.mapping.CurrencyRevaluationField}" size="1" styleClass="sectionField">
+								<apex:selectOptions value="{!viewstate.currencyRevaluationSelect}" />
+							</apex:selectList>
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Audit Trail fields, Last Modified etc. -->
+					<apex:pageBlockSection id="auditTrail">
+						<apex:pageBlockSectionItem id="lastModifiedBy">
+							<apex:outputLabel value="{!$Label.SubAnalysisMappingLastModifiedBy}"  for="mapLastModifiedBy" />
+							<apex:outputText id="mapLastModifiedBy" value="{!mapView.mapping.LastModifiedByName}" />
+						</apex:pageBlockSectionItem>
+
+						<apex:pageBlockSectionItem id="lastModifiedDate">
+							<apex:outputLabel value="{!$ObjectType.c2g__AnalysisFieldMappingSettings__c.fields.LastModifiedDate.Label}" for="mapLastModifiedDate" />
+							<apex:outputText id="mapLastModifiedDate" value="{!mapView.mapping.LastModified}" />
+						</apex:pageBlockSectionItem>
+					</apex:pageBlockSection>
+
+					<!-- Hidden checkbox gets toggled to mark mappings to be deleted -->
+					<apex:inputCheckbox id="mapDeleteCheck" value="{!mapView.selected}" styleClass="hidden" />
+
+				</apex:pageBlockSection>
+			</apex:repeat>
+		</apex:pageBlock>
+	</apex:form>
+
+	<script>
+		//Create a new onLoad function and keep a backup of the old one if present
+		var oldOnLoadFn = window.onload;
+		window.onload = function(){
+			//Execute the old onload function if present
+			if(oldOnLoadFn){
+				oldOnLoadFn();
+			}
+
+			//Collapse all of the page section
+			collapseAllSections();
+		}
+
+		//Marks a mapping to be deleted by checking it's delete checkbox
+		function markForDelete(checkboxId, deleteButton, deleteMessage){
+			var deleteCheckbox = document.getElementById(checkboxId),
+				deleteButton = document.getElementById(deleteButton),
+				doDelete = false;
+
+			//Display a confirmation dialog asking the user if they are sure they want to delete the mapping
+			doDelete = window.confirm(deleteMessage);
+
+			if(doDelete){
+				deleteCheckbox.checked = true;
+				deleteButton.click();
+			}
+		}
+
+		/**
+		* This function searches the page for all page block sections (identified by the attribute autoCollapse) and collapses all sections
+		* where this attribute is set to true.  Salesforce don't provide any way to automatically collapse page block sections so to get this
+		* functionallity without relying on the Salesforce JS function twistSection() (which may change at any point in time) we have had to
+		* get javascript to 'click' on the collapse button to invoke the collapse.  The collapse button is an img tag child node of a child node
+		* of the page block section
+		*/
+        function collapseAllSections(){
+            var elementArray = document.querySelectorAll('[autoCollapse=true]'),
+                sectionEl,
+                sectionInnerDiv,
+                collapseButton,
+                i;
+
+            for(i = 0; i < elementArray.length; i++){
+            	sectionEl = elementArray[i];
+            	sectionInnerDiv = sectionEl.getElementsByTagName('div')[0];
+            	collapseButton = sectionInnerDiv.getElementsByTagName('img')[0];
+            	collapseButton.click();
+            }
+		}
+	</script>
+
+</apex:page>

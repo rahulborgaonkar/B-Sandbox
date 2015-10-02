@@ -1,0 +1,173 @@
+<apex:page standardController="c2g__DataView__c" extensions="c2g.DataViewController" showHeader="true" sidebar="true">
+	<c:ffa_bridgeUserInfo />
+	<c:ffa_extBootstrap applicationName="Dataview" staticResource="{!$Resource.c2g__Dataview}" developmentPrefix="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}" frameworkPath="../../ext">
+		<script type="text/javascript">
+			window['$RemoteAction'] = window['$RemoteAction'] || {};
+			window['$Params'] = window['$Params'] || {};
+			window['$Label'] = window['$Label'] || {};
+
+			<!-- Remote Actions -->
+			$RemoteAction.DataViewController = $RemoteAction.DataViewController || {};
+			$RemoteAction.DataViewController.save = '{!$RemoteAction.DataViewController.save}';
+			$RemoteAction.DataViewController.getObjectMetadata = '{!$RemoteAction.DataViewController.getObjectMetadata}';
+
+			<!-- Params -->
+			$Params.OpenDataView = '{!JSENCODE(OpenDataView)}';
+			$Params.ObjectList = '{!JSENCODE(ObjectList)}';
+			$Params.Metadata = '{!JSENCODE(Metadata)}';
+			$Params.ListUrl = '{!JSENCODE(ListPageUrl)}';
+			$Params.CommonNames = '{!JSENCODE(CommonNames)}';
+			$Params.Actions = '{!JSENCODE(ActionClasses)}';
+			$Params.hasEditPermissions = Boolean({!hasEditPermissions});
+
+			<!-- Labels -->
+			$Label.DataViewLabel = '{!JSENCODE($ObjectType.DataView__c.label)}';
+			$Label.DataViewNameLabel = '{!JSENCODE($ObjectType.DataView__c.fields.Name.label)}';
+			$Label.DataViewStartingObjectLabel = '{!JSENCODE($ObjectType.DataView__c.fields.StartingObject__c.label)}';
+			$Label.DataViewFieldSourceLabel = '{!JSENCODE($Label.DataViewSourceLabel)}';
+			$Label.DataViewFieldFieldLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.ObjectField__c.label)}';
+			$Label.DataViewFieldCommonNameLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.CommonName__c.label)}';
+			$Label.DataViewFieldAggregatableLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.Aggregatable__c.label)}';
+			$Label.DataViewFieldReversibleLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.Reversible__c.label)}';
+			$Label.DataViewFieldSelectableLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.Selectable__c.label)}';
+			$Label.DataViewFieldPresentableLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.Presentable__c.label)}';
+			$Label.DataViewFieldKeyLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.KeyPriority__c.label)}';
+			$Label.DataViewFieldNameLabel = '{!JSENCODE($ObjectType.DataViewField__c.fields.Name.label)}';
+			$Label.DataViewTransposeItemSourceLabel = '{!JSENCODE($Label.DataViewSourceLabel)}';
+			$Label.DataViewTransposeItemFieldLabel = '{!JSENCODE($ObjectType.DataViewTransposeItem__c.fields.ObjectField__c.label)}';
+			$Label.DataViewTransposeItemValueLabel = '{!JSENCODE($ObjectType.DataViewTransposeItem__c.fields.Value__c.label)}';
+			$Label.DataViewActionNameLabel = '{!JSENCODE($ObjectType.DataViewAction__c.fields.Name.label)}';
+			$Label.DataViewActionDescriptionLabel = '{!JSENCODE($ObjectType.DataViewAction__c.fields.Description__c.label)}';
+			$Label.DataViewActionParameterLabel = '{!JSENCODE($ObjectType.DataViewAction__c.fields.Parameter__c.label)}';
+			$Label.DataViewActionClassLabel = '{!JSENCODE($ObjectType.DataViewAction__c.fields.ApexClass__c.label)}';
+
+			<!-- Titles -->
+			$Label.DataViewNewTitle = '{!JSENCODE($Label.DataViewNewTitle)}';
+			$Label.DataViewEditTitle = '{!JSENCODE($Label.DataViewEditTitle)}';
+			$Label.DataViewFieldsTab = '{!JSENCODE($Label.DataViewFieldsTab)}';
+			$Label.DataViewJoinsTab = '{!JSENCODE($Label.DataViewJoinsTab)}';
+			$Label.DataViewActionsTab = '{!JSENCODE($Label.DataViewActionsTab)}';
+			$Label.DataViewAddAllFieldsButton = '{!JSENCODE($Label.DataViewAddAllFieldsButton)}';
+			$Label.DataViewAddFieldButton = '{!JSENCODE($Label.DataViewAddFieldButton)}';
+			$Label.DataViewDeleteFieldsButton = '{!JSENCODE($Label.DataViewDeleteFieldsButton)}';
+			$Label.DataViewBackButton = '{!JSENCODE($Label.DataViewBackButton)}';
+			$Label.DataViewCloneButton = '{!JSENCODE($Label.DataViewCloneButton)}';
+			$Label.DataViewSaveButton = '{!JSENCODE($Label.DataViewSaveButton)}';
+			$Label.DataViewServiceErrorsTitle = '{!JSENCODE($Label.DataViewServiceErrorsTitle)}';
+			$Label.DataViewWarning = '{!JSENCODE($Label.DataViewWarning)}';
+			$Label.DataViewError = '{!JSENCODE($Label.DataViewError)}';
+			$Label.DataViewOK = '{!JSENCODE($Label.DataViewOK)}';
+			$Label.DataViewEdit = '{!JSENCODE($Label.DataViewEdit)}';
+			$Label.DataViewToggleFullscreen = '{!JSENCODE($Label.DataViewToggleFullscreen)}';
+			$Label.DataViewHelp = '{!JSENCODE($Label.DataViewHelp)}';
+			$Label.DataViewCancel = '{!JSENCODE($Label.DataViewCancel)}';
+			$Label.DataViewTransposeItemTitle = '{!JSENCODE($Label.DataViewTransposeItemTitle)}';
+			$Label.DataViewTransposeItemReadOnlyTitle = '{!JSENCODE($Label.DataViewTransposeItemReadOnlyTitle)}';
+			$Label.DataViewTransposeItemDefaultFieldDescription = '{!JSENCODE($Label.DataViewTransposeItemDefaultFieldDescription)}';
+			$Label.DataViewTransposeItemSource = '{!JSENCODE($Label.DataViewTransposeItemSource)}';
+			$Label.DataViewTransposeItemMapOnField = '{!JSENCODE($Label.DataViewTransposeItemMapOnField)}';
+			$Label.DataViewTransposeItemAddButton = '{!JSENCODE($Label.DataViewTransposeItemAddButton)}';
+			$Label.DataViewTransposeItemDeleteButton = '{!JSENCODE($Label.DataViewTransposeItemDeleteButton)}';
+			$Label.DataViewMapColumn = '{!JSENCODE($Label.DataViewMapColumn)}';
+			$Label.DataviewJoinJoinName = '{!JSENCODE($Label.DataviewJoinJoinName)}';
+			$Label.DataViewJoinJoinTo = '{!JSENCODE($Label.DataViewJoinJoinTo)}';
+			$Label.DataviewJoinAddLookupButton = '{!JSENCODE($Label.DataviewJoinAddLookupButton)}';
+			$Label.DataviewJoinAddRelationshipButton = '{!JSENCODE($Label.DataviewJoinAddRelationshipButton)}';
+			$Label.DataviewJoinLookUpLabel = '{!JSENCODE($Label.DataviewJoinLookUpLabel)}';
+			$Label.DataviewJoinRelationshipLabel = '{!JSENCODE($Label.DataviewJoinRelationshipLabel)}';
+			$Label.DataViewDeleteJoinWarning = '{!JSENCODE($Label.DataViewDeleteJoinWarning)}';
+			$Label.DataViewJoinGoToError = '{!JSENCODE($Label.DataViewJoinGoToError)}';
+			$Label.DataViewJoinExpandAll = '{!JSENCODE($Label.DataViewJoinExpandAll)}';
+			$Label.DataViewJoinCollapseAll = '{!JSENCODE($Label.DataViewJoinCollapseAll)}';
+			$Label.DataViewJoinEditor = '{!JSENCODE($Label.DataViewJoinEditor)}';
+			$Label.DataViewJoinOk = '{!JSENCODE($Label.DataViewJoinOk)}';
+			$Label.DataViewJoinReset = '{!JSENCODE($Label.DataViewJoinReset)}';
+			$Label.DataViewJoinCancel = '{!JSENCODE($Label.DataViewJoinCancel)}';
+			$Label.DataViewTransposeItemTypeRestrictionText = '{!JSENCODE($Label.DataViewTransposeItemTypeRestrictionText)}';
+			$Label.DataViewAddActionButton = '{!JSENCODE($Label.DataViewAddActionButton)}';
+			$Label.DataViewDeleteActionsButton = '{!JSENCODE($Label.DataViewDeleteActionsButton)}';
+			$Label.DataViewInUseColumnHeader = '{!JSENCODE($Label.DataViewInUseColumnHeader)}';
+			$Label.DataViewInUseTooltipHeader = '{!JSENCODE($Label.DataViewInUseTooltipHeader)}';
+			$Label.DataViewMenuSelectAll = '{!JSENCODE($Label.DataViewMenuSelectAll)}';
+			$Label.DataViewMenuDeselectAll = '{!JSENCODE($Label.DataViewMenuDeselectAll)}';
+			$Label.FilterFieldFilterTooltip = '{!JSENCODE($Label.FilterFieldFilterTooltip)}';
+
+			<!-- Messages -->
+			$Label.DataViewLoadingMetadataMessage = '{!JSENCODE($Label.DataViewLoadingMetadataMessage)}';
+			$Label.DataViewSavingMessage = '{!JSENCODE($Label.DataViewSavingMessage)}';
+			$Label.DataViewCloneWarningMessage = '{!JSENCODE($Label.DataViewCloneWarningMessage)}';
+			$Label.DataViewDuplicateDataviewNameError = '{!JSENCODE($Label.DataViewDuplicateDataviewNameError)}';
+			$Label.DataViewDuplicateTransposeItemValueWithinTransposeItem = '{!JSENCODE($Label.DataViewDuplicateTransposeItemValueWithinTransposeItem)}';
+			$Label.DataViewDuplicateDataviewJoinNameError = '{!JSENCODE($Label.DataViewDuplicateDataviewJoinNameError)}';
+			$Label.DataViewJoinsSelectPrimaryObject = '{!JSENCODE($Label.DataViewJoinsSelectPrimaryObject)}';
+			$Label.DataViewJoinNameCannotBeBlank = '{!JSENCODE($Label.DataViewJoinNameCannotBeBlank)}';
+			$Label.DataviewJoinObjectNoLongerExists = '{!JSENCODE($Label.DataviewJoinObjectNoLongerExists)}';
+			$Label.DataViewTransposeItemCannotHaveBlankValues = '{!JSENCODE($Label.DataViewTransposeItemCannotHaveBlankValues)}';
+			$Label.DataViewTransposeItemNoTransposeItems = '{!JSENCODE($Label.DataViewTransposeItemNoTransposeItems)}';
+			$Label.DataviewJoinLimitLookup = '{!JSENCODE($Label.DataviewJoinLimitLookup)}';
+			$Label.DataviewJoinLimitRelationship = '{!JSENCODE($Label.DataviewJoinLimitRelationship)}';
+			$Label.DataViewFieldIsNotPresentable = '{!JSENCODE($Label.DataViewFieldIsNotPresentable)}';
+			$Label.DataViewFieldIsNotAggregatable = '{!JSENCODE($Label.DataViewFieldIsNotAggregatable)}';
+			$Label.DataViewFieldNotReversible = '{!JSENCODE($Label.DataViewFieldNotReversible)}';
+			$Label.DataViewFieldNotSelectable = '{!JSENCODE($Label.DataViewFieldNotSelectable)}';
+			$Label.DataViewInUseCannotDeleteField = '{!JSENCODE($Label.DataViewInUseCannotDeleteField)}';
+			$Label.DataViewChangeInUseKey = '{!JSENCODE($Label.DataViewChangeInUseKey)}';
+			$Label.DataViewJoinInUseError = '{!$Label.DataViewJoinInUseError}';
+			$Label.DataViewObjectDoesNotExist = '{!JSENCODE($Label.DataViewObjectDoesNotExist)}';
+			$Label.DataviewFieldDoesNotExist = '{!JSENCODE($Label.DataviewFieldDoesNotExist)}';
+			$Label.DataViewPrimaryObjectNotValid = '{!JSENCODE($Label.DataViewPrimaryObjectNotValid)}';
+
+			<!-- Filter component -->
+			$Label.FilterPanelField = '{!JSENCODE($Label.FilterPanelField)}';
+			$Label.FilterPanelAnd = '{!JSENCODE($Label.FilterPanelAnd)}';
+			$Label.FilterPanelOr = '{!JSENCODE($Label.FilterPanelOr)}';
+			$Label.FilterProperties = '{!JSENCODE($Label.FilterProperties)}';
+			$Label.FilterCancel = '{!JSENCODE($Label.FilterCancel)}';
+			$Label.FilterOk = '{!JSENCODE($Label.FilterOk)}';
+			$Label.FilterField = '{!JSENCODE($Label.FilterField)}';
+			$Label.FilterOperator = '{!JSENCODE($Label.FilterOperator)}';
+			$Label.FilterValue = '{!JSENCODE($Label.FilterValue)}';
+			$Label.FilterFrom = '{!JSENCODE($Label.FilterFrom)}';
+			$Label.FilterTo = '{!JSENCODE($Label.FilterTo)}';
+			$Label.FilterPrompt = '{!JSENCODE($Label.FilterPrompt)}';
+			$Label.FilterOpEquals = '{!JSENCODE($Label.FilterOpEquals)}';
+			$Label.FilterOpNotEquals = '{!JSENCODE($Label.FilterOpNotEquals)}';
+			$Label.FilterOpLessThan = '{!JSENCODE($Label.FilterOpLessThan)}';
+			$Label.FilterOpGreaterThan = '{!JSENCODE($Label.FilterOpGreaterThan)}';
+			$Label.FilterOpLessOrEqual = '{!JSENCODE($Label.FilterOpLessOrEqual)}';
+			$Label.FilterOpGreaterOrEqual = '{!JSENCODE($Label.FilterOpGreaterOrEqual)}';
+			$Label.FilterOpContains = '{!JSENCODE($Label.FilterOpContains)}';
+			$Label.FilterOpDoesNotContain = '{!JSENCODE($Label.FilterOpDoesNotContain)}';
+			$Label.FilterOpStartsWith = '{!JSENCODE($Label.FilterOpStartsWith)}';
+			$Label.FilterOpRange = '{!JSENCODE($Label.FilterOpRange)}';
+			$Label.FilterOpNotRange = '{!JSENCODE($Label.FilterOpNotRange)}';
+			$Label.FilterEmptyExpression = '{!JSENCODE($Label.FilterEmptyExpression)}';
+			$Label.FilterFieldSingleFormat = '{!JSENCODE($Label.FilterFieldSingleFormat)}';
+			$Label.FilterFieldRangeFormat = '{!JSENCODE($Label.FilterFieldRangeFormat)}';
+			$Label.FilterBooleanTrue = '{!JSENCODE($Label.FilterBooleanTrue)}';
+			$Label.FilterBooleanFalse = '{!JSENCODE($Label.FilterBooleanFalse)}';
+			$Label.FilterInvalidDateValue = '{!JSENCODE($Label.FilterInvalidDateValue)}';
+			$Label.FilterInvalidTimeValue = '{!JSENCODE($Label.FilterInvalidTimeValue)}';
+			$Label.ValueDropZoneText = '{!JSENCODE($Label.ValueDropZoneText)}';
+
+			<!-- Soft Date Component -->
+			$Label.DatePickerHardDateTabTitle = '{!JSENCODE($Label.DatePickerHardDateTabTitle)}';
+			$Label.DatePickerSoftDateTabTitle = '{!JSENCODE($Label.DatePickerSoftDateTabTitle)}';
+			$Label.DatePickerSoftDateNLabel = '{!JSENCODE($Label.DatePickerSoftDateNLabel)}';
+			$Label.DatePickerSoftDateNBlank = '{!JSENCODE($Label.DatePickerSoftDateNBlank)}';
+			$Label.DatePickerSelectButton = '{!JSENCODE($Label.DatePickerSelectButton)}';
+			$Label.SoftDateLastWeek = '{!JSENCODE($Label.SoftDateLastWeek)}';
+			$Label.SoftDateLastYear = '{!JSENCODE($Label.SoftDateLastYear)}';
+			$Label.SoftDateNextWeek = '{!JSENCODE($Label.SoftDateNextWeek)}';
+			$Label.SoftDateNextYear = '{!JSENCODE($Label.SoftDateNextYear)}';
+			$Label.SoftDateThisWeek = '{!JSENCODE($Label.SoftDateThisWeek)}';
+			$Label.SoftDateThisYear = '{!JSENCODE($Label.SoftDateThisYear)}';
+			$Label.SoftDateToday = '{!JSENCODE($Label.SoftDateToday)}';
+			$Label.SoftDateTomorrow = '{!JSENCODE($Label.SoftDateTomorrow)}';
+			$Label.SoftDateYesterday = '{!JSENCODE($Label.SoftDateYesterday)}';
+			$Label.SoftDateLastNDaysWithN = '{!JSENCODE($Label.SoftDateLastNDaysWithN)}';
+			$Label.SoftDateNextNDaysWithN = '{!JSENCODE($Label.SoftDateNextNDaysWithN)}';
+			$Label.FilterInvalidDateValueAllowSoft = '{!JSENCODE($Label.FilterInvalidDateValueAllowSoft)}';
+		</script>
+	</c:ffa_extBootstrap>
+</apex:page>

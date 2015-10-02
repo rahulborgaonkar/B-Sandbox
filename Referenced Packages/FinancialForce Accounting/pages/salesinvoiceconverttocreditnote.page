@@ -1,0 +1,13 @@
+<apex:page standardController="c2g__codaInvoice__c" extensions="c2g.ffb_SalesInvoiceController" action="{!convertToCreditNote}">
+    <apex:sectionHeader title="{!$ObjectType.c2g__codaInvoice__c.Label}" subtitle="{!c2g__codaInvoice__c.Name}"/>
+    <apex:form >
+	    <apex:pageBlock title="{!$Label.ConvertToCreditNoteTitle}" mode="edit">
+			<apex:pagemessages />
+			<apex:pageBlockButtons >  
+			    <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+			    <apex:outputLabel value="{!c2g__codaInvoice__c.c2g__InvoiceStatus__c}" rendered="false"/>
+	    	</apex:pageBlockButtons>
+	    </apex:pageBlock>
+	     
+    </apex:form>
+</apex:page>

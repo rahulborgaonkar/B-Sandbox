@@ -1,0 +1,14 @@
+<apex:page standardController="c2g__codaJournal__c" extensions="ffgl.JournalController" sidebar="false" action="{!post}">
+    <apex:form >
+    	<apex:sectionHeader title="{!$ObjectType.c2g__codaJournal__c.Label}" subtitle="{!c2g__codaJournal__c.Name}"/>
+    		<apex:pageBlock >
+    			<apex:pagemessages />
+    			
+    			<apex:pageBlockButtons >
+    				<apex:commandButton action="{!post}" value="{!$Label.PostJournal}" rendered="{!WarningDone}"/>
+    				<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+    			</apex:pageBlockButtons>
+    			
+    		</apex:pageBlock>    
+    </apex:form>
+</apex:page>

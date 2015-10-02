@@ -19,4 +19,5 @@
     <tab>Error_Log__c</tab>
     <tab>c2g__codaYearEndLog__c</tab>
     <tab>Invoice_History__c</tab>
+    <tab>IDG_Find_Tab</tab>
 </CustomApplication>

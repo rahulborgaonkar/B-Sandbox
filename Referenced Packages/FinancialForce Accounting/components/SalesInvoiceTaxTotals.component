@@ -1,0 +1,8 @@
+<apex:component controller="c2g.CODASalesInvoiceTaxTotalsController" access="global">
+    <apex:attribute name="salesInvoice" access="global" description="The sales invoice to pass to the component." type="c2g__codaInvoice__c" assignTo="{!salesInvoiceAttr}"/>
+    <apex:attribute name="salesInvoiceLineItems" access="global" description="The sales invoice line items to pass to the component." type="c2g__codaInvoiceLineItem__c[]" assignTo="{!salesInvoiceLineItemsAttr}"/>
+    <apex:attribute name="summariesVar" access="global" description="The tax data returned." type="String"/>
+    <apex:componentBody >
+        <apex:variable var="{!summariesVar}" value="{!taxSummaries}"/>
+    </apex:componentBody>   
+</apex:component>

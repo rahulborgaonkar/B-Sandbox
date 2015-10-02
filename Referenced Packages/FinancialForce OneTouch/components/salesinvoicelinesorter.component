@@ -1,0 +1,13 @@
+<apex:component controller="ffbext.SalesInvoiceLineSorterController" access="global">
+    <apex:attribute name="salesInvoice" access="global" description="" type="c2g__codaInvoice__c" assignTo="{!salesInvoice}"/>
+    <apex:attribute name="var" access="global" description="" type="String"/>
+    <apex:attribute name="styleClass" access="global" description="" type="String"/>
+    <apex:attribute name="firstId" access="global" description="" type="String"/>
+    <table class="{!styleClass}">
+        <apex:repeat value="{!salesInvoiceLines}" var="line">
+            <apex:componentBody >
+                <apex:variable var="{!var}" value="{!line}"/>
+            </apex:componentBody>
+        </apex:repeat>
+    </table>
+</apex:component>

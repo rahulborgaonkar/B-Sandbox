@@ -1,0 +1,3 @@
+<apex:page standardController="c2g__codaCompany__c" action="{!URLFOR($Page.AddressValidation,'',[id=CodaCompany__c.Id, addressType="Company"])}">
+  <h1>Something has to be between the apex:page tags it seems</h1>
+</apex:page>

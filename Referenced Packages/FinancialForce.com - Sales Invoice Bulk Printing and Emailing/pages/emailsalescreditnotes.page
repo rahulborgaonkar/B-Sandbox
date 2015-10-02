@@ -1,0 +1,33 @@
+<apex:page standardController="c2g__codaCreditNote__c" recordSetVar="creditNotes" extensions="ffps_scnbtnb.SalesCreditNoteController" action="{!preCheck}" >
+    <apex:sectionHeader title="Sales Credit Notes" subtitle="Email Sales Credit Notes" />
+    <apex:form >
+        <apex:pageBlock rendered="{!isComplete}">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:pageMessages />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:commandButton value="Back" action="{!cancel}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!NOT(isComplete)}">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="You have chosen to email a selection of sales credit notes. Note that you will be alerted via email when this has been completed."/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputPanel >
+                        <apex:commandButton value="Cancel" action="{!cancel}"/>
+                        <apex:outputText value=" "/>
+                        <apex:commandButton value="Send" action="{!send}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

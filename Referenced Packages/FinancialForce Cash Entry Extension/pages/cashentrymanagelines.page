@@ -1,0 +1,159 @@
+<apex:page standardController="c2g__codaCashEntry__c" extensions="ffcash.CashEntryLineItemController" sidebar="false" action="{!loadLines}">
+	<apex:variable var="fields" value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields}"/>
+	<apex:variable var="fieldsInFieldSet" value="{!0}"/>
+	<apex:stylesheet value="{!$Resource.ffcash__front_cashmanagement}/front_cashmanagement/components/UberGrid/UberGrid.css"/>
+	<style type="text/css">
+	.datePicker{
+		z-index:2000 !important;
+	}
+	.currencyISOCode{
+		font-size:11px;
+		color:#aaaaaa;
+	}
+	</style>
+	<script type="text/javascript">
+		var FFDCGlobalThousandSeperator = ",";
+		var FFDCGlobalDecimalSeperator = ".";
+	</script>
+	<script type="text/javascript" src="{!$Resource.front_cashmanagement}/front_cashmanagement/base/frameworks/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_cashmanagement}/front_cashmanagement/components/UberGrid/UberGrid.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_cashmanagement}/front_cashmanagement/pages/cashentrymanagelines/calculations.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_cashmanagement}/front_cashmanagement/pages/cashentrymanagelines/ajaxproxy.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_cashmanagement}/front_cashmanagement/utils/utilNumeric.js"></script>
+	<apex:form onsubmit="if(typeof($FFDC)!='undefined'){$FFDC('#uberGridWaiting').css({'display':'block'});}">
+		<!-- PAGE TITLE -->
+		<apex:sectionHeader title="{!$Label.ManageLinesTitle}" subtitle="{!c2g__codaCashEntry__c.Name}"/>
+			<apex:pageBlock title="{!$Label.CashEntryLinesTitle}">
+				<apex:pageBlockButtons >
+					<apex:outputPanel rendered="{!!CashEntryLineItemControllerView.pageLoadErrors}" layout="none">
+						<apex:commandButton action="{!saveAll}" value="{!$Label.SaveAllButton}"/>
+					</apex:outputPanel>
+	            	<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" immediate="true"/>
+				</apex:pageBlockButtons>
+				<apex:PageMessages />
+				<!-- HARD SET FIELDS -->
+				<div class="uberGridWrapper hideGrid_{!CashEntryLineItemControllerView.pageLoadErrors}">
+					<div class="waiting" id="uberGridWaiting">
+						<div class="waitingBG"></div>
+						<div class="waitingIcon"></div>
+					</div>
+					<table cellpadding="0" cellspacing="0" border="0" class="uberGrid" id="uberGrid">
+						<thead>
+							<tr>
+								<th class="aCenter ignorecol_true">
+									<div class="headerInner">&nbsp;</div>
+								</th>
+								<apex:repeat value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fieldsets.ffcash__ManageLines}" var="f" >
+									<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].name}_STRING"/>
+									<apex:variable var="fieldsInFieldSet" value="{!fieldsInFieldSet+1}"/>
+										<apex:outputText rendered="{!IF(OR(NOT(fieldName='c2g__BankAccountValue__c_STRING'),AND(fieldName='c2g__BankAccountValue__c_STRING',NOT(CashEntryLineItemControllerView.AreSameCurrencies))),true,false)}">
+											<th class="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].type} ignorecol_{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].calculated}">
+												<div class="headerInner {!IF(!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].nillable,'required','')} {!IF(fieldName='c2g__Account__c_STRING','required','')} {!IF(fieldName='c2g__CashEntryValue__c_STRING','required','')}" >
+													{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].label}
+												</div>
+											</th>
+										</apex:outputText>
+								</apex:repeat>
+								<th class="aCenter ignorecol_true">
+									<div class="headerInner">&nbsp;</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:variable var="lineNumber" value="{!0}"/>
+							<apex:repeat var="viewLine" value="{!CashEntryLineItemControllerView.cashEntryLines}">
+								<apex:variable var="lineNumber" value="{!lineNumber+1}"/>
+								<tr class="{!IF(viewLine.deleted,'hiddenRow','')}">
+									<td class="aCenter" width="30">
+										<div class="cellInnerText lineNumber"><apex:outputText value="{0,number,###}"><apex:param value="{!lineNumber}" /></apex:outputText></div>
+										<apex:inputCheckbox value="{!viewLine.deleted}" styleClass="deleted"/>
+										<apex:outputText rendered="{!IF(CashEntryLineItemControllerView.AreSameCurrencies,true,false)}">
+											<div style="display:none">
+												<apex:inputField value="{!viewLine.CashEntryLine.c2g__BankAccountValue__c}" styleClass="input input_{!$ObjectType.c2g__codaCashEntryLineItem__c.fields.c2g__BankAccountValue__c.name}"/>
+											</div>
+										</apex:outputText>
+									</td>
+									<apex:repeat value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fieldsets.ffcash__ManageLines}" var="f">
+										<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].name}_STRING"/>
+										<apex:outputText rendered="{!IF(OR(NOT(fieldName='c2g__BankAccountValue__c_STRING'),AND(fieldName='c2g__BankAccountValue__c_STRING',NOT(CashEntryLineItemControllerView.AreSameCurrencies))),true,false)}">
+											<td class="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaCashEntryLineItem__c.fields[f].calculated==false,'inputCell','')}">
+												<div class="{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].name} {!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaCashEntryLineItem__c.fields[f].calculated==false,'cellInner','cellInnerText')}">
+													<apex:inputField value="{!viewLine.CashEntryLine[f]}" styleClass="input input_{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].name}">
+														<apex:message />
+													</apex:inputField>
+												</div>
+											</td>
+										</apex:outputText>
+									</apex:repeat>
+									<td class="aCenter" width="30">
+										<a href="#" class="removeLine" title="{!$Label.RemoveLineButton}">{!$Label.RemoveLineButton}</a>
+									</td>
+								</tr>
+							</apex:repeat>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td></td>
+								<td>
+									<div class="cellInnerText">
+										<input type="button" id="addLine" class="btnAddLine" value="{!$Label.AddNewLineButton}"/>
+									</div>
+								</td>
+								<td colspan="{!fieldsInFieldSet-5}" class="aRight"><div class="cellInnerText" style="padding-top:8px">{!$Label.TotalsLabel}</div></td>
+								<td class="aRight"><div class="cellInnerText" style="padding: 8px 10px 4px 1px;"><span class="currencyISOCode">{!c2g__codaCashEntry__c.c2g__CashEntryCurrency__r.Name}&nbsp;&nbsp;</span><span id="cashEntryTotal">0.00</span></div></td>
+								<apex:outputText rendered="{!IF(CashEntryLineItemControllerView.AreSameCurrencies,true,false)}">
+									<td class="aRight hiddenCell"><div class="cellInnerText" style="padding-top:8px" id="bankAccountTotal">0.00</div></td>
+								</apex:outputText>
+								<apex:outputText rendered="{!IF(CashEntryLineItemControllerView.AreSameCurrencies,false,true)}">
+									<td class="aRight"><div class="cellInnerText" style="padding: 8px 10px 4px 1px;"><span class="currencyISOCode">{!c2g__codaCashEntry__c.c2g__BankAccountCurrency__c}&nbsp;&nbsp;</span><span id="bankAccountTotal">0.00</span></div></td>
+								</apex:outputText>
+								<td class="aRight"><div class="cellInnerText" style="padding: 8px 10px 4px 1px;"><span class="currencyISOCode">{!c2g__codaCashEntry__c.c2g__BankAccountCurrency__c}&nbsp;&nbsp;</span><span id="lineChargesTotal">0.00</span></div></td>
+								<td class="aRight"><div class="cellInnerText" style="padding-top: 8px;"><span class="currencyISOCode">{!c2g__codaCashEntry__c.c2g__BankAccountCurrency__c}&nbsp;&nbsp;</span><span id="netValueTotal">0.00</span></div></td>
+								<td>&nbsp;</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div id="defaultRowFields" class="defaultRowFields">
+					<apex:repeat value="{!$ObjectType.c2g__codaCashEntryLineItem__c.fieldsets.ffcash__ManageLines}" var="f" >
+						<div>input_{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].label}:<apex:inputField value="{!CashEntryLineItemControllerView.defaultCashEntryLine[f]}" styleClass="input input_{!$ObjectType.c2g__codaCashEntryLineItem__c.fields[f].name}"/></div>
+					</apex:repeat>
+				</div>
+	        </apex:pageBlock>
+			<script type="text/javascript">
+				var $FFDC = jQuery.noConflict();
+				
+				$FFDC(document).ready(function () {
+					$FFDC.errorString = '##ERROR##'; 
+					$FFDC.exchangeRate = parseFloat({!CashEntryLineItemControllerView.rate});
+					$FFDC.sameCurrencies = {!CashEntryLineItemControllerView.AreSameCurrencies};
+					
+					//SETUP KEYBOARD GRID
+					$FFDC('#uberGrid').UberGrid({
+						'addLine': $FFDC('#addLine')
+					});
+					
+					//SETUP CALCULATION JS FOR THIS GRID
+					$FFDC('#uberGrid').CalcGrid({});
+					
+					//CALCULATE EACH ROW
+					$FFDC('#uberGrid tbody tr:not(.hiddenRow)').each(function (i, e) {
+						$FFDC().CalcGrid('calculateRow', $FFDC(e));
+					});
+					
+					$FFDC('#uberGrid tbody tr').each(function (i, e) {
+						$FFDC(e).find('td.inputCell.reference .lookupInput .input.input_c2g__Account__c:not(a)').AjaxProxy({
+							action: 'Common.GetAccountValues',
+							fields: ["c2g__AccountPaymentMethod__c","c2g__AccountDimension1__c","c2g__AccountDimension2__c","c2g__AccountDimension3__c","c2g__AccountDimension4__c"]
+						});
+					});
+				});
+				
+				$FFDC(window).load(function () {
+					$FFDC('#uberGridWaiting').css({
+						'display': 'none'
+					});
+				});
+			</script>
+	</apex:form>
+</apex:page>

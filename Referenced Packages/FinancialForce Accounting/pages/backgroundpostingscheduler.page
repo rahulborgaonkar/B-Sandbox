@@ -1,0 +1,222 @@
+<apex:page controller="c2g.BackgroundPostingSchedulerController">
+<script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/pages/backgroundpostingscheduler/css/backgroundpostingscheduler.css')}"/>
+	<apex:form >
+		<apex:inputHidden value="{!selectedFrequencyType}" id="selectedFrequency"/>
+		<apex:inputHidden value="{!selectedMonthItem}" id="selectedMonthItem"/>
+
+		<apex:sectionHeader title="{!$Label.BackgroundPostingScheduler}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1321')}"/>
+
+		<apex:pageBlock mode="edit" title="{!$Label.ScheduleEdit}">
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!scheduleJob}" value="{!$Label.ScheduleJob}"/>
+				<apex:commandButton action="{!runNow}" value="{!$Label.RunNow}"/>
+			</apex:pageBlockButtons>
+			<apex:pageMessages />
+
+			<apex:pageBlockSection columns="1">
+				<apex:outputPanel layout="block">
+					<table cellspacing="0" cellpadding="4" width="100%" border="0">
+						<tr>
+							<td class="labelCell labelCellTop" valign="top" width="150px">
+							<span>{!$Label.Frequency}</span>
+							</td>
+							<td>
+								<div class="frequency">
+									<div class="cronTabs">
+										<apex:repeat var="frequencyType" value="{!frequencyTypeList}">
+											<div class="cronTab" id="tab{!frequencyType.Value}">
+												<input id="radio{!frequencyType.Value}" type="radio" name="frequencyType" value="{!frequencyType.value}" onclick="javascript:togglePanel('{!frequencyType.value}')"/>
+												<label for="radio{!frequencyType.Value}">{!frequencyType.Name}</label>
+												<div class="borderBottom"></div>
+											</div>
+										</apex:repeat>
+										<div class="clearBoth"></div>
+									</div>
+
+									<div id="pnlHourly" class="frequencyTabPanel" style="height:70px">
+										<table width="100%" cellspacing="0" cellpadding="8">
+											<tr>
+												<td class="labelCell2"><apex:outputLabel value="{!$Label.RepeatInterval}" for="repeatInterval"/></td>
+												<td style="width:100%">
+													<apex:selectList id="repeatInterval" value="{!selectedInterval}" multiselect="false" size="1" required="true">
+														<apex:selectOptions value="{!intervalList}" />
+													</apex:selectList>
+												</td>
+											</tr>
+											<tr>
+												<td class="labelCell2"><apex:outputLabel value="{!$Label.PreferredStartOffset}" for="startOffset"/></td>
+												<td>
+													<apex:selectList id="startOffset" value="{!selectedOffset}" multiselect="false" size="1" required="true">
+														<apex:selectOptions value="{!offsetList}" />
+													</apex:selectList>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div id="pnlDaily" class="frequencyTabPanel" style="display:none;height:70px">
+										<table width="100%" cellspacing="0" cellpadding="8">
+											<tr><td><span class="recurs">Recurs every day</span></td></tr>
+										</table>
+									</div>
+
+									<div id="pnlWeekly" class="frequencyTabPanel" style="display:none;height:70px">
+										<table width="100%" cellspacing="0" cellpadding="8">
+											<tr><td><span class="recurs">{!$Label.Recurseveryweekon}</span></td></tr>
+											<tr>
+												<td>
+													<apex:selectCheckboxes value="{!selectedWeekDays}">
+														<apex:selectOptions value="{!weekDayList}"/>
+													</apex:selectCheckboxes>
+												</td>
+											</tr>
+										</table>
+									</div>
+
+									<div id="pnlMonthly" class="frequencyTabPanel" style="display:none;height:70px">
+										<table width="100%" cellspacing="0" cellpadding="8">
+											<tr>
+												<td>
+													<input id="radioDayNo" type="radio" name="monthPanel" value="1" onclick="javascript:toggleMonthItems('1')">{!$Label.OnDay}</input>
+													<apex:selectList id="lstMonthDay" value="{!selectedMonthDay}" multiselect="false" size="1">
+														<apex:selectOptions value="{!monthDayList}" />
+													</apex:selectList> {!$Label.ofeverymonth}
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input id="radioDayOccurance" type="radio" name="monthPanel" value="1" onclick="javascript:toggleMonthItems('2')">{!$Label.On}</input>
+													<apex:selectList id="lstDayOccurance" value="{!selectedDayOccurance}" multiselect="false" size="1">
+														<apex:selectOptions value="{!dayOccuranceList}" />
+													</apex:selectList>
+													<apex:selectList id="lstWeekDay" value="{!selectedWeekDay}" multiselect="false" size="1">
+														<apex:selectOptions value="{!weekDayList}" />
+													</apex:selectList> {!$Label.ofeverymonth}
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr id="startTimeRow">
+							<td class="labelCell"><apex:outputLabel value="{!$Label.PreferredStartTime}" for="startTime"/></td>
+							<td style="height:40px;">
+								<apex:selectList id="startTime" value="{!selectedTime}" multiselect="false" size="1" required="true">
+									<apex:selectOptions value="{!timeList}" />
+								</apex:selectList>
+							</td>
+						</tr>
+					</table>
+
+					<script type="text/javascript">
+
+						function togglePanel(panelType)
+						{
+							if(panelType == 'Hourly')
+							{
+								document.getElementById('tabHourly').className = 'cronTab current';
+								document.getElementById('tabDaily').className = 'cronTab';
+								document.getElementById('tabWeekly').className = 'cronTab';
+								document.getElementById('tabMonthly').className = 'cronTab';
+
+								document.getElementById('pnlHourly').style.display = 'block';
+								document.getElementById('pnlDaily').style.display = 'none';
+								document.getElementById('pnlWeekly').style.display = 'none';
+								document.getElementById('pnlMonthly').style.display = 'none';
+							}
+							else if(panelType == 'Daily')
+							{
+								document.getElementById('tabHourly').className = 'cronTab';
+								document.getElementById('tabDaily').className = 'cronTab current';
+								document.getElementById('tabWeekly').className = 'cronTab';
+								document.getElementById('tabMonthly').className = 'cronTab';
+
+								document.getElementById('pnlHourly').style.display = 'none';
+								document.getElementById('pnlDaily').style.display = 'block';
+								document.getElementById('pnlWeekly').style.display = 'none';
+								document.getElementById('pnlMonthly').style.display = 'none';
+							}
+							else if(panelType == 'Weekly')
+							{
+								document.getElementById('tabHourly').className = 'cronTab';
+								document.getElementById('tabDaily').className = 'cronTab';
+								document.getElementById('tabWeekly').className = 'cronTab current';
+								document.getElementById('tabMonthly').className = 'cronTab';
+
+								document.getElementById('pnlHourly').style.display = 'none';
+								document.getElementById('pnlDaily').style.display = 'none';
+								document.getElementById('pnlWeekly').style.display = 'block';
+								document.getElementById('pnlMonthly').style.display = 'none';
+							}
+							else if(panelType == 'Monthly')
+							{
+								document.getElementById('tabHourly').className = 'cronTab';
+								document.getElementById('tabDaily').className = 'cronTab';
+								document.getElementById('tabWeekly').className = 'cronTab';
+								document.getElementById('tabMonthly').className = 'cronTab current';
+
+								document.getElementById('pnlHourly').style.display = 'none';
+								document.getElementById('pnlDaily').style.display = 'none';
+								document.getElementById('pnlWeekly').style.display = 'none';
+								document.getElementById('pnlMonthly').style.display = 'block';
+
+								document.getElementById('radioDayNo').checked = true;
+								toggleMonthItems(1);
+							}
+							document.getElementById("{!$Component.selectedFrequency}").value = panelType;
+							document.getElementById('startTimeRow').style.visibility = (panelType == 'Hourly') ? 'hidden' : 'visible';
+						}
+
+						function toggleMonthItems(itemType)
+						{
+							if(itemType == 1)
+							{
+								document.getElementById("{!$Component.lstMonthDay}").disabled = false;
+								document.getElementById("{!$Component.lstDayOccurance}").disabled= true;
+								document.getElementById("{!$Component.lstWeekDay}").disabled= true;
+							}
+							else if(itemType == 2)
+							{
+								document.getElementById("{!$Component.lstMonthDay}").disabled= true;
+								document.getElementById("{!$Component.lstDayOccurance}").disabled= false;
+								document.getElementById("{!$Component.lstWeekDay}").disabled= false;
+							}
+							document.getElementById("{!$Component.selectedMonthItem}").value = itemType;
+						}
+
+						function GetValue()
+						{
+							getExpression(document.getElementById("{!$Component.resultExp}").value);
+						}
+
+						//SETUP
+						if(document.getElementById('{!$Component.selectedFrequency}').value=='' || document.getElementById('{!$Component.selectedFrequency}').value=='Hourly'){
+							document.getElementById('radioHourly').checked = true;
+							document.getElementById('tabHourly').className = 'cronTab current';
+							document.getElementById("{!$Component.selectedFrequency}").value = 'Hourly';
+						}
+						else if(document.getElementById('{!$Component.selectedFrequency}').value=='Daily'){
+							document.getElementById('radioDaily').checked = true;
+							document.getElementById('tabDaily').className = 'cronTab current';
+						}
+						else if(document.getElementById('{!$Component.selectedFrequency}').value=='Weekly'){
+							document.getElementById('radioWeekly').checked = true;
+							document.getElementById('tabWeekly').className = 'cronTab current';
+						}
+						else if(document.getElementById('{!$Component.selectedFrequency}').value=='Monthly'){
+							document.getElementById('radioMonthly').checked = true;
+							document.getElementById('tabMonthly').className = 'cronTab current';
+						}
+						togglePanel(document.getElementById("{!$Component.selectedFrequency}").value);
+
+					</script>
+
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+	</apex:form>
+</apex:page>

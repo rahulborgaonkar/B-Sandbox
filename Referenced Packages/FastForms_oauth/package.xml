@@ -15,7 +15,7 @@
                 <members>VisualAntidote__FastForms_oauth</members>
                 <name>Module</name>
             </types>
-            <version>66.0</version>
+            <version>83.0</version>
         </module>
     </modules>
     <namespacePrefix>VisualAntidote</namespacePrefix>

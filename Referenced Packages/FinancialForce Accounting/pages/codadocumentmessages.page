@@ -1,0 +1,14 @@
+<!-- codadocumentmessages -->
+<apex:page controller="c2g.CODADocumentMessagesController">
+	<apex:sectionHeader title="{!$Label.codaDocumentMessagePageTitle}" subtitle="{!$Label.codaDocumentMessagePageSubtitle}"/>
+	<apex:form >
+		<apex:pageBlock mode="detail">
+			<apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <apex:outputpanel id="buttonPanel">
+                    <apex:commandButton id="back" value="{!$Label.codaDocumentMessagePageBackToDocument}" action="{!back}"/>
+                </apex:outputpanel>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

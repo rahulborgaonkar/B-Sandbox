@@ -1,0 +1,7 @@
+<!-- WorkerProgressBar -->
+<apex:page standardController="c2g__Worker__c">
+	<c:fflib_batchInfo id="jobStatus"
+        batchControlRecordId="{!c2g__Worker__c.Id}"
+        batchJobClass="WorkerBatch"
+    />
+</apex:page>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>F21y_oauth</fullName>
+    <apiAccessLevel>Unrestricted</apiAccessLevel>
+    <modules>
+        <module>
+            <label>F21y_oauth</label>
+            <moduleType>connected</moduleType>
+            <name>F21y_oauth</name>
+            <types>
+                <members>F21y_oauth_devConfig</members>
+                <name>ConnectivityDevConfigMetadata</name>
+            </types>
+            <types>
+                <members>ffc__F21y_oauth</members>
+                <name>Module</name>
+            </types>
+            <version>11.0</version>
+        </module>
+    </modules>
+    <namespacePrefix>ffc</namespacePrefix>
+    <version>31.0</version>
+</Package>

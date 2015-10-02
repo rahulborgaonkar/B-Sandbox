@@ -9,35 +9,51 @@
         <members>CKEditorNewFormMultiController</members>
         <members>CKEditorNewFormMultiController2</members>
         <members>ExportLinksController</members>
+        <members>FFDragAndDropRESTAPI</members>
+        <members>FFHelper</members>
+        <members>FFPaymentConfigHelper</members>
         <members>FFRecordData</members>
+        <members>FFResultHelper</members>
+        <members>FFTheme</members>
         <members>FastFormsLookupController</members>
         <members>FastFormsPostInstallClass</members>
+        <members>FastFormsUtilities</members>
         <members>FormDraftPreviewController</members>
         <members>FormEditorController</members>
+        <members>FormPaymentComponentController</members>
         <members>FormPublishController</members>
         <members>FormPublishPreviewController</members>
         <members>LicenseHelper</members>
         <members>PublishComponentController</members>
         <members>RuleEditorComponentController</members>
+        <members>RuleHelper</members>
         <members>SObjectWrapper</members>
         <members>SelectModal</members>
         <members>SelectOptionSorter</members>
+        <members>StyleEditorComponentController</members>
         <members>TestCKEditorMenuController</members>
         <members>TestCKEditorNewFormController</members>
         <members>TestCKEditorNewFormMultiController</members>
         <members>TestCKEditorNewFormMultiController2</members>
         <members>TestExportLinksController</members>
+        <members>TestFFDragAndDropRESTAPI</members>
+        <members>TestFFHelper</members>
+        <members>TestFFPaymentConfigHelper</members>
         <members>TestFastFormsLookupController</members>
+        <members>TestFastFormsUtilities</members>
         <members>TestFastForms_CaseAutoResponse</members>
         <members>TestFastForms_LeadAutoResponse</members>
         <members>TestFormDraftPreviewController</members>
         <members>TestFormEditorController</members>
+        <members>TestFormPaymentComponentController</members>
         <members>TestFormPublishController</members>
         <members>TestFormPublishPreviewController</members>
         <members>TestLicenseHelper</members>
         <members>TestPublishComponentController</members>
         <members>TestRuleEditorComponentController</members>
+        <members>TestRuleHelper</members>
         <members>TestSelectOptionSorter</members>
+        <members>TestStyleEditorComponentController</members>
         <members>TrialExpiryComponentController</members>
         <members>XMLDom</members>
         <members>XMLDomTest</members>
@@ -49,13 +65,16 @@
         <name>ApexClass</name>
     </types>
     <types>
+        <members>FFDragAndDrop</members>
         <members>FormCss</members>
+        <members>FormPaymentComponent</members>
         <members>NewFormComponent</members>
         <members>NewFormComponentMulti</members>
         <members>NewFormComponentMulti2</members>
         <members>PublishComponent</members>
         <members>RuleDialog</members>
         <members>RuleEditorComponent</members>
+        <members>StyleEditorComponent</members>
         <members>TrialExpiryComponent</members>
         <name>ApexComponent</name>
     </types>
@@ -68,6 +87,7 @@
         <members>FormEditorToolbar</members>
         <members>FormMenu</members>
         <members>FormOption</members>
+        <members>FormPayment</members>
         <members>FormPublish</members>
         <members>FormPublishPreview</members>
         <members>FormWelcome</members>
@@ -79,36 +99,132 @@
         <name>ApexPage</name>
     </types>
     <types>
+        <members>FastForms_CaseAutoResponse</members>
+        <members>FastForms_LeadAutoResponse</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
         <members>FastForms</members>
         <name>CustomApplication</name>
     </types>
     <types>
+        <members>Case.Fast_Forms_Auto_Assign__c</members>
+        <members>Case.Fast_Forms_Autoresponse__c</members>
         <members>Confirmation_Email__c.Body__c</members>
         <members>Confirmation_Email__c.Subject__c</members>
         <members>FastFormsAuthorizationKey__c.Key__c</members>
         <members>FastFormsFileUploadEnabled__c.FileUploadEnabled__c</members>
+        <members>FastFormsFreemiumEnabled__c.freemiumPopupDisabled__c</members>
         <members>FastFormsLastID__c.FormID__c</members>
         <members>FastFormsServiceURL__c.EngineURL__c</members>
         <members>FastFormsServiceURL__c.LicenseURL__c</members>
         <members>FastFormsServiceURL__c.ServiceURL__c</members>
         <members>FastFormsShortLinkURL__c.FFShortLink__c</members>
+        <members>FastForms_InitialPopupDismissed__c.PopupDismissed__c</members>
         <members>Form_Rule__c.Active__c</members>
         <members>Form_Rule__c.Form__c</members>
         <members>Form_Rule__c.Rule_Order__c</members>
         <members>Form_Rule__c.Rule_Script__c</members>
         <members>Form_Rule__c.Rule_XML__c</members>
+        <members>Form_Style__c.CSS_custom__c</members>
+        <members>Form_Style__c.CSS_default__c</members>
+        <members>Form_Style__c.Recently_selected__c</members>
+        <members>Form_Style__c.Style_Type__c</members>
+        <members>Form_Style__c.Style_data__c</members>
+        <members>Form_Style__c.Tile_Preview_html__c</members>
         <members>Form_Submission__c.Details__c</members>
+        <members>Form_Submission__c.Form_Used__c</members>
         <members>Form_Submission__c.Form__c</members>
         <members>Form_Submission__c.IP_Address__c</members>
         <members>Form_Submission__c.Object__c</members>
         <members>Form_Submission__c.Record_Created_Updated__c</members>
         <members>Form_Submission__c.Status__c</members>
         <members>Form_Submission__c.Submission_Date__c</members>
+        <members>Form_Submission__c.User_Content_ID__c</members>
+        <members>Lead.Fast_Forms_Auto_Assign__c</members>
+        <members>Lead.Fast_Forms_Autoresponse__c</members>
         <members>Notification_Email__c.Body__c</members>
         <members>Notification_Email__c.Subject__c</members>
+        <members>Payment_Account__c.Account_Type__c</members>
+        <members>Payment_Account__c.Is_Sandbox__c</members>
+        <members>Payment_Account__c.Password__c</members>
+        <members>Payment_Account__c.Signature__c</members>
+        <members>Payment_Account__c.Username__c</members>
+        <members>Payment_Currency__c.Currency_Code__c</members>
+        <members>Payment_Currency__c.Currency_Symbol__c</members>
+        <members>Payment_Field__c.Account__c</members>
+        <members>Payment_Field__c.American_Express_Accepted__c</members>
+        <members>Payment_Field__c.Currency__c</members>
+        <members>Payment_Field__c.Discover_Accepted__c</members>
+        <members>Payment_Field__c.Display_Amount_Charged__c</members>
+        <members>Payment_Field__c.Failure_Email_BCC__c</members>
+        <members>Payment_Field__c.Failure_Email_Body__c</members>
+        <members>Payment_Field__c.Failure_Email_CC__c</members>
+        <members>Payment_Field__c.Failure_Email_Subject__c</members>
+        <members>Payment_Field__c.Failure_Email_To_Field_ID__c</members>
+        <members>Payment_Field__c.Failure_Email_To__c</members>
+        <members>Payment_Field__c.Field_ID__c</members>
+        <members>Payment_Field__c.Form__c</members>
+        <members>Payment_Field__c.Is_Payment_Required__c</members>
+        <members>Payment_Field__c.Label_Amount__c</members>
+        <members>Payment_Field__c.Label_CVV__c</members>
+        <members>Payment_Field__c.Label_Credit_Card__c</members>
+        <members>Payment_Field__c.Label_Expiry__c</members>
+        <members>Payment_Field__c.Label_Recurring_Fee__c</members>
+        <members>Payment_Field__c.Label_Shipping__c</members>
+        <members>Payment_Field__c.Label_Sub_Total_Amount__c</members>
+        <members>Payment_Field__c.Label_Taxes__c</members>
+        <members>Payment_Field__c.Label_Total_Amount__c</members>
+        <members>Payment_Field__c.Mastercard_Accepted__c</members>
+        <members>Payment_Field__c.Notification_Email_BCC__c</members>
+        <members>Payment_Field__c.Notification_Email_Body__c</members>
+        <members>Payment_Field__c.Notification_Email_CC__c</members>
+        <members>Payment_Field__c.Notification_Email_From_Name__c</members>
+        <members>Payment_Field__c.Notification_Email_From__c</members>
+        <members>Payment_Field__c.Notification_Email_Subject__c</members>
+        <members>Payment_Field__c.Notification_Email_To_Field_ID__c</members>
+        <members>Payment_Field__c.Notification_Email_To__c</members>
+        <members>Payment_Field__c.Payment_Type__c</members>
+        <members>Payment_Field__c.Provider_Field_Mapping_XML__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Count__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Field_Type__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Frequency__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Initial_Amount_Formula__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Initial_Amt_Field_ID__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Initial_Fixed_Amount__c</members>
+        <members>Payment_Field__c.Recurring_Payment_Interval__c</members>
+        <members>Payment_Field__c.Retry_Recurring_Payment_After_Failure__c</members>
+        <members>Payment_Field__c.Shipping_Field_ID__c</members>
+        <members>Payment_Field__c.Shipping_Field_Type__c</members>
+        <members>Payment_Field__c.Shipping_Fixed_Amount__c</members>
+        <members>Payment_Field__c.Shipping_Formula__c</members>
+        <members>Payment_Field__c.Subtotal_Amount_Default_Formula__c</members>
+        <members>Payment_Field__c.Subtotal_Amount_Field_Type__c</members>
+        <members>Payment_Field__c.Subtotal_Amount_Formula_Type__c</members>
+        <members>Payment_Field__c.Subtotal_Amount_Formula__c</members>
+        <members>Payment_Field__c.Subtotal_Amount_Mapping_XML__c</members>
+        <members>Payment_Field__c.Subtotal_Amount__c</members>
+        <members>Payment_Field__c.Subtotal_Base_Amount__c</members>
+        <members>Payment_Field__c.Subtotal_Field_ID__c</members>
+        <members>Payment_Field__c.Success_Email_BCC__c</members>
+        <members>Payment_Field__c.Success_Email_Body__c</members>
+        <members>Payment_Field__c.Success_Email_CC__c</members>
+        <members>Payment_Field__c.Success_Email_Subject__c</members>
+        <members>Payment_Field__c.Success_Email_To_Field_ID__c</members>
+        <members>Payment_Field__c.Success_Email_To__c</members>
+        <members>Payment_Field__c.Taxes_Field_ID__c</members>
+        <members>Payment_Field__c.Taxes_Field_Type__c</members>
+        <members>Payment_Field__c.Taxes_Fixed_Percentage__c</members>
+        <members>Payment_Field__c.Taxes_Formula__c</members>
+        <members>Payment_Field__c.Test_Mode__c</members>
+        <members>Payment_Field__c.Transaction_Amount_Mapping_Field_ID__c</members>
+        <members>Payment_Field__c.Transaction_ID_Mapping_Field_ID__c</members>
+        <members>Payment_Field__c.Visa_Accepted__c</members>
         <members>Previous_Form__c.Active__c</members>
+        <members>Previous_Form__c.Disable_Lookup_Visible_Warning__c</members>
         <members>Previous_Form__c.Draft_Form__c</members>
         <members>Previous_Form__c.Draft_Status__c</members>
+        <members>Previous_Form__c.Dynamic_Prefill_Enabled__c</members>
         <members>Previous_Form__c.EmailDraft__c</members>
         <members>Previous_Form__c.EmailTemplateConfigFields__c</members>
         <members>Previous_Form__c.EmailToNotify__c</members>
@@ -123,12 +239,22 @@
         <members>Previous_Form__c.Form_Number__c</members>
         <members>Previous_Form__c.Form_Type__c</members>
         <members>Previous_Form__c.HasEmailDraft__c</members>
+        <members>Previous_Form__c.Hidden_Related_Object__c</members>
         <members>Previous_Form__c.Hidden_Secondary_Object__c</members>
         <members>Previous_Form__c.Hide_Popup__c</members>
         <members>Previous_Form__c.Hosted_Form_ID__c</members>
         <members>Previous_Form__c.Is_Simple_Web_Interface_Form__c</members>
         <members>Previous_Form__c.Object_Name__c</members>
+        <members>Previous_Form__c.PDF_Confirmation_Chatter__c</members>
+        <members>Previous_Form__c.PDF_Confirmation_Record__c</members>
+        <members>Previous_Form__c.PDF_Send_To_Email__c</members>
+        <members>Previous_Form__c.PDF_Send_To__c</members>
+        <members>Previous_Form__c.Prefill_Key__c</members>
+        <members>Previous_Form__c.Prefill_Object_list__c</members>
+        <members>Previous_Form__c.Prefill_Secret_Key__c</members>
+        <members>Previous_Form__c.Related_Object__c</members>
         <members>Previous_Form__c.Secondary_Object__c</members>
+        <members>Previous_Form__c.Theme__c</members>
         <members>Previous_Form__c.TrackingEnabled__c</members>
         <members>Previous_Form__c.Url_Param_Str__c</members>
         <members>Web_Services_Log__c.Dataset__c</members>
@@ -145,12 +271,18 @@
         <members>Confirmation_Email__c</members>
         <members>FastFormsAuthorizationKey__c</members>
         <members>FastFormsFileUploadEnabled__c</members>
+        <members>FastFormsFreemiumEnabled__c</members>
         <members>FastFormsLastID__c</members>
         <members>FastFormsServiceURL__c</members>
         <members>FastFormsShortLinkURL__c</members>
+        <members>FastForms_InitialPopupDismissed__c</members>
         <members>Form_Rule__c</members>
+        <members>Form_Style__c</members>
         <members>Form_Submission__c</members>
         <members>Notification_Email__c</members>
+        <members>Payment_Account__c</members>
+        <members>Payment_Currency__c</members>
+        <members>Payment_Field__c</members>
         <members>Previous_Form__c</members>
         <members>Web_Services_Log__c</members>
         <name>CustomObject</name>
@@ -161,21 +293,31 @@
         <name>CustomTab</name>
     </types>
     <types>
+        <members>FastFormsFiles</members>
         <members>Fast_Forms</members>
         <members>Fast_Forms/Logo.png</members>
         <name>Document</name>
     </types>
     <types>
         <members>Form_Rule__c-Form Rule Layout</members>
+        <members>Form_Style__c-Form Style Layout</members>
         <members>Form_Submission__c-Form Submission Layout</members>
+        <members>Payment_Account__c-Payment Account Layout</members>
+        <members>Payment_Currency__c-Payment Currency Layout</members>
+        <members>Payment_Field__c-Payment Field Layout</members>
         <members>Previous_Form__c-Custom Template Info Layout</members>
         <members>Web_Services_Log__c-Web Services Log Layout</members>
         <name>Layout</name>
     </types>
     <types>
         <members>Form_Rule__c.All</members>
+        <members>Form_Style__c.All</members>
         <members>Form_Submission__c.All</members>
+        <members>Payment_Account__c.All</members>
+        <members>Payment_Currency__c.All</members>
+        <members>Payment_Field__c.All</members>
         <members>Previous_Form__c.All</members>
+        <members>Previous_Form__c.Custom_template_list</members>
         <members>Web_Services_Log__c.All</members>
         <name>ListView</name>
     </types>
@@ -192,16 +334,24 @@
     <types>
         <members>Bootstrapwizardcss</members>
         <members>Bootstrapwizardjs</members>
+        <members>CSStoJSON</members>
         <members>Clipboard</members>
+        <members>FFCKEditor</members>
+        <members>FFFileUpload</members>
+        <members>FFRating</members>
         <members>OpenSansSemiBold</members>
         <members>OpenSansSemiBoldTTF</members>
         <members>PublishComponentJs</members>
         <members>PublishComponentJsCopy</members>
+        <members>Select2MultiCheckboxExt</members>
+        <members>SelectToRadioList</members>
         <members>Stroke_w_circle</members>
         <members>action_icons_sprite</members>
         <members>alpha</members>
         <members>autosize</members>
         <members>checkmark_gif</members>
+        <members>commonJSHelper</members>
+        <members>datetimepicker</members>
         <members>downloadify</members>
         <members>downloadifyjs</members>
         <members>downloadifypng</members>
@@ -211,9 +361,16 @@
         <members>draft_saving_gif</members>
         <members>fancyScorllbar</members>
         <members>ff_radio_buttons</members>
+        <members>ffcolpicker</members>
         <members>ffcommon</members>
+        <members>ffdefaulttheme</members>
+        <members>ffrangeslider</members>
+        <members>fftextcomplete</members>
         <members>fixedposition</members>
+        <members>formEditorJS</members>
+        <members>formPaymentComponentJS</members>
         <members>formatToolbar</members>
+        <members>formcommoncss</members>
         <members>formcss</members>
         <members>foundation</members>
         <members>freshereditor</members>
@@ -224,7 +381,9 @@
         <members>joyride</members>
         <members>jquery_dialog</members>
         <members>jquerytoolsjs</members>
+        <members>loadingWorkerJs</members>
         <members>logos</members>
+        <members>lzstringJs</members>
         <members>perfectscrollbar</members>
         <members>please_wait_gif</members>
         <members>publish_option_buttonsprite</members>
@@ -235,8 +394,14 @@
         <members>sfffstyle</members>
         <members>sortable</members>
         <members>sticky</members>
+        <members>styleEditorComponentJs</members>
+        <members>styleeditor_iframecss</members>
         <members>swfobjectjs</members>
         <name>StaticResource</name>
+    </types>
+    <types>
+        <members>Form_Submission__c.Resubmit</members>
+        <name>WebLink</name>
     </types>
     <version>31.0</version>
 </Package>

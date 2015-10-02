@@ -1,0 +1,1405 @@
+<apex:component controller="VisualAntidote.FormPaymentComponentController" allowDML="true">
+
+
+
+    <apex:includeScript value="{!$Resource.VisualAntidote__Bootstrapwizardjs}" />
+   
+
+
+
+
+
+<style>
+.payment-recurring-block{
+
+  background-color: #d7e0e4;
+}
+.email-to-fields-wrapper.collapse{
+  display:none;
+}
+
+.email-accordion .accordion-header  {
+  
+    padding-bottom: 5px;
+  border-bottom: 1px solid #C0C0C0;
+}
+.email-accordion .accordion-header h2{
+cursor: pointer;
+color:#052942;
+display: block;
+  text-align: left;
+  
+}
+.accordion-wrapper {
+  padding-top: 20px;
+}
+.pp-account-name {
+  max-width: 260px;
+}
+.email-to-fields-wrapper {
+  background-color: #CFE0EA; 
+  margin-top: -1px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.email-to-fields-wrapper .email-content-box,.email-to-fields-wrapper .email-to-fields {
+ margin: 0px 50px !important;
+}
+.email-accordion .accordion-header  .pp-action-icon{
+  
+  background-image: url("{!URLFOR($Resource.VisualAntidote__ffcommon,'iconimages/button-sprite.png')}");
+  background-repeat: no-repeat;;
+  background-position: -146px -3px;
+  display: inline-block;
+  width:30px;
+  height:30px;
+  float: right;
+  }
+  .email-accordion .accordion-header.pp-expanded .pp-action-icon {
+  
+  background-position: -346px -3px;
+  }
+  .email-content-editor {
+    border: 1px solid #aaa;
+  background-color: white;
+  border-radius: 5px;
+  min-height: 100px; 
+  padding: 5px;
+}
+.pp-edit-actions-outer{
+float:right;
+display:inline-block;
+}
+.pp-edit-actions-outer .test-mode-box-inner{
+display:block;
+}
+.paypal-account-item-container{
+overflow:hidden;
+}
+h4.pp-sandbox{
+    display: block;
+  float: right;
+  padding: 0px 20px 10px 0px;
+  font-weight: 700 !important;
+  clear: both;
+}
+.validation-message {
+  color: red;
+  padding: 5px 0px;
+  font-weight: 300;
+ 
+}
+.email-to-fields .validation-message {
+ margin-left: 180px;
+}
+.fields-mapping-body input.ff-input-text{
+  max-width:226px;
+}
+.fields-mapping-body input.pp-type-currency{
+  max-width:98px;
+}
+</style>
+
+
+<script>
+var currencyList=[];
+var availableFieldsListForPayment=[];
+
+function remoteUpdatePaymenfieldInfoJS(paymentFieldRecord)
+ { 
+  
+   
+       Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteUpdatePaymenfieldInfo)}',
+        paymentFieldRecord,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null && result.indexOf('record updated')==0 ) {
+
+                   console.log('Update- '+result);
+                     
+                } else {
+                     console.log('update paymentfield fail');
+                }
+
+            } else if (event.type === 'exception') {
+                
+            } else {
+                 
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ function remoteGetFieldsInfoJS(paymentFieldRecordId,fieldList,elemSourceParent)
+ { 
+  
+   var fieldlistCSV=fieldList.join("|");
+       Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteGetFieldsInfo)}',
+        paymentFieldRecordId,fieldlistCSV,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null && typeof result=='object' ) {
+
+                   console.log('Fetch paymentfield success- '+result.id);
+
+                      populatePaypalTabInfo(result,elemSourceParent);
+                } else {
+                     console.log('Fetch paymentfield fail');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ function remotePopulatePaypalAccountInfoJS(elementSource,accountid)
+{
+    Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remotePopulatePaypalAccountInfo)}',
+        accountid,
+        function(result, event) {
+            if (event.status) {
+                
+                
+                if (result != null && result.length > 0) {
+                  console.log(' remotePopulatePaypalAccountInfo result HTML-' + result);
+                    for (i = 0; i < result.length; i++) {
+console.log(' Output -'+i+' -- '+ result[i]);   
+
+                    }
+                    if(result.length==6)
+                    {
+                       
+                       populatePaypalAccountFields(elementSource,result);
+
+                    }
+                     
+                } else {
+                     console.log('No account information found');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+}
+function remoteIsPaypalAccountInUseJS(paypalaccid)
+{
+
+Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteIsPaypalAccountInUse)}',
+        paypalaccid,
+        function(result, event) {
+            if (event.status) {
+                
+                
+                if (result != null && result.length > 0) {
+                   
+                 //   alert('This account is used in other '+result.length+' forms'); 
+                    var formlist='<ul>';
+                     for (i = 0; i < result.length; i++) {
+                        formlist+='<li>'+result[i]+'</li>'  ;
+
+                    }
+                    formlist+='</ul>';
+                    commonAlertMessage('This account is being used in other forms and cannot be deleted.','Please modify the payment fields in the forms below before deleting this account:<br/>'+formlist+'');
+                     
+                } else {
+                      dodeletePaypalAccount(paypalaccid);
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while deleting paypal account- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while deleting paypal account- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+}
+function remoteRefreshAvailableFieldsListJS(paymenttab,elemSourceParent)
+ {
+ //availableFieldsListForPayment
+ var recordid = '{!$CurrentPage.parameters.id}';
+ Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteGetAvailableFieldsListForPayment)}',
+        recordid,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null   ) {
+                  availableFieldsListForPayment=[];
+                   console.log('Fields list ');
+                   
+                   populateAvailableFieldsListForPaymentCallBack(elemSourceParent,result);
+                   changePaymentActiveTabCallBack(paymenttab,elemSourceParent)
+                     
+                } else {
+                     console.log('Fields list null');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ function remoteGetCurrencyListWithSelectedItemJS(paymentFieldRecordid,elemSourceTabsContainer)
+ { 
+       Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteGetCurrencyListWithSelectedItem)}',
+        paymentFieldRecordid,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null   ) {
+                  currencyList=[];
+                   console.log('Currency list ');
+                   for (i = 0; i < result.length; i++) {
+                         if(result[i].ResultSObject!=null)
+                         {
+                          var  currency_Code__c=getPrefixedOrgFieldName(SFOrgPrefix,'Currency_Code__c');
+                          var  currency_Symbol__c=getPrefixedOrgFieldName(SFOrgPrefix,'Currency_Symbol__c'); 
+                          var currencyid = result[i].ResultSObject.Id;
+                         
+                          var code = result[i].ResultSObject[currency_Code__c];
+                        var symbol = result[i].ResultSObject[currency_Symbol__c];
+                        var name = result[i].ResultSObject.Name;
+                        var isselected=result[i].ResultText=='selected'? true : false;
+
+                        currencyList.push(createJSONCurrencyObject(currencyid,name, code, symbol,isselected));
+                         }
+                        
+
+                    }
+                   populateCurrencyListCallBack(currencyList,elemSourceTabsContainer);
+                     
+                } else {
+                     console.log('Currency list null');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ function remoteSavePaymenfieldInfoJS(paymentFieldRecordid,fieldname,fieldvalue)
+ { 
+       Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteSavePaymenfieldInfo)}',
+        paymentFieldRecordid,fieldname,fieldvalue,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null && typeof result=='object' ) {
+
+                   console.log('savepaymentfield success '+result.Id);
+                     
+                } else {
+                     console.log('savepaymentfield fail');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ function remoteToggleTestModeJS(paymentFieldRecordid,updateTestMode,elementSourceFieldLi)
+ { 
+       Visualforce.remoting.Manager.invokeAction(
+        '{!URLENCODE($RemoteAction.FormPaymentComponentController.remoteToggleTestMode)}',
+        paymentFieldRecordid,updateTestMode,
+        function(result, event) {
+            if (event.status) {
+                
+                
+               if (result != null && typeof result=='object' && result.IsValid) {
+
+                   if(result.ResultText=='true')
+                   {
+                   /* var  issandbox__c=getPrefixedOrgFieldName(SFOrgPrefix,'Is_Sandbox__c');
+                           var accid = result[i].ResultSObject.Id;
+                           var issandbox = result[i].ResultSObject[issandbox__c];
+                           var acctWrapdivid='pp-acc-'+accid;*/
+                    setPaymentTestModeDisplay(true,$(elementSourceFieldLi).find('.test-mode-togglelink'));
+                     setPaymentTestModeHTML(elementSourceFieldLi,true);
+                   }
+                   else
+                   {
+                     setPaymentTestModeDisplay(false,$(elementSourceFieldLi).find('.test-mode-togglelink'));
+                     setPaymentTestModeHTML(elementSourceFieldLi,false);
+                   }
+                   console.log('Payment field  found- test mode is '+result.ResultText);
+                     
+                } else {
+                     console.log('Payment field not found');
+                }
+
+            } else if (event.type === 'exception') {
+                //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+            } else {
+                //console.log(" unknown Exception while getting available themes- " + event.message);
+            }
+        }, {
+            escape: false
+        }
+    );
+ }
+ 
+</script>
+
+<apex:actionFunction name="refreshAvailableFields"   immediate="true" action="{!DummyRefresh}"    reRender="msgPanel,tempPaymentAvailableFieldsDiv" oncomplete="refreshAvailableFieldList();draftchanges(false);"  >
+</apex:actionFunction> 
+     <apex:actionFunction name="createOrUpdatePayPalAccount"   immediate="true" action="{!createNewPayPalAccount}"  status="statusCreateAcc"  reRender="msgPanel, mainPaypalAccountsPanel" oncomplete="resetPaymentSettings();draftchanges(false);"  >
+     <apex:param name="accountid" value=""/>
+            <apex:param name="accountname" value=""/>
+            <apex:param name="ppusername" value=""/>
+            <apex:param name="pppassword" value=""/>
+            <apex:param name="accsignature" value=""/>
+            <apex:param name="issandbox" value=""/>
+            
+           
+            
+      </apex:actionFunction> 
+     
+<apex:actionFunction immediate="true"  name="dodeletePaypalAccount" action="{!deletePaypalAccount}" reRender="msgPanel, mainPaypalAccountsPanel"    oncomplete="resetPaymentSettings();draftchanges(false); " >
+    <apex:param name="deleteaccid"   value=""/>
+</apex:actionFunction>
+      <apex:actionStatus id="statusCreateAcc">
+      <apex:facet name="start">
+       <div id="load-status" > 
+          <div class="overlay"></div>
+              <div class="status">
+                  <div class='dialogHeader'><div class='dialogIcon dialogIconWait'>&nbsp;</div></div><div class='dialogFont'><div class="primary">Processing, please wait...<br /><br /><br /></div></div>
+              </div>
+        </div>
+     </apex:facet>
+</apex:actionStatus>
+    <div class="payment-options-container">
+ 
+ <div class="test-mode-box-inner ">
+                  <div class="test-mode-status">Test Mode Off</div>
+                                                  <div class="test-mode-togglelink" onclick="toggleTestMode(this,true);">
+                                                      <div class="test-mode-toggleswitch">
+                                                          &nbsp;
+                                                      </div>
+                                                  </div>
+                                                  
+                                              </div>
+  <ul class="nav nav-tabs  payment-option-tabs">
+                <li class="sfff-tab paypal-account-header" id="paypal-account-header">
+                    <a  onclick="changePaymentActiveTab(this);return false;" href="#paypalaccountsection"  ><span class="acc-tab-number">1</span><span class="tab-title">Select Account</span></a>
+                </li>
+                <li class="sfff-tab paypal-setting-header" id="paypal-setting-header">
+                    <a  onclick="changePaymentActiveTab(this);return false;"  href="#paypalsettingsection"  ><span class="acc-tab-number">2</span><span class="tab-title">Payment Settings</span></a>
+                </li>
+                <li class="sfff-tab fields-mapping-header" id="fields-mapping-header">
+                    <a  onclick="changePaymentActiveTab(this);return false;" href="#fieldsmappingsection"  ><span class="acc-tab-number">3</span><span class="tab-title">Field Mapping</span></a>
+                </li>
+                <li class="sfff-tab email-confirmation-header" id="email-confirmation-header" >
+                    <a   onclick="changePaymentActiveTab(this);return false;" href="#emailconfirmationsection"  ><span class="acc-tab-number">4</span><span class="tab-title">Email Confirmation</span></a>
+                </li>
+            </ul>
+
+ <apex:outputPanel id="tabPaypmentContentPanel" layout="block" styleClass="payment-option-content tab-content" >
+            <div id="paypalaccountsection" class="tab-pane fade in paypal-account-body  active">
+                    
+                    <div class="mt40 mlr40"><h2  >Select a PayPal Account</h2></div>
+                    <div class="paypal-accounts-list mlr40">
+                    <apex:outputPanel id="mainPaypalAccountsPanel" layout="block" styleClass="" >
+                         <apex:repeat id="mainPaypalAccountsRepeater" rendered="{!IF(paypalAccountsBriefList.size>0,true,false)}" value="{!paypalAccountsBriefList}" var="paypalAccount">
+                                 <div id='pp-acc-{!paypalAccount.Id}' class="paypal-item-wrapper paypal-account-item-container mt20">
+                                   <div class="pp-checkbox-box  inline-block pad10" id="pp-account-{!paypalAccount.Id}">
+                                    <input id="ppacccheck-{!paypalAccount.Id}" name="pp-account" type="radio" onchange="radioPPAccountChange(this);" class="ff-radio-input" />
+                                    <label for="ppacccheck-{!paypalAccount.Id}"  class="ff-radio-css" />
+                                   </div>
+                                   <div class="pp-account-name  inline-block pad10">
+                                   <h1>{!paypalAccount.Name}</h1>
+                                   <span class="pp-username">{!paypalAccount.Username__c}</span>
+                                   
+                                   </div>
+                                   <div class="pp-edit-actions-outer">
+                                   <div class="pp-edit-actions inline-block pad10">
+                                    <a class="edit-pp-account expand-icon" onclick="expandPaypalAccountDiv(this,true); return false;" data-acc-id="{!paypalAccount.Id}"></a>
+                                    <a class="delete-pp-account delete-icon" onclick="deletePaypalAccount(this); return false;" data-acc-id="{!paypalAccount.Id}"></a>
+                                  </div>
+                                  <!-- sandbox mode div -->
+                                   <h4 class="pp-sandbox">{!IF(paypalAccount.Is_Sandbox__c,'Sandbox','Live')}</h4>
+                                  <!-- sandbox mode div ends -->
+                                   </div>
+                                   <div class="paypal-account-wrap-container mb20 " style="display:none;">
+                                     <div class="paypal-account-element-wrapper" >
+                                     </div>
+                                   </div>
+                                 </div>
+                         </apex:repeat>
+                      </apex:outputPanel>
+                    </div>
+                    <div class="paypal-item-wrapper pp-new-account-wrapper">
+                      <div class="mt20 mb20 mlr40 text-align-center">
+                      <a class="vabutton3" id="addPaypalAccount" onclick="expandPaypalAccountDiv(this,false);return false;"><span class="btn-text">Add New Paypal Account</span></a>
+                        
+                      </div>
+                      <div class="paypal-account-wrap-container mlr40 mb20" style="display:none;">
+                        <div class="paypal-account-element-wrapper" >
+                         
+                             </div>
+                            <div class="text-align-center mt20">
+                              <a class="vabutton3"   onclick="createPaypalAccount(this,'');return false;"><span class="btn-text">Create Paypal Account</span></a>
+                            </div>
+
+                      </div>
+                    </div>
+                    
+                </div>
+                <div id="paypalsettingsection" class="tab-pane fade paypal-setting-body">
+                      <div class="mt40 mlr40"><h2  >Set up Your Payment Options</h2></div>
+                      <div class="pp-field-row mlr40">
+                          <div class="pp-field-left">Payment Required</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                     <input type="checkbox" data-pp-prop="Is_Payment_Required__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxIsPaymentRequired" value="" />
+                                                                   <label   class="css-check-label"></label>
+                                  </div>
+                           </div>
+                      </div>
+                      <div class="pp-field-row mlr40 mb20">
+                          <div class="pp-field-left">Currency<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                                                              
+                                      <select data-pp-prop="Currency__c" class="sfff-select-element select-elem pp-currency-select pps-261"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                      
+                                      
+                                  </div>
+                           </div>
+                      </div>
+                      <div class="pp-field-row mlr40">
+                          <div class="pp-field-left">Display Amount Charged&nbsp;&nbsp;</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                     <input type="checkbox" data-pp-prop="Display_Amount_Charged__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxDisplayAmountCharged" value="" />
+                                                                   <label   class="css-check-label"></label>
+                                  </div>
+                           </div>
+                      </div>
+                      <div class="pp-field-row mlr40">
+                          <div class="pp-field-left">Cards Accepted
+                            <a class="help-icon blue-tooltip"    >
+                              <span class="blue-tooltip-text -mt90 -ml40">Select the cards you'd like to accept in your form. Note that your payment provider account will also need to be set up to accept these cards as well.</span>
+                              <span class="draft-text"> <img style="margin-left:0px; float:inherit; margin-top:3px;" class="helpIconCode" height="20px" src="{!URLFOR($Resource.alpha,'blank.png')}"/></span>
+                            </a>
+                          </div>
+                                                       
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                     <ul class="credit-cards-list pp-horizontal">
+                                         <li>
+                                              <input type="checkbox" data-pp-prop="Visa_Accepted__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxVisaCardAccepted" value="" />
+                                                                   <label  for="chkbxVisaCardAccepted" class="css-check-label"><span class="cc-v"></span></label>
+                                          </li>
+                                          <li>
+                                              <input type="checkbox" data-pp-prop="Mastercard_Accepted__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxMastercardAccepted" value="" />
+                                                                   <label  for="chkbxMastercardAccepted" class="css-check-label "><span class="cc-mc"></span></label>
+                                          </li>
+                                           <li>
+                                              <input type="checkbox" data-pp-prop="American_Express_Accepted__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxAmericanExpressAccepted" value="" />
+                                                                   <label for="chkbxAmericanExpressAccepted"  class="css-check-label"><span class="cc-ae"></span></label>
+                                          </li>
+                      
+                                          <li>
+                                              <input type="checkbox" data-pp-prop="Discover_Accepted__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxDiscoverAccepted" value="" />
+                                                                   <label  for="chkbxDiscoverAccepted"  class="css-check-label"><span class="cc-d"></span></label>
+                                          </li>
+                                         
+
+                                      </ul>
+                                  </div>
+                           </div>
+                      </div>
+                      <div class="pp-recurring-row-outer mt20">
+                       <div class="pp-recurring-row mlr40">
+                          <div class="pp-field-left">Payment Type</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                     <ul class="pp-radiochklist pp-horizontal">
+                                          <li>
+                                              <input class="pp-prop-radiochk" id="radiosinglepayment" data-pp-prop="Payment_Type__c" name="radio-paymenttype" onchange="radioRecurringChange(this,true);"  type="radio" value="single"/>
+                                              <label class="pp-prop-radiochk-lbl" for="radiosinglepayment"><span class="se-align-text">Single</span></label>
+                                          </li>
+                                          <li>
+                                              <input class="pp-prop-radiochk" data-pp-prop="Payment_Type__c" id="radiorecurringpayment" name="radio-paymenttype" onchange="radioRecurringChange(this,true);" type="radio" value="recurring"/>
+                                              <label class="pp-prop-radiochk-lbl" for="radiorecurringpayment"><span class="se-align-text">Recurring</span></label>
+                                          </li>
+
+                                      </ul>
+                                  </div>
+                           </div>
+                            </div>
+                          
+
+
+
+                           <div class="expandable-borders payment-recurring-block display-none" data-reccurringclass="pp-recurring-block">
+                              <div class="payment-recurring-block-inner  mlr40 pb20">
+                                      <div class="pp-recurring-row">
+                                          <div class="pp-field-left">Frequency
+                                          </div>
+                                          
+                                          <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                             
+                                            <select data-pp-prop="Recurring_Payment_Interval__c" class="select-elem sel-rec pps-102"  onchange="paymentSetupChange(this)"  >
+                                            <option value="Day">Daily</option>
+                                            <option value="Week">Weekly</option>
+                                            <option value="Month">Monthly</option>
+                                            <option value="SemiMonth">Semi-Monthly</option>
+                                            <option value="Year">Yearly</option>
+                                            </select>
+                                            </div>
+                                          </div>
+                                      </div>
+                                      <div class="pp-recurring-row">
+                                          <div class="pp-field-left">Number of payments  
+                                          <br />
+                                          <span class="pp-help-text">Leave blank to recur indefinitely</span>                                          
+                                          </div>
+                                                                                        
+                                          <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                              <input type="text" data-pp-prop="Recurring_Payment_Count__c" class="ff-input-text pp-textbox pp-type-number el-3digit"  onblur="paymentSetupChange(this)"  />
+                                               
+                                            </div>
+                                          </div>
+                                      </div>
+                                      <div class="pp-recurring-row">
+                                          <div class="pp-field-left">Retry on failure 
+                                          </div>
+                                                                                      
+                                          <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                            <input type="checkbox" data-pp-prop="Retry_Recurring_Payment_After_Failure__c"   onchange="paymentSetupChange(this)"     class="css-checkbox pp-checkbox"   name="chkbxrecurringRetry" value="" />
+                                                                   <label   class="css-check-label"></label>                                              
+                                            </div>
+                                          </div>
+                                      </div>
+
+
+
+                                      <div class="pp-recurring-row">
+                                          <div class="pp-field-left">Initial amount
+                                          </div>
+                                                                                       
+                                          <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                <div class="pp-field-type-div field-type-target pp-static-block pp-def-show display-none" data-toggleclass="static-alink">
+                                                         <span class="pp-currency-span">$</span>                                         
+                                                    <input class="ff-input-text pp-textbox pp-type-currency"  data-target-suffix="recurringfee" data-pp-prop="Recurring_Payment_Initial_Fixed_Amount__c" onblur="paymentSetupChange(this)" type="text"/>
+                                                    
+                                                    
+                                                </div>
+                                                <div class="pp-field-type-div field-type-target pp-dynamic-block" data-toggleclass="dynamic-alink">
+                                             
+                             
+                              <select class="select-elem pp-sel-fields pps-261" data-target-suffix="recurringfee"  data-pp-prop="Recurring_Payment_Initial_Amt_Field_ID__c" data-val="dynamic"  onchange="paymentSetupChange(this,true)"  > </select>
+                                                    
+                                                </div>
+                                                
+                                                <div class="pp-toggle-links">
+                                                   <ul>
+                                                   <li class="pp-block-a static-alink">
+                                             <a class="toggle-field-behaviour change-trigger" data-pp-prop="Recurring_Payment_Field_Type__c" data-val="static" onclick="togglePPFieldBlock(this,'static',true)">Set a Value</a>
+                                           </li>
+                                           <li class="pp-block-a dynamic-alink display-none">
+                                             <a class="toggle-field-behaviour change-trigger" data-pp-prop="Recurring_Payment_Field_Type__c" data-val="dynamic" onclick="togglePPFieldBlock(this,'dynamic',true)">Select a Field</a>
+                                           </li>
+                                           <li class="pp-block-a formula-alink">
+                                             <a class="toggle-field-behaviour change-trigger" data-pp-prop="Recurring_Payment_Field_Type__c" data-val="formula" onclick="togglePPFieldBlock(this,'formula',true)">Set a Formula</a>
+                                           </li>
+                                                   </ul>
+                                                </div>
+                                            </div>
+                                          </div>
+                                      </div>
+                                </div>
+                                <div class="pp-formula-block-outer field-type-target pp-collapsed display-none" data-target-suffix="recurringfee" data-toggleclass="formula-alink">
+                                            <div class="pp-formula-block-detail">
+                                                 <div class="merge-field-block">
+                                                <select   class="select-elem sel-merge-field pps-228"     >
+                                                </select>
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="mergeFieldChange(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                                    </div>
+                                               <textarea class="content-editor-textarea" data-pp-prop="Recurring_Payment_Initial_Amount_Formula__c" onblur="paymentSetupChange(this)"></textarea>
+                                            </div>
+                                </div>
+                              
+                          </div>
+                      </div>
+
+
+
+                      <div class="pp-amount-details mt40 mb20">
+                          
+                          <h2 class="mlr40 multi-label-elem"  data-single-payment="Set up Transaction Amount" data-recurring-payment="Set up Recurring Amount" >Set up Transaction Amount</h2>
+                          <!--expandable border div starts-->
+                          <div class="expandable-borders payment-amount-block">
+                              <div class="payment-amount-block-inner  mlr40">
+                                  <div class="pp-field-row">
+                                    <div class="pp-field-left">Amount<span class="sfff-required">*</span></div>
+                                    <div class="pp-field-right ">
+                                      <div class="pp-form-fields">
+                                        <div data-toggleclass="static-alink" class="pp-field-type-div field-type-target pp-static-block pp-def-show"  >
+                                                 <span class="pp-currency-span">$</span>                                         
+                                            <input type="text" data-pp-prop="Subtotal_Amount__c"  data-target-suffix="amount"   class="ff-input-text pp-textbox pp-type-currency"  onblur="paymentSetupChange(this)"  >
+                                            </input>
+                                            
+                                        </div>
+                                        <div data-toggleclass="dynamic-alink" class="pp-field-type-div field-type-target pp-dynamic-block">
+                                               <select data-pp-prop="Subtotal_Field_ID__c" data-target-suffix="amount" class="select-elem pp-sel-fields pps-261"  onchange="paymentSetupChange(this)"  >
+                                            </select>
+                                            
+                                        </div>
+                                         
+                                        <div class="pp-toggle-links">
+                                           <ul>
+                                           <li class="pp-block-a static-alink">
+                                             <a onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Subtotal_Amount_Field_Type__c" data-val="static" >Set a Value</a>
+                                           </li>
+                                           <li class="pp-block-a dynamic-alink">
+                                             <a onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Subtotal_Amount_Field_Type__c" data-val="dynamic" >Select a Field</a>
+                                           </li>
+                                           <li class="pp-block-a formula-alink" >
+                                             <a onClick="togglePPFieldBlock(this,'formula',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Subtotal_Amount_Field_Type__c" data-val="formula" >Set a Formula</a>
+                                           </li>
+                                           </ul>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div  data-toggleclass="formula-alink" data-target-suffix="amount" class="pp-formula-block-outer field-type-target pp-collapsed">
+                                  <div  class="pp-formula-block- step-1">
+                                      <div class="formula-step-header">
+                                      <h3 class="formula-step-title">1- Set a base amount (optional)</h3>
+                                      <span class="display-block">Set an initial amount for your payment field formula</span>
+                                         
+                                      </div>
+                                      <div class="pp-formula-fields">
+                                      <span class="pp-currency-span">$</span>  
+                                         <input  type="text" data-pp-prop="Subtotal_Base_Amount__c"  class="ff-input-text pp-textbox pp-type-currency"   onblur="paymentSetupChange(this)"  />
+                                         </div>
+                                  </div>
+                                  <div  class="pp-formula-block- step-2">
+                                      <div class="formula-step-header">
+                                      <h3 class="formula-step-title">2- Set field amounts (optional)</h3>
+                                      <span class="display-block">Set additional amounts for your form's picklists and checkboxes</span>
+                                      </div>
+                                      <div class="pp-formula-fields">
+                                           <div class="pp-options-fields">
+                                             <div class="pp-options-fields-row">
+                                                <div class="pp-options-fields-info-header">
+                                                 <div class="pp-options-fields-col-1">
+                                                  <select   class="select-elem pp-sel-fields sel-option-field pps-228" data-pp-formula="amount"  onchange="availableFieldOptionChange(this,true)"  />
+                                                  </div>
+                                                 <div class="pp-option-add-delete-box"><a class="pp-option-delete"   onclick="deleteFieldOptionRowHTML(this,true);return false;" style="display: none;"></a>
+                                                  <a class="pp-option-add"   onclick="addFieldOptionRowHTML(this,true);return false;"></a>
+                                                  </div>
+                                                  </div>
+                                              </div>
+                                           </div>
+                                         </div>
+                                  </div>
+                                  <div  class="pp-formula-block- step-3">
+                                      <div class="formula-step-header">
+                                      <h3 class="formula-step-title">3- Calculate subtotal</h3>
+                                      <span class="display-block">Choose how you would like to calculate your subtotal</span>
+                                      </div>
+
+
+                                      <ul class="pp-radiochklist">
+                                          <li>
+                                              <input type="radio" class="pp-prop-radiochk" data-pp-prop="Subtotal_Amount_Formula_Type__c" onchange="radioFormulaElemChange(this,true);" id="radioffppsubtotalamountdefault"  name="radio-sub-total-amount-formula" value="default" />
+                                              <label class="pp-prop-radiochk-lbl" for="radioffppsubtotalamountdefault"><span class="se-align-text">Set total by adding the above items</span></label>
+                                          </li>
+                                          <li>
+                                              <input type="radio" class="pp-prop-radiochk" data-pp-prop="Subtotal_Amount_Formula_Type__c" onchange="radioFormulaElemChange(this,true);" id="radioffppsubtotalamountcustom"  name="radio-sub-total-amount-formula" value="custom" />
+                                              <label class="pp-prop-radiochk-lbl" for="radioffppsubtotalamountcustom"><span class="se-align-text">Set total using a custom formula</span></label>
+                                          </li>
+                                      </ul>
+                                      <div  class="pp-formula-block-detail display-none default-formula">
+                                                 
+                                                <textarea class="content-editor-textarea text-disabled" readonly="true" data-pp-prop="Subtotal_Amount_Default_Formula__c" ></textarea>
+                                      </div>
+                                      <div  class="pp-formula-block-detail display-none custom-formula">
+                                                <div class="merge-field-block">
+                                                <select   class="select-elem sel-merge-field pps-228"     >
+                                                </select>
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="mergeFieldChange(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                                    </div>
+                                               <textarea class="content-editor-textarea" data-pp-prop="Subtotal_Amount_Formula__c" onblur="paymentSetupChange(this)"></textarea>
+                                      </div>
+                                  </div>
+                              </div>
+                              
+                          </div>
+                          <!--expandable border div ends-->
+                           <!--expandable border div starts-->
+                          <div class="expandable-borders payment-shipping-block">
+                              <div class="payment-shipping-block-inner  mlr40">
+                                      <div class="pp-field-row">
+                                          <div class="pp-field-left">Shipping</div>
+                                          <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                <div data-toggleclass="static-alink" class="pp-field-type-div field-type-target pp-static-block pp-def-show"  >
+                                                         <span class="pp-currency-span">$</span>                                         
+                                                    <input  type="text" data-pp-prop="Shipping_Fixed_Amount__c" data-target-suffix="shipping" class="ff-input-text pp-textbox pp-type-currency"  onblur="paymentSetupChange(this)"  >
+                                                    </input>
+                                                    
+                                                </div>
+                                                <div data-toggleclass="dynamic-alink" class="pp-field-type-div field-type-target pp-dynamic-block">
+                                                       <select data-pp-prop="Shipping_Field_ID__c" data-target-suffix="shipping" class="select-elem pp-sel-fields pps-261"  onchange="paymentSetupChange(this)"  >
+                                                    </select>
+                                                    
+                                                </div>
+                                                
+                                                <div class="pp-toggle-links">
+                                                   <ul>
+                                                   <li class="pp-block-a static-alink">
+                                             <a onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Shipping_Field_Type__c" data-val="static" >Set a Value</a>
+                                           </li>
+                                           <li class="pp-block-a dynamic-alink">
+                                             <a onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Shipping_Field_Type__c" data-val="dynamic" >Select a Field</a>
+                                           </li>
+                                           <li class="pp-block-a formula-alink" >
+                                             <a onClick="togglePPFieldBlock(this,'formula',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Shipping_Field_Type__c" data-val="formula" >Set a Formula</a>
+                                           </li>
+                                                   </ul>
+                                                </div>
+                                            </div>
+                                          </div>
+                                      </div>
+                                </div>
+                                <div  data-toggleclass="formula-alink"  data-target-suffix="shipping" class="pp-formula-block-outer field-type-target pp-collapsed">
+                                            <div  class="pp-formula-block-detail">
+                                              <div class="merge-field-block">
+                                                <select   class="select-elem sel-merge-field pps-228"     >
+                                                </select>
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="mergeFieldChange(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                                    </div>
+                                               <textarea class="content-editor-textarea" data-pp-prop="Shipping_Formula__c" onblur="paymentSetupChange(this)"></textarea>
+                                            </div>
+                                </div>
+                              
+                          </div>
+                          <!--expandable border div ends-->
+
+                          <!--expandable border div starts-->
+                          <div class="expandable-borders payment-taxes-block">
+                              <div class="payment-taxes-block-inner mlr40">
+                                    <div class="pp-field-row">
+                                      <div class="pp-field-left">Taxes</div>
+                                      <div class="pp-field-right ">
+                                        <div class="pp-form-fields">
+                                          <div data-toggleclass="static-alink" class="pp-field-type-div field-type-target pp-static-block pp-def-show"  >
+                                                                                           
+                                              <input  type="text" data-pp-prop="Taxes_Fixed_Percentage__c"  data-target-suffix="taxes" class="ff-input-text pp-textbox pp-type-percentage"  onblur="paymentSetupChange(this)"  >
+                                              </input>
+                                              <span class="pp-percentage-span">%</span> 
+                                              
+                                          </div>
+                                          <div data-toggleclass="dynamic-alink" class="pp-field-type-div field-type-target pp-dynamic-block">
+                                                 <select data-pp-prop="Taxes_Field_ID__c" data-target-suffix="taxes" class="select-elem pp-sel-fields pp-type-percentage pps-261"  onchange="paymentSetupChange(this)"  >
+                                              </select>
+                                              
+                                          </div>
+                                          
+                                          <div class="pp-toggle-links">
+                                             <ul>
+                                             <li class="pp-block-a static-alink">
+                                             <a onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Taxes_Field_Type__c" data-val="static" >Set a Value</a>
+                                           </li>
+                                           <li class="pp-block-a dynamic-alink">
+                                             <a onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Taxes_Field_Type__c" data-val="dynamic" >Select a Field</a>
+                                           </li>
+                                           <li class="pp-block-a formula-alink" >
+                                             <a onClick="togglePPFieldBlock(this,'formula',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="Taxes_Field_Type__c" data-val="formula" >Set a Formula</a>
+                                           </li>
+                                             </ul>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                              </div>
+                              <div data-toggleclass="formula-alink" data-target-suffix="taxes" class="pp-formula-block-outer field-type-target  pp-collapsed">
+                                            <div  class="pp-formula-block-detail">
+                                                <div class="merge-field-block">
+                                                <select   class="select-elem sel-merge-field pps-228"     >
+                                                </select>
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="mergeFieldChange(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                                    </div>
+                                               <textarea  class="content-editor-textarea" data-pp-prop="Taxes_Formula__c" onblur="paymentSetupChange(this)"></textarea>
+                                            </div>
+                              </div>
+                              
+                        </div>
+                        <!--expandable border div ends-->
+                           
+                      </div>
+                      <div class="pp-transaction-details mt40 mlr40 mb40">
+                          
+                          <h2  >Transaction Results</h2>
+                          <div class="pp-field-row">
+                            <div class="pp-field-left multi-label-elem"  data-single-payment="Save Transaction Amount To" data-recurring-payment="Save Recurring Amount To">Save Transaction Amount To</div>
+                            <div class="pp-field-right ">
+                                  <div class="pp-form-fields">
+                                                                                
+                                        <select data-pp-prop="Transaction_Amount_Mapping_Field_ID__c" class="sfff-select-element select-elem pp-sel-fields pps-261"  onchange="paymentSetupChange(this)"  >
+                                        </select>
+                                        
+                                        
+                                    </div>
+                             </div>
+                          </div>
+                          <div class="pp-field-row">
+                            <div class="pp-field-left multi-label-elem"  data-single-payment="Save Transaction ID To" data-recurring-payment="Save Recurring Profile ID To">Save Transaction ID To</div>
+                            <div class="pp-field-right ">
+                                  <div class="pp-form-fields">
+                                                                                
+                                        <select data-pp-prop="Transaction_ID_Mapping_Field_ID__c" class="sfff-select-element select-elem pp-sel-fields pps-261"  onchange="paymentSetupChange(this)"  >
+                                        </select>
+                                        
+                                        
+                                    </div>
+                             </div>
+                          </div>
+                      </div>
+                      
+                </div>
+
+                <div id="fieldsmappingsection" class="tab-pane fade fields-mapping-body">
+                      <div class="mt40 mlr40"><h2  >Map Billing Fields to Paypal</h2></div>
+                      <div class="pp-header-row-with-seperator ohidden mt40 mlr40" >
+                        <div class="pp-field-left header-italic">Paypal Fields</div>
+                          <div class="pp-field-right header-italic">Form Fields</div>
+                      </div>
+                        
+                        <!--Mapping fields block starts    -->
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">First Name<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="firstName" class="sfff-value-field- select-elem pp-sel-fields pps-228"   onchange="paymentSetupChange(this)" >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Last Name<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="lastName" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                         
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Email<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="email" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Billing Address 1</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingAddress1" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Billing Address 2</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingAddress2" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Billing City</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingCity" class="sfff-value-field- select-elem pp-sel-fields pps-228"   onchange="paymentSetupChange(this)" >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Billing State / Province</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingState" class="sfff-value-field- select-elem pp-sel-fields pps-228"   onchange="paymentSetupChange(this)" >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40" >
+                          <div class="pp-field-left">Billing ZIP / Postal Code</div>
+                          <div class="pp-field-right ">
+                               <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingZip" class="sfff-value-field- select-elem pp-sel-fields pps-228"   onchange="paymentSetupChange(this)" >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40 mb40" >
+                          <div class="pp-field-left">Billing Country</div>
+                          <div class="pp-field-right ">
+                                <div class="pp-form-fields">
+                                   <select data-pp-prop="FieldMapping" data-pp-sub-prop="billingCountry" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                      </select>
+                                </div>
+                           </div>
+                        </div>
+                        <div class="pp-field-row mlr40 mt20 mb40"  >
+                            <div class="checkbox-wrap">
+                            <input type="checkbox"    onchange="toggleAdvanceOptions(this)"     class="css-checkbox pp-checkbox"   name="chkbxToggleAdvancedOptions"   />
+                                                                   <label   class="css-check-label">Show advanced mapping options</label>
+                                                                   </div>
+                        </div>
+                        <!--Mapping fields block ends -->
+                        <!--Advanced Mapping fields block starts -->
+                        <div class="fields-mapping-advanced-options ohidden" style="display:none" id="fieldsmappingsectionadvance">
+                                  <div class="mt40 mlr40"><h2>Map Transaction Fields to Paypal</h2></div>
+                                  <div class="pp-header-row-with-seperator ohidden mt40 mlr40">
+                                    <div class="pp-field-left header-italic">Paypal Fields</div>
+                                      <div class="pp-field-right header-italic">Form Fields</div>
+                                  </div>
+                                    
+                                    
+                                    <div class="pp-field-row mlr40">
+                                      <div class="pp-field-left">Product Name</div>
+                                      <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                 
+                                <div data-toggleclass="static-alink" class="pp-field-type-div pp-static-block">
+                                                                                                    
+                                                        <input data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="productName"  data-pp-elem-prop="fixedValue" class="ff-input-text pp-textbox"  type="text"  onblur="paymentSetupChange(this)"  >
+                                                        </input>
+                                                        
+                                                    </div>
+                                                    <div data-toggleclass="dynamic-alink" class="pp-field-type-div pp-dynamic-block pp-def-show">
+                                                           <select data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="productName"  data-pp-elem-prop="formFieldId" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                                  </select>
+                                                        
+                                                    </div>
+                                                     
+                                                    <div class="pp-toggle-links">
+                                                       <ul>
+                                                       <li class="pp-block-a static-alink">
+                                                         <a data-parentelem="advancedfieldmapping"  data-val="static" onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Set a Value</a>
+                                                       </li>
+                                                       <li class="pp-block-a dynamic-alink">
+                                                         <a data-parentelem="advancedfieldmapping" data-val="dynamic" onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Select a Field</a>
+                                                       </li>
+                                                        
+                                                       </ul>
+                                                    </div>
+                                            </div>
+                                       </div>
+                                    </div>
+                                     <div class="pp-field-row mlr40">
+                                      <div class="pp-field-left">Unit Price</div>
+                                      <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                 
+                                <div data-toggleclass="static-alink" class="pp-field-type-div pp-static-block  ">
+                                                             <span class="pp-currency-span">$</span>                                         
+                                                        <input data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="unitPrice" data-pp-elem-prop="fixedValue"  class="ff-input-text pp-textbox pp-type-currency" type="text"  onblur="paymentSetupChange(this)"  >
+                                                        </input>
+                                                        
+                                                    </div>
+                                                    <div data-toggleclass="dynamic-alink" class="pp-field-type-div pp-dynamic-block pp-def-show">
+                                                           <select data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="unitPrice"  data-pp-elem-prop="formFieldId" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                                  </select>
+                                                        
+                                                    </div>
+                                                     
+                                                    <div class="pp-toggle-links">
+                                                       <ul>
+                                                       <li class="pp-block-a static-alink">
+                                                         <a data-parentelem="advancedfieldmapping" data-val="static" onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Set a Value</a>
+                                                       </li>
+                                                       <li class="pp-block-a dynamic-alink">
+                                                         <a data-parentelem="advancedfieldmapping" data-val="dynamic" onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Select a Field</a>
+                                                       </li>
+                                                        
+                                                       </ul>
+                                                    </div>
+                                            </div>
+                                       </div>
+                                    </div>
+                        <div class="pp-field-row mlr40 mb20">
+                                      <div class="pp-field-left">Quantity</div>
+                                      <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                 
+                                <div data-toggleclass="static-alink" class="pp-field-type-div pp-static-block ">
+                                                                                                
+                                                        <input data-pp-prop="FieldMappingAdvanced"  type="text"  data-pp-sub-prop="quantity" data-pp-elem-prop="fixedValue"  class="ff-input-text pp-textbox"  onblur="paymentSetupChange(this)"  >
+                                                        </input>
+                                                        
+                                                    </div>
+                                                    <div data-toggleclass="dynamic-alink" class="pp-field-type-div pp-dynamic-block pp-def-show">
+                                                           <select data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="quantity" data-pp-elem-prop="formFieldId" class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                                  </select>
+                                                        
+                                                    </div>
+                                                     
+                                                    <div class="pp-toggle-links">
+                                                       <ul>
+                                                       <li class="pp-block-a static-alink">
+                                                         <a data-parentelem="advancedfieldmapping"  data-val="static" onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Set a Value</a>
+                                                       </li>
+                                                       <li class="pp-block-a dynamic-alink">
+                                                         <a data-parentelem="advancedfieldmapping" data-val="dynamic" onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Select a Field</a>
+                                                       </li>
+                                                        
+                                                       </ul>
+                                                    </div>
+                                            </div>
+                                       </div>
+                                    </div>
+                        <div class="pp-field-row mlr40 mb20" style="display:none">
+                                      <div class="pp-field-left">Quantity Amount</div>
+                                      <div class="pp-field-right ">
+                                            <div class="pp-form-fields">
+                                                 
+                                <div data-toggleclass="static-alink" class="pp-field-type-div pp-static-block">
+                                                                                                     
+                                                        <input data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="quantityAmount"  data-pp-elem-prop="fixedValue" class="ff-input-text pp-textbox"  type="text"  onblur="paymentSetupChange(this)"  >
+                                                        </input>
+                                                        
+                                                    </div>
+                                                    <div data-toggleclass="dynamic-alink" class="pp-field-type-div pp-dynamic-block pp-def-show">
+                                                           <select data-pp-prop="FieldMappingAdvanced" data-pp-sub-prop="quantityAmount" data-pp-elem-prop="formFieldId"  class="sfff-value-field- select-elem pp-sel-fields pps-228"  onchange="paymentSetupChange(this)"  >
+                                                  </select>
+                                                        
+                                                    </div>
+                                                     
+                                                    <div class="pp-toggle-links">
+                                                       <ul>
+                                                       <li class="pp-block-a static-alink">
+                                                         <a data-parentelem="advancedfieldmapping"  data-val="static" onClick="togglePPFieldBlock(this,'static',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Set a Value</a>
+                                                       </li>
+                                                       <li class="pp-block-a dynamic-alink">
+                                                         <a data-parentelem="advancedfieldmapping"  data-val="dynamic" onClick="togglePPFieldBlock(this,'dynamic',true)" class="toggle-field-behaviour change-trigger" data-pp-prop="advancedfieldmapping" >Select a Field</a>
+                                                       </li>
+                                                        
+                                                       </ul>
+                                                    </div>
+                                            </div>
+                                       </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                            </div>
+
+
+                         <!--Advanced Mapping fields block ends -->
+                         <div class="pp-field-row mlr40 mb40 ohidden" ></div>
+                        
+                        
+                        
+                </div>
+                <div id="emailconfirmationsection" class="tab-pane fade email-confirmation-body">
+                     <div class="mt40 mlr40"><h2  >Email confirmation options</h2></div>
+                      <!-- Wrapper for email-accordion starts-->
+                     <div class="email-accordion mt20 mb40">
+                     <div class="accordion-wrapper ">
+                     <div class="accordion-header pb20 mlr40">
+                        <h2  data-toggleclass="email-success"  onclick="toggleEmailBody(this,true);return false;" class="">Success<span class="pp-action-icon"></span></h2>
+                     </div>
+                     <div class="email-to-fields-wrapper email-success collapse">
+                                 <div class="email-to-fields">
+                                        <div class="form-row">
+                                            <label class="label-for">To</label>
+                                           
+                                            <input data-pp-email="Success_Email_To__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="1" onblur="paymentSetupChange(this);" type="textbox"   class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">CC</label>
+                                            <input data-pp-email="Success_Email_CC__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="2" onblur="paymentSetupChange(this);"  type="textbox" class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">BCC</label>
+                                            <input data-pp-email="Success_Email_BCC__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="3"  onblur="paymentSetupChange(this);"  type="textbox" class="el-text-box el-email" />
+                                        </div>
+
+
+                                    </div>
+                                    <span class="silver-line-separator" />
+                                    <div class="email-content-box">
+                                        <div class="form-row">
+                                            <label class="label-for">Subject</label>
+                                            <input data-pp-email="Success_Email_Subject__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="4"  onblur="paymentSetupChange(this);" type="textbox"  class="el-text-box" />
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="label-for">Message</label>
+                                        </div>
+                                        <div class="email-template-box">
+                                            <div class="email-editor-custom-toolbar">
+                                        <select   class="select-elem pp-email-fields pps-228"       >
+                                                </select>
+
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a  class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="insertFieldToEditor(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                            </div>
+                                            <div class="email-editor-toolbar"></div>
+                                            <div data-pp-email="Success_Email_Body__c"     class="email-content-editor"></div>
+                                        </div>
+                                        
+                                    </div>
+                        </div>
+                    </div>
+                    <div class="accordion-wrapper">
+                    <div class="accordion-header pb20 mlr40">
+                        <h2  data-toggleclass="email-failure"  onclick="toggleEmailBody(this,true);return false;" class="">Failure<span class="pp-action-icon"></span></h2>
+                     </div>
+                    <div class="email-to-fields-wrapper email-failure collapse">
+                                 <div class="email-to-fields">
+                                        <div class="form-row">
+                                            <label class="label-for">To</label>
+                                           
+                                             <input data-pp-email="Failure_Email_To__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="5"   onblur="paymentSetupChange(this);" type="textbox"   class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">CC</label>
+                                            <input data-pp-email="Failure_Email_CC__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="6"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">BCC</label>
+                                            <input data-pp-email="Failure_Email_BCC__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="7"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box el-email" />
+                                        </div>
+
+
+                                    </div>
+                                    <span class="silver-line-separator" />
+                                    <div class="email-content-box">
+                                        <div class="form-row">
+                                            <label class="label-for">Subject</label>
+                                            <input data-pp-email="Failure_Email_Subject__c"  onkeydown="customTabIndexForEmailFields(this,event);" tabindex="8"  onblur="paymentSetupChange(this);" type="textbox"  class="el-text-box" />
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="label-for">Message</label>
+                                        </div>
+                                        <div class="email-template-box">
+                                            <div class="email-editor-custom-toolbar">
+                      <select   class="select-elem pp-email-fields pps-228"     >
+                                                </select>
+
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a    class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="insertFieldToEditor(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                            </div>
+                                            <div class="email-editor-toolbar"></div>
+                                            <div data-pp-email="Failure_Email_Body__c"     class="email-content-editor"></div>
+                                        </div>
+                                        
+                                    </div>
+                    </div>
+                    </div>
+                    <div class="accordion-wrapper">
+                    <div class="accordion-header pb20  mlr40">
+                        <h2 data-toggleclass="email-notification"  onclick="toggleEmailBody(this,true);return false;" class="">Confirmation <span class="pp-action-icon"></span></h2>
+                     </div>
+                    <div class="email-to-fields-wrapper email-notification collapse">
+                                 <div class="email-to-fields">
+                                 <div class="form-row">
+                                            <label class="label-for">From Name</label>
+                                            <input data-pp-email="Notification_Email_From_Name__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="9"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">From Email</label>
+                                            <input data-pp-email="Notification_Email_From__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="10"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                        <label class="label-for">To</label>
+                                          
+                                             <select  data-pp-email="Notification_Email_To_Field_ID__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="11"  onchange="paymentSetupChange(this);"  class="select-elem pp-email-fields pps-228"     >
+                                                </select>                                             
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">CC</label>
+                                            <input data-pp-email="Notification_Email_CC__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="12"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box el-email" />
+                                        </div>
+                                        <div class="form-row">
+                                            <label class="label-for">BCC</label>
+                                            <input data-pp-email="Notification_Email_BCC__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="13"   onblur="paymentSetupChange(this);" type="textbox" class="el-text-box el-email" />
+                                        </div>
+
+
+                                    </div>
+                                    <span class="silver-line-separator" />
+                                    <div class="email-content-box">
+                                        <div class="form-row">
+                                            <label class="label-for">Subject</label>
+                                            <input data-pp-email="Notification_Email_Subject__c" onkeydown="customTabIndexForEmailFields(this,event);" tabindex="14"   onblur="paymentSetupChange(this);" type="textbox"  class="el-text-box" />
+                                        </div>
+
+                                        <div class="form-row">
+                                            <label class="label-for">Message</label>
+                                        </div>
+                                        <div class="email-template-box">
+                                            <div class="email-editor-custom-toolbar">
+                      <select   class="select-elem pp-email-fields pps-228"      >
+                                                </select>
+
+                                                <div class="insert-field-btn-div  ">
+
+                                                      <a    class="insert-field-btn action-icon add-icon blue-tooltip"   onclick="insertFieldToEditor(this,true);"><span class="blue-tooltip-text -ml25 -mt30">Insert merge field</span></a>
+                                                    </div>
+                                            </div>
+                                            <div class="email-editor-toolbar"></div>
+                                            <div data-pp-email="Notification_Email_Body__c"     class="email-content-editor"></div>
+                                        </div>
+                                        
+                                    </div>
+                      </div>
+                    </div>
+                    </div>
+                    <!-- Wrapper for email-accordion ends-->
+
+
+                </div>
+                </apex:outputPanel>
+                </div>
+
+
+                <div class="paypal-account-temp-box" style="display:none" >
+                      <div class="pp-close-div" >
+                      <a class="action-icon close-icon blue-tooltip"  onclick="hideNewAccountDiv(this,false);return false;"><span class="blue-tooltip-text">Cancel</span></a>
+                      </div>
+                          <div class="pp-field-row" >
+                          <div class="pp-field-left">Account Name<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right "> 
+                          <input class="pp-accountname" type="text" />
+                          </div>
+                           </div>
+                          <div class="pp-field-row" >
+                          <div class="pp-field-left">Username<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                          <input class="pp-username" type="text" />
+                           </div>
+                            </div>
+                           <div class="pp-field-row" >
+                          <div class="pp-field-left">Password<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right">
+                          <input class="pp-password" type="password" />
+                            </div>
+                             </div>
+                            <div class="pp-field-row" >
+                          <div class="pp-field-left">Signature<span class="sfff-required">*</span></div>
+                          <div class="pp-field-right ">
+                          <input class="pp-accsignature" type="text" />
+                            </div>
+                             </div>
+                              <div class="pp-field-row" >
+                          <div class="pp-field-left">Sandbox</div>
+                          <div class="pp-field-right ">
+                          <input class="css-checkbox pp-checkbox pp-issandbox" name="checkboxIsSandbox" disabled="disabled" type="checkbox" />
+                          <label   class="css-check-label pp-check-sandbox checkboxdisabled "></label>
+                            </div>
+                             </div>
+                             
+                            <div class="pp-field-row error-message" style="display:none" >
+                            <p>* required fields</p>
+                            </div>
+                           </div>
+
+                          <div id="optionFieldRowHtml" style="display:none">
+                              <div class="pp-options-fields-info-header">
+                                  <div class="pp-options-fields-col-1">
+                                    <select   class="select-elem pp-sel-fields sel-option-field pps-228"  data-pp-formula="amount"  onchange="availableFieldOptionChange(this,true)"  />
+                                  </div>
+                                   <div class="pp-option-add-delete-box"><a class="pp-option-delete"   onclick="deleteFieldOptionRowHTML(this,true);return false;" style="display: none;"></a>
+                                                  <a class="pp-option-add"   onclick="addFieldOptionRowHTML(this,true);return false;"></a>
+                                                  </div>
+                              </div>
+
+                          </div>
+<div id="optionsFieldsHtml" style="display:none">
+     
+        <div class="pp-col-1"><span></span></div>
+      <div class="pp-col-2">
+        <span class="pp-currency-span">$</span>   
+        <input type="text" data-pp-prop="subtotalAmountMapping" data-pp-sub-prop="" onblur="paymentSetupChange(this)" class="ff-type-text pp-type-currency"/>
+      </div>
+     
+  </div>
+                    <apex:outputPanel id="tempPaymentAvailableFieldsDiv"  styleClass="tempPaymentAvailableFieldsDivCSS" layout="block" style="display:none"     >
+     <apex:selectList id="tempPaymentAvailableFieldsSorted" styleClass="select-elem "  value="{!tempSelectSTR}" >
+                          <apex:selectOptions value="{!PaymentAvailableFieldsSorted}"></apex:selectOptions> 
+                      </apex:selectList>
+      </apex:outputpanel>      
+</apex:component>

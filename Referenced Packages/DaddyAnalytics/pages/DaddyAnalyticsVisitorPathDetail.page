@@ -1,0 +1,703 @@
+<apex:page standardController="Lead" extensions="DaddyAnalytics.DaddyAnalyticsVisitorPathDetailExtension" sidebar="false" action="{!getVisitorDetails}">
+
+   <style>
+      .tableStyle{margin-bottom:20px;}
+      .tableStyle tr td{ padding:10px 0 10px 15px; vertical-align:middle; line-height:26px; color:#000000; font-size:12px;}
+      .tableStyle table tr td{ padding:0 10px 0 0; line-height:normal; border-bottom:0!important; border-top:0 !important; line-height:24px;}
+       .tableStyle1 tr:nth-child(even) {background: #E5EEFF}   
+       .tableStyle1 tr:nth-child(odd){background:#fff;} 
+       .tableStyle1 table tr:nth-child(even) {background:none}   
+       .tableStyle1  table tr:nth-child(odd){background:none;} 
+       .tableStyle1 tr:nth-child(odd) td {border-top:1px solid #D5D7E8; border-bottom:1px solid #D5D7E8;}         
+       .addScroll{ height:256px; overflow-y:auto; overflow-x:hidden;}
+       .addScroll-ifText{ height:235px; overflow-y:auto; overflow-x:hidden;}
+      /*td.rich-tabpanel-content{height:248px; padding:1.5%;}*/
+      .rich-tab-active, .rich-tab-inactive{background-image:none;}
+      .rich-tab-inactive{background-color:#fff!important;}
+      
+      #assign-action-spinner-main
+       {
+            position:fixed;
+            left:0;
+            top:0;
+            background-color:#8d8d8d;
+            height:100%;
+            width:100%;
+            opacity:0.6;
+            filter:alpha(opacity=60);
+            z-index:999;
+            align:center;
+            vertical-align:middle;
+        }
+        #assign-action-spinner-content
+        {
+            position:absolute; 
+            top:35%;
+            left:50%;
+            opacity:1.0;
+            filter:alpha(opacity=100);
+            z-index:1000;
+            background-color:#F5FCFF;
+            width:204; 
+            height:94;
+            border-radius:1em;
+            border:1px solid #CEECFF;
+            padding:20px 40px 20px 40px;
+            margin-left:-112px;
+        }
+        #assign-action-spinner-content img
+        {
+            width:32; 
+            height:32; 
+            align:center; 
+            vertical-align: middle;
+        }
+        #assign-action-spinner-content p
+        {
+            display:inline;
+            font-size:135%;
+            font-weight:bold;
+        }   
+        .col div{ min-height:135px; padding:15px;} 
+        .dateClass{
+            background: #579cf0; /* Old browsers */
+            background: -moz-linear-gradient(top,  #579cf0 0%, #477ac0 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#579cf0), color-stop(100%,#477ac0)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #579cf0 0%,#477ac0 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #579cf0 0%,#477ac0 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #579cf0 0%,#477ac0 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #579cf0 0%,#477ac0 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#579cf0', endColorstr='#477ac0',GradientType=0 ); /* IE6-9 */
+            color:#fff; font-size:11px; font-weight:bold;padding:6px 7px 6px 32px; position:relative; border-top-left-radius:4px; border-top-right-radius:4px; margin-top:0px; float:left;
+            text-shadow: 0px -1px 0px #2B5591;
+            filter: dropshadow(color=#2B5591, offx=0, offy=-1);
+         }
+        .dateIcon{position:absolute; top:3px; left:6px;}
+        .imageDiv,.locationDiv{float:right; margin:0 15px 0 0;}
+        .imageDiv img{margin-left:5px;}
+        .locationDiv{margin-top:2px;}
+        .tableHeight-ifText{height:279px; width:100%;position:relative;}
+        .tableHeight{height:300px; width:100%; position:relative;}
+        .moreInfoClass{font-size:12px;height: 256px; padding-top : 0px;}
+        .moreInfoClass-ifText{font-size:12px;height: 235px;}
+        /*.mapContainerDiv{display: table;height: 100%;position: relative;width: 100%;}
+        .mapContainerClass{position: absolute;height: 295px;vertical-align: bottom;width: 100%;top: 15px;}
+        .mapContainer-ifTextClass{position: absolute;height: 274px;vertical-align: bottom;width: 100%;top: 15px;}*/
+        .mapHeight{position:absolute;background-color: rgb(229, 227, 223);overflow: hidden;-webkit-transform: translateZ(0);vertical-align: bottom;width: 40%;height:100%;top: 0px;}
+        .borderBlue{border:1px solid #D5D7E8; border-top-width:2px; padding:15px; background:#fff; font-size:12px; line-height:20px;}
+        .visitorDetailActionURL{word-wrap: break-word;width:350px;}
+        .minWidth500{min-width:500px; display:block;}
+        .width100{width:100px;}
+        .width120{width:120px;}
+        
+         @media screen and (max-width: 1024px) {
+            #contentWrapper{width:auto;min-width:100%;}
+            .mapHeight{position:absolute; height:300px;}
+        }
+    
+        @media screen and (max-width: 800px) {
+            #mapTdWidth, .tabsSection{display:block; width:100%;}
+            .tableHeight{height:auto;}
+            .mapHeight{position:relative; height:300px; width:100%;}
+            .visitorDetailActionURL{width:auto;word-break: break-all;}
+            .minWidth500{min-width:100%; width:auto;}
+            .width100{width:60px;}
+            .moreInfoClass{height:256px; overflow-y:auto;}
+            .width120{width:60px; line-height:16px;}
+            .rich-tab-bottom-line{position:absolute; top:0px; z-index:99; width:90%;}
+            .addScroll, .moreInfoClass{margin-top:50px;}
+            
+        }  
+        
+       @media screen and (max-width: 480px) {
+        .tableStyle label{display: block;word-break: break-all;}
+        }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=weather"></script>
+    <script type="text/javascript">
+    var map;
+    var bounds;
+    var localTime;
+    function loadMap(domId)
+    {      
+        var mapDiv = document.getElementById(domId);
+        var options = {
+            zoom: 10,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    
+        map = new google.maps.Map(mapDiv, options);    
+        bounds = new google.maps.LatLngBounds();
+    
+        var latitude = '{!JSENCODE(TEXT(geoLocationLatitude))}';
+        var longitude = '{!JSENCODE(TEXT(geoLocationLongitude))}';
+            
+        if(latitude != null && longitude != null)
+        {
+            map_init('{!JSENCODE(individualName)}', latitude, longitude);
+        }
+        
+        /*var timeStamp = Math.round((new Date()).getTime() / 1000);
+        alert(timeStamp);
+        simpleHttpRequest('https://maps.googleapis.com/maps/api/timezone/json?location=' + latitude + ',' + longitude + '&timestamp=' + timeStamp + '&sensor=true')*/
+    } 
+    
+    function simpleHttpRequest(url) 
+    {
+        var request = makeHttpObject();
+        request.open("GET", url, true);
+        request.send(null);
+        request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          if (request.status == 200)
+          {
+            alert(request.responseText);
+            alert(request.statusText);
+            if(request.statusText == 'OK')
+            {
+                var jsonObj = JSON.parse(request.responseText);
+                
+                var d = new Date();
+                var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+                var nd = new Date(utc + (1000*(jsonObj.dstOffset+jsonObj.rawOffset)));
+                
+                //alert('Temp : ' + nd.toLocaleString());
+            }
+          }
+          else if (failure)
+            alert(request.status, request.statusText);
+        }
+        };
+    }          
+    
+    function makeHttpObject() 
+    {
+        try {return new XMLHttpRequest();}
+        catch (error) {}
+        try {return new ActiveXObject("Msxml2.XMLHTTP");}
+        catch (error) {}
+        try {return new ActiveXObject("Microsoft.XMLHTTP");}
+        catch (error) {}
+
+        throw new Error("Could not create HTTP request object.");
+    }
+    
+    function map_init(name, lat, lng)
+    {    
+        var infowindow = new google.maps.InfoWindow({content: name});
+        var latlng = new google.maps.LatLng(lat,lng);  
+        
+        
+        
+        
+        /*var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'latLng': latlng}, function(results, status) {           
+              if (status == google.maps.GeocoderStatus.OK) 
+              {
+                    if (results[1]) 
+                    {  
+                        alert(results[0].formatted_address); 
+                        for (var i=0; i<results[0].address_components.length; i++) 
+                        {
+                            for (var b=0;b<results[0].address_components[i].types.length;b++) 
+                            {
+                                //alert(results[0].address_components[i].short_name + ' Type : ' + results[0].address_components[i].types[b]);
+                                //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                                if (results[0].address_components[i].types[b] == "administrative_area_level_1") 
+                                {
+                                    //this is the object you are looking for
+                                    alert('level 1 = ' + results[0].address_components[i].long_name);
+                                    break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "administrative_area_level_2") 
+                                {
+                                    //this is the object you are looking for
+                                    alert('level 2 = ' + results[0].address_components[i].long_name);
+                                    break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "administrative_area_level_3") 
+                                {
+                                    //this is the object you are looking for
+                                    alert('level 3 = ' + results[0].address_components[i].long_name);
+                                    break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "country") 
+                                {
+                                    //this is the object you are looking for
+                                    alert('country = ' + results[0].address_components[i].long_name);
+                                    break;
+                                }
+                            }
+                        }                                  
+                    }
+              }
+              else 
+              {
+                    alert("Geocode was not successful for the following reason: " + status);
+              }
+       });*/
+        
+        map.setCenter(latlng);  
+        
+       bounds.extend(latlng);   
+       
+       var weatherLayer = new google.maps.weather.WeatherLayer({
+        temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+        });
+        weatherLayer.setMap(map);
+    
+        var cloudLayer = new google.maps.weather.CloudLayer();
+        cloudLayer.setMap(map);    
+      
+       marker = new google.maps.Marker(
+        {
+            position: latlng ,
+            map: map,
+            title: name
+        });
+        var mark = marker;
+          
+        google.maps.event.addListener(marker, 'click', function() {infowindow.open(map,mark); });                        
+    }               
+   
+    
+       //$('.tableStyle tr:odd').css({'background':'#ccc'});  
+       
+       function setDynamicHeight(createScrollDivId)
+        {
+            var tableHeight = document.getElementById("containerTableId");
+            var createScroll = document.getElementById(createScrollDivId);
+            
+            if({!isPackageTrial} == true)
+            {                                                  
+               var attClass_Txt=document.createAttribute("class");
+               attClass_Txt.value = "tableHeight-ifText";
+               tableHeight.setAttributeNode(attClass_Txt);
+                              
+               var attClass_Txt_scroll =document.createAttribute("class");
+               attClass_Txt_scroll.value = "addScroll-ifText";                               
+               createScroll.setAttributeNode(attClass_Txt_scroll);                                                                          
+            }            
+            else
+            {                      
+               var attClass_default = document.createAttribute("class");
+               attClass_default.value = "tableHeight";
+               tableHeight.setAttributeNode(attClass_default);               
+                              
+               var attClass_scrollDefault =document.createAttribute("class");
+               attClass_scrollDefault.value = "addScroll";                                 
+               createScroll.setAttributeNode(attClass_scrollDefault);                                                                          
+            }
+        } 
+        
+        function setDynamicHeightMoreInfo(divId)
+        { 
+            var moreInfoDiv = document.getElementById(divId);                           
+            if({!isPackageTrial} == true)
+            {               
+               var attClass_default = document.createAttribute("class");
+               attClass_default.value = "moreInfoClass-ifText";
+               moreInfoDiv.setAttributeNode(attClass_default);                  
+            }
+            else
+            {
+               var attClass_default = document.createAttribute("class");
+               attClass_default.value = "moreInfoClass";
+               moreInfoDiv.setAttributeNode(attClass_default);  
+            }                       
+        }    
+        
+        
+                                       
+    </script>
+    <apex:form id="formID"> 
+    
+        <apex:actionStatus id="assign-action-status" layout="block">
+            <apex:facet name="start">
+                <div id="assign-action-spinner-main">
+                    <div id="assign-action-spinner-content">
+                        <img src="/img/analytics/reportbuilder/icons/spinner32.gif" alt="Processing..." title="Processing..." />
+                        &nbsp;&nbsp;
+                        <p>Processing...</p>
+                    </div>
+                </div>
+            </apex:facet>
+          </apex:actionStatus>
+    
+        <apex:actionFunction name="setFirstVisitDetail" id="setFirstVisitFunctionId" action="{!setFirstVisitDetail}" reRender="FirstVisitPanelId" status="assign-action-status"/>   
+        <apex:actionFunction name="setFirstVisitPathDetail" id="setFirstVisitPathFunctionId" action="{!setFirstVisitPathDetails}" reRender="FirstVisitPathPanelId" status="assign-action-status"/>                         
+        <apex:outputPanel rendered="{!showTabs}">
+            <apex:outputPanel rendered="{!isPackageTrial}" style="height: 16px; padding-bottom: 5px; margin:0; display:block;">                                   
+                <apex:outputLabel value="You are using a free trial of Daddy Analytics, which ends in {!daysLeftForPackageExpiry} days on {!strPackageExpiryDate}. Click "></apex:outputLabel>                        
+                <apex:outputLink value="https://daddyanalytics.com/billing/pricing-page.html?oid={!$Organization.Id}" target="_blank">here</apex:outputLink>
+                <apex:outputLabel value=" to Purchase"/>  
+                <br/><br/>          
+           </apex:outputPanel>
+           
+            <table border="0" cellspacing="0" cellpadding="0" class="tableHeight-ifText" id="containerTableId">              
+                <tr>
+                    <td width="60%" style="vertical-align:top;" class="tabsSection">
+                                    
+                    <apex:tabPanel switchType="client" selectedTab="Visitor Path" id="theTabPanel">
+                    <apex:tab label="Form Submission Visit Path" name="Visitor Path" id="visitorPathtab"> 
+                    <apex:outputPanel rendered="{!isVisitInfoAvailable}">              
+                        <div class="addScroll" id="formSubmissionVisitPathDiv">                      
+                                <script>setDynamicHeight('formSubmissionVisitPathDiv');</script>                                                                 
+                                <apex:repeat value="{!mapVisitDateAndListOfPagesVisited}" var="visitDate">
+                               <span class="dateClass">
+                                    <apex:image url="{!URLFOR($Resource.DaddyAnalytics__DaddyAnalyticsImageResource,'DaddyAnalyticsImage/dateImage.png')}" width="20" height="20" styleClass="dateIcon"/>                                                 
+                                    {!visitDate}
+                                </span>
+                                <span class="imageDiv">
+                                    <!--<apex:image url="http://www.geonames.org/flags/x/{!visitorDetailObj.countryCode}.gif"  height="20" width="25"/>  -->                      
+                                    <apex:image value="https://cdn.daddyanalytics.com/images/{!visitorDetailObj.webBrowser}" height="20" width="20" rendered="{!isBrowserImageAvailable}"/>                                                 
+                                    <apex:outputLabel value="{!visitorDetailObj.webBrowser}" rendered="{!!isBrowserImageAvailable}"/>
+                                    <apex:image value="https://cdn.daddyanalytics.com/images/{!visitorDetailObj.operatingSystem}" height="20" width="20" rendered="{!isOperatingSystemImageAvailable}"/>                                                 
+                                    <apex:outputLabel value="{!visitorDetailObj.webBrowser}" rendered="{!!isOperatingSystemImageAvailable}"/>
+                                </span>
+                                <span class="locationDiv">
+                                    {!visitorDetailObj.geoLocation}
+                                </span>
+                                <table class="tableStyle tableStyle1" cellspacing="0" cellpadding="0" width="100%" style="border-right:0; border-top:0; border:1px solid #D5D7E8">                           
+                                <apex:repeat value="{!mapVisitDateAndListOfPagesVisited[visitDate]}" var="visitorDetail">
+                                    <tr>
+                                    <td>
+                                    <table cellspacing="0" cellpadding="0">
+                                    <tr style="line-height: 10px;">
+                                        <td>                                
+                                               <div class="width100"> {!visitorDetail.visitTime}  </div>                                 
+                                        </td>
+                                        <td style="line-height:normal;">                               
+                                                <div class="visitorDetailActionURL">{!visitorDetail.actionURL}</div>                                  
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                    <tr style="line-height: 10px;">
+                                        <td>                                                        
+                                                {!visitorDetail.timeSpent}                                           
+                                        </td>
+                                        <td>                                
+                                                {!visitorDetail.actionTitle}                                  
+                                        </td>
+                                    </tr>
+                                    </table>
+                                    </td>
+                                    </tr>                     
+                                </apex:repeat> 
+                                </table> 
+                                </apex:repeat>                                                                                            
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!!isVisitInfoAvailable}">
+                             <div class="addScroll">
+                            <div class="borderBlue">
+                                <apex:outputLabel value="This visitor submitted their web-form over six months ago, and we do not store individual page history information past six months. However, data is and will always be available in the Daddy Analytics Lead fields."/>
+                            </div> 
+                            </div>                               
+                        </apex:outputPanel>
+                        </apex:tab>
+                        
+                        <apex:tab label="Form Submission Visit Info" name="Form Submission Visit Info" id="formSubmissionVisittab" ontabenter="setFirstVisitDetail();" rendered="{!isVisitInfoAvailable}">  
+                            <apex:outputPanel id="FormSubmissionVisitPanelId">
+                                <apex:outputPanel >                                
+                                <div class="addScroll" id="formSubmissionVisitInfoDiv">  
+                                <script>setDynamicHeight('formSubmissionVisitInfoDiv');</script>      
+                                <table class="tableStyle tableStyle1" cellspacing="0" cellpadding="0" width="100%"  style="border-right:0; border-top:0; border:1px solid #D5D7E8">                            
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Date of Visit:</div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitDateTime}" styleClass="minWidth500"></apex:outputLabel><br/>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Session Info: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitSession}"></apex:outputLabel><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Referrer Website: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitReferer}"></apex:outputLabel><br/>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <div class="width120">Landing Page:</div>
+                                        </td>
+                                        <td>
+                                            <div style="word-wrap:break-word;">
+                                                <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitLandingPage}"></apex:outputLabel><br/>  
+                                            </div>                                                   
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Campaign Name:</div> 
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitCampaignName}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Source: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitCampaignSource}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Medium : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitCampaignMedium}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <div class="width120"> Campaign Content : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitCampaignContent}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Term : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!formSubmissionVisitDetailObj.visitCampaignTerm}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>                               
+                                </table> 
+                                </div> 
+                                </apex:outputPanel>                                                                                       
+                            </apex:outputPanel>                                              
+                        </apex:tab>                                                
+                        
+                        <apex:tab label="First Visit Path" name="First Visit Path" id="firstVisitPathtab" ontabenter="setFirstVisitPathDetail();" rendered="{!!isCurrentVisitAndFirstVisitSame}">
+                        <apex:outputPanel id="FirstVisitPathPanelId">
+                                <apex:outputPanel rendered="{!!isCurrentVisitAndFirstVisitSame}">
+                                
+                                <div class="addScroll" id="firstVisitPathDiv">    
+                                        <script>setDynamicHeight('firstVisitPathDiv');</script>                             
+                                        <apex:repeat value="{!mapVisitDateAndListOfFirstVisitPagesVisited}" var="visitDate" id="mapFirstVisitPathDetails"> 
+                                        <span class="dateClass">
+                                            <apex:image url="{!URLFOR($Resource.DaddyAnalytics__DaddyAnalyticsImageResource,'DaddyAnalyticsImage/dateImage.png')}" width="20" height="20" styleClass="dateIcon"/>                                                 
+                                            {!visitDate}
+                                        </span>
+                                        <span class="imageDiv">
+                                            <!--<apex:image url="http://www.geonames.org/flags/x/{!visitorDetailObj.countryCode}.gif"  height="20" width="25"/> -->                       
+                                            <apex:image value="https://cdn.daddyanalytics.com/images/{!visitorDetailObj.webBrowser}" height="20" width="20" rendered="{!isBrowserImageAvailable}"/>                                                 
+                                            <apex:outputLabel value="{!visitorDetailObj.webBrowser}" rendered="{!!isBrowserImageAvailable}"/>
+                                            <apex:image value="https://cdn.daddyanalytics.com/images/{!visitorDetailObj.operatingSystem}" height="20" width="20" rendered="{!isOperatingSystemImageAvailable}"/>                                                 
+                                            <apex:outputLabel value="{!visitorDetailObj.webBrowser}" rendered="{!!isOperatingSystemImageAvailable}"/>
+                                        </span>
+                                        <span class="locationDiv">
+                                            {!visitorDetailObj.geoLocation}
+                                        </span>  
+                                        <table class="tableStyle tableStyle1" cellspacing="0" cellpadding="0" width="100%" style="border-right:0; border-top:0; border:1px solid #D5D7E8">                                       
+                                                                                  
+                                        <apex:repeat value="{!mapVisitDateAndListOfFirstVisitPagesVisited[visitDate]}" var="firstVisitPathDetail">
+                                            <tr>
+                                            <td>
+                                            <table cellspacing="0" cellpadding="0">
+                                            <tr style="line-height: 10px;">
+                                                <td>                                
+                                                       <div class="width100"> {!firstVisitPathDetail.visitTime} </div>                                 
+                                                </td>
+                                                <td>                               
+                                                        <div class="visitorDetailActionURL">{!firstVisitPathDetail.actionURL}</div>                                  
+                                                </td>
+                                            </tr>
+                                            <tr></tr>
+                                            <tr style="line-height: 10px;">
+                                                <td>                                                        
+                                                        {!firstVisitPathDetail.timeSpent}                                          
+                                                </td>
+                                                <td>                                
+                                                        {!firstVisitPathDetail.actionTitle}                                  
+                                                </td>
+                                            </tr>
+                                            </table>
+                                            </td>
+                                            </tr>                     
+                                        </apex:repeat>  
+                                        </table>  
+                                        </apex:repeat>                                      
+                                    
+                                    </div>
+                                </apex:outputPanel>  
+                                <apex:outputPanel rendered="{!isCurrentVisitAndFirstVisitSame}">
+                                    <apex:outputLabel value="You are currently viewing this person's first visit."></apex:outputLabel>        
+                                </apex:outputPanel>                                                       
+                            </apex:outputPanel>                                    
+                        </apex:tab>
+                        
+                        <apex:tab label="First Visit Info" name="First Visit" id="firstVisittab" ontabenter="setFirstVisitDetail();" rendered="{!!isCurrentVisitAndFirstVisitSame}">  
+                            <apex:outputPanel id="FirstVisitPanelId">
+                                <apex:outputPanel rendered="{!!isCurrentVisitAndFirstVisitSame}">
+                                
+                                <div class="addScroll" id="firstVisitInfoDiv">  
+                                <script>setDynamicHeight('firstVisitInfoDiv');</script>   
+                                <table class="tableStyle tableStyle1" cellspacing="0" cellpadding="0" width="100%"  style="border-right:0; border-top:0; border:1px solid #D5D7E8">                            
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Date of Visit:</div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitDateTime}" styleClass="minWidth500"></apex:outputLabel><br/>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Session Info: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitSession}"></apex:outputLabel><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Referrer Website: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitReferer}"></apex:outputLabel><br/>    
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <div class="width120">Landing Page:</div>
+                                        </td>
+                                        <td>
+                                            <div style="word-wrap:break-word;"> 
+                                                <apex:outputLabel value="{!firstVisitDetailObj.visitLandingPage}"></apex:outputLabel><br/>  
+                                            </div>                                                   
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120">Campaign Name:</div> 
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitCampaignName}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Source: </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitCampaignSource}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Medium : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitCampaignMedium}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                           <div class="width120"> Campaign Content : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitCampaignContent}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="width120"> Campaign Term : </div>
+                                        </td>
+                                        <td>
+                                            <apex:outputLabel value="{!firstVisitDetailObj.visitCampaignTerm}"></apex:outputLabel>        
+                                        </td>
+                                    </tr>                               
+                                </table> 
+                                </div> 
+                                </apex:outputPanel>  
+                                <apex:outputPanel rendered="{!isCurrentVisitAndFirstVisitSame}">
+                                    <apex:outputLabel value="You are currently viewing this person's first visit."></apex:outputLabel>        
+                                </apex:outputPanel>                                                       
+                            </apex:outputPanel>                                              
+                        </apex:tab>
+                        
+                        <apex:tab label="More Info" name="Daddy Analytics Features" id="daddyAnalyticsFeaturestab">                            
+                            <div id="moreInfoDivId"> 
+                               <div class="borderBlue" style="padding-top : 0px;">
+                                <script>setDynamicHeightMoreInfo('moreInfoDivId');</script>                                                     
+                                <apex:outputLabel style="font-size:12px;line-height:60px;"  value="To build links that populate the DA Campaign fields, use our "></apex:outputLabel>                        
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:60px;" value="https://daddyanalytics.com/super-url-builder/" target="_blank">Super URL Builder</apex:outputLink>
+                                <br/>
+                                
+                                <apex:outputLabel style="font-size:12px;line-height:20px;" value="Our  "></apex:outputLabel>
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:20px;" value="https://support.daddyanalytics.com/" target="_blank">support site</apex:outputLink>
+                                <apex:outputLabel style="font-size:12px;line-height:20px;" value=" has more info, including articles on "></apex:outputLabel>
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:20px;" value="https://support.daddyanalytics.com/customer/portal/articles/1283361-why-are-the-da-campaign-fields-blank-" target="_blank">'Why are the DA Campaign Fields Blank?'</apex:outputLink>
+                                <apex:outputLabel style="font-size:12px;line-height:20px;" value=" , "></apex:outputLabel>                                
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:20px;" value="https://support.daddyanalytics.com/customer/portal/articles/1283363-where-do-the-daddy-analytics-fields-go-after-a-lead-is-converted-" target="_blank">'Where do the Daddy Analytics fields go after a Lead is Converted?'</apex:outputLink>
+                                <apex:outputLabel style="font-size:12px;line-height:20px;" value=" and "></apex:outputLabel>                                                                
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:20px;" value="https://support.daddyanalytics.com/customer/portal/articles/1283353-why-don-t-lead-source-and-campaign-name-source-match-" target="_blank">'Why don't Lead Source and DA Campaign Fields match?'</apex:outputLink>                                                                                                                             
+                                <br/>
+                                
+                                <apex:outputLabel style="font-size:12px;line-height:70px;" value="Check out our beta features, "></apex:outputLabel>
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:70px;" value="/apex/DaddyAnalytics__DaddyAnalyticsChart" target="_blank">Dynamic Bar Charts</apex:outputLink>
+                                <apex:outputLabel style="font-size:12px;line-height:70px;" value=" and "></apex:outputLabel>
+                                <apex:outputLink style="font-size:12px;color:blue;line-height:70px;" value="/apex/DaddyAnalytics__DaddyAnalyticsHeatmap" target="_blank">Heatmaps</apex:outputLink>
+                                   
+                                <br/>
+                                <apex:outputLabel style="font-size:11px;margin-top:500px;line-height:15px;" value="Estimated GeoLocation is based on IP address at time of Form submission. Estimated GeoLocation is 99% accurate at the country level, 80% accurate at the city level."></apex:outputLabel>       
+                              </div>  
+                             </div>                                               
+                        </apex:tab>
+                        </apex:tabPanel>
+                    </td>
+                    <td width="40%" id="mapTdWidth">
+                     
+                      <apex:outputPanel layout="block" id="mapContainer" styleClass="mapHeight">Loading map...</apex:outputPanel>
+                        <script>                   
+                            loadMap('{!$Component.mapContainer}');
+                        </script>
+                      
+                    </td>
+                </tr>   
+              
+                <!--<tr>
+                    <td colspan="2" style="vertical-align:top;">
+                        <apex:outputLabel style="font-size:12px;" value="Estimated GeoLocation is based on IP address at time of Form submission. Estimated GeoLocation is 99% accurate at the country level, 80% accurate at the city level."></apex:outputLabel>    
+                    </td>
+                </tr>  -->                       
+            </table>           
+        </apex:outputPanel>   
+        <apex:outputPanel rendered="{!!showTabs}">
+            <br/>
+            <br/>
+            <br/>
+            <apex:outputLabel style="font-size:13px;" value="This Lead might have been created before Daddy Analytics was installed. Or it might have been created through a method other than Web-to-Lead. If so, then no Daddy Analytics data will be available on this Lead."></apex:outputLabel>            
+            <br/>
+            <apex:outputLabel style="font-size:13px;" value="If it was created through Web-to-Lead, after setting up Daddy Analytics, and you expected data here, then we might not have information on this Lead because the web visitor might not have had Javascript enabled."></apex:outputLabel>   
+        </apex:outputPanel> 
+        
+        <!-- function for screen scrapping --> 
+        <apex:actionFunction name="updateExpiryDateAndTrialStatus_JS" action="{!updateExpiryDateAndTrialStatus}" rerender="panelForUpdatePackageInfo"/>
+        <apex:outputPanel id="panelForUpdatePackageInfo">
+        </apex:outputPanel>
+    </apex:form> 
+    <script>
+        window.onload = function ()
+        {
+            updateExpiryDateAndTrialStatus_JS();                                                                                                                             
+        }                
+    </script>      
+</apex:page>

@@ -30,15 +30,17 @@
     
     #editor {
         border-radius: 5px;
-        border: 1px inset #cecece;
-        min-height: 22px;
+        border: 1px solid #aaa;
+        min-height: 23px;
         min-width: 207px;
-        width: 207px;
+        width: 214px;
         white-space: nowrap;
         overflow: hidden;
         background: white;
-        padding: 10px;
+        padding: 8px;
         outline: none;
+        color: #052942;
+        font-size:14px;
     }
     
     #toolbar {
@@ -65,7 +67,7 @@
     
     #tblEditing {
         font-family: 'Open Sans', 'sans-serif';
-        max-width:610px;
+        
     }
     
     .activeBtn {
@@ -78,7 +80,7 @@
         function assignValues(){
 
           if(parent.$("#defaultValue").attr('name') == undefined){
-              lblId=$(container).find('.ExpandDiv').prev().prev().prev().attr('id');
+              lblId=$(container).find('.ExpandDiv').prev().prev().attr('id');
           }else if(parent.$("#defaultValue").attr('name') == "GENERALTEXT"){
             //  lblId=$(container).find('.ExpandDiv').prev().prev().prev().find('label').attr('id');
             /// updated on mar 30 2015- by balinder (can't edit general text- FIXED)
@@ -137,12 +139,13 @@
 
                          
                       }else{
-                          $(container).find('#lbl'+lblId).html($('#editor').text());
+                          $(container).find('#lbl'+lblId).eq(0).html($('#editor').text());
                       }
                }, false);
                
-               $("#editor").on('change', function() {
+               $("#editor").on('blur', function() {
                		parent.isChangesMadeInForm = true;
+                  mixpanel.track('Field label changed',{ "Field ID": lblId});
                });
            }else{              
               document.getElementById('editor').attachEvent("onkeyup", function() {
@@ -159,11 +162,12 @@
                         /*to fix File upload label edit issue on April 13 2015 */
                        //  $(container).find('#lbl'+lblId+'_Select').html($('#editor').text());                      
                       }else{
-                          $(container).find('#lbl'+lblId).html($('#editor').text());
+                          $(container).find('#lbl'+lblId).eq(0).html($('#editor').text());
                       }
                }); 
-               $("#editor").on('change', function() {
+               $("#editor").on('blur', function() {
                		parent.isChangesMadeInForm = true;
+                  mixpanel.track('Field label changed',{ "Field ID": lblId});
                });               
            } 
            setTimeout(function(){
@@ -496,7 +500,7 @@
                         /*to fix File upload label edit issue on April 13 2015 */
                        //  $(container).find('#'+lblId+'_Select').html($('#editor').text());
           }else{
-              $(container).find('#lbl'+lblId).html($('#editor').text());
+              $(container).find('#lbl'+lblId + '.ff-label').html($('#editor').text());
           }
        }  
        function showStyle(){
@@ -504,7 +508,12 @@
            $('.dshow').hide();
            $('.navbar').show();                      
        } 
-       
+    
+
+        (function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+        mixpanel.init("39b7e8be28cfa1b59fdd342bad0004e0");
+              
     </script>
     </head>
     <div id="dsel"></div>

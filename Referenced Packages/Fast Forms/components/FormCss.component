@@ -546,7 +546,9 @@ background-position: -140px -1px;
     .vabutton2:active,
     .vabutton2:focus,
     .vabutton1:active,
-    .vabutton1:focus {
+    .vabutton1:focus,
+    .vabuttonLarge:active,
+    .vabuttonLarge:focus {
         background-color: #1288c5;
         text-decoration: none;
         color: #ffffff;
@@ -637,6 +639,42 @@ background-position: -140px -1px;
         line-height: 18px;
         vertical-align: top;
     }
+      
+    .vabuttonLarge {
+        font-family: 'Open Sans';
+        font-weight: 600;
+        color: #ffffff;
+        background-color: #33aefd;
+        text-decoration: none;
+       padding: 14px 20px 14px 20px;
+        display: inline-block;
+        font-size: 16px;
+        min-width: 100px;
+        border-radius: 6px;
+        border: solid 1px #33aefd;
+        cursor: pointer;
+    }
+    .vabuttonLarge span {
+        display: inline-block;
+        line-height: 18px;
+        vertical-align: top;
+    }
+    .vabuttonLarge:hover {
+        background-color: #139be1;
+        color: #ffffff;
+        text-decoration: none;
+        border: solid 1px #139be1;
+    }
+    .vabuttonLarge:active,
+    .vabuttonLarge:focus {
+        background-color: #1288c5;
+        text-decoration: none;
+        color: #ffffff;
+        border: solid 1px #1288c5;
+        background-image:none !important;
+    }
+
+
     .vabutton2 span {
         display: inline-block;
       
@@ -715,7 +753,8 @@ background-position: -140px -1px;
         }       
                  
         .ui-dialog .ui-dialog-buttonpane .vabutton2 ,
-        .ui-dialog .ui-dialog-buttonpane .vabutton1{
+        .ui-dialog .ui-dialog-buttonpane .vabutton1 ,
+        .ui-dialog .ui-dialog-buttonpane .vabuttonLarge{
          font-family: 'Open Sans' !important;
             font-weight: 600  !important;
              text-decoration: none !important;
@@ -725,14 +764,21 @@ background-position: -140px -1px;
             border-radius: 6px !important;
             min-width: 100px !important;
         }
+        .ui-dialog .ui-dialog-buttonpane .vabuttonLarge{
+         margin-bottom: -20px !important;
+        }        
         .ui-dialog .ui-dialog-buttonpane .vabutton2:hover ,
-        .ui-dialog .ui-dialog-buttonpane .vabutton1:hover{    
+        .ui-dialog .ui-dialog-buttonpane .vabutton1:hover ,
+        .ui-dialog .ui-dialog-buttonpane .vabuttonLarge:hover{    
             background-color: #139be1 !important;
             background-image:none !important;
             color: #ffffff  !important;
             text-decoration: none;
             border: solid 1px #139be1  !important;
-        }
+        }        
+        .ui-dialog .ui-dialog-buttonpane .vabuttonLarge:hover{    
+            margin-bottom: -20px !important;
+        }        
         .ui-dialog .ui-dialog-buttonpane .vabutton2
         {
            
@@ -748,6 +794,13 @@ background-position: -140px -1px;
             background-image: none;
             border: solid 1px #33aefd !important;
         }
+        .ui-dialog .ui-dialog-buttonpane .vabuttonLarge {
+         
+            color: #ffffff !important;
+            background-color: #33aefd !important;
+            background-image: none !important;
+            border: solid 1px #33aefd !important;
+        }        
         .ui-draggable .ui-dialog-titlebar {
             display: none;
         }
@@ -1244,7 +1297,7 @@ margin-top:-10px;
     max-width:850px;
     display:inline-block;
     border-radius: 25px;
-    height:50px;
+    /*height:50px;*/
     background-color: #d55555;
     text-align: center;
      
@@ -1601,7 +1654,7 @@ margin-top:-10px;
         #parentUlForm .fieldLi.B div:first-child,
         #parentUlForm .fieldLi.C div:first-child
         {
-        margin-left:-3px;
+        margin-left:0px;
         }
         .css-label {
             float: left;
@@ -1788,6 +1841,8 @@ background-position:-13px -1px;
     .display-none{
         display:none !important;
     }    
+
+
 /* form editor css ends*/
 </style>
 </apex:component>

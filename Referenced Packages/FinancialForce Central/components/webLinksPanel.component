@@ -1,0 +1,48 @@
+<apex:component layout="none" selfClosing="false">
+	<apex:attribute name="webLinks" type="WebLink[]" description="WebLinks to be tabulated." />
+	<apex:attribute name="styleClass" type="String" description="Data table style class." />
+	<apex:stylesheet value="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}{!URLFOR($Resource.ffc__ffCentral, '/feeds.css')}" />
+	
+	<apex:dataTable value="{!webLinks}" var="webLink" headerClass="header" styleClass="feedTable {!styleClass}">
+		
+		<apex:facet name="caption"><apex:componentBody /></apex:facet>
+		
+		<apex:column styleClass="date" rendered="{!webLink.PageOrSObjectType != 'Tutorial' && webLink.PageOrSObjectType != 'Xtra'}">
+			<c:castToDatetime datetimeValue="{!webLink.CreatedDate}" outputTextValue="{0,date,dd MMM ''yy}" />
+		</apex:column>
+		
+		<apex:column headerClass="hidden" styleClass="item">
+			<!-- XTRA -->
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'Xtra'}" value="{!URLFOR($Page.ffc__XtraSingleSignOn, null, [xtraUrl = webLink.Url])}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.Name}</apex:outputLink>
+			
+			<!-- TUTORIAL -->
+			<c:castToDatetime rendered="{!webLink.PageOrSObjectType == 'Tutorial'}" datetimeValue="{!webLink.CreatedDate}" outputTextValue="{0,date,dd MMM ''yy}" />
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'Tutorial'}" value="{!URLFOR($Page.ffc__XtraSingleSignOn, null, [xtraUrl = webLink.Url])}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}" rel="shadowbox;width={!webLink.Width};height={!webLink.Height}">&nbsp;&nbsp;{!webLink.Name}</apex:outputLink>
+			<apex:outputPanel rendered="{!webLink.PageOrSObjectType == 'Tutorial'}" styleClass="description" layout="block">
+				in&nbsp;<apex:outputLink value="{!URLFOR($Page.ffc__XtraSingleSignOn, null, [xtraUrl = webLink.Description])}" styleClass="description" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.MasterLabel}</apex:outputLink>
+			</apex:outputPanel>
+			
+			<!-- ANNOUNCEMENT -->
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'Announcement'}" value="{!URLFOR($Page.ffc__XtraSingleSignOn, null, [xtraUrl = webLink.Url])}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.Name}</apex:outputLink>
+			
+			<!-- IDEA -->
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'Idea'}" value="{!webLink.Url}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.Name}</apex:outputLink>
+			
+			<!-- SOLUTION -->
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'Solution'}" value="{!webLink.Url}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.Name}</apex:outputLink>
+			
+			<!-- NEWS links -->
+			<apex:outputLink rendered="{!webLink.PageOrSObjectType == 'News'}" value="{!webLink.Url}" target="{!IF('newWindow' == webLink.OpenType, '_blank', '')}">{!webLink.Name}</apex:outputLink>
+			
+		</apex:column>
+		
+		<apex:column rendered="{!LEN(webLink.DisplayType) > 0}" styleClass="thumbnail">
+			<apex:outputLink rel="shadowbox;width={!webLink.Width};height={!webLink.Height}" value="{!URLFOR($Page.ffc__XtraSingleSignOn)}" styleClass="thumbnail">
+				<apex:param name="xtraUrl" value="{!webLink.Url}" />
+				<apex:image styleClass="thumb" value="{!webLink.DisplayType}" width="80" />
+				<apex:image styleClass="decal" value="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}{!URLFOR($Resource.ffc__ffCentral, '/playDecal.png')}" />
+			</apex:outputLink>
+		</apex:column>
+		
+	</apex:dataTable>
+</apex:component>

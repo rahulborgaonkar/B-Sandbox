@@ -1,0 +1,75 @@
+<apex:component layout="none" selfClosing="true">
+	<apex:attribute name="animate"           type="Boolean" default="true" description="True to enable animations." />
+	<apex:attribute name="animateFade"       type="Boolean" default="true" description="True to enable opacity animations." />
+	<apex:attribute name="autoplayMovies"    type="Boolean" default="true" description="True to automatically play movies when they load." />
+	<apex:attribute name="continuous"        type="Boolean" default="false" description="True to enable the user to skip to the first item in a gallery from the last using next." />
+	<apex:attribute name="enableKeys"        type="Boolean" default="true" description="True to enable keyboard navigation." />
+	<apex:attribute name="flashParams"       type="String"  default="{bgcolor:'#000000',allowfullscreen:true}" description="Parameters to pass to flash <object>'s." />
+	<apex:attribute name="flashVars"         type="String"  default="{}" description="Variables to pass to flash <object>'s." /> 
+	<apex:attribute name="flashVersion"      type="String"  default="9.0.115" description="The minimum required Flash version. Note: The default is 9.0.115. This is the minimum version suggested by the JW FLV player." />
+	<apex:attribute name="handleOversize"    type="String"  default="resize" description="Determines how oversized content is handled. If set to 'resize' the content will be resized while preserving aspect ratio. If 'drag' will display the image at its original resolution but it will be draggable. If 'none' will display the content at its original resolution but it may be cropped." />
+	<apex:attribute name="handleUnsupported" type="String"  default="link" description="Determines how unsupported content is handled. If set to 'remove' will remove the content from the gallery. If 'link' will display a helpful link to a page where the necessary browser plugin can be installed." />
+	<apex:attribute name="onChange"          type="String"  default="function() {}" description="A hook function to be fired when changing from one gallery item to the next. Is passed the item that is about to be displayed as its only argument." />
+	<apex:attribute name="onClose"           type="String"  default="function() {}" description="A hook function to be fired when closing. Is passed the most recent item as its only argument." />
+	<apex:attribute name="onFinish"          type="String"  default="function() {}" description="A hook funciton to be fires when content is finished loading. Is passed the current gallery item as its only argument." />
+	<apex:attribute name="onOpen"            type="String"  default="function() {}" description="A hook function to be fired when opening. Is passed the current gallery item as its only argument." />
+	<apex:attribute name="showMovieControls" type="Boolean" default="true" description="True to enable movie controls on movie players." />
+	<apex:attribute name="skipSetup"         type="Boolean" default="false" description="True to skip calling setup during init." />
+	<apex:attribute name="slideshowDelay"    type="Integer" default="0" description="The delay (in seconds) to use when displaying a gallery in slideshow mode. Setting this option to any value other than 0 will trigger slideshow mode." />
+	<apex:attribute name="viewportPadding"   type="Integer" default="20" description="The ammount of padding (in pixels) to maintain around the edge of the viewport at all times." />
+	<apex:attribute name="animSequence"      type="String"  default="sync" description="The sequence of the resizing animations. 'hw' will resize height, then width. 'wh' resizes width, then height. 'sync' resizes both simultaneously." />
+	<apex:attribute name="counterLimit"      type="Integer" default="10" description="The limit to the number of counter links that are displayed in a 'skip'-style counter." />
+	<apex:attribute name="counterType"       type="String"  default="default" description="The counter type to use. May be either 'default' or 'skip'. A skip counter displays a link for each object in the gallery." />
+	<apex:attribute name="displayCounter"    type="Boolean" default="true" description="True to display the gallery counter." />
+	<apex:attribute name="displayNav"        type="Boolean" default="true" description="True to show the navigation controls." />
+	<apex:attribute name="fadeDuration"      type="Decimal" default="0.35" description="The duration (in seconds) of opacity animations." />
+	<apex:attribute name="initialHeight"     type="Integer" default="160" description="The initial height (in pixels)." />
+	<apex:attribute name="initialWidth"      type="Integer" default="320" description="initialWidth" />
+	<apex:attribute name="modal"             type="Boolean" default="false" description="True to trigger Shadowbox.close when the overlay is clicked." />
+	<apex:attribute name="overlayColor"      type="String"  default="#000" description="The color (in hex) to use for the overlay." />
+	<apex:attribute name="overlayOpacity"    type="String"  default="0.5" description="The opacity to use for the overlay." />
+	<apex:attribute name="resizeDuration"    type="Decimal" default="0.35" description="The duration (in seconds) to use for resizing animations." />
+	<apex:attribute name="showOverlay"       type="Boolean" default="true" description="True to show the overlay, false to hide it." />
+	<apex:attribute name="troubleElements"   type="String"  default="['select', 'object', 'embed', 'canvas']" description="Names of elements that should be hidden when the overlay is enabled." />
+	
+	<apex:includeScript value="{!URLFOR($Resource.ffc__thirdparty_shadowboxZip, 'shadowbox-3.0.3/shadowbox.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.ffc__thirdparty_shadowboxZip, 'shadowbox-3.0.3/shadowbox.css')}" />
+	
+	<script>
+		Shadowbox.init({
+			animate:{!animate},
+			animateFade:{!animateFade},
+			autoplayMovies:{!autoplayMovies},
+			continuous:{!continuous},
+			enableKeys:{!enableKeys},
+			flashParams:"{!flashParams}",
+			flashVars:"{!flashVars}",
+			flashVersion:'{!flashVersion}',
+			handleOversize:'{!handleOversize}',
+			handleUnsupported:'{!handleUnsupported}',
+			onChange:{!onChange},
+			onClose:{!onClose},
+			onFinish:{!onFinish},
+			onOpen:{!onOpen},
+			showMovieControls:{!showMovieControls},
+			skipSetup:{!skipSetup},
+			slideshowDelay:{!slideshowDelay},
+			viewportPadding:{!viewportPadding},
+			
+			animSequence:'{!animSequence}',
+			counterLimit:{!counterLimit},
+			counterType:'{!counterType}',
+			displayCounter:{!displayCounter},
+			displayNav:{!displayNav},
+			fadeDuration:{!fadeDuration},
+			initialHeight:{!initialHeight},
+			initialWidth:{!initialWidth},
+			modal:{!modal},
+			overlayColor:'{!overlayColor}',
+			overlayOpacity:{!overlayOpacity},
+			resizeDuration:{!resizeDuration},
+			showOverlay:{!showOverlay},
+			troubleElements:{!troubleElements}
+		});
+	</script>
+</apex:component>

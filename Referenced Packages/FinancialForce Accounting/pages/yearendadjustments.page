@@ -1,0 +1,117 @@
+<apex:page standardController="c2g__codaYear__c" extensions="c2g.YearEndAdjustmentsController">
+ 	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/DialogBox/DialogBox.css')}"/>
+ 	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+  	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/LoadingOverlay/LoadingOverlay.css')}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+	<script>
+		var $FFDC = jQuery.noConflict();
+		var CODA2GoButtons = new CODA2GoPage();
+		var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+	</script>
+	<script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/base/frameworks/ext-core-3.1.0.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/components/DialogBox/DialogBox.js')}" type="text/javascript"></script>
+    <script src="{!URLFOR($Resource.front,'front/components/LoadingOverlay/LoadingOverlay.js')}" type="text/javascript"></script>
+	<apex:form onsubmit="ffdc.go.loadingOverlay.createLoadingOverlay('ffdcTableOverlay','{!$Label.codaProcessing}',1);if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+		<apex:sectionHeader title="Year End Adjustments" subtitle="{!viewState.YearDto.Name}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1326')}"/>
+		<apex:pageBlock id="buttonsBlock">
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton value="{!$Label.codaYearEndPageCancelBtn}" action="{!redirectToYear}" id="cancel_h" styleclass="hiddensubmit cancelButton" immediate="true" reRender=""/>
+				<apex:commandButton value="Process" action="{!runYearEndAdjustments}" id="runYE_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaYearEndOKBtn}" action="{!ok}" id="okBtn_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaYearEndResubmitBtn}" action="{!resubmit}" id="resubmit_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.codaYearEndPageCancelBtn}" id="cancel" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;" rendered="{!!viewstate.errorOccurredOnBatch}"/>
+				<apex:commandButton value="Process" id="runYE" onclick="document.getElementById('{!$Component.runYE_h}').click(); return false;" rendered="{!viewState.canRunYearEndAdjustments}" reRender="dialogPanel,batchApexPanel,actPoller"/>
+				<apex:commandButton value="{!$Label.codaYearEndOKBtn}" id="okBtn" onclick="document.getElementById('{!$Component.okBtn_h}').click(); return false;" rendered="{!viewstate.errorOccurredOnBatch}" reRender="dialogPanel,batchApexPanel,actPoller"/>
+				<apex:commandButton value="{!$Label.codaYearEndResubmitBtn}" id="resubmit" onclick="document.getElementById('{!$Component.resubmit_h}').click(); return false;" rendered="{!viewstate.errorOccurredOnBatch}" reRender="dialogPanel,batchApexPanel,actPoller"/>
+				<apex:commandButton value="{!$Label.codaYearEndResubmitBtn}" id="reRunYearEnd" onclick="document.getElementById('{!$Component.runYE_h}').click(); return false;" rendered="{!viewState.readyForResubmit}" reRender="dialogPanel,batchApexPanel,actPoller"/>
+				<script>					
+					var CODA2GoButtonArray = "";
+					
+					if(document.getElementById("{!$Component.runYE}"))
+                        CODA2GoButtonArray = CODA2GoButtonArray + ',' + "{!$Component.runYE}";
+
+                    if(document.getElementById("{!$Component.cancel}"))
+                        CODA2GoButtonArray = CODA2GoButtonArray + ',' + "{!$Component.cancel}";
+
+                    if(document.getElementById("{!$Component.okBtn}"))
+                        CODA2GoButtonArray = CODA2GoButtonArray + ',' + "{!$Component.okBtn}";
+
+                    if(document.getElementById("{!$Component.resubmit}"))
+                        CODA2GoButtonArray = CODA2GoButtonArray + ',' + "{!$Component.resubmit}";
+
+                    if(document.getElementById("{!$Component.reRunYearEnd}"))
+                        CODA2GoButtonArray = CODA2GoButtonArray + ',' + "{!$Component.reRunYearEnd}";
+
+                    var myCODA2GoButtonArray = CODA2GoButtonArray.substr(1).split(",");
+                    CODA2GoButtons.initButtons(myCODA2GoButtonArray);
+				</script>
+			</apex:pageBlockButtons>
+			<!-- Messages -->
+			<apex:pagemessages />
+			<!-- Dialog Box -->
+			<apex:outputPanel id="dialogPanel" layout="none">
+            	<apex:outputText id="batchInformationId" styleClass="batchInformation hiddensubmit" value="{!viewstate.BatchProgress}"/>
+                <apex:outputPanel id="batchApexPanel" layout="block" rendered="{!viewstate.IsYearEndAdjustmentsProcessing}" >
+                    <script type="text/javascript">
+                        Ext.onReady(function () {
+                            if(!Ext.get('dialogWrapper')){
+                                var content = [{
+                                    tag: 'div',
+                                    style: 'text-align:center',
+                                    cn: [{
+                                        tag: 'div',
+                                        cn: [{
+                                            tag: 'h3',
+                                            html: '{!$Label.codaYearEndViewProcessed}',
+                                            style: 'display:block;margin:20px;'
+                                        }, {
+                                            tag: 'h3',
+                                            id: 'batchInformationField',
+                                            html: '{!viewstate.BatchProgress}',
+                                            style: 'display:block;margin:20px;'
+                                        }, {
+                                            tag: 'img',
+                                            src: '/img/loading.gif'
+                                        }, {
+                                            tag: 'h3',
+                                            html: '{!$Label.codaYearEndViewClickOk}',
+                                            style: 'display:block;margin:20px'
+                                        }]
+                                    }, {
+                                        tag: 'div',
+                                        cn: [{
+                                            tag: 'a',
+                                            cls: 'btn',
+                                            id: 'popUpOkButton',
+                                            style: 'text-decoration:none;padding:3px 15px;color:#333333',
+                                            html: '{!$Label.codaYearEndViewOk}',
+                                            href: '{!URLFOR($Action.codaYear__c.Tab,$ObjectType.codaYear__c)}'
+                                        }]
+                                    }]
+                                }];
+                                ffdc.go.dialogBox.createDialogBox({
+                                    dialogTitle: '{!$Label.codaYearEndViewLoading}',
+                                    dialogContent: content,
+                                    dialogWidth: 360,
+                                    dialogShowClose: false
+                                });
+                            }
+                        });
+                    </script>
+                    <apex:actionPoller id="actPoller" action="{!viewstate.loadYearEndAdjustmentsInfo}" oncomplete="if({!!viewstate.IsYearEndAdjustmentsProcessing}){closeDialogBox();  if({!!viewstate.ErrorOccurredOnBatch}){$FFDC('.cancelButton').click();}  }else{updateBatchInfo()};" enabled="{!viewstate.IsYearEndAdjustmentsProcessing}" interval="5" reRender="batchInformationId,buttonsBlock"/>
+                </apex:outputPanel>
+                <script type="text/javascript">
+	                function closeDialogBox(){
+	                    window.location = window.location;
+	                }
+	                function updateBatchInfo(){
+	                	var content = '' + $FFDC('.batchInformation').text();
+						$FFDC('#batchInformationField').text(content);
+	                }
+                </script>
+            </apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,111 @@
+<!-- CODAMergeAccounts -->
+<apex:page Controller="c2g.CODAMergeAccountsController">
+    <script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+    <script>
+        CODA.documentFunctionTimer("keyup", CODA.executeQueue, 1500);
+        CODA.documentFunctionTimer("click", CODA.executeQueue, 1500);
+    </script>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+    <style>
+        .extracollapsed
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extraexpanded
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extracollapsed_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extraexpanded_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .newlinebutton 
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/add.gif')});
+        }
+        .pbError
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+        }
+        .informationerrorblock
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIconsm.gif')});
+        }
+    </style>
+    <script>
+    	var CODA2GoButtons = new CODA2GoPage();
+        var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+    </script>
+    <apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+        <DIV id="indicator"><img src="{!URLFOR($Resource.coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/><span id="indicatortext"></span></DIV>
+
+        <!-- Header -->
+        <apex:sectionHeader title="{!$Label.codaMergeAccPageTitle}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1083')}"/>
+
+        <!-- Merge Accounts Details -->
+        <apex:pageBlock id="backgroundCashMatchingBlock" mode="edit">
+        
+            <!-- Buttons -->
+            <apex:pageBlockButtons id="mergeAccButton">  
+                <!-- Hidden Buttons -->
+                <apex:commandButton value="{!$Label.codaMergeAccPageRunButton}" id="run_h" action="{!run}" styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageConfirmButton}" id="confirm_h" action="{!confirm}" styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageCancelButton}" id="cancel_h" action="{!cancel}" styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageBackButton}" id="back_h" action="{!cancel}" styleclass="hiddensubmit"/>
+                <!--  End of Hidden Buttons-->
+                <apex:commandButton value="{!$Label.codaMergeAccPageRunButton}" id="run" onclick="if(!CODA.queing()){document.getElementById('{!$Component.run_h}').click()};return false;" rendered="{!viewstate.isError}"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageConfirmButton}" id="confirm" onclick="if(!CODA.queing()){document.getElementById('{!$Component.confirm_h}').click()};return false;" rendered="{!viewstate.isInfo}"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageCancelButton}" id="cancel" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;" rendered="{!viewstate.isInfo}"/>
+                <apex:commandButton value="{!$Label.codaMergeAccPageBackButton}" id="back" onclick="if(!CODA.queing()){document.getElementById('{!$Component.back_h}').click()};return false;" rendered="{!viewstate.isComplete}"/>
+                <script>                	
+                    CODA2GoButtons.initButtons(["{!$Component.run}", "{!$Component.confirm}", "{!$Component.cancel}"]);
+                </script>
+            </apex:pageBlockButtons>
+
+            <!-- Messages -->
+            <apex:outputPanel id="messagePanel" layout="block">
+                <apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.showErrorMessages}">
+                    <apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+                        <apex:outputText value="{!errorMessage}"/><br/>
+                    </apex:repeat>
+                </apex:outputPanel>
+                <apex:outputPanel id="infoPanel" layout="block" styleClass="pbInformation" rendered="{!viewstate.showInfoMessages}">
+                    <apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showInfoMessages}">
+                        <apex:outputText value="{!errorMessage}"/><br/>
+                    </apex:repeat>
+                </apex:outputPanel>
+                <apex:outputPanel id="completePanel" layout="block" styleClass="pbInformation" rendered="{!viewstate.showCompleteMessages}">
+                    <apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showCompleteMessages}">
+                        <apex:outputText value="{!errorMessage}"/><br/>
+                    </apex:repeat>
+                </apex:outputPanel>
+            </apex:outputPanel>
+
+            <!-- Object Detail -->
+            <apex:pageBlockSection id="objects" title="{!$Label.codaMergeAccPageSelection}" columns="2">
+            
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaMergeAccPageMasterField}"/>
+                    <apex:inputField id="masterField" required="true" value="{!viewstate.MasterAccLookup.dto.c2g__Account__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaMergeAccPageMerge1Field}"/>
+                    <apex:inputField id="merge1Field" required="true" value="{!viewstate.AccToMerge1Lookup.dto.c2g__Account__c}"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem />
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$Label.codaMergeAccPageMerge2Field}"/>
+                    <apex:inputField id="merge2Field" value="{!viewstate.AccToMerge2Lookup.dto.c2g__Account__c}"/>
+                </apex:pageBlockSectionItem>
+            
+            </apex:pageBlockSection>        
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,89 @@
+<apex:page standardController="c2g__codaJournal__c" extensions="ffgl.JournalCancelReverseController" sidebar="false">
+    <apex:variable var="fields" value="{!$ObjectType.c2g__codaJournal__c.fields}"/>
+    <apex:form >
+        <!-- PAGE TITLE -->
+        <apex:sectionHeader title="{!$Label.ReverseCancel}" subtitle="{!JournalName}"/>
+            <apex:pageBlock title="{!$Label.JournalDetail}" mode="edit">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!commitCancelReverse}" value="{!$Label.Save}" rendered="{!!IsComplete}"/>
+                <apex:commandButton action="{!commitCancelReverse}" value="{!$Label.SaveandPost}" rendered="{!IsComplete}"/>
+                <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" />
+            </apex:pageBlockButtons>
+            <apex:pagemessages id="messagePanel" />
+            <apex:variable var="view" value="{!viewstate.Journal}"/>
+            <apex:pageBlockSection id="journalDetail" title="{!$Label.Information}" columns="2" >
+                    <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$Label.Type}" for="cancelradio"/>
+                            <apex:outputPanel id="cancelradiopanel"> 
+                                <apex:selectRadio id="cancelradio" value="{!viewstate.CancelReverse}" style="margin-top:-5px;width:70%;" onclick="onChangeCancelMode();" layout="inlineDirection" disabled="{!!IsComplete}">
+                                    <apex:actionFunction name="onChangeCancelMode" action="{!modeUpdate}" reRender="cancelradiopanel,messagePanel,originaljournalWrapper,journalDateWrapper,periodWrapper,descriptionWrapper"/>
+                                    <apex:selectOption itemLabel="{!$Label.Reverse}" itemValue="reverse"/>
+                                    <apex:selectOption itemLabel="{!$Label.Cancel}" itemValue="cancel"/>
+                                </apex:selectRadio>
+                            </apex:outputPanel>
+                    </apex:pageBlockSectionItem>            
+                    <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >    
+                        <apex:outputLabel value="{!fields.c2g__JournalCurrency__c.label}" for="currency_cancel"/>
+                        <apex:outputPanel layout="block" style="min-height:20px;">
+                            <apex:outputField id="currency_cancel" value="{!viewstate.Journal.dto.c2g__JournalCurrency__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!fields.c2g__Debits__c.label}"/>
+                            <apex:outputText id="debits" value="{!Debits}" style="width:150px;display:block;text-align:right;"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!fields.c2g__Reference__c.label}" for="reference"/>
+                        <apex:inputField id="reference" value="{!viewstate.Journal.dto.c2g__Reference__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!fields.c2g__Credits__c.label}"/>
+                            <apex:outputText id="credits" value="{!Credits}" style="width:150px;display:block;text-align:right;"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!fields.c2g__OriginalJournal__c.label}" for="originaljournal"/>
+                        <apex:outputPanel id="originaljournalWrapper" layout="block" style="min-height:20px;">
+                            <apex:outputField id="originaljournal" value="{!viewstate.Journal.dto.c2g__OriginalJournal__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!fields.c2g__Total__c.label}"/>
+                            <apex:outputText id="total" value="{!Total}" style="width:150px;display:block;text-align:right;"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!fields.c2g__JournalDate__c.label}" for="date" />
+                        <apex:outputPanel id="journalDateWrapper">
+                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                <apex:inputField id="journalDate" value="{!viewstate.Journal.dto.c2g__JournalDate__c}" rendered="{!!isCancel}"/>
+                                <apex:outputField id="journalDate2" value="{!viewstate.Journal.dto.c2g__JournalDate__c}" rendered="{!isCancel}"/>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>        
+
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!fields.c2g__Period__c.label}" for="period"/>
+                        <apex:outputPanel id="periodWrapper">
+                            <apex:inputField value="{!viewstate.Journal.dto.c2g__Period__c}" id="period" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>    
+                    <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>        
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!fields.c2g__JournalDescription__c.label}" for="description"/>
+                        <apex:outputPanel id="descriptionWrapper">
+                            <apex:inputField id="description" value="{!viewstate.Journal.dto.c2g__JournalDescription__c}" style="height:50px;width:100%"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>                                            
+            </apex:pageBlock>
+    </apex:form>
+</apex:page>

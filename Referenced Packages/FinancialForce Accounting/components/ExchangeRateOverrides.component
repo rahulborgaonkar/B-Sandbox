@@ -1,0 +1,49 @@
+<!--
+Pages hosting this component are expected to provide the popup support.
+
+The script is in coda2go/web/script/lib.js; i.e.
+    <script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+The css tends to be on the page; i.e.
+    .extracollapsed { BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')}); }
+    .extraexpanded { BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')}); }
+    .extracollapsed_h { BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')}); }
+    .extraexpanded_h { BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')}); }
+-->
+<apex:component >
+	<apex:attribute name="rateData" description="This is the exchange rate override information to display." type="c2g.ExchangeRateOverrideView" required="true"/>
+	<apex:attribute name="readOnly" description="Are the exchange rates read-only?." type="Boolean" required="false" default="true"/>
+
+	<apex:outputPanel rendered="{!rateData.isMultiCurrency}" styleClass="holder">
+		<a href="#" onclick="CODA.toggleHeaderExpand(this, 'myRates');return false;" title="{!$Label.CurrencyExchangeRatesToggle}">
+			<img id="rateIcon" src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.CurrencyExchangeRatesToggle}"/>
+		</a>
+		<DIV id="myRates" class="headerexpander" style="z-index: 1">
+			<apex:pageBlockSection title="{!$Label.CurrencyExchangeRatesPopupTitle}" id="headerExchangeRateBlock" collapsible="false" columns="2">
+				<apex:pageBlockSectionItem rendered="{!rateData.showDocRate && !readOnly}">
+					<apex:outputLabel value="{!rateData.documentRateLabel}" for="documentRate"/>
+					<apex:inputText value="{!rateData.documentRate}" id="documentRate" styleclass="analysisdata"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!rateData.showDocRate && readOnly}">
+					<apex:outputLabel value="{!rateData.documentRateLabel}" for="documentRateRo"/>
+					<apex:outputText value="{!rateData.documentRate}" id="documentRateRo" styleclass="analysisdata"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!rateData.showDocRate}">
+					<apex:outputLabel value="{!$Label.codaCurrentDocumentExchangeRateLabel}" for="documentMemoRate"/>
+					<apex:outputText value="{!rateData.documentMemoRate}" id="documentMemoRate"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!rateData.showDualRate && !readOnly}">
+					<apex:outputLabel value="{!$Label.codaDualExchangeRateLabel}" for="dualRate"/>
+					<apex:inputText value="{!rateData.dualRate}" id="dualRate" styleclass="analysisdata"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!rateData.showDualRate && readOnly}">
+					<apex:outputLabel value="{!$Label.codaDualExchangeRateLabel}" for="dualRateRo"/>
+					<apex:outputText value="{!rateData.dualRate}" id="dualRateRo" styleclass="analysisdata"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem rendered="{!rateData.showDualRate}">
+					<apex:outputLabel value="{!$Label.codaCurrentDualExchangeRateLabel}" for="dualMemoRate"/>
+					<apex:outputText value="{!rateData.dualMemoRate}" id="dualMemoRate"/>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</DIV>
+	</apex:outputPanel>
+</apex:component>

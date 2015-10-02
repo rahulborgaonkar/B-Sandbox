@@ -1,0 +1,64 @@
+<apex:page standardController="ffps_blkstatex__StatementAccount__c" recordSetVar="statements" extensions="ffps_blkstatex.StatementController" action="{!prePrintPage}" >
+	<apex:sectionHeader title="Statements" subtitle="Print Statements" />
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		var $FFDC = jQuery.noConflict();
+
+		function showprinticon( id ) {
+			$FFDC(id).show();
+		}
+	</script>
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockSection columns="1" rendered="{!hasError && NOT(hasBatchedStatements)}">
+				<apex:pageBlockSectionItem >
+					<apex:pageMessages />
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1" rendered="{!NOT(hasBatchedStatements)}">
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<p>Choose what you would like to print:</p>
+						<apex:selectRadio value="{!printOption}" layout="pageDirection">
+							<apex:selectOption itemLabel="{!printRunLabel}" itemValue="printrun"/>
+							<apex:selectOption itemLabel="{!tickedLabel}" itemValue="ticked"/>
+							<apex:selectOption itemLabel="{!allInViewLabel}" itemValue="allinview"/>
+						</apex:selectRadio>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1" rendered="{!hasBatchedStatements}">
+				<apex:pageBlockSection columns="1">
+					<apex:pageBlockSectionItem >
+						<apex:pageMessages />
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+				<apex:pageBlockSectionItem >
+					<apex:dataTable value="{!batchedStatements}" var="statement" headerClass="headerRow" rowClasses="dataRow" styleClass="list">
+						<apex:column >
+							<apex:facet name="header">Batch</apex:facet>
+							<apex:outputText value="{!statement.batch}"/>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">Statement</apex:facet>
+							<apex:outputLink target="_new" onclick="showprinticon( '#printicon-{!statement.batch}' );" value="{!statement.url}">Click to download statement {!statement.batch}</apex:outputLink>
+						</apex:column>
+						<apex:column >
+							<apex:facet name="header">Downloaded</apex:facet>
+							<img class="printicon" style="vertical-align:middle; display: none;" id="printicon-{!statement.batch}" src="/img/msg_icons/confirm16.png" alt="" />
+						</apex:column>
+					</apex:dataTable>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputPanel >
+						<apex:commandButton value="Back" action="{!cancel}"/>
+						<apex:outputText value=" " rendered="{!NOT(hasBatchedStatements)}"/>
+						<apex:commandButton value="Print" action="{!printStatements}" rendered="{!NOT(hasBatchedStatements)}"/>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

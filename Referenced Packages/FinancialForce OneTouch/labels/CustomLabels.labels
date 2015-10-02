@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>codaBECashMatchingReportPageCashEntry</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageCashEntry</shortDescription>
+        <value>Cash Entry</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageCashEntryReference</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageCashEntryReference</shortDescription>
+        <value>Cash Entry Reference</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageCashEntryReferenceNotFound</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageCashEntryReferenceNotFound</shortDescription>
+        <value>Cash Entry Reference: No matches found.</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageChooseCriteria</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageChooseCriteria</shortDescription>
+        <value>Choose the criteria you wish to report against:</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageProcessing</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageProcessing</shortDescription>
+        <value>Processing</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageReportValid</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageReportValid</shortDescription>
+        <value>You must specify a valid report in the &quot;Cash Matching Report Name&quot; setting (OneTouch Settings).</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageSalesCreditNote</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageSalesCreditNote</shortDescription>
+        <value>Sales Credit Note</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageSalesInvoice</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageSalesInvoice</shortDescription>
+        <value>Sales Invoice</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageShowReportButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageShowReportButton</shortDescription>
+        <value>Show Report</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageVendorCreditNoteNumber</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageVendorCreditNoteNumber</shortDescription>
+        <value>Vendor Credit Note Number</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageVendorCreditNoteNumberNotFound</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageVendorCreditNoteNumberNotFound</shortDescription>
+        <value>Vendor Credit Note Number: No matches found.</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageVendorInvoiceNumber</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageVendorInvoiceNumber</shortDescription>
+        <value>Vendor Invoice Number</value>
+    </labels>
+    <labels>
+        <fullName>codaBECashMatchingReportPageVendorInvoiceNumberNotFound</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBECashMatchingReportPageVendorInvoiceNumberNotFound</shortDescription>
+        <value>Vendor Invoice Number: No matches found.</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyCopyOfJournal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyCopyOfJournal</shortDescription>
+        <value>Copy of {0}.</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyJobSubmitted</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyJobSubmitted</shortDescription>
+        <value>You will be notified by email when the process completes.</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyBeginning</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyBeginning</shortDescription>
+        <value>This message has been sent by FinancialForce Accounting to inform you that the journals bulk cloning process has completed&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyError1</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyError1</shortDescription>
+        <value>with the following errors: &lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyError2</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyError2</shortDescription>
+        <value>- Error cloning journal {0}: {1}&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyFooter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyFooter</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;Thank you for using FinancialForce Accounting.&lt;br&gt;&lt;br&gt;Created by FinancialForce.com. &lt;br&gt;www.financialforce.com</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyMessage1</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyMessage1</shortDescription>
+        <value>successfully and the following journals have been created: &lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailBodyMessage2</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailBodyMessage2</shortDescription>
+        <value>- &lt;a href=&quot;https://login.salesforce.com/{0}&quot;&gt;Journal {1}&lt;/a&gt;&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyMailSubject</shortDescription>
+        <value>Journals Bulk Cloning</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyPageBackButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyPageBackButton</shortDescription>
+        <value>Back to list</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyPageSubtitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyPageSubtitle</shortDescription>
+        <value>Clone Journals</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopyPageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopyPageTitle</shortDescription>
+        <value>Journals</value>
+    </labels>
+    <labels>
+        <fullName>codaBEJournalCopySelectSomeJournal</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEJournalCopySelectSomeJournal</shortDescription>
+        <value>You must select at least one journal.</value>
+    </labels>
+    <labels>
+        <fullName>codaBEMailSenderName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEMailSenderName</shortDescription>
+        <value>Financial Force</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryEnterACompany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryEnterACompany</shortDescription>
+        <value>You must enter a Company.</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryFromPeriodEarlierToPeriod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryFromPeriodEarlierToPeriod</shortDescription>
+        <value>The &quot;From Period&quot; must be earlier than the &quot;To Period&quot;.</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageCompany</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageCompany</shortDescription>
+        <value>Company</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageDimensions</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageDimensions</shortDescription>
+        <value>Dimensions</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageFilterCriteria</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageFilterCriteria</shortDescription>
+        <value>Filter Criteria</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageFromPeriod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageFromPeriod</shortDescription>
+        <value>From Period</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageGeneralLedgerAccount</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageGeneralLedgerAccount</shortDescription>
+        <value>General Ledger Account</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPagePeriods</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPagePeriods</shortDescription>
+        <value>Periods</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageReportValid</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageReportValid</shortDescription>
+        <value>You must specify a valid report in the &quot;Transaction Inquiry Report Name&quot; setting (OneTouch Settings).</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageShowReportButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageShowReportButton</shortDescription>
+        <value>Show Report</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageTitle</shortDescription>
+        <value>Transaction Inquiry</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryPageToPeriod</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryPageToPeriod</shortDescription>
+        <value>To Period</value>
+    </labels>
+    <labels>
+        <fullName>codaBETransactionEnquiryValidPeriodRange</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBETransactionEnquiryValidPeriodRange</shortDescription>
+        <value>You must enter a valid period range.</value>
+    </labels>
+    <labels>
+        <fullName>codaBEWorkflowDocumentIsNotApproved</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBEWorkflowDocumentIsNotApproved</shortDescription>
+        <value>The document cannot be posted because it is not approved.</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostCashEntryMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostCashEntryMailSubject</shortDescription>
+        <value>Cash Entry Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostJournalMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostJournalMailSubject</shortDescription>
+        <value>Journal Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailBodyBeginning</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailBodyBeginning</shortDescription>
+        <value>This message has been sent by FinancialForce Accounting to inform you that the bulk document posting process you initiated has completed&amp;nbsp;</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailBodyErrors1</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailBodyErrors1</shortDescription>
+        <value>with the following errors: &lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailBodyErrors2</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailBodyErrors2</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailBodyFooter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailBodyFooter</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;Thank you for using FinancialForce Accounting.&lt;br&gt;&lt;br&gt;Created by FinancialForce.com. &lt;br&gt;www.financialforce.com</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailBodySuccess</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailBodySuccess</shortDescription>
+        <value>successfully. &lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailSenderName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailSenderName</shortDescription>
+        <value>Financial Force</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostMailSubject</shortDescription>
+        <value>Sales Invoices Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageBackButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageBackButton</shortDescription>
+        <value>Back to list</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageCompletedInvoicesExcluded</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageCompletedInvoicesExcluded</shortDescription>
+        <value>The number of completed invoices excluded:</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageDiscardedInvoicesExcluded</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageDiscardedInvoicesExcluded</shortDescription>
+        <value>The number of discarded invoices excluded:</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageInvWithIncSchExcluded</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageInvWithIncSchExcluded</shortDescription>
+        <value>The number of invoices excluded because they have an income schedule:</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageInvoicesSent</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageInvoicesSent</shortDescription>
+        <value>The number of invoices sent for processing:</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageMailNotification</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageMailNotification</shortDescription>
+        <value>You will be notified by email when the process completes.</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageNoDocumentSelected</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageNoDocumentSelected</shortDescription>
+        <value>You must select at least one ‘In Progress’ document.</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageNoInvoicesSelected</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageNoInvoicesSelected</shortDescription>
+        <value>You must select at least one ‘In Progress’ sales invoice.</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPageTitle</shortDescription>
+        <value>Document Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPayableCreditNoteMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPayableCreditNoteMailSubject</shortDescription>
+        <value>Payable Credit Note Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostPayableInvoiceMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostPayableInvoiceMailSubject</shortDescription>
+        <value>Payable Invoice Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostSalesCreditNoteMailSubject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostSalesCreditNoteMailSubject</shortDescription>
+        <value>Sales Credit Note Bulk Posting</value>
+    </labels>
+    <labels>
+        <fullName>codaBulkPostTooManyJobs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>codaBulkPostTooManyJobs</shortDescription>
+        <value>There are too many batch jobs already running. Please try again later.</value>
+    </labels>
+</CustomLabels>

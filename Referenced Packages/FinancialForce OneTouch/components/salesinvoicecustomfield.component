@@ -1,0 +1,9 @@
+<apex:component controller="ffbext.SalesInvoiceCustomFieldController" access="global">
+    <apex:attribute name="salesInvoice" access="global" description="" type="c2g__codaInvoice__c" assignTo="{!salesInvoice}"/>
+    <apex:attribute name="headerFields" access="global" description="" type="Boolean" assignTo="{!headerFields}"/>
+    <apex:attribute name="customFieldsVar" access="global" description="" type="String"/>
+    <apex:attribute name="lineId" access="global" description="" type="Id" assignTo="{!lineId}"/>
+    <apex:componentBody rendered="{!shouldRender}">
+        <apex:variable var="{!customFieldsVar}" value="{!CustomFields}"/>
+    </apex:componentBody>   
+</apex:component>

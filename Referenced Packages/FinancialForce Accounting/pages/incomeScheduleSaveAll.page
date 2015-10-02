@@ -1,0 +1,12 @@
+<apex:page standardController="c2g__codaScheduleLineItem__c" extensions="c2g.ffb_SalesScheduleLineItemExt" recordSetVar="icmScheLis" action="{!saveAllIncomeSchedule}">
+	<apex:form >
+	    <apex:pageBlock mode="detail">
+			<apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <apex:outputpanel id="buttonPanel">
+                    <apex:commandButton action="{!cancel}" value="Back" />
+                </apex:outputpanel>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

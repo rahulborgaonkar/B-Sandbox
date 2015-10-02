@@ -1,0 +1,12 @@
+<apex:page standardController="c2g__codaInvoice__c" extensions="c2g.ffb_SalesInvoiceController" action="{!post}">
+    <apex:form >
+    	<apex:sectionHeader title="{!$ObjectType.c2g__codaInvoice__c.Label}" subtitle="{!c2g__codaInvoice__c.Name}"/>
+    	<apex:pageBlock >
+    		<apex:pagemessages />    
+    		<apex:pageBlockButtons >
+    			<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+    		</apex:pageBlockButtons>
+    		<apex:outputLabel value="{!c2g__codaInvoice__c.c2g__InvoiceStatus__c}" rendered="false"/>  
+    	</apex:pageBlock>     
+    </apex:form>
+</apex:page>

@@ -1,0 +1,149 @@
+<!-- CODABankStatement -->
+<apex:page standardController="c2g__codaBankStatement__c" extensions="c2g.CODABankStatementController">
+    <script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+    <script>
+        CODA.documentFunctionTimer("keyup", CODA.executeQueue, 1500);
+        CODA.documentFunctionTimer("click", CODA.executeQueue, 1500);
+        var CODA2GoButtons = new CODA2GoPage();
+		var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+    </script>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+    <style>
+        .extracollapsed
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extraexpanded
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extracollapsed_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extraexpanded_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .newlinebutton 
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/add.gif')});
+        }
+        .pbError
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+        }
+        .informationerrorblock
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIconsm.gif')});
+        }
+    </style>
+    
+    <apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+        <DIV id="indicator"><img src="{!URLFOR($Resource.coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/><span id="indicatortext"></span></DIV>
+
+        <!-- Header -->
+        <apex:sectionHeader title="{!$Label.codaBankStatementPageTitle}" subtitle="{!$Label.codaBankStatementPageSubtitle}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1080')}"/>
+		
+        <!-- Bank Statement Details -->
+        <apex:pageBlock title="{!$Label.codaBankStatementPageTitle}" id="BankStatementBlock" mode="edit">
+        
+            <!-- Buttons --> 
+            <apex:pageBlockButtons >  
+                <!-- Hidden Buttons -->
+                <apex:commandButton value="{!$Label.codaBankStatementPageImportBtn}" action="{!importFile}" id="import_h" styleclass="hiddensubmit" rendered="{!!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageCancelBtn}" action="{!cancel}" id="cancel_h" styleclass="hiddensubmit" immediate="true" reRender="" rendered="{!!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageAcceptBtn}" action="{!skipMessage}" id="acceptButton_h" styleclass="hiddensubmit" immediate="true" reRender="" rendered="{!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageCancelBtn}" action="{!cancelAndRemove}" id="cancelAndRemove_h" styleclass="hiddensubmit" immediate="true" reRender="" rendered="{!hasClosingBalanceWarning}"/>
+                <!--  End of Hidden Buttons-->
+                <apex:commandButton value="{!$Label.codaBankStatementPageImportBtn}" id="import" onclick="if(!CODA.queing()){document.getElementById('{!$Component.import_h}').click()};return false;" rendered="{!!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageCancelBtn}" id="cancel" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;" rendered="{!!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageAcceptBtn}" id="acceptButton" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.acceptButton_h}').click()};return false;" rendered="{!hasClosingBalanceWarning}"/>
+                <apex:commandButton value="{!$Label.codaBankStatementPageCancelBtn}" id="cancelAndRemove" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancelAndRemove_h}').click()};return false;" rendered="{!hasClosingBalanceWarning}"/>
+                
+                <script>
+                    var CODA2GoButtonArray = "";
+                    if(document.getElementById("{!$Component.import}"))
+	                	CODA2GoButtonArray = CODA2GoButtonArray + ',' +"{!$Component.import}";
+	                
+	                if(document.getElementById("{!$Component.cancel}"))
+	                	CODA2GoButtonArray = CODA2GoButtonArray + ',' +"{!$Component.cancel}";
+                    
+                    if(document.getElementById("{!$Component.acceptButton}"))
+	                	CODA2GoButtonArray = CODA2GoButtonArray + ',' +"{!$Component.acceptButton}";
+	                
+	                if(document.getElementById("{!$Component.cancelAndRemove}"))
+	                	CODA2GoButtonArray = CODA2GoButtonArray + ',' +"{!$Component.cancelAndRemove}";
+                    
+                    var CODA2GoButtonArraySplited = CODA2GoButtonArray.substr(1).split(",");
+                    CODA2GoButtons.initButtons(CODA2GoButtonArraySplited);
+                </script>
+            </apex:pageBlockButtons> 
+			
+            <!-- Messages -->
+            <apex:outputPanel id="messagePanel" layout="block">
+                <apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.showErrorMessages}">
+                    <!--apex:messages/-->
+                    <apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+                        <apex:outputText value="{!errorMessage}"/><br/>
+                    </apex:repeat>
+                </apex:outputPanel>
+            </apex:outputPanel>
+			
+            <!-- Object Detail -->
+            <apex:pageBlockSection id="bankStatementHeaderSection" title="{!$Label.codaBankStatementPageDetailSection}" columns="2" rendered="{!!hasClosingBalanceWarning}">
+			
+		        <apex:pageBlockSectionItem >
+				    <apex:outputLabel value="{!$ObjectType.c2g__codaBankStatement__c.fields.c2g__BankAccount__c.label}" for="bankAccountField"/>
+				    <apex:outputPanel id="bankAccountPanel">
+				    	<apex:actionRegion id="bankAccountRegion">
+					    	<apex:inputField id="bankAccountField" value="{!viewstate.bankStatement.bankStatement.dto.c2g__BankAccount__c}" />
+					    	<apex:actionFunction name="onChangeBankAccount" action="{!updateBankStatementFields}" reRender="messagePanel,bankAccountPanel,openingBalanceEdit" oncomplete="CODA.resumeQueueProcessing()"/>
+		                    <script>
+		                        CODA.addQueuedOnBlurEvent(null, "{!$Component.bankAccountField}", "{!$Label.codaProcessing}", onChangeBankAccount,true);
+		                    </script>
+						</apex:actionRegion>
+				    </apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:inputField id="openingBalanceEdit" value="{!viewstate.bankStatement.bankStatement.dto.c2g__OpeningBalance__c}"/>
+				
+				<apex:pageBlockSectionItem >
+				    <apex:outputLabel value="{!$ObjectType.c2g__codaBankStatement__c.fields.c2g__StatementDate__c.label}" for="statementDateField"/>
+				    <apex:outputPanel id="statementDatePanel">
+				    	<apex:actionRegion id="statementDateRegion">
+					    	<apex:inputField id="statementDateField" value="{!viewstate.bankStatement.bankStatement.dto.c2g__StatementDate__c}" />
+					    	<apex:actionFunction name="onChangeStatementDate" action="{!updateBankStatementFieldsByDate}" reRender="messagePanel,openingBalanceEdit" oncomplete="CODA.resumeQueueProcessing()"/>
+		                    <script>
+		                    	CODA.addToFocusEvent("{!$Component.statementDateField}");
+		                        CODA.addQueuedOnBlurEvent(null, "{!$Component.statementDateField}", "{!$Label.codaProcessing}", onChangeStatementDate,true);
+		                    </script>
+						</apex:actionRegion>
+				    </apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:inputField id="closingBalanceEdit" value="{!viewstate.bankStatement.bankStatement.dto.c2g__ClosingBalance__c}"/>
+				
+			    <apex:inputField id="referenceEdit" value="{!viewstate.bankStatement.bankStatement.dto.c2g__Reference__c}"/>
+			    
+			    <apex:pageBlockSectionItem >
+		        	<apex:outputLabel value="{!$Label.codaBankStatementPageFileField}" for="fileSearchEdit" />
+		            <apex:inputFile value="{!contentFile}" filename="{!fileName}" id="fileSearchEdit"/>
+		        </apex:pageBlockSectionItem>
+		        
+        	</apex:pageBlockSection>
+        	
+        	<apex:pageBlockSection id="bankStatementHeaderView" columns="2" rendered="{!hasClosingBalanceWarning}">
+        		<apex:outputField id="bankAccountFieldView" value="{!viewstate.bankStatement.bankStatement.dto.c2g__BankAccount__c}" />
+				<apex:outputField id="openingBalanceView" value="{!viewstate.bankStatement.bankStatement.dto.c2g__OpeningBalance__c}"/>
+				<apex:outputField id="statementDateView" value="{!viewstate.bankStatement.bankStatement.dto.c2g__StatementDate__c}"/>
+				<apex:outputField id="closingBalanceView" value="{!viewstate.bankStatement.bankStatement.dto.c2g__ClosingBalance__c}"/>
+			    <apex:outputField id="referenceView" value="{!viewstate.bankStatement.bankStatement.dto.c2g__Reference__c}"/>
+			    <apex:pageBlockSectionItem >
+		        	<apex:outputLabel value="{!$Label.codaBankStatementPageFileField}" for="fileSearchView" />
+		            <apex:outputText value="{!fileName}" id="fileSearchView"/>
+		        </apex:pageBlockSectionItem>
+        	</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

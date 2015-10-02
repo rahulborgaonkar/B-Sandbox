@@ -44,24 +44,6 @@ color:#b2b5b6;
 
  
 
-.select2-results li.select2-result-with-children.FieldOption.A > .select2-result-label
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'A.png')});
-background-position:165px 3px;
-background-repeat:no-repeat;
- }
- .select2-results li.select2-result-with-children.FieldOption.B > .select2-result-label
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'B.png')});
-background-position:165px 3px;
-background-repeat:no-repeat;
- }
- .select2-results li.select2-result-with-children.FieldOption.C > .select2-result-label
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')});
-background-position:165px 3px;
-background-repeat:no-repeat;
- }
  .select2-results li.select2-result-with-children.FieldOption 
  {
 border-left:0px !important;
@@ -76,39 +58,93 @@ border-left:0px !important;
         .select2-results li.select2-result-with-children.FieldOption.C .select2-highlighted{
             border-left: 5px solid #7d21d9 !important;
         }
+        
+.select2-results li.select2-result-with-children.FieldOption.D .select2-highlighted{
+border-left: 5px solid #d39f02 !important;
+} 
+.select2-results li.select2-result-with-children.FieldOption.E .select2-highlighted{
+border-left: 5px solid #f54028 !important;
+} 
+.select2-results li.select2-result-with-children.FieldOption.F .select2-highlighted{
+border-left: 5px solid #2121d9 !important;
+} 
+.select2-results li.select2-result-with-children.FieldOption.G .select2-highlighted{
+border-left: 5px solid #d0601d !important;
+}
+.select2-results li.select2-result-with-children.FieldOption.H .select2-highlighted{
+ border-left: 5px solid #d921d9 !important;
+}
+.select2-results li.select2-result-with-children.FieldOption.I .select2-highlighted{
+border-left: 5px solid #159215 !important;
+}
 
-.color-tag.A  ,.color-tag.B  ,.color-tag.C  {
+.color-tag.A  ,.color-tag.B  ,.color-tag.C ,
+.color-tag.D  ,.color-tag.E  ,.color-tag.F ,
+.color-tag.G  ,.color-tag.H  ,.color-tag.I  {
   background-position:165px 7px;
 background-repeat:no-repeat;
 border-left-width:1px !important;
 }
 .sfff-rule-st-existing-field-box .color-tag.A,
 .sfff-rule-st-existing-field-box .color-tag.B,
-.sfff-rule-st-existing-field-box .color-tag.C
+.sfff-rule-st-existing-field-box .color-tag.C,
+.sfff-rule-st-existing-field-box .color-tag.D,
+.sfff-rule-st-existing-field-box .color-tag.E,
+.sfff-rule-st-existing-field-box .color-tag.F,
+.sfff-rule-st-existing-field-box .color-tag.G,
+.sfff-rule-st-existing-field-box .color-tag.H,
+.sfff-rule-st-existing-field-box .color-tag.I
 {
   background-position:155px 7px;
 }
 .sfff-rule-then-existing-field-box .color-tag.A,
 .sfff-rule-then-existing-field-box .color-tag.B,
-.sfff-rule-then-existing-field-box .color-tag.C
+.sfff-rule-then-existing-field-box .color-tag.C,
+.sfff-rule-then-existing-field-box .color-tag.D,
+.sfff-rule-then-existing-field-box .color-tag.E,
+.sfff-rule-then-existing-field-box .color-tag.F,
+.sfff-rule-then-existing-field-box .color-tag.G,
+.sfff-rule-then-existing-field-box .color-tag.H,
+.sfff-rule-then-existing-field-box .color-tag.I
 {
   background-position:105px 7px;
 }
-.color-tag.A  
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'A.png')}) !important;
-
- }
- .color-tag.B
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'B.png')})  !important;
  
- }
-.color-tag.C
- {
-background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !important;
- 
- }
+.pnlFormainRuleRepeaterCSS.silver-label .rule-tag-number,
+.pnlFormainRuleRepeaterCSS.silver-label .btn-text,
+.pnlFormainRuleRepeaterCSS.silver-label .vabuttonA1,
+.pnlFormainRuleRepeaterCSS.silver-label .vabuttonA1:hover,
+.pnlFormainRuleRepeaterCSS.silver-label .toggle-field-behaviour-link,
+.pnlFormainRuleRepeaterCSS.silver-label .toggle-field-behaviour-link-then,
+.pnlFormainRuleRepeaterCSS.silver-label input,
+.pnlFormainRuleRepeaterCSS.silver-label textarea,
+.pnlFormainRuleRepeaterCSS.silver-label select,
+.pnlFormainRuleRepeaterCSS.silver-label div.select2-container
+{
+  color:#777575 !important;
+   pointer-events: none;
+}
+.pnlFormainRuleRepeaterCSS.silver-label input,
+.pnlFormainRuleRepeaterCSS.silver-label textarea,
+.pnlFormainRuleRepeaterCSS.silver-label select,
+.pnlFormainRuleRepeaterCSS.silver-label div.select2-container .select2-choice ,
+.pnlFormainRuleRepeaterCSS.silver-label div.select2-container .select2-choice > .select2-chosen,
+.pnlFormainRuleRepeaterCSS.silver-label div.select2-container .select2-choice .select2-arrow
+{
+background-color: #F5F5F5 !important;
+}
+.pnlFormainRuleRepeaterCSS.silver-label .vabuttonA1{
+    background-color: #e6ecef;
+  }
+  .pnlFormainRuleRepeaterCSS.silver-label .rule-add-delete-box{
+    display:none !important;
+  }
+  a.sfff-lookup-link {
+       float: right;
+    margin-left: -27px;
+    margin-top: -30px;
+    position: relative;
+  }
 /* Rule box css ends*/
 </style>
 
@@ -150,15 +186,15 @@ background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !impor
      </apex:facet>
 </apex:actionStatus>
 
-<apex:actionFunction immediate="true"  name="doDeleteRule" action="{!deleteRule}" reRender="msgPanel,pnlForNewRuleBlock,ruleBoxTEMP,pnlFormainRuleRepeater"  status="statusDelete"  oncomplete="getRemoteFormFieldsJs();resetSelect2();triggerAutoSave();" >
+<apex:actionFunction immediate="true"  name="doDeleteRule" action="{!deleteRule}" reRender="msgPanel,pnlForNewRuleBlock,ruleBoxTEMP,pnlFormainRuleRepeater"  status="statusDelete"  oncomplete="getRemoteFormFieldsJs();resetSelect2();draftchanges(false);" >
     <apex:param name="deleteRuleId" value="deleteRuleId" />
 </apex:actionFunction>
-     <apex:actionFunction immediate="true" name="saveRule" action="{!autoSave}" reRender="msgPanel"  >
+     <apex:actionFunction immediate="true" name="saveRule" action="{!autoSave}" reRender="msgPanel"  status="draftChangesStatus" oncomplete="draftchanges(false);"  >
              <apex:param name="ruleid" value=""/>
              <apex:param name="rulexml" value=""/>
       </apex:actionFunction> 
       
-      <apex:actionFunction name="createANewRule"   immediate="true" action="{!createNewRule}"  status="statusCreate"  reRender="msgPanel, pnlFormainRuleRepeater" oncomplete="getRemoteFormFieldsJs();resetSelect2();triggerAutoSave();"  >
+      <apex:actionFunction name="createANewRuleCall"   immediate="true" action="{!createNewRule}"  status="statusCreate"  reRender="msgPanel, pnlFormainRuleRepeater" oncomplete="getRemoteFormFieldsJs();resetSelect2();draftchanges(false);"  >
             <apex:param name="ruleindex" value=""/>
       </apex:actionFunction> 
 <!--   -->
@@ -174,7 +210,7 @@ background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !impor
 
  
 
- <apex:outputPanel id="pnlFormainRuleRepeater"  styleClass="pnlFormainRuleRepeaterCSS"    layout="block"  > 
+ <apex:outputPanel id="pnlFormainRuleRepeater"  styleClass="pnlFormainRuleRepeaterCSS {!if(isFreemium,'silver-label','')}"    layout="block"  > 
    
 <apex:repeat id="mainRuleRepeater" rendered="{!IF(formRuleXmlList.size>0,true,false)}" value="{!formRuleXmlList}" var="rulexml">
 <!-- Rule box Repeat item  starts -->
@@ -237,7 +273,10 @@ background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !impor
               </div>
               <div class="sfff-rule-st-static-value-box   {!IF(ruleCondition.rcIsOperand2Dynamic ,'display-none','')}">
             
-                  <input type="text" class="sfff-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleCondition.rcIsOperand2Dynamic ,'',ruleCondition.rcOperand2)}" />
+                  
+                   <div class="sfff-st-value-field-wrapper"> <input type="text" class="sfff-value-field- sfff-textbox display-none" data-refid="{!ruleCondition.rcRefId}" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleCondition.rcIsOperand2Dynamic ,'',ruleCondition.rcOperand2)}" />
+                  <a class="sfff-lookup-link"  href="javascript:void(0);" style="display:none"   id="someid_lkwgt"><img style="display:none" src="/s.gif" class="lookupIcon"/></a>
+                  </div>
                   <textarea class="sfff-value-field- sfff-textarea display-none"  onblur="callSaveRule(this,true);return false;"  >{!IF(ruleCondition.rcIsOperand2Dynamic ,'',ruleCondition.rcOperand2)}</textarea> 
                     <div class="sfff-value-field-box  ">
                                             <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxSelectValueField" value="" />
@@ -321,12 +360,16 @@ background-image:url({!URLFOR($Resource.VisualAntidote__alpha,'C.png')})  !impor
                 <a onClick="switchFieldsThenDynamicStatic(this,'static')" class="toggle-field-behaviour-link-then" >Set a value</a>
                 </div>
                 <div class="sfff-rule-then-static-value-box     {!IF(ruleResult.rrIsOtherDynamic ,'display-none','')}">
-                  <input type="text" class="sfff-then-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}" />
+                  <div class="sfff-then-value-field-wrapper"><input type="text" class="sfff-then-value-field- sfff-textbox display-none" data-refid="{!ruleResult.rrRefId}" onblur="callSaveRule(this,true);return false;" value="{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}" />
+                  <a class="sfff-lookup-link"  href="javascript:void(0);" style="display:none"  id="someid_lkwgt"><img style="display:none" src="/s.gif" class="lookupIcon"/></a>
+                  </div>
                   <textarea class="sfff-then-value-field- sfff-textarea display-none"  onblur="callSaveRule(this,true);return false;"  >{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}</textarea> 
                   <div class="sfff-value-field-box  ">
                               <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-then-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxthenSelectValueField" value="{!IF(ruleResult.rrIsOtherDynamic ,'',ruleResult.rrOther+'')}" />
                                <label   class="css-check-label display-none"></label>
-                  </div>                      
+                  </div> 
+                   
+
                 <select class="sfff-value-field- sfff-select-element select-elem display-none"  onchange="callSaveRule(this,true);return false;"  >
                 </select>
                 
@@ -446,7 +489,10 @@ the following block is  to add new blank statements, sections etc
                     <a onClick="switchFieldsDynamicStatic(this,'static')" class="toggle-field-behaviour-link">Set a value</a>
                 </div>
                 <div class="sfff-rule-st-static-value-box  ">
-                    <input type="text" class="sfff-value-field- sfff-textbox" onblur="callSaveRule(this,true);return false;" value="" />
+                   
+                    <div class="sfff-st-value-field-wrapper"> <input type="text" class="sfff-value-field- sfff-textbox" data-refid="" onblur="callSaveRule(this,true);return false;" value="" />
+                  <a class="sfff-lookup-link" href="javascript:void(0);" style="display:none"   id="someid_lkwgt"><img style="display:none" src="/s.gif" class="lookupIcon"/></a>
+                  </div>
                   <textarea class="sfff-value-field- sfff-textarea display-none"  > </textarea> 
                     <div class="sfff-value-field-box  ">
                                             <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxSelectValueField" value="" />
@@ -516,7 +562,10 @@ the following block is  to add new blank statements, sections etc
                 <a onClick="switchFieldsThenDynamicStatic(this,'static')" class="toggle-field-behaviour-link-then" >Set a value</a>
                 </div>
                 <div class="sfff-rule-then-static-value-box    ">
-                  <input type="text" class="sfff-then-value-field- sfff-textbox display-none" onblur="callSaveRule(this,true);return false;" value="" />
+                  
+                  <div class="sfff-then-value-field-wrapper"><input type="text" class="sfff-then-value-field- sfff-textbox display-none" data-refid="" onblur="callSaveRule(this,true);return false;" value="" />
+                  <a class="sfff-lookup-link" href="javascript:void(0);" style="display:none"   id="someid_lkwgt"><img style="display:none" src="/s.gif" class="lookupIcon"/></a>
+                  </div>
                   <textarea class="sfff-then-value-field- sfff-textarea display-none"  ></textarea> 
                   <div class="sfff-value-field-box  ">
                               <input type="checkbox"   onchange="callSaveRule(this,true);return false;"  class="sfff-then-value-field- sfff-checkbox css-checkbox display-none" style="display: inline-block;float:left;" name="chkbxthenSelectValueField" value="" />
@@ -570,12 +619,12 @@ the following block is  to add new blank statements, sections etc
 
       </apex:outputpanel> 
 <!-- TEMP RULE BOX ends -->
-<div id="dialog-confirm" class="content"></div>
+<div id="dialog-confirm" class="content"></div> 
 <div id="tempDiv" style="display:none">
 </div>
 
 <script type="javascript">
-  
+  var lookupFieldInput;
 function unLoadWindow() {
      if((isFirstOperandValid() && ifThenBlockIsValid()))
      {
@@ -600,7 +649,7 @@ function unLoadWindow() {
                         {"PICKLIST": "eqt,net,con,nco,stw,edw,nsw,new"},{"MULTIPICKLIST": "eqt,net,con,nco,stw,edw,nsw,new"},
             {"NUMBER": "eqt,net,lst,grt,lte,gte"},{"PERCENT": "eqt,net,lst,grt,lte,gte"},
             {"CURRENCY": "eqt,net,lst,grt,lte,gte"},{"DECIMAL": "eqt,net,lst,grt,lte,gte"},
-            {"DOUBLE": "eqt,net,lst,grt,lte,gte"},{"INTEGER": "eqt,net,lst,grt,lte,gte"}
+            {"DOUBLE": "eqt,net,lst,grt,lte,gte"},{"INTEGER": "eqt,net,lst,grt,lte,gte"},{"PICKLIST": "eqt,net"},{"MULTIPICKLIST": "eqt,net"}
             ];
                var jsonFieldsData= [];
                         
@@ -643,8 +692,92 @@ function unLoadWindow() {
         );
     }
  
+function openLookupPopupForRule(elemSource,Ltype,Rtype){
+                var left = (screen.width/2)-(600/2);
+                var top = 250
+                //ltype=RecordType&rtype=Account
+                
+                if(Ltype=='Group' || Ltype=='Queue')
+                    {
+                        var elemeId=$(elemSource).parents('.sfff-then-block-rule-statement-').find('.rule-st-2 .sfff-rule-then-field-list select option:selected').val();
+                        if(!isNullOrEmpty(elemeId))
+                        {
+                        var idItems=lengthSplitId(elemeId);
+                        if(idItems==2)
+                        {
+                            //primary
+                          Rtype=  elemeId.split('.')[0];
+                        }
+                        else if(idItems>2)
+                        {
+                            //secondary
+                            Rtype=  elemeId.split('.')[1];
+                        }
+                      }
+                    }
+                  lookupFieldInput=$(elemSource).parent().find('input[type="text"]');
+                var url = '/apex/FastFormsLookup?ltype='+Ltype+'&rtype='+Rtype+'&sourcePage=rule';
+                newWin = window.open(url, 'RulePopup','height=500,width=600,left='+left+',top='+top+',resizable=no,scrollbars=yes,toolbar=no,status=no');
+        }
+        function   setRuleLookupOptions(a,b,c,d,e,f,g,h)
+        {
+          if($(lookupFieldInput)!=null && $(lookupFieldInput).length>0)
+          {
+            $(lookupFieldInput).attr('data-refid',d);
+            $(lookupFieldInput).val(e);
+            callSaveRule(lookupFieldInput, true);
+          }
+        }
+   function createANewRule(ruleIndex)
+   {
+    <apex:outputText rendered="{!if(isFreemium,true,false)}">
+                        upgradeNowMessage('Conditional rules are only available for paid subscriptions.','','');                           
+                     
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(isFreemium,false,true)}">
+                        createANewRuleCall(ruleIndex);                          
+                     
+                    </apex:outputText>
+             
+   }
+function switchClass(elem) {
+    
+    <apex:outputText rendered="{!if(isFreemium,true,false)}">
+                        upgradeNowMessage('Conditional rules are only available for paid subscriptions.','','');                           
+                     
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(isFreemium,false,true)}">
+    if ($(elem).attr('data-rule-data') != undefined && $(elem).attr('data-rule-data') == 'norule') {
+        $(elem).attr('data-rule-data', 'ruleexists');
+        $(elem).parents('.create-rule-header-block').find('.no-rule-text').fadeOut('slow');
+        $(elem).parents('.create-rule-header-block').find('.no-rule-block').removeClass("no-rule-block-show", 500);
+        createANewRuleCall('1');
 
+    }
+    else if ($(elem).attr('data-rule-data') != undefined && $(elem).attr('data-rule-data') == 'ruleexists') {
+
+        createANewRuleCall('1');
+
+    }
+    else {
+
+    }
+ </apex:outputText>
+
+}
+function addNewRuleSectionHTML(elem) {
+  <apex:outputText rendered="{!if(isFreemium,true,false)}">
+                        upgradeNowMessage('Conditional rules are only available for paid subscriptions.','','');                           
+                     
+                    </apex:outputText>
+                    <apex:outputText rendered="{!if(isFreemium,false,true)}">
+    var newElem = getNewIfRuleSectionHTML();
+    $(elem).parent().before(newElem).fadeIn('slow');
+    $(newElem).find('.sfff-rule-delete').css('display', '');
    
-
+    resetSelect2Element(newElem);
+     populateBlockSelect(newElem,true);
+     </apex:outputText>
+}
 </script>
 </apex:component>

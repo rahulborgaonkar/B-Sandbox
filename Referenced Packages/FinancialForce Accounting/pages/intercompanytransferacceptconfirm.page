@@ -1,0 +1,26 @@
+<!-- Intercompany Transfer Detail-Accept Confirm -->
+<apex:page standardController="c2g__codaIntercompanyTransfer__c" extensions="c2g.IntercompanyTransferController">
+    <script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+    <script>
+		var CODA2GoButtons = new CODA2GoPage();
+		var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+	</script>
+    <apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+        <apex:sectionHeader title="{!$Label.IntercompanyTransferAcceptTitle}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1198')}" subtitle="{!viewstate.intercompanyTransfer.Dto.Name}"/>
+        <apex:pageBlock >
+            <apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <!-- Hidden Buttons -->
+                <apex:commandButton value="{!$Label.IntercompanyTransferConfirmAcceptanceButton}" action="{!acceptICTs}" id="acceptICT_h" styleclass="hiddensubmit"/>
+                <apex:commandButton value="{!$Label.IntercompanyTransferCancelButton}" action="{!cancel}" id="cancel_h" styleclass="hiddensubmit" immediate="true"/>
+                <!-- End of Hidden Buttons -->
+                <apex:commandButton value="{!$Label.IntercompanyTransferConfirmAcceptanceButton}" id="acceptICT" rendered="{!ShowAcceptButton}" onclick="document.getElementById('{!$Component.acceptICT_h}').click();return false;"  />
+                <apex:commandButton value="{!$Label.IntercompanyTransferCancelButton}" id="cancel" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;"/>
+                <script>                   
+                    CODA2GoButtons.initButtons(["{!$Component.acceptICT}","{!$Component.cancel}"]);
+                </script>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,13 @@
+<apex:component access="global" controller="c2g.CODASalesCreditNoteLineSorterController" >
+	<apex:attribute access="global" name="creditNote" description="The sales credit note to pass to the component." type="c2g__codaCreditNote__c" assignTo="{!creditNoteAttr}"/>
+	<apex:attribute access="global" name="creditNoteLineItems" description="The sales credit note line items to pass to the component." type="c2g__codaCreditNoteLineItem__c[]" assignTo="{!creditNoteLineItemsAttr}"/>
+	<apex:attribute access="global" name="var" description="The sorted document lines returned." type="String"/>
+	<apex:attribute access="global" name="styleClass" description="The style class to format the table." type="String"/>
+	<table class="{!styleClass}">
+		<apex:repeat value="{!creditNoteLines}" var="line">
+			<apex:componentBody >
+				<apex:variable var="{!var}" value="{!line}"/>
+			</apex:componentBody>
+		</apex:repeat>
+	</table>
+</apex:component>

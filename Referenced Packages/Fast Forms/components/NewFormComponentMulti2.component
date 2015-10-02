@@ -1,4 +1,5 @@
 <apex:component controller="VisualAntidote.CKEditorNewFormMultiController" allowDML="true" id="cp">
+
     <link rel="stylesheet" href="{!URLFOR($Resource.sortable,'sortable/jquery-ui.css')}" />
     <!-- <script src="{!URLFOR($Resource.sortable,'sortable/jquery-1.8.3.js')}"></script> -->
     <script src="{!URLFOR($Resource.sortable,'sortable/jquery-ui.js')}"></script>
@@ -432,13 +433,13 @@
     
     function callObject(){
         var selectedObject = $('select.drop-select').select2('val');
-        RelatedObject(selectedObject);
+        //RelatedObject(selectedObject);
      }
     function callRelatedObject(){
-        RelatedObjectRelated();
+        //RelatedObjectRelated();
     }
     function callRelatedObjectThird(){    
-        RelatedObjectRelatedThird();
+        //RelatedObjectRelatedThird();
     }
     function delRelated(){
         $('#levelFirst').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
@@ -479,11 +480,8 @@
             <apex:param name="sThird" value="" assignTo="{!selectedFieldNameThird }" />
 </apex:actionFunction>
  
-<apex:actionFunction name="RelatedObject" action="{!RelatedObject}" reRender="mergeTypeSelectSec" status="status" oncomplete="callSeleted();return false;">
-    <apex:param name="aa" value="" assignTo="{!sobjectName}"/>
-</apex:actionFunction>
-<apex:actionFunction name="RelatedObjectRelated" action="{!RelatedObject}" reRender="mergeTypeSelectSecRelated" status="status" oncomplete="callSeletedRelated();return false;"/>
-<apex:actionFunction name="RelatedObjectRelatedThird" action="{!RelatedObject}" reRender="mergeTypeSelectSecRelatedThird" status="status" oncomplete="callSeletedRelatedThird();return false;"/>
+
+
 <center><table id="newForm">
      <tr>
         <td>

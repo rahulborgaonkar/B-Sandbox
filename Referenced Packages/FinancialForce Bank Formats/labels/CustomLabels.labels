@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ffbfBankFormatDefinition</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatDefinition</shortDescription>
+        <value>Bank Format Definition</value>
+    </labels>
+    <labels>
+        <fullName>ffbfBankFormatMapping</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatMapping</shortDescription>
+        <value>Bank Format Mapping</value>
+    </labels>
+    <labels>
+        <fullName>ffbfBankFormatViewPageBackButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatViewPageBackButton</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>ffbfBankFormatViewPageDocument</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatViewPageDocument</shortDescription>
+        <value>Document:</value>
+    </labels>
+    <labels>
+        <fullName>ffbfBankFormatViewPageSubTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatViewPageSubTitle</shortDescription>
+        <value>Generate Bank File</value>
+    </labels>
+    <labels>
+        <fullName>ffbfBankFormatViewPageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfBankFormatViewPageTitle</shortDescription>
+        <value>Bank Format</value>
+    </labels>
+    <labels>
+        <fullName>ffbfCustomSettingRequired</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfCustomSettingRequired</shortDescription>
+        <value>You must set up appropriate Bank Format Tool custom settings</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDateLabel</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDateLabel</shortDescription>
+        <value>Date</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefFieldNoZero</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefFieldNoZero</shortDescription>
+        <value>You must enter a value greater than 0.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefFieldRequired</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefFieldRequired</shortDescription>
+        <value>You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefFieldUnique</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefFieldUnique</shortDescription>
+        <value>This value must be unique. The next value would be {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeNoZero</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeNoZero</shortDescription>
+        <value>You must enter a value greater than 0.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeRequired</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeRequired</shortDescription>
+        <value>You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeSequenceNoZero</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeSequenceNoZero</shortDescription>
+        <value>You must enter a value greater than 0.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeSequenceRequired</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeSequenceRequired</shortDescription>
+        <value>You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeSequenceUnique</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeSequenceUnique</shortDescription>
+        <value>This value must be unique. The next value would be {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfDefRecordTypeUnique</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfDefRecordTypeUnique</shortDescription>
+        <value>This value must be unique. The next value would be {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportBodyFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportBodyFailed</shortDescription>
+        <value>The {0} export process has failed.&lt;br&gt;&lt;br&gt;The following errors occurred:&lt;br&gt;&lt;br&gt;&lt;ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportBodySuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportBodySuccessful</shortDescription>
+        <value>The {0} export process has completed successfully.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportFileNotFound</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportFileNotFound</shortDescription>
+        <value>Import file not found.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageDefinitionDoc</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageDefinitionDoc</shortDescription>
+        <value>Definition Document:</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageExportSection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageExportSection</shortDescription>
+        <value>Export</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageExportToButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageExportToButton</shortDescription>
+        <value>Export To</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageFile</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageFile</shortDescription>
+        <value>File</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageFormats</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageFormats</shortDescription>
+        <value>Formats</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageImportButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageImportButton</shortDescription>
+        <value>Import From</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageImportSection</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageImportSection</shortDescription>
+        <value>Import</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageMappingDoc</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageMappingDoc</shortDescription>
+        <value>Mapping Document:</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPagePopUp</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPagePopUp</shortDescription>
+        <value>The process has completed successfully. Click the {0} tab to view the new record.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageSubTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageSubTitle</shortDescription>
+        <value>Bank Format Export/Import</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportImportPageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportImportPageTitle</shortDescription>
+        <value>Bank Format Export/Import</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportSubjectFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportSubjectFailed</shortDescription>
+        <value>The process to export {0} has failed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfExportSubjectSuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfExportSubjectSuccessful</shortDescription>
+        <value>The process to export {0} has succeed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfFieldDoesNotExist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfFieldDoesNotExist</shortDescription>
+        <value>Please, review if {0} has a field which API name is {1}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFileLink</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFileLink</shortDescription>
+        <value>Your bank file has been generated successfully. Click the link below to download it.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFilePageBackButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFilePageBackButton</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFilePageFileName</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFilePageFileName</shortDescription>
+        <value>Formats</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFilePageGenerateButton</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFilePageGenerateButton</shortDescription>
+        <value>Generate Bank File</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFilePageSubTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFilePageSubTitle</shortDescription>
+        <value>Generate Bank File</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFilePageTitle</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFilePageTitle</shortDescription>
+        <value>Bank Format Tool</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFormatMappingName</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFormatMappingName</shortDescription>
+        <value>Format {0} - {1}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBankFormatMappintNotFound</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBankFormatMappintNotFound</shortDescription>
+        <value>Bank Format Mapping not found.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateBodyFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateBodyFailed</shortDescription>
+        <value>The Bank File generation process has failed.&lt;br&gt;&lt;br&gt;The following errors occurred:&lt;br&gt;&lt;br&gt;&lt;ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateEmailSender</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateEmailSender</shortDescription>
+        <value>FinancialForce</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateFooter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateFooter</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;Thank you for using FinancialForce Bank Formats.&lt;br&gt;&lt;br&gt;Created by FinancialForce.com&lt;br&gt;www.financialforce.com</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateRootObjectNotCorrect</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateRootObjectNotCorrect</shortDescription>
+        <value>The information on the mapping form does not match the selected Bank Format Root Object.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateSubjectFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateSubjectFailed</shortDescription>
+        <value>The process to generate the Bank File has failed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateSubjectSuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateSubjectSuccessful</shortDescription>
+        <value>The process to generate the Bank File has succeed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerateYouMustSelectOneRecord</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerateYouMustSelectOneRecord</shortDescription>
+        <value>You must select one record.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfGenerationPagePopUp</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfGenerationPagePopUp</shortDescription>
+        <value>This process may take some time to complete. You will be informed by email when it does.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportBodyFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportBodyFailed</shortDescription>
+        <value>The {0} import process has failed.&lt;br&gt;&lt;br&gt;The following errors occurred:&lt;br&gt;&lt;br&gt;&lt;ul&gt;</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportBodySuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportBodySuccessful</shortDescription>
+        <value>The {0} import process has completed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportEmailSender</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportEmailSender</shortDescription>
+        <value>FinancialForce</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportExportBankFormatNotFound</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportExportBankFormatNotFound</shortDescription>
+        <value>Bank Format Mapping not found.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportExportDefinitionName</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportExportDefinitionName</shortDescription>
+        <value>Bank Format Definition Document {0}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportExportMappingName</fullName>
+        <categories>BankFormat</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportExportMappingName</shortDescription>
+        <value>Bank Format Mapping Document {0}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportFooter</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportFooter</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;Thank you for using FinancialForce Bank Formats.&lt;br&gt;&lt;br&gt;Created by FinancialForce.com&lt;br&gt;www.financialforce.com</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportSubjectFailed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportSubjectFailed</shortDescription>
+        <value>The process to import {0} has failed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfImportSubjectSuccessful</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfImportSubjectSuccessful</shortDescription>
+        <value>The process to import {0} has succeed.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfMapRecordTypeNoZero</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfMapRecordTypeNoZero</shortDescription>
+        <value>You must enter a value greater than 0.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfMapRecordTypeRequired</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfMapRecordTypeRequired</shortDescription>
+        <value>You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfMapRecordTypeUnique</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfMapRecordTypeUnique</shortDescription>
+        <value>This value must be unique. The next value would be {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfMappingFieldExternalIdIsWrong</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfMappingFieldExternalIdIsWrong</shortDescription>
+        <value>There is at least one Bank Format Mapping Field External Id which grandfather is not the one related to its Bank Format Mapping Detail.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfMappingRecordExternalIdIsWrong</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfMappingRecordExternalIdIsWrong</shortDescription>
+        <value>There is at least one Bank Format Mapping Record Type External Id which father is not the one related to its Bank Format Mapping Detail.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfNoDataRelatedWithObject</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfNoDataRelatedWithObject</shortDescription>
+        <value>There is no data related to {0}. Please review your Mapping fields.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfNoResultSet</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfNoResultSet</shortDescription>
+        <value>Result set for {0}.{1}.{2} not found.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfObjectOrCustomSettingValuesLeft</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfObjectOrCustomSettingValuesLeft</shortDescription>
+        <value>Check that you have data on your {0} {1}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfOutputSequenceNotEditable</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfOutputSequenceNotEditable</shortDescription>
+        <value>You cannot edit this field. The value must be {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfSQLDuplicateExternalId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfSQLDuplicateExternalId</shortDescription>
+        <value>Insert failed. The file has a duplicate value in the field External Id. Review {0} object.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfSQLMustReturnOneRecord</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfSQLMustReturnOneRecord</shortDescription>
+        <value>The query must return just one record. Please go to Bank Format Definition object and check if it has more than one Bank Format Mapping objects.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfSQLNoDefinitionFieldWithThisId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfSQLNoDefinitionFieldWithThisId</shortDescription>
+        <value>There is no definition field with external Id = {0}, definition record type with external Id = {1} and definition with external Id = {2}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfSQLNoDefinitionRecordWithThisId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfSQLNoDefinitionRecordWithThisId</shortDescription>
+        <value>There is no definition record type with external Id = {0} and definition with external Id = {1}</value>
+    </labels>
+    <labels>
+        <fullName>ffbfSQLNoDefinitionWithThisId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfSQLNoDefinitionWithThisId</shortDescription>
+        <value>There is no definition with this external Id.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfThisFieldOnlyLetters</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfThisFieldOnlyLetters</shortDescription>
+        <value>This field does not allow numeric characters.</value>
+    </labels>
+    <labels>
+        <fullName>ffbfUnableDetermineRecordType</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ffbfUnableDetermineRecordType</shortDescription>
+        <value>Unable to determine record type for output type {0}.</value>
+    </labels>
+</CustomLabels>

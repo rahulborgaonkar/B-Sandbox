@@ -1,0 +1,888 @@
+<!-- Cash Matching new UI --> 
+<apex:page controller="c2g.CashMatchingController">
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/CMTable.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/LoadingOverlay/LoadingOverlay.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/components/HeaderDetails/HeaderDetails.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/cashmatching.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/datatables.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/components/UberFilter/uberfilter.css')}"/>    
+    <script type="text/javascript" src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" ></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front,'front/base/frameworks/ext-core-3.1.0.js')}" ></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/base/frameworks/jquery.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/base/frameworks/jquery.dataTables.min.js')}"></script>
+    <c:CODALocaleJS />
+    <script type="text/javascript">
+        var $FFDC = jQuery.noConflict();
+        var FFDCGlobalThousandSeperator = ffdc.utils.getThousandSeparator();
+        var FFDCGlobalDecimalSeperator = ffdc.utils.getDecimalSeparator();
+    </script>
+    <script type="text/javascript">
+        window['$Label'] = window['$Label'] || {};
+        $Label.InquiryTemplateFormulaInvalidNumberInvalid = '{!JSENCODE($Label.InquiryTemplateFormulaInvalidNumberInvalid)}';
+    </script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front,'front/components/LoadingOverlay/LoadingOverlay.js')}" ></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/components/HeaderDetails/HeaderDetails.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/components/UberFilter/uberfilter.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/utils/ErrorMessageUtil.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/utils/utilNumeric.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/components/UberCEGrid/uberCEGrid.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.front_cashmatching,'front_cashmatching/components/UberTRGrid/uberTRGrid.js')}"></script>
+    <style>
+        .extracollapsed_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .extraexpanded_h
+        {
+            BACKGROUND-IMAGE: url( {!URLFOR($Resource.coda2go, 'coda2go/web/images/CollapsedExpanded.gif')});
+        }
+        .CMTable tbody tr td 
+        {
+            line-height: 0.9em;
+            height:25px;
+        }
+        .CMTable tbody tr td span 
+        {
+            margin-left:10px;
+        }       
+        .CMTable thead tr th a 
+        {
+            text-decoration:none;          
+        }
+        .CMTable thead tr th a:hover 
+        {
+            text-decoration:none;          
+        }
+        .outer .CMTable  td 
+        {
+            vertical-align: middle;
+        }
+        .paginator .prevNextLinks .prevNext 
+        {
+            margin: 0px;
+        }
+        .pbError
+        {
+            background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIcon.gif')});
+        }
+    </style>
+    <script type="text/javascript">
+        $FFDC.checkCurrencyMode = function()
+        {
+            var valCheked;
+            var $FFDCelements = $FFDC('#currmoderadiopanelDiv').find('input');
+            for (i = 0; i < $FFDCelements.size(); i++) 
+            {      
+                if ($FFDCelements[i].checked) 
+                {
+                    valCheked = $FFDCelements[i].value;
+                    break;
+                }
+            }
+            if (valCheked == 'Account')
+            {
+                $FFDC('#currencyDiv').find('select').val($FFDC('#inputHidden').val());
+                $FFDC('#currencyDiv').find('select').attr('disabled','disabled');
+            }
+            else
+            {      
+                $FFDC('#currencyDiv').find('select').removeAttr('disabled');
+            }
+        } 
+        
+        $FFDC.setLoadingOverlayLabel = function(status) 
+        {
+            if (status == 'Commit')
+            {
+                $FFDC('#loadingOverlayLabel').val('{!$Label.CashMatchingPageCommitting}');
+            }
+            else
+            {
+                $FFDC('#loadingOverlayLabel').val('{!$Label.CashMatchingPageRetrieving}');
+            }   
+        }
+        
+        function jq(myid) 
+        { 
+             return "#" + myid.replace(/:/g,"\\\:");
+        }
+    </script>
+    <!-- Account Details -->
+    <apex:form id="accountDetailForm">
+        <div id="indicator">
+            <img src="{!URLFOR($Resource.coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/>
+            <span id="indicatortext"></span>
+        </div>
+        
+        <!-- Header -->
+        <apex:outputPanel id="sectionHeader">
+            <apex:sectionHeader title="{!$Label.CashMatchingPageTitle}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1139')}"/>         
+        </apex:outputPanel>
+        <apex:pageBlock mode="edit">
+            <apex:outputPanel id="messagesPanel">
+                <apex:pageMessages id="pMessages"/>
+            </apex:outputPanel>
+            <apex:outputPanel id="matchingErrorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.ShowFailedMatchMessages}">
+                <apex:repeat value="{!viewstate.failedMatchMessages}" var="faildMatchMessage" rendered="{!viewstate.ShowFailedMatchMessages}">
+                        <apex:outputText value="{!faildMatchMessage}"/><br/>
+                 </apex:repeat>
+            </apex:outputPanel>
+            <apex:pageBlockButtons location="top">
+                <span id="toggleHeaderButton" class="showHeaderDetail active">
+                    <span class="text">{!$Label.CashMatchingPageHideHeader}</span>
+                    <div class="arrow"></div>
+                </span>
+            </apex:pageBlockButtons>
+            <div id="headerDetailPanel" class="headerDetailPanel active">
+                <apex:pageBlockSection id="accountPageBlockSection" title="{!$Label.CashMatchingPageAccountDetail}" columns="3">
+                <apex:facet name="header">
+                    <h3>{!$Label.CashMatchingPageAccountDetail}</h3>
+                </apex:facet>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.c2g__codaLookup__c.fields.c2g__Account__c.label}" for="account"/>
+                        <apex:outputPanel styleClass="holder">
+                            <apex:outputPanel id="accountPanel">
+                                <apex:inputField id="account" value="{!viewstate.lookupData.c2g__Account__c}"/>    
+                                <input id="inputHidden" type="hidden" value="{!viewstate.accCurrencyName}"/>
+                            </apex:outputPanel>
+                            <a href="#" onclick="CODA.toggleHeaderExpand(this,'myex0');return false;" title="{!$Label.CashMatchingAnalysisTitle}">
+                                <img src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.CashMatchingAnalysisTitle}"/>
+                            </a>
+                            <DIV id="myex0" class="headerexpander">
+                                <apex:pageBlockSection title="{!$Label.CashMatchingAnalysisTitle}" collapsible="false" columns="1">
+                                    <apex:outputPanel id="accountDimensions">
+                                        <apex:outputPanel rendered="{!!viewstate.hasAccount}" styleClass="informationblock">
+                                            {!$Label.CashMatchingPageEnterAccount}
+                                        </apex:outputPanel>
+                                        <apex:panelGrid columns="2" columnClasses="labelCol first, data2Col first" styleClass="detailList">
+                                            <apex:outputLabel rendered="{!viewstate.hasAccount}" value="{!$ObjectType.Account.fields.c2g__CODADimension1__c.label}" for="accountDimension1"/>
+                                            <apex:inputField id="accountDimension1" rendered="{!viewstate.hasAccount}" value="{!viewstate.lookupData.c2g__Dimension1__c}" styleclass="analysisdata"/>
+                                            <apex:outputLabel rendered="{!viewstate.hasAccount}" value="{!$ObjectType.Account.fields.c2g__CODADimension2__c.label}" for="accountDimension2"/>
+                                            <apex:inputField id="accountDimension2" rendered="{!viewstate.hasAccount}" value="{!viewstate.lookupData.c2g__Dimension2__c}" styleclass="analysisdata"/>
+                                            <apex:outputLabel rendered="{!viewstate.hasAccount}" value="{!$ObjectType.Account.fields.c2g__CODADimension3__c.label}" for="accountDimension3"/>
+                                            <apex:inputField id="accountDimension3" rendered="{!viewstate.hasAccount}" value="{!viewstate.lookupData.c2g__Dimension3__c}" styleclass="analysisdata"/>
+                                            <apex:outputLabel rendered="{!viewstate.hasAccount}" value="{!$ObjectType.Account.fields.c2g__CODADimension4__c.label}" for="accountDimension4"/>
+                                            <apex:inputField id="accountDimension4" rendered="{!viewstate.hasAccount}" value="{!viewstate.lookupData.c2g__Dimension4__c}" styleclass="analysisdata"/>
+                                        </apex:panelGrid>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSection>
+                            </DIV>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.c2g__codaCashMatchingHistory__c.fields.c2g__MatchingDate__c.label}" for="matchingDate"/>
+                        <apex:outputPanel id="matchingDateBlock">
+                            <apex:inputField id="matchingDate" value="{!viewstate.lookupData.c2g__LookupDate__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel styleClass="holder">
+                            <div style="height: 100%; margin-right: 42px; position: relative; width: 100% ">
+                                <apex:commandButton id="retrieveData_h" action="{!retrieveData}" styleClass="hiddensubmit" reRender="leftForm,messagesPanel,accountPanel,accountDimensions,periodPanel,currencyPanel,selectCurrency,inputHidden"/>
+                                <div class="button buttonBig btn" id="retrieveData" onclick="document.getElementById('{!$Component.retrieveData_h}').click();$FFDC('#tablesContents').css('display','block');ffdc.go.loadingOverlay.createLoadingOverlay('tablesContents','{!$Label.CashMatchingPageRetrieving}',1);" style="font-size:13px !important; padding:4px 50px 4px 50px; font-weight:400;">
+                                    {!$Label.CashMatchingPageRetrieve}
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem datastyleClass="radiowidth">
+                        <apex:outputLabel value="{!$Label.CashMatchingPageCurrencyMode}" for="currmoderadio"/>
+                        <apex:outputPanel id="currmoderadiopanel">
+                            <div id="currmoderadiopanelDiv">
+                                <apex:selectRadio id="currmoderadio" value="{!viewstate.currencyMode}" onchange="$FFDC.checkCurrencyMode();">
+                                    <apex:selectOption itemLabel="{!$Label.CashMatchingPageAccount}" itemValue="Account"/>
+                                    <apex:selectOption itemLabel="{!$Label.CashMatchingPageDocument}" itemValue="Document"/>
+                                </apex:selectRadio>
+                            </div>
+                        </apex:outputPanel> 
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem id="periodBlock">
+                        <apex:outputLabel value="{!$ObjectType.c2g__codaCashMatchingHistory__c.fields.c2g__Period__c.label}" for="period"/>
+                        <apex:outputPanel id="periodPanel">
+                            <apex:inputField id="period" value="{!viewstate.lookupData.c2g__Period__c}"/>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel styleClass="holder">
+                            <div style="height: 100%; margin-right: 42px; position: relative; width: 100% ">
+                                <apex:commandButton id="undoMatch_h" action="{!undoCash}" styleClass="hiddensubmit" reRender="messagesPanel"/>
+                                <div class="button buttonBig btn" id="undoMatch" onclick="document.getElementById('{!$Component.undoMatch_h}').click();return false;" style="font-size:13px !important; padding:4px 38px 4px 40px; font-weight:400; display: inline-block;">
+                                    {!$Label.UndoMatchButton}
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem id="currencyblock">
+                        <apex:outputLabel value="{!$ObjectType.c2g__codaCashMatchingHistory__c.fields.c2g__MatchingCurrency__c.label}" for="selectCurrency"/>
+                        <apex:outputPanel id="currencyPanel" layout="block" style="height:22px;">
+                            <div id="currencyDiv">
+                                <apex:selectList id="selectCurrency" value="{!viewstate.matchingCurrencyName}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!viewstate.subscribedCurrencies}"/> 
+                                </apex:selectList>
+                            </div>
+                            <script>
+                                $FFDC.checkCurrencyMode();
+                            </script>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.c2g__codaCashMatchingHistory__c.fields.c2g__DiscountDate__c.label}" for="discountDate"/>
+                        <apex:outputPanel id="discountDatePanel">
+                            <apex:inputField value="{!viewstate.discountDate.c2g__LookupDate__c}" id="discountDate" />
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                
+                <div id="prepareCommitDiv" >
+                    <apex:commandButton value="{!$Label.CashMatchingPageCommit}" id="prepareCommitButton_h" styleClass="hiddensubmit" action="{!donothing}" rerender="accountDetailForm" oncomplete="$FFDC.setLoadingOverlayLabel('Commit'); if({!hasMessages} == false) {$FFDC('#matchButton').find('input').click();}"/>
+                </div>
+                
+                <!-- Analisys -->  
+        <div style="height:24px;padding:10px">
+               <apex:outputPanel style="align:right;height:30px;margin-right:5px;"> 
+                <span id="toggleAnalysisButton" class="showHeaderDetail active">
+                    <span class="text"> Hide Analysis Details</span>
+                    <div class="arrow"></div>
+                </span>
+               </apex:outputPanel> 
+                </div>
+               <div id="analysisDiv" class="headerDetailPanel active"  style="border:none;">
+                <apex:outputPanel id="analysisBlock">
+                    
+                    <apex:pageBlockSection title="{!$Label.CashMatchingAnalysisTitle}" >
+                          
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.c2g__codaCompany__c.fields.c2g__CustomerSettlementDiscount__c.label}" for="custSettDisc"/>
+                            <apex:outputPanel styleClass="holder">
+                                <apex:inputField value="{!viewstate.company.c2g__CustomerSettlementDiscount__c}" id="custSettDisc"/>
+                                <a href="#" onclick="CODA.toggleHeaderExpand(this,'myex');return false;" title="{!$Label.CashMatchingAnalysisTitle}">
+                                    <img src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.CashMatchingAnalysisTitle}"/>
+                                </a>
+                                <DIV id="myex" class="headerexpander">
+                                    <apex:pageBlockSection title="{!$Label.CashMatchingAnalysisTitle}" collapsible="false" columns="1">
+                                        <apex:inputField id="customerSettlementDiscountDimension1" value="{!viewstate.company.c2g__CustomerSettlementDiscountDimension1__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerSettlementDiscountDimension2" value="{!viewstate.company.c2g__CustomerSettlementDiscountDimension2__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerSettlementDiscountDimension3" value="{!viewstate.company.c2g__CustomerSettlementDiscountDimension3__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerSettlementDiscountDimension4" value="{!viewstate.company.c2g__CustomerSettlementDiscountDimension4__c}" styleclass="analysisdata"/>                                          
+                                    </apex:pageBlockSection>
+                                </DIV>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem />
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.c2g__codaCompany__c.fields.c2g__CustomerWriteOff__c.label}" for="custWriteOff"/>
+                            <apex:outputPanel styleClass="holder">
+                            <apex:inputField value="{!viewstate.company.c2g__CustomerWriteOff__c}" id="custWriteOff"/>
+                            <a href="#" onclick="CODA.toggleHeaderExpand(this,'myex1');return false;" title="{!$Label.CashMatchingAnalysisTitle}">
+                                <img src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.CashMatchingAnalysisTitle}"/>
+                            </a>
+                            <DIV id="myex1" class="headerexpander">
+                                <apex:pageBlockSection title="{!$Label.CashMatchingAnalysisTitle}" collapsible="false" columns="1">
+                                    <apex:inputField id="customerWriteOffDimension1" value="{!viewstate.company.c2g__CustomerWriteOffDimension1__c}" styleclass="analysisdata"/>
+                                    <apex:inputField id="customerWriteOffDimension2" value="{!viewstate.company.c2g__CustomerWriteOffDimension2__c}" styleclass="analysisdata"/>
+                                    <apex:inputField id="customerWriteOffDimension3" value="{!viewstate.company.c2g__CustomerWriteOffDimension3__c}" styleclass="analysisdata"/>
+                                    <apex:inputField id="customerWriteOffDimension4" value="{!viewstate.company.c2g__CustomerWriteOffDimension4__c}" styleclass="analysisdata"/>                                          
+                                </apex:pageBlockSection>
+                            </DIV>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem />
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.c2g__codaCompany__c.fields.c2g__CustomerCurrencyWriteOff__c.label}" for="custCurrWriteOff"/>
+                            <apex:outputPanel styleClass="holder">
+                                <apex:inputField value="{!viewstate.company.c2g__CustomerCurrencyWriteOff__c}" id="custCurrWriteOff"/>
+                                <a href="#" onclick="CODA.toggleHeaderExpand(this,'myex2');return false;" title="{!$Label.CashMatchingAnalysisTitle}">
+                                    <img src="/s.gif" width="16" height="16" class="extracollapsed_h" title="{!$Label.CashMatchingAnalysisTitle}"/>
+                                </a>
+                                <DIV id="myex2" class="headerexpander">
+                                    <apex:pageBlockSection title="{!$Label.CashMatchingAnalysisTitle}" collapsible="false" columns="1">
+                                        <apex:inputField id="customerCurrencyWriteOffDimension1" value="{!viewstate.company.c2g__CustomerCurrencyWriteOffDimension1__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerCurrencyWriteOffDimension2" value="{!viewstate.company.c2g__CustomerCurrencyWriteOffDimension2__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerCurrencyWriteOffDimension3" value="{!viewstate.company.c2g__CustomerCurrencyWriteOffDimension3__c}" styleclass="analysisdata"/>
+                                        <apex:inputField id="customerCurrencyWriteOffDimension4" value="{!viewstate.company.c2g__CustomerCurrencyWriteOffDimension4__c}" styleclass="analysisdata"/>
+                                    </apex:pageBlockSection>
+                                </DIV>
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >                            
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>    
+                </apex:outputPanel>
+                </div>
+            </div>
+        </apex:pageBlock>              
+        <script>
+            $FFDC(document).ready(function () 
+            {
+                // SETUP HEADER DETAILS
+                $FFDC('#headerDetailPanel').HeaderDetails(
+                {
+                    'toggleElement':'#toggleHeaderButton',
+                    'toggleElementText':'#toggleHeaderButton .text',
+                    'toggleElementTextShow':'{!$Label.CashMatchingPageShowHeader}',
+                    'toggleElementTextHide':'{!$Label.CashMatchingPageHideHeader}'
+                });
+                
+                $FFDC('#analysisDiv').HeaderDetails(
+                {
+                    'toggleElement':'#toggleAnalysisButton',
+                    'toggleElementText':'#toggleAnalysisButton .text',
+                    'toggleElementTextShow':'Show Analysis Details',
+                    'toggleElementTextHide':'Hide Analysis Details'
+                });
+                if(!{!ShowAnalysisSection})
+                {
+                    $FFDC("#toggleAnalysisButton").click();
+                }
+                $FFDC.checkCurrencyMode();
+            });
+        </script>      
+    </apex:form>
+    
+    <!-- Transaction Line Items -->
+         
+            <apex:form onsubmit="ffdc.go.loadingOverlay.createLoadingOverlay('tablesContents',$FFDC('#loadingOverlayLabel').val(),1);" id="leftForm">
+              <div id="tablesContents" style=" height: 650px;width: 100%;position: relative;  {!IF(!hasMessages && ((viewState.transactionStdController.cashMatchingPageLines != null && viewState.transactionStdController.cashMatchingPageLines.size > 0 )|| (viewState.cashEntryStdController.cashMatchingPageLines != null && viewState.cashEntryStdController.cashMatchingPageLines.size > 0)) , 'display:block', 'display:none')}" align="center">
+                <apex:outputPanel id="tablesContainer" layout="block">
+                    <input type="hidden" id="loadingOverlayLabel" value="{!$Label.CashMatchingPageRetrieving}"/>
+                    <input type="hidden" id="numOfTransSelect" value="0"/>
+                    <input type="hidden" id="rightTableSelectCount" value="0"/>
+                    <input type="hidden" id="leftTableSelectCount" value="0"/>
+                  
+                            <div id="leftTableContents" style="width:50%;float: left;display:none;">
+                                <div class="header" style="border: 1px solid #D4D9DD;">
+                                    <div style="height: 34px;line-height: 35px;font-weight: 700;font-size: 11px;text-shadow: 0px 1px 0px white;text-indent: 10px;margin-left: -1px;width: 98%;float: left;">
+                                        {!$Label.CashMatchingPageCashEntries}
+                                    </div>
+                                    <div style="width: 2%;float: right;height: 34px;">
+                                         <img class="headerArrow" src="/s.gif"></img>
+                                    </div>
+                                </div>
+                                <apex:outputPanel id="leftTableOuter" style="border: 1px solid #D4D9DD;width: 100%;" layout="block">
+                                <apex:variable var="fieldsInLeftFieldSet" value="{!0}"/>
+                                <input id="cashEntryOPaidTotal" type="hidden" value="{!viewState.cashEntryStdController.paidTotal}"/>
+                                <apex:variable var="listFieldSetLocal" value=""/>
+                                <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingCashEntries}" var="f" >
+                                    <apex:variable var="listFieldSetLocal" value="{!listFieldSetLocal + '#' + f}"/>
+                                </apex:repeat>
+                                <div class="filterCell" style="width: 100%;">
+                                    <div class="filterInput" style="width: 80%;">
+                                        <apex:inputText id="leftSearchField" value="{!viewstate.leftSearch}"/>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div style="float: right;height: 34px;">                                
+                                            <apex:commandButton id="retrieveCustomCashData_h" action="{!retrieveCustomCashData}" value="{!$Label.CashMatchingPageSearch}" styleClass="hiddensubmit" reRender="messagesPanel,leftTableOuter" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();">
+                                            <apex:param name="listFieldSet" value="{!listFieldSetLocal}"/>
+                                        </apex:commandButton>
+                                        <div class="button buttonBig btn" id="retrieveData" onclick="document.getElementById('{!$Component.retrieveCustomCashData_h}').click();" style="font-size:13px !important; padding: 4px 20px 4px 20px; font-weight:400;margin-top: 4px;margin-right: 4px;display: block;">
+                                            {!$Label.CashMatchingPageSearch}
+                                        </div>
+                                    </div>        
+                                </div>   
+                                <table cellpadding="0" cellspacing="0" border="0" class="CMTable" id="CETable">
+                                    <thead>
+                                        <th>
+                                            <div class="status">
+                                                <input class="lineChkBoxToggle" id="lineChkBoxToggleLeft" type="checkbox" style="display:none;"/>
+                                            </div>
+                                        </th>
+                                        <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingCashEntries}" var="f" >
+                                            <apex:outputText rendered="{!IF(!(f == 'DocumentOutstandingValue__c' || f == 'AccountOutstandingValue__c'),true,false)}">
+                                                <apex:variable var="fieldsInLeftFieldSet" value="{!fieldsInLeftFieldSet+1}"/>
+                                                <th>
+                                                    <apex:commandLink value="{!CashEntriesMapLabels[f].label}" action="{!sortCashEntries}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter" >
+                                                                    <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!IF((f == 'DocumentOutstandingValue__c' && viewstate.currencyMode == 'Document'),true,false)}">
+                                                <apex:variable var="fieldsInLeftFieldSet" value="{!fieldsInLeftFieldSet+1}"/>
+                                                <th>
+                                                    <apex:commandLink value="{!CashEntriesMapLabels[f].label}" action="{!sortCashEntries}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter" >
+                                                                    <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!IF((f == 'AccountOutstandingValue__c' && viewstate.currencyMode == 'Account'),true,false)}">
+                                                <apex:variable var="fieldsInLeftFieldSet" value="{!fieldsInLeftFieldSet+1}"/>
+                                                <th>
+                                                    <apex:commandLink value="{!CashEntriesMapLabels[f].label}" action="{!sortCashEntries}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter" >
+                                                                    <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>                              
+                                        </apex:repeat>
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransPaid}</th>
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransRemaining}</th>   
+                                    </thead>                                                              
+                                    <tbody>
+                                        <apex:repeat var="viewLine" value="{!viewState.cashEntryStdController.cashMatchingPageLines}">
+                                            <tr>
+                                                <td>
+                                                    <div class="status" style="margin-left: 9px;">
+                                                        <apex:inputCheckBox id="TLSelected" value="{!viewLine.selected}" styleClass="lineChkBox" style="display:none;"/>
+                                                    </div>
+                                                </td>
+                                                <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingCashEntries}" var="f">
+                                                    <apex:outputText rendered="{!IF(!(f == 'DocumentOutstandingValue__c' || f == 'AccountOutstandingValue__c'),true,false)}">                                                   
+                                                        <td class="{!CashEntriesMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.cashEntryStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!IF((f == 'DocumentOutstandingValue__c' && viewstate.currencyMode == 'Document'),true,false)}">                                 
+                                                        <td class="{!CashEntriesMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.cashEntryStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!IF((f == 'AccountOutstandingValue__c' && viewstate.currencyMode == 'Account'),true,false)}">                                           
+                                                        <td class="{!CashEntriesMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.cashEntryStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                </apex:repeat>
+                                                <td  class="DOUBLE">
+                                                    <input type="hidden" class="oValueClass" value="{!viewLine.outstandingValue}"/>
+                                                    <span class="paidClassOut" style="display:block;">{!viewState.ZeroFormatter}</span>
+                                                    <apex:inputField id="CEPaid" value="{!viewLine.paid.c2g__LookupNumber__c}" styleClass="paidClass" style="display:none;width: 50px; text-align: right;"/>
+                                                </td>
+                                                <td class="DOUBLE">
+                                                    <span class="remainingClassOut" style="display:block;">{!viewLine.outstandingValue}</span>
+                                                </td>
+                                            </tr>                                           
+                                        </apex:repeat>
+                                    </tbody>
+                                    <tfoot>                                     
+                                        <tr>
+                                            <th colspan="{!fieldsInLeftFieldSet+1}">
+                                                <div class="paginator" style="text-align: center; height: 29px; line-height: 30px; font-weight: 700; text-shadow: 0px 1px 0px white; bottom: 0px; width: 75%; font-size: 11px;float:left;">
+                                                        <div style="float: left;margin-left: 40px;">
+                                                            <apex:outputPanel styleClass="pages">
+                                                                {!$Label.CashMatchingPagePage}
+                                                                <span class="page">{!viewState.cashEntryStdController.pageNumber}</span>                                         
+                                                                {!$Label.CashMatchingPageOf}  <span class="page">{!viewState.cashEntryStdController.numberOfPages}</span>
+                                                            </apex:outputPanel> 
+                                                            <apex:outputPanel styleClass="prevNextLinks" style="margin-left: 10px;">
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.cashEntryStdController.hasPrevious}">
+                                                                    <apex:commandLink id="leftIndex" action="{!viewState.cashEntryStdController.first}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter">
+                                                                        <img class="first" src="/s.gif" title="{!$Label.CashMatchingPageFirst}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.cashEntryStdController.hasPrevious}">
+                                                                    <img class="firstoff" src="/s.gif" title="{!$Label.CashMatchingPageFirst}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.cashEntryStdController.hasPrevious}">
+                                                                    <apex:commandLink id="leftPrevious" action="{!viewState.cashEntryStdController.previous}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter">
+                                                                        <img class="prev" src="/s.gif" style="background-position: -10px 1px;" title="{!$Label.CashMatchingPagePrevious}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.cashEntryStdController.hasPrevious}">
+                                                                    <img class="prevoff" src="/s.gif" style="background-position: -10px -10px;" title="{!$Label.CashMatchingPagePrevious}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.cashEntryStdController.hasNext}">
+                                                                    <apex:commandLink id="leftNext" action="{!viewState.cashEntryStdController.next}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter">
+                                                                        <img class="next" src="/s.gif" style="background-position: -18px 1px;" title="{!$Label.CashMatchingPageNext}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.cashEntryStdController.hasNext}">
+                                                                    <img class="nextoff" src="/s.gif" style="background-position: -18px -10px;" title="{!$Label.CashMatchingPageNext}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.cashEntryStdController.hasNext}">
+                                                                    <apex:commandLink id="leftLast" action="{!viewState.cashEntryStdController.last}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="leftTableOuter">
+                                                                        <img class="last" src="/s.gif" title="{!$Label.CashMatchingPageLast}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.cashEntryStdController.hasNext}">
+                                                                    <img class="lastoff" src="/s.gif" title="{!$Label.CashMatchingPageLast}"></img>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel> 
+                                                            <apex:outputPanel styleClass="pages" style="margin-left: 10px;">
+                                                                <apex:selectList value="{!viewState.cashEntryStdController.rowsPerPage}" size="1" multiselect="false" title="{!$Label.CashMatchingPageItemsPerPage}">
+                                                                    <apex:selectOption itemValue="10" itemLabel="10" />
+                                                                    <apex:selectOption itemValue="25" itemLabel="25" />
+                                                                    <apex:selectOption itemValue="50" itemLabel="50" />
+                                                                    <apex:selectOption itemValue="100" itemLabel="100" />
+                                                                    <apex:selectOption itemValue="200" itemLabel="200" />
+                                                                    <apex:actionSupport event="onchange" action="{!viewState.cashEntryStdController.pageResize}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();"  reRender="leftTableOuter" />
+                                                                </apex:selectList>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                   </div>
+                                            </th>
+                                            <th>
+                                                <div style="height: 29px;">
+                                                    <span id="cashEntryPaidTotal" style="color: black;font-size: 12px;display: block;text-align: right;margin-right: 3px;">{!viewState.ZeroFormatter}</span>
+                                                </div>
+                                            </th>
+                                            <th></th>                                           
+                                        </tr>
+                                    </tfoot>
+                                </table>                          
+                            <script type="text/javascript"> 
+                                $FFDC(document).ready(function () 
+                                {    
+                                    $FFDC('#leftTableContents').UberFilter(
+                                    {
+                                        filterInput: jq('{!$Component.leftForm.leftSearchField}')
+                                    }); 
+                                    
+                                    $FFDC('#CETable').UberCEGrid({ 
+                                        tableid: jq('{!$Component.leftForm.CETable}'),
+                                        selectionsCounterId: '#numOfTransSelect',
+                                        toggleCheckboxesId: '#lineChkBoxToggleLeft',
+                                        tooManyLinesLabel: '{!viewState.messageRowLimit}',
+                                        toggleCheckBoxesId: '#lineChkBoxToggleLeft'
+                                    });  
+                                    
+                                    $FFDC.setLoadingOverlayLabel('');
+                                     
+                                    var oTable = $FFDC('#CETable').dataTable( {
+                                        "bInfo": false,
+                                        "bPaginate": false,
+                                        "bSort": false,
+                                        "sScrollY": "470px",
+                                        "sScrollX": "100%",
+                                        "bFilter": false,
+                                        "bScrollCollapse": false,
+                                        "aoColumnDefs": [
+                                            { "sWidth": "100px", "aTargets": [ {!fieldsInLeftFieldSet+1}, {!fieldsInLeftFieldSet+2} ] },
+                                            { "bVisible": {!ShowRemainingValues}, "aTargets": [ {!fieldsInLeftFieldSet+2} ] }
+                                        ],
+                                        "fnInitComplete": function(oSettings, json) {
+                                        
+                                             $FFDC('#leftTableContents').css('display','block');
+                                             $FFDC('#CETable').dataTable().fnAdjustColumnSizing();
+
+                                             if ($FFDC('#CETable').width() > $FFDC('#CETable').parent().width() &&
+                                                 navigator.platform && navigator.platform.toLowerCase().indexOf('mac') >= 0)
+                                             {
+                                                $FFDC('#CETable').parent().css({overflowX: 'scroll'}); // Mac fix
+                                             }
+                                        }                                       
+                                    });
+                                    
+                                    $FFDC(jq('{!$Component.leftForm.leftSearchField}')).focus();
+                                });
+                            </script>
+                        </apex:outputPanel>
+                        </div>                
+                            <div id="rightTableContents" style="position:relative;width:50%;float: left;display:none;">
+                                <div class="header" style="border: 1px solid #D4D9DD;">
+                                    <div style="width: 2%;float: left;height: 34px;">
+                                        <img class="headerArrow" src="/s.gif"></img>
+                                    </div>
+                                    <div style="height: 34px;line-height: 35px;font-weight: 700;font-size: 11px;text-shadow: 0px 1px 0px white;text-indent: 10px;margin-left: -1px;width: 98%;float: right;">
+                                        {!$Label.CashMatchingPageOtherTransantions}
+                                    </div>
+                                </div>
+                                <apex:outputPanel id="rightTableOuter" style="border: 1px solid #D4D9DD;width: 100%;" layout="block">
+                                <apex:variable var="fieldsInRightFieldSet" value="{!0}"/>
+                                <apex:variable var="listFieldSetLocal" value=""/>
+                                <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingOtherTransactions}" var="f" >
+                                    <apex:variable var="listFieldSetLocal" value="{!listFieldSetLocal + '#' + f}"/>
+                                </apex:repeat>
+                                <div class="filterCell" style="width:100%">
+                                    <div class="filterInput" style="width: 80%;">
+                                        <apex:inputText id="rigthSearchField" value="{!viewstate.rightSearch}"/>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div style="float: right;height: 34px;">                                
+                                        <apex:commandButton id="retrieveCustomDocData_h" action="{!retrieveCustomDocData}" styleClass="hiddensubmit" value="{!$Label.CashMatchingPageSearch}" reRender="messagesPanel,rightTableOuter" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();">
+                                            <apex:param name="listFieldSet" value="{!listFieldSetLocal}"/>
+                                        </apex:commandButton>
+                                        <div class="button buttonBig btn" id="retrieveData" onclick="document.getElementById('{!$Component.retrieveCustomDocData_h}').click();" style="font-size:13px !important; padding: 4px 20px 4px 20px; font-weight:400;margin-top: 4px;margin-right: 4px;display: block;">
+                                            {!$Label.CashMatchingPageSearch}
+                                        </div>
+                                    </div>                                
+                                </div>
+                                <table cellpadding="0" cellspacing="0" border="0" class="CMTable" id="TRTable">
+                                    <thead>
+                                        <th>
+                                            <div class="status">
+                                                <input class="lineChkBoxToggle" id="lineChkBoxToggleRight" type="checkbox" style="display:none;"/>
+                                            </div>
+                                        </th>
+                                        <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingOtherTransactions}" var="f" >
+                                            <apex:outputText rendered="{!IF(!(f == 'DocumentOutstandingValue__c' || f == 'AccountOutstandingValue__c'),true,false)}">
+                                                <apex:variable var="fieldsInRightFieldSet" value="{!fieldsInRightFieldSet+1}"/>                                         
+                                                <th>
+                                                    <apex:commandLink value="{!OtherTransactionsMapLabels[f].label}" action="{!sortOtherDocuments}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter" >
+                                                        <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.DocSortCol==f,viewstate.docSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.DocSortCol==f,viewstate.docSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!IF((f == 'DocumentOutstandingValue__c' && viewstate.currencyMode == 'Document'),true,false)}">
+                                                <apex:variable var="fieldsInRightFieldSet" value="{!fieldsInRightFieldSet+1}"/>
+                                                <th>
+                                                    <apex:commandLink value="{!OtherTransactionsMapLabels[f].label}" action="{!sortOtherDocuments}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter" >
+                                                        <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>
+                                            <apex:outputText rendered="{!IF((f == 'AccountOutstandingValue__c' && viewstate.currencyMode == 'Account'),true,false)}">
+                                                <apex:variable var="fieldsInRightFieldSet" value="{!fieldsInRightFieldSet+1}"/>
+                                                <th>
+                                                    <apex:commandLink value="{!OtherTransactionsMapLabels[f].label}" action="{!sortOtherDocuments}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter" >
+                                                        <apex:param name="sortingCol" value="{!f}"/>
+                                                    </apex:commandLink>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortUpArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='asc')}"/>
+                                                    <apex:image styleClass="absmiddle" value="{!URLFOR($Resource.c2g__front_cashmatching,'front_cashmatching/pages/cashmatching/images/SortDownArrow.png')}" rendered="{!AND(viewstate.cashSortCol==f,viewstate.cashSortDir=='desc')}"/>
+                                                </th>
+                                            </apex:outputText>
+                                        </apex:repeat>
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransPaid}</th>
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransDiscount}</th>
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransWriteOff}</th>                                                                                                                        
+                                        <th>{!$Label.codaCashMatchingNewCashMatchingOtherTransRemaining}</th>                                                                                                                       
+                                    </thead>                                                              
+                                    <tbody>
+                                        <apex:repeat var="viewLine" value="{!viewState.transactionStdController.cashMatchingPageLines}">
+                                            <tr>
+                                                <td>
+                                                    <div class="status" style="margin-left: 9px;">
+                                                        <apex:inputCheckBox id="TLSelected" value="{!viewLine.selected}" styleClass="lineChkBox" style="display:none;"/>
+                                                    </div>
+                                                </td>
+                                                <apex:repeat value="{!$ObjectType.c2g__codaTransactionLineItem__c.fieldsets.c2g__CashMatchingOtherTransactions}" var="f">                                                 
+                                                    <apex:outputText rendered="{!IF(!(f == 'DocumentOutstandingValue__c' || f == 'AccountOutstandingValue__c'),true,false)}">                                                   
+                                                        <td class="{!OtherTransactionsMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.transactionStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!IF((f == 'DocumentOutstandingValue__c' && viewstate.currencyMode == 'Document'),true,false)}">                                 
+                                                        <td class="{!OtherTransactionsMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.transactionStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                    <apex:outputText rendered="{!IF((f == 'AccountOutstandingValue__c' && viewstate.currencyMode == 'Account'),true,false)}">                                           
+                                                        <td class="{!OtherTransactionsMapLabels[f].type}">
+                                                            <apex:outputField value="{!viewState.transactionStdController.stdController.records[viewLine.documentLineItemIndex][f]}" />
+                                                        </td>
+                                                    </apex:outputText>
+                                                </apex:repeat>
+                                                <td class="DOUBLE">
+                                                    <input type="hidden" class="oValueClass" value="{!viewLine.outstandingValue}"/>
+                                                    <span class="paidClassOut" style="display:block;">{!viewState.ZeroFormatter}</span>
+                                                    <apex:inputField id="TRPaid" value="{!viewLine.paid.c2g__LookupNumber__c}" style="width: 50px;display:none;text-align: right;" styleClass="paidClass"/>
+                                                </td>
+                                                <td class="DOUBLE">
+                                                    <span class="discountClassOut" style="display:block;">{!viewState.ZeroFormatter}</span>
+                                                    <apex:inputField id="TRDiscount" value="{!viewLine.discount.c2g__LookupNumber__c}" style="width: 60px;display:none;text-align: right;" styleClass="discountClass" />
+                                                    <input type="hidden" class="discountOClass" value="{!viewLine.maxDiscountByDateValue}"/>
+                                                </td>
+                                                <td class="DOUBLE">
+                                                    <span class="writeOffClassOut" style="display:block;">{!viewState.ZeroFormatter}</span>
+                                                    <apex:inputField id="TRWriteOff" value="{!viewLine.writeOff.c2g__LookupNumber__c}" style="width: 60px;display:none;text-align: right;" styleClass="writeOffClass" />
+                                                </td>
+                                                <td class="DOUBLE">
+                                                    <span class="remainingClassOut" style="display:block;">{!viewLine.outstandingValue}</span>
+                                                </td>
+                                            </tr>                                           
+                                        </apex:repeat>
+                                    </tbody>
+                                    <tfoot>                                     
+                                        <tr>
+                                            <th colspan="{!fieldsInRightFieldSet+1}">
+                                                <div class="paginator" style="text-align: center; height: 29px; line-height: 30px; font-weight: 700; text-shadow: 0px 1px 0px white;bottom: 0px; font-size: 11px;float:left;">
+                                                        <div style="float: left;margin-left: 40px;">
+                                                            <apex:outputPanel styleClass="pages">
+                                                                {!$Label.CashMatchingPagePage}
+                                                                <span class="page">{!viewState.transactionStdController.pageNumber}</span>                                     
+                                                                {!$Label.CashMatchingPageOf}  <span class="page">{!viewState.transactionStdController.numberOfPages}</span>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel styleClass="prevNextLinks" style="margin-left:10px">
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.transactionStdController.hasPrevious}">
+                                                                    <apex:commandLink id="rightIndex" action="{!viewState.transactionStdController.first}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter">
+                                                                        <img class="first" src="/s.gif" title="{!$Label.CashMatchingPageFirst}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.transactionStdController.hasPrevious}">
+                                                                    <img class="firstoff" src="/s.gif" title="{!$Label.CashMatchingPageFirst}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.transactionStdController.hasPrevious}">
+                                                                    <apex:commandLink id="rightPrevious" action="{!viewState.transactionStdController.previous}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter">
+                                                                        <img class="prev" src="/s.gif" style="background-position: -10px 1px;" title="{!$Label.CashMatchingPagePrevious}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.transactionStdController.hasPrevious}">
+                                                                    <img class="prevoff" src="/s.gif" style="background-position: -10px -10px;" title="{!$Label.CashMatchingPagePrevious}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.transactionStdController.hasNext}">
+                                                                    <apex:commandLink id="rightNext" action="{!viewState.transactionStdController.next}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter">
+                                                                        <img class="next" src="/s.gif" style="background-position: -18px 1px;" title="{!$Label.CashMatchingPageNext}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.transactionStdController.hasNext}">
+                                                                    <img class="nextoff" src="/s.gif" style="background-position: -18px -10px;" title="{!$Label.CashMatchingPageNext}"></img>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!viewState.transactionStdController.hasNext}">
+                                                                    <apex:commandLink id="rightLast" action="{!viewState.transactionStdController.last}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter">
+                                                                        <img class="last" src="/s.gif" title="{!$Label.CashMatchingPageLast}"></img>
+                                                                    </apex:commandLink>
+                                                                </apex:outputPanel>
+                                                                <apex:outputPanel styleClass="prevNext" rendered="{!!viewState.transactionStdController.hasNext}">
+                                                                    <img class="lastoff" src="/s.gif" title="{!$Label.CashMatchingPageLast}"></img>
+                                                                </apex:outputPanel>
+                                                            </apex:outputPanel> 
+                                                            <apex:outputPanel styleClass="pages" style="margin-left: 10px;">
+                                                                <apex:selectList value="{!viewState.transactionStdController.rowsPerPage}" size="1" multiselect="false" title="{!$Label.CashMatchingPageItemsPerPage}">
+                                                                    <apex:selectOption itemValue="10" itemLabel="10" />
+                                                                    <apex:selectOption itemValue="25" itemLabel="25" />
+                                                                    <apex:selectOption itemValue="50" itemLabel="50" />
+                                                                    <apex:selectOption itemValue="100" itemLabel="100" />
+                                                                    <apex:selectOption itemValue="200" itemLabel="200" />
+                                                                    <apex:actionSupport event="onchange" action="{!viewState.transactionStdController.pageResize}" oncomplete="ffdc.go.loadingOverlay.removeLoadingOverlay();" reRender="rightTableOuter" />
+                                                                </apex:selectList>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                            </th>
+                                            <th>
+                                                <input id="transactionOPaidTotal" type="hidden" value="{!viewState.transactionStdController.paidTotal}"/>
+                                                 <div style="height: 29px;">
+                                                     <span id="transactionPaidTotal" style="color: black;font-size: 12px;display: block;text-align: right;margin-right: 3px;">{!viewState.ZeroFormatter}</span>
+                                                 </div>
+                                             </th>
+                                             <th>
+                                                <input id="transactionODiscountTotal" type="hidden" value="{!viewState.transactionStdController.discountTotal}"/>
+                                                 <div style="height: 29px;">
+                                                     <span id="transactionDiscountTotal" style="display: block;text-align: right;margin-right: 3px;">{!viewState.ZeroFormatter}</span>
+                                                 </div>
+                                             </th>
+                                             <th>
+                                                <input id="transactionOWriteOffTotal" type="hidden" value="{!viewState.transactionStdController.writeOffTotal}"/>
+                                                 <div style="height: 29px;">
+                                                     <span id="transactionWriteOffTotal" style="display: block;text-align: right;margin-right: 3px;">{!viewState.ZeroFormatter}</span>
+                                                 </div>
+                                             </th>
+                                             <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table> 
+                            <script type="text/javascript">
+                                $FFDC(document).ready(function () 
+                                {
+                                    $FFDC('#rightTableContents').UberFilter(
+                                    {
+                                        filterInput: jq('{!$Component.leftForm.rigthSearchField}')
+                                    }); 
+                                    $FFDC('#TRTable').UberTRGrid({
+                                        tableid: jq('{!$Component.leftForm.TRTable}'),
+                                        selectionsCounterId: '#numOfTransSelect',
+                                        tooManyLinesLabel: '{!viewState.messageRowLimit}',
+                                        outstandingValueLabel: '{!$Label.CashMatchingPageOutstandingValidation}',
+                                        toggleCheckBoxesId: '#lineChkBoxToggleRight'
+                                    });
+                                    $FFDC.setLoadingOverlayLabel(''); 
+                                    
+                                    var oTable2 = $FFDC('#TRTable').dataTable( {                                        
+                                        "bInfo": false,
+                                        "bSort": false,
+                                        "bPaginate": false,
+                                        "sScrollY": "470px",
+                                        "sScrollX": "100%",
+                                        "bFilter": false,
+                                        "bScrollCollapse": false,
+                                        "aoColumnDefs": [
+                                            { "sWidth": "100px", "aTargets": [ {!fieldsInRightFieldSet +1}, {!fieldsInRightFieldSet+2}, {!fieldsInRightFieldSet+3}, {!fieldsInRightFieldSet+4} ] },
+                                            { "bVisible": {!ShowDiscountValues}, "aTargets": [ {!fieldsInRightFieldSet+2} ] },
+                                            { "bVisible": {!ShowWriteOffValues}, "aTargets": [ {!fieldsInRightFieldSet+3} ] },
+                                            { "bVisible": {!ShowRemainingValues}, "aTargets": [ {!fieldsInRightFieldSet+4} ] }
+                                        ],
+                                        "fnInitComplete": function(oSettings, json) {                                           
+                                            $FFDC('#rightTableContents').css('display','block');
+                                            $FFDC('#TRTable').dataTable().fnAdjustColumnSizing();
+                                            $FFDC('#loadingOverlayWrapper').remove();
+                                            if ({!IF(!hasMessages && ((viewState.transactionStdController.cashMatchingPageLines != null && viewState.transactionStdController.cashMatchingPageLines.size > 0) || (viewState.cashEntryStdController.cashMatchingPageLines != null && viewState.cashEntryStdController.cashMatchingPageLines.size > 0)) , 'true', 'false')}) {
+                                                    $FFDC('#toggleHeaderButton').removeClass('active');                     
+                                                    $FFDC('#toggleHeaderButton .text').text('{!$Label.CashMatchingPageShowHeader}');
+                                                    $FFDC('#headerDetailPanel').css({display: 'none'});
+                                            }
+                                            if ($FFDC('#TRTable').width() > $FFDC('#TRTable').parent().width() &&
+                                                navigator.platform && navigator.platform.toLowerCase().indexOf('mac') >= 0)
+                                            {
+                                                $FFDC('#TRTable').parent().css({overflowX: 'scroll'}); // Mac fix
+                                            }                                            
+                                        }                                   
+                                    });
+                                    $FFDC(jq('{!$Component.leftForm.rigthSearchField}')).focus();                                   
+                                }); 
+                            </script>
+                        </apex:outputPanel>
+                        </div>
+                        <script>
+                             $FFDC(jq('{!$Component.leftForm.leftSearchField}')).focus();
+                             $FFDC('#tablesContents').css('width','99.9%');
+                             $FFDC(document).ready(function () 
+                             {
+                                    var rightExpanded = false;
+                                    var leftExpanded = false;
+                                    $FFDC('#leftTableContents .headerArrow').click(function() {                     
+                                        
+                                        if(!rightExpanded&&!leftExpanded) {
+                                            $FFDC('#leftTableContents').css('display','none');
+                                            $FFDC('#rightTableContents').css('width','100%');
+                                            $FFDC('#rightTableContents .headerArrow').css('background-position','left -91px');
+                                            
+                                            rightExpanded = true;
+                                            $FFDC('#TRTable').dataTable().fnAdjustColumnSizing();
+                                        } 
+                                        if(leftExpanded){
+                                            $FFDC('#leftTableContents').css('width','50%');
+                                            $FFDC('#rightTableContents').css('display','block');
+                                            $FFDC('#leftTableContents .headerArrow').css('background-position','left -29px');
+                                            
+                                            leftExpanded = false;
+                                            $FFDC('#CETable').dataTable().fnAdjustColumnSizing();
+                                        }
+                                    }); 
+                                    $FFDC('#rightTableContents .headerArrow').click(function() {                        
+                                        if(!leftExpanded&&!rightExpanded) {
+                                            $FFDC('#rightTableContents').css('display','none');
+                                            $FFDC('#leftTableContents').css('width','100%');
+                                            $FFDC('#leftTableContents .headerArrow').css('background-position','left -29px');
+                                            
+                                            leftExpanded = true;
+                                            $FFDC('#CETable').dataTable().fnAdjustColumnSizing();
+                                        }
+                                        if(rightExpanded){
+                                            $FFDC('#rightTableContents').css('width','50%');
+                                            $FFDC('#leftTableContents').css('display','block');
+                                            $FFDC('#rightTableContents .headerArrow').css('background-position','left -91px');
+                                            
+                                            rightExpanded = false;
+                                            $FFDC('#TRTable').dataTable().fnAdjustColumnSizing();
+                                        }
+                                    });
+                             });
+                        </script>
+                <div align="center" style="float: left;width: 100%;">   
+                    <div class="actionsWrapper" style="width: 400px;">
+                        <span style="display: block;    float: left;    font-size: 14px;    font-weight: 700;   margin-top: 20px;   text-align: right;  width: 33%;">{!$Label.CashMatchingPageMatchTotal}</span>
+                        <span id="matchTotalBalance" style="color: green;   display: block; float: left; font-size: 20px;   font-weight: 700;   margin-top: 17px;   text-align: center; width: 33%;">{!viewState.ZeroFormatter}</span>
+                        <div style="display:none; float: left;margin-top: 10px; width: 33%;" id="matchButton">
+                            <apex:commandButton value="{!$Label.CashMatchingPageCommit}" id="theCommitButton_h" styleClass="hiddensubmit" action="{!commitData}"/>
+                            <div class="button buttonBig btn" id="commitData" onclick="$FFDC.setLoadingOverlayLabel('Commit');$FFDC('#prepareCommitDiv').find('input').click();" style="font-size:13px !important; padding: 4px 20px 4px 20px; font-weight:400;margin-top: 4px;margin-right: 4px;display: block;">
+                                {!$Label.CashMatchingPageCommit}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>         
+        </div>
+    </apex:form>
+</apex:page>

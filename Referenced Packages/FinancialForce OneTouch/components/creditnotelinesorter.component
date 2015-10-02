@@ -1,0 +1,12 @@
+<apex:component access="global" controller="ffbext.CreditNoteLineSorterController">
+    <apex:attribute access="global" name="creditNote" description="This is the Credit Note in which you want to sort the lines." type="c2g__codaCreditNote__c" assignTo="{!creditNote}"/>
+    <apex:attribute access="global" name="var" description="This is the var in which the lines will be returned." type="String"/>
+    <apex:attribute access="global" name="styleClass" description="The style class to format the table." type="String"/>
+    <table class="{!styleClass}">
+        <apex:repeat value="{!creditNoteLines}" var="line">
+            <apex:componentBody >
+                <apex:variable var="{!var}" value="{!line}"/>
+            </apex:componentBody>
+        </apex:repeat>
+    </table>
+</apex:component>

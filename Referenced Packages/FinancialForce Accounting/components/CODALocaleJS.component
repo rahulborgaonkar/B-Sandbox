@@ -1,0 +1,10 @@
+<apex:component controller="c2g.CODALocaleJSController">
+<script type="text/javascript" src="{!URLFOR($Resource.coda2go,'coda2go/web/script/codalocale.js')}" ></script>
+<script type="text/javascript">
+    ffdc.utils.initLocale({
+        thousandSeparator:  '{!JSENCODE(thousandSeparator)}',
+        decimalSeparator : '{!JSENCODE(decimalSeparator)}',
+        decimalPlaces: 2
+    });
+</script>
+</apex:component>

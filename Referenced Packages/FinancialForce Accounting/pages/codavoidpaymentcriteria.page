@@ -1,0 +1,102 @@
+<apex:page standardcontroller="c2g__codaPayment__c" extensions="c2g.CODAQuickPaymentController,c2g.CODAQuickPaymentRemoteController">
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/base/base.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/DialogBox/DialogBox.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/ffdcTable/ffdcTable.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/LoadingOverlay/LoadingOverlay.css')}"/>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/pages/codavoidpaymentcriteria/css/codavoidpaymentcriteria.css')}"/>
+	<style type="text/css">
+	.pbError{background-image:url({!URLFOR($Resource.coda2go, 'coda2go/web/images/pbErrorIcon.gif')})}
+	</style>
+	<script src="{!URLFOR($Resource.front,'front/base/frameworks/ext-core-3.1.0.js')}" type="text/javascript"></script>
+	<script src="{!URLFOR($Resource.front,'front/components/DialogBox/DialogBox.js')}" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="{!URLFOR($Resource.front,'front/pages/codavoidpaymentcriteria/js/base.js')}" type="text/javascript"></script>
+	<script src="{!URLFOR($Resource.front,'front/pages/codavoidpaymentcriteria/js/remoteactionmanager.js')}" type="text/javascript"></script>
+	<script src="{!URLFOR($Resource.front,'front/pages/codavoidpaymentcriteria/js/codavoidpaymentcriteria.js')}" type="text/javascript"></script>
+	<script type="text/javascript">
+		FFDC.ButtonManager.disablingMessage = '{!$Label.codaPaymentProcessing}';
+		FFDC.RemoteActionManager.errorHeader = '<strong>' + '{!$Label.codaPaymentTransactionLinePageBegginingError}' + ' </strong>';
+		var codavoidpaymentcriteria = new FFDC.CodaVoidPaymentCriteria();
+		var remoteactionmanager = new FFDC.RemoteActionManager();
+		codavoidpaymentcriteria.setviewstate_payment_IsInConfirmationPage({!viewstate.payment.IsInConfirmationPage});
+		var calculatePeriod = {!$RemoteAction.CODAQuickPaymentRemoteController.calculatePeriod};
+	</script>
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.codaQuickPaymentViewPayments}" subtitle="{!viewstate.payment.dto.Name}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1166')}"/>
+		<apex:pageBlock id="voidPaymentCriteriaBlock" title="{!$Label.codaQuickPaymentViewPayments}" mode="edit">
+		<apex:outputPanel id="messagePanel" layout="block">
+			<apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" rendered="{!viewstate.showErrorMessages}">
+				<apex:repeat value="{!viewstate.errorMessages}" var="errorMessage" rendered="{!viewstate.showErrorMessages}">
+					<apex:outputText value="{!errorMessage}"/><br/>
+				</apex:repeat>
+			</apex:outputPanel>
+		</apex:outputPanel>
+		<apex:pageBlockSection id="voidPaymentCriteriaSection" title="" columns="1">
+				<apex:facet name="header">
+					<apex:outputPanel layout="block">
+						<h3>{!$Label.codaVoidPaymentCriteriaHeader}</h3>
+					</apex:outputPanel>
+				</apex:facet>
+				<apex:outputPanel layout="block" styleClass="center">
+				<apex:pageBlockSection id="inputPanel" title="" columns="1" collapsible="false" showHeader="false" >
+					<apex:inputField id="cancelReason" value="{!viewstate.Payment.VoidPaymentCriteriaView.VoidPaymentCriteria.c2g__CancelReason__c}"/>
+					<apex:inputField id="undoMatchDate" value="{!viewstate.Payment.VoidPaymentCriteriaView.VoidPaymentCriteria.c2g__UndoMatchDate__c}"/>
+					<apex:inputField id="undoMatchPeriod" value="{!viewstate.Payment.VoidPaymentCriteriaView.VoidPaymentCriteria.c2g__UndoMatchPeriod__c}" required="true"/>
+					<apex:inputField id="paymentRefundDate" value="{!viewstate.Payment.VoidPaymentCriteriaView.VoidPaymentCriteria.c2g__PaymentRefundDate__c}"/>
+					<apex:inputField id="paymentRefundPeriod" value="{!viewstate.Payment.VoidPaymentCriteriaView.VoidPaymentCriteria.c2g__PaymentRefundPeriod__c}" required="true"/>
+					
+					<script>
+						$FFDC(document).ready(function (){
+							remoteactionmanager.registerAction(
+								calculatePeriod,
+								[ {'type': 'input-id', 'value': '{!$Component.undoMatchDate}'}],
+								'{!$Component.undoMatchDate}','blur','{!$Component.undoMatchDate}','{!$Component.messagePanel}', 'codaVoidPaymentCriteria__c',
+								{ '{!$Component.undoMatchPeriod}': 'Name' },
+								['{!$Component.goToPaymentView}', '{!$Component.goToPaymentConfirmationButton}'], ['{!$Component.undoMatchDate}', '{!$Component.undoMatchPeriod}']
+							);
+							remoteactionmanager.registerAction(
+								calculatePeriod,
+								[ {'type': 'input-id', 'value': '{!$Component.paymentRefundDate}'}],
+								'{!$Component.paymentRefundDate}','blur','{!$Component.paymentRefundDate}','{!$Component.messagePanel}', 'codaVoidPaymentCriteria__c',
+								{ '{!$Component.paymentRefundPeriod}': 'Name' },
+								['{!$Component.goToPaymentView}', '{!$Component.goToPaymentConfirmationButton}'], ['{!$Component.paymentRefundDate}', '{!$Component.paymentRefundPeriod}']
+							);
+						});
+					</script>
+				</apex:pageBlockSection>
+				</apex:outputPanel>
+				<apex:outputPanel styleclass="button-center">
+					<apex:commandButton value="{!$Label.codaPageVoidPaymentCriteriaGoBack}" id="gotoPaymentView" action="{!gotoPaymentView}" immediate="true" />
+					<apex:actionFunction name="goToPaymentConfirmation" rerender="messagePanel,codavoidpaymentcriteriaJS,inputPanel" action="{!goToPaymentConfirmation}"/>
+					<apex:commandButton value="{!$Label.codaPageVoidPaymentCriteriaContinue}" id="goToPaymentConfirmationButton"/>
+					<apex:actionFunction name="submitVoidPayment" action="{!submitVoidPayment}" rerender="messagePanel,codavoidpaymentcriteriaJS" oncomplete="codavoidpaymentcriteria.checkGoBackFromPopUp()" />
+				</apex:outputPanel>
+			<script>
+				var selector = FFDC.idToIdSelector('{!$Component.goToPaymentConfirmationButton}');
+				$FFDC(document).on('click',selector,function(event){
+					event.preventDefault();
+					FFDC.ButtonManager.disableElements(['{!$Component.goToPaymentConfirmationButton}','{!$Component.gotoPaymentView}']);
+					goToPaymentConfirmation();
+				});
+			</script>
+
+			<apex:outputpanel id="codavoidpaymentcriteriaJS">
+				<script type="text/javascript">
+					FFDC.ButtonManager.enableElements(['{!$Component.goToPaymentConfirmationButton}','{!$Component.gotoPaymentView}']);
+					codavoidpaymentcriteria.setLabel_codaPageVoidPaymentCriteriaGoBack('{!$Label.codaPageVoidPaymentCriteriaGoBack}');
+					codavoidpaymentcriteria.setLabel_codaPageVoidPaymentCriteriaCancelPayment('{!$Label.codaPageVoidPaymentCriteriaCancelPayment}');
+					codavoidpaymentcriteria.setLabel_codaVoidPaymentCriteriaPopUpHeader('{!$Label.codaVoidPaymentCriteriaPopUpHeader}');
+					codavoidpaymentcriteria.setviewstate_payment_VoidPaymentConfirmationMessage('{!viewstate.payment.VoidPaymentConfirmationMessage}');
+					codavoidpaymentcriteria.setviewstate_showErrorMessages('{!viewstate.showErrorMessages}');
+					if (codavoidpaymentcriteria.getviewstate_payment_IsInConfirmationPage() + 1 == {!viewstate.payment.IsInConfirmationPage})
+					{
+						codavoidpaymentcriteria.setviewstate_payment_IsInConfirmationPage(codavoidpaymentcriteria.getviewstate_payment_IsInConfirmationPage() + 1);
+						codavoidpaymentcriteria.createConfirmDialog();
+					}
+				</script>
+			</apex:outputpanel>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,670 @@
+<apex:page sidebar="false">
+    
+    <!-- apex:iframe scrolling="true" src="https://daddy-donkey-labs.recurly.com/subscribe/be-da/{!$Organization.Id}/?quantity=3"/ -->
+    
+  <link href="https://app-static.recurly.com/favicon.ico?1363391694" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+  <!--[if (!IE)|(gte IE 8)]><!-->
+<link href="https://app-static.recurly.com/assets/payment-datauri.css?1363294121" media="all" rel="stylesheet" type="text/css" />
+<!--<![endif]-->
+<!--[if lte IE 7]>
+<link href="https://app-static.recurly.com/assets/payment.css?1363294121" media="all" rel="stylesheet" type="text/css" />
+<![endif]-->
+  <script src="https://app-static.recurly.com/assets/payment.js?1363294121" type="text/javascript"></script>
+
+  <!--[if lt IE 8]><link href="https://app-static.recurly.com/stylesheets/hosted/payment.ie.css?1363391698" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+
+
+  <script src="https://app-static.recurly.com/javascripts/jquery.min.js?1363391698" type="text/javascript"></script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(
+    ['_setAccount', 'UA-10003220-5'],
+    ['_setDomainName','.recurly.com'],
+    ['_setAllowHash', false],
+    ['_trackPageview']
+    , ['_setCustomVar', 1, 'site_mode', 'sandbox']
+  );
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  <script src="https://app-static.recurly.com/javascripts/jquery.alphanumeric.pack.js?1363391698" type="text/javascript"></script>
+  <script src="https://app-static.recurly.com/javascripts/jquery.placeholder.js?1363391698" type="text/javascript"></script>
+  <script src="https://app-static.recurly.com/javascripts/jquery.validate.min.js?1363391698" type="text/javascript"></script>
+  <script src="https://app-static.recurly.com/javascripts/jquery.currencymagic.js?1363391698" type="text/javascript"></script>
+  <script src="https://app-static.recurly.com/javascripts/jquery.anychange-0.1.0.js?1363391698" type="text/javascript"></script>
+
+  <!-- wrapper -->
+  <div id="wrapper">
+    <!-- header -->
+    <div id="header">
+      <h1 class="company_name">Daddy Donkey Labs</h1>
+    </div>
+    <!-- /header -->
+
+    <!-- content -->
+    <div id="content">
+
+
+
+<form accept-charset="UTF-8" action="https://daddy-donkey-labs.recurly.com/subscribe/be-da?account_code={!$Organization.Id}" class="subscribe-form" id="new_account" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="iV0ZnbT9WRdkJviu5jjXtmXCQvuTMbVFPaI0WDjgOds=" /></div>
+  <div class="panel  ">
+    <div id="subscription_plan_w">
+      <div class="title">
+        <h1 class="planname">Basic User License - Daddy Analytics</h1>
+
+
+      </div>
+      <div id="plan_price_qty_w">
+
+          <!-- quantity -->
+          <div id="plan_qty_w">
+            
+              <label for="subscription_quantity">Quantity</label>
+              <input class="plan_quantity" id="subscription_quantity" maxlength="4" name="subscription[quantity]" size="4" type="text" value="3" />
+              
+          </div>
+          <!-- /quantity -->
+
+        <div id="plan_price_w">
+          <label class="subscription_interval">1 month</label>
+            <span id="subscription_price">$30.00 USD</span>
+        </div>
+        <span id="qty_error" style="color: red; position: absolute; top: 40px; font-size: 12px; display:none;">Quantity can not be less than 3</span>
+      </div>
+      
+      <div style="clear:both;"></div>
+
+    </div>
+
+
+      <div id="coupon_w">
+        
+          <input id="subscription_coupon_code" maxlength="50" name="subscription[coupon_code]" placeholder="Coupon Code" size="50" type="text" />
+        <span id="check_coupon">
+          <span class="throbber"></span>
+        </span>
+        <span id="coupon_status"></span>
+        <span id="coupon_discount"></span>
+      </div>
+
+
+      <div id="order_total" style="display: none;">
+        <dl>
+          <dt>Order Total</dt>
+          <dd id="subscription_total">$30.00 USD</dd>
+        </dl>
+      </div>
+  </div>
+
+    <input id="quantity" name="quantity" type="hidden" value="3" />
+    <input id="unit_amount" name="unit_amount" type="hidden" value="10.0" />
+
+  
+      <fieldset>
+        <div class="block">
+
+
+          <!-- errors -->
+          <div class="box" id="error-messages" style="display: none;">
+            <div id="errors"></div>
+          </div>
+          <!-- /errors -->
+
+          <!-- Contact-info -->
+          <div class="box">
+            <h3>Contact Information</h3>
+            <!--
+            <div class="aside">
+              <strong class="hint">Enter your first name</strong>
+            </div>
+            -->
+            <div class="row-holder">
+              <div class="row">
+                <label for="account_first_name" style="display: none">First Name</label>
+                <input autofocus="autofocus" class="name" id="account_first_name" maxlength="50" name="account[first_name]" placeholder="First Name" size="50" type="text" />
+
+                <label for="account_last_name" style="display: none">Last Name</label>
+                <input class="name" id="account_last_name" maxlength="50" name="account[last_name]" placeholder="Last Name" size="50" type="text" />
+              </div>
+            </div>
+            <!--
+            <div class="aside">
+              <strong class="hint">Enter your email</strong>
+            </div>
+            -->
+            <div class="row-holder">
+
+                <div class="row">
+                  <label for="account_email" style="display: none">Email</label>
+                  <input id="account_email" maxlength="50" name="account[email]" placeholder="Email" size="50" type="email" />
+                </div>
+
+            </div>
+          </div>
+          <!-- /contact-info -->
+
+          <!-- payment-method -->
+            <input id="payment_method" name="payment_method" type="hidden" value="card" />
+          <!-- /payment-method -->
+
+
+            <!-- billing-info -->
+            <div class="box" id="credit_card_section">
+              <h3>Billing Information</h3>
+
+              <div>
+                <div class="aside">
+                  <div class="payments">
+                    <div class="payments-holder">
+                      <div class="payments-frame">
+                        <div class="payments-info" id="card-types">
+                          <p>Cards Accepted</p>
+                          <p class="card-image">
+                              <img alt="Visa" id="card-image-visa" src="https://app-static.recurly.com/images/icons/creditcards/visa.gif?1363391698" />
+                              <img alt="MasterCard" id="card-image-master" src="https://app-static.recurly.com/images/icons/creditcards/master.gif?1363391698" />
+                              <img alt="American Express" id="card-image-american_express" src="https://app-static.recurly.com/images/icons/creditcards/american_express.gif?1363391698" />
+                              <img alt="Discover" id="card-image-discover" src="https://app-static.recurly.com/images/icons/creditcards/discover.gif?1363391698" />
+                              <img alt="Diner&#x27;s Club" id="card-image-diners_club" src="https://app-static.recurly.com/images/icons/creditcards/diners_club.gif?1363391698" />
+                              <img alt="JCB" id="card-image-jcb" src="https://app-static.recurly.com/images/icons/creditcards/jcb.gif?1363391698" />
+                          </p>
+                        </div>
+                        <div class="payments-info" id="card-cvv" style="display: none">
+                          <p>Card Verification Value</p>
+                          <p><img alt="CVV" src="https://app-static.recurly.com/images/icons/creditcards/cvv-glyph.png?1363391698" /></p>
+                          <p>3-4 digit security code</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row-holder">
+                  <div class="row">
+                    <input autocomplete="off" class="card" id="billing_info_number" maxlength="20" name="billing_info[number]" placeholder="Card Number" size="20" type="text" />
+                    <input autocomplete="off" class="cvv" id="billing_info_verification_value" maxlength="4" name="billing_info[verification_value]" placeholder="CVV" size="4" type="text" />
+      
+                  </div>
+                  <div class="row">
+                    <label for="billing_info_month">Expires</label>
+                    <select id="billing_info_month" name="billing_info[month]"><option value="1">01 - January</option>
+<option value="2">02 - February</option>
+<option value="3" selected="selected">03 - March</option>
+<option value="4">04 - April</option>
+<option value="5">05 - May</option>
+<option value="6">06 - June</option>
+<option value="7">07 - July</option>
+<option value="8">08 - August</option>
+<option value="9">09 - September</option>
+<option value="10">10 - October</option>
+<option value="11">11 - November</option>
+<option value="12">12 - December</option></select>
+                    <select id="billing_info_year" name="billing_info[year]"><option value="2013" selected="selected">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+<option value="2021">2021</option>
+<option value="2022">2022</option>
+<option value="2023">2023</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+<option value="2027">2027</option>
+<option value="2028">2028</option>
+<option value="2029">2029</option>
+<option value="2030">2030</option>
+<option value="2031">2031</option>
+<option value="2032">2032</option>
+<option value="2033">2033</option></select>
+                  </div>
+
+                    <div class="row">
+                      <input id="billing_info_address1" maxlength="50" name="billing_info[address1]" placeholder="Street Address" size="50" type="text" />
+                    </div>
+                    <div class="row">
+                      <input class="zip" id="billing_info_zip" maxlength="20" name="billing_info[zip]" placeholder="Zip/Postal" size="20" type="text" />
+                    </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- /billing-info -->
+
+            <div class="testsite">
+              <h3>Test site</h3>
+              <p>This is a test site. You will not be charged.</p>
+            </div>
+        </div>
+
+        <div class="subscribe-block">
+              <button type="submit" class="pay large" id="pay-creditcard">
+                Subscribe
+              </button>
+          <strong class="secure-payment">Recurly Secure Payment</strong>
+        </div>
+      </fieldset>
+</form>
+<script language="javascript">
+  $('input, textarea').placeholder();
+
+
+  $(document).ready(function () {
+    $('#pay-creditcard').removeAttr('disabled');
+    $('#pay-paypal').removeAttr('disabled');
+
+    // Teach currencymagic how to format currency
+    $.currencymagic_teach('$1.00 USD', '$0.33 USD');
+
+    update_prices();
+
+    $('#order_total').show();
+
+
+    function hasPlaceholderSupport() {
+      var i = document.createElement('input');
+      return 'placeholder' in i;
+    }
+    if(!hasPlaceholderSupport()){
+      $(".subscribe-form").placeholder({blankSubmit:true});
+      $('input[autofocus=true]').focus();
+    };
+
+    // Numeric only fields
+      $('#billing_info_number').numeric({allow:"-"});
+
+      $('#billing_info_verification_value').numeric();
+      $('#subscription_quantity').numeric().anychange(function(){
+        update_prices();
+      });
+
+      $('#billing_info_verification_value').focus(function() {
+        $("#card-cvv").css('display', 'block');
+        $("#card-types").css('display', 'none');
+      });
+      $('#billing_info_verification_value').blur(function() {
+        $("#card-cvv").css('display', 'none');
+        $("#card-types").css('display', 'block');
+      });
+
+
+      var showHint = function () {
+        var ctl = $(this).closest('.subscribe-form');
+        var hintElt = $('.account-field-hinttext', ctl);
+
+        if ($('input', ctl).hasClass('error')) {
+          hintElt.css('display', 'none');
+          return;
+        }
+
+        hintElt.css('display', 'block');
+      };
+
+      var hideHint = function () {
+        var ctl = $(this).closest('.account-field');
+        $('.account-field-hinttext', ctl).css('display', 'none');
+      };
+
+
+      var isCardValidatedOnSubmit = function() { return true; };
+
+    var validator = $('.subscribe-form').validate({
+      submitHandler: function (form) {
+          $('#pay-creditcard').attr('disabled', 'disabled');
+          $('#pay-creditcard').html('Please wait...');
+        form.submit();
+      },
+      showErrors: function (errorMap, errorList) {
+        this.defaultShowErrors();
+      },
+      errorPlacement: function(error, element) {
+        error.appendTo(element.parents(".row")[0]);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass(errorClass);
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass(errorClass);
+      },
+      groups: { name: "account[first_name] account[last_name]" },
+      rules: {
+          'subscription[quantity]': { required: true, min: 3, digits: true },
+        'account[first_name]': { required: true },
+        'account[last_name]': { required: true },
+          'account[email]': { required: true, email: true },
+        'billing_info[number]': { required: isCardValidatedOnSubmit, creditcard: true },
+        'billing_info[verification_value]': { required: isCardValidatedOnSubmit, digits: true, minlength: 3, maxlength: 4 },
+          'billing_info[address1]': { required: isCardValidatedOnSubmit },
+          'billing_info[zip]': { required: isCardValidatedOnSubmit },
+        '_awfuliehack': {}
+      },
+      messages: {
+        'account[first_name]': { required: 'First Name can\'t be blank' },
+        'account[last_name]': { required: 'Last Name can\'t be blank' },
+        'account[email]': { required: 'Email can\'t be blank' },
+        'billing_info[address1]': { required: 'Street address is required.' },
+        'billing_info[zip]': { required: 'Zip/Postal can\'t be blank' },
+        'billing_info[state]': { required: 'State can\'t be blank' },
+        'billing_info[country]': { required: 'Country can\'t be blank' },
+        'billing_info[number]': {
+          required: 'Card Number can\'t be blank',
+          creditcard: 'Card Number is invalid'
+        },
+        'billing_info[verification_value]': { required: 'Verification Code can\'t be blank'},
+        'accept': { required: 'Terms of Service must be accepted' }
+      }
+    });
+
+    // Credit card type functions
+    function getCardType(cardnumber) {
+      var cards = [
+        { name: "Visa", prefixes: [4] },
+        { name: "MasterCard", prefixes: [51, 52, 53, 54, 55] },
+        { name: "American Express", prefixes: [34, 37] },
+        { name: "Discover", prefixes: [6011, 62, 64, 65] },
+        { name: "Diner's Club", prefixes: [305, 36, 38] },
+        { name: "Carte Blanche", prefixes: [300, 301, 302, 303, 304, 305] },
+        { name: "JCB", prefixes: [35] },
+        { name: "enRoute", prefixes: [2014, 2149] },
+        { name: "Maestro", prefixes: [5018, 5020, 5038, 6304, 6759, 6761, 6762, 6763] },
+        { name: "Visa", prefixes: [417500, 4917, 4913, 4508, 4844] }, // Visa Electron
+        { name: "Laser", prefixes: [6304, 6706, 6771, 6709] }
+      ];
+
+      for (var c = 0; c < cards.length; c++) {
+        for (var p = 0; p < cards[c].prefixes.length; p++) {
+          if (new RegExp("^" + cards[c].prefixes[p].toString()).test(cardnumber))
+            return cards[c].name;
+        }
+      }
+
+      return 'Unknown';
+    }
+
+    var detectType = function () {
+      //var ctl = $(this).closest('.payments-info');
+      var images = $('p.card-image img');
+
+      images.removeClass('nomatch').removeClass('match');
+
+      var cardType = getCardType($(this).val());
+
+      if (cardType != 'Unknown') {
+        images.filter('img[alt="' + cardType + '"]').addClass('match');
+        images.filter('img[alt!="' + cardType + '"]').addClass('nomatch');
+      }
+    }
+
+    $('#billing_info_number').keydown(detectType).keyup(detectType);
+
+    // ----------------- Helper annotations -----------------
+
+    $('.test-data h2').click(function(){
+      $(this).closest('.test-data').find('dl').toggle();
+    });
+
+    $('dl[data-fills] > dt').click(function() {
+      $src = $(this);
+      $dest = $( $(this).closest('dl').attr('data-fills') );
+
+      var txt = $src.text();
+      $dest.val(txt);
+
+      $('#billing_info_verification_value').val('000');
+    });
+
+    // ----- add ons -----
+
+    $('.subscription_add_on_check').click(function(){
+      $rel_qty = $(this).closest('.subscription_add_on').find('.subscription_add_on_qty_w');
+      if($(this).is(':checked')) {
+        $rel_qty.show();
+      }
+      else {
+        $rel_qty.hide();
+      }
+      update_prices();
+    });
+
+    $('.subscription_add_on_qty_w').each(function(){
+      $(this).hide();
+
+      $(this).find('input.subscription_add_on_qty')
+      .numeric()
+      .anychange(function() {
+        update_prices();
+      });
+    });
+
+    // ----- end addons -----
+
+    // ----- coupons -----
+
+    var coupon = null;
+    var current_xhr = null;
+
+    function reset_coupon() {
+      $('#coupon_w').removeClass('valid').removeClass('invalid').removeClass('working');
+      $('#coupon_status').text('');
+      coupon = null;
+      if(current_xhr) {
+        current_xhr.abort();
+        current_xhr = null;
+      }
+      update_prices();
+    }
+
+    $('#subscription_coupon_code').anychange(function() {
+      if(current_xhr || $('#coupon_w').hasClass('valid') || $('#coupon_w').hasClass('invalid')) {
+        reset_coupon();
+      }
+
+      $('#coupon_w').toggleClass('disabled', $(this).val().length == 0);
+    });
+
+    $('#check_coupon').click(function(){
+
+      if($('#coupon_w').hasClass('disabled'))
+        return;
+
+      if(current_xhr) {
+        current_xhr.abort();
+      }
+
+      if(current_xhr || $('#coupon_w').hasClass('valid') || $('#coupon_w').hasClass('invalid')) {
+        $('#subscription_coupon_code').val('');
+        reset_coupon();
+        return;
+      }
+
+      var code = $('#subscription_coupon_code').val();
+
+      $('#coupon_w').addClass('working');
+      $('#coupon_status').text('');
+
+      current_xhr = $.getJSON('https://daddy-donkey-labs.recurly.com/subscribe/be-da/check_coupon.json?currency=USD', {'coupon_code': code},
+        function(data) {
+          current_xhr = null;
+          $('#coupon_w').removeClass('working');
+
+          if(data.valid) {
+            $('#coupon_w')
+            .removeClass('invalid')
+            .addClass('valid');
+
+            coupon = data;
+          }
+          else {
+            $('#coupon_w')
+            .removeClass('valid')
+            .addClass('invalid');
+
+            coupon = null;
+          }
+
+          if(data.message) {
+            $('#coupon_status').text(data.message);
+          }
+
+          update_prices();
+            }
+        );
+    });
+
+    // ----- end coupons -----
+
+    function update_prices() {
+      var total = 0; // Start with 0
+      var has_trial = false;
+        var has_setup_fee = false;
+
+      // Calculate plan prices
+      var plan_qty = $('#subscription_quantity').val();
+      if(!plan_qty || plan_qty.isNaN || plan_qty < 3) {
+        plan_qty = 3;
+        $('#subscription_quantity').val('3');
+       $('#qty_error').show(); 
+      }
+      else
+         $('#qty_error').hide();   
+
+      var plan_amount = 10.0;
+      var plan_total = plan_amount * plan_qty;
+
+      $('#subscription_price').currencymagic(plan_total);
+
+      total += plan_total;
+
+      // Calculate add-ons
+      $('.subscription_add_on').each(function() {
+        $add_on = $(this);
+        var $qty = $add_on.find('.subscription_add_on_qty');
+        var add_on_qty = $qty.length ? parseFloat($qty.val()) : 1;
+        var add_on_amount = parseFloat($add_on.attr('data-amount'));
+
+        // Only add to total if checked
+        if($add_on.find('.subscription_add_on_check:checked').length != 0 && add_on_qty && add_on_qty > 0 && add_on_qty.toString() != 'NaN') {
+          $add_on.addClass('selected');
+          var add_on_total = add_on_amount * add_on_qty;
+          $add_on.find('.subscription_add_on_price').currencymagic(add_on_total);
+
+          total += add_on_total;
+
+        }
+        else {
+          $add_on.removeClass('selected');
+          $add_on.find('.subscription_add_on_price').currencymagic(add_on_amount);
+        }
+      });
+
+      if(has_trial) {
+        total = 0;
+      }
+
+      // Calculate coupon
+      var discount = null;
+
+      if(coupon) {
+        if(coupon.discount_percent) {
+          discount = -total*(coupon.discount_percent/100.0)
+        }
+        else if(coupon.discount_in_dollars) {
+          discount = -coupon.discount_in_dollars;
+        }
+      }
+
+      // setup fee
+      total += 0.0;
+
+      if(discount !== null) {
+        if(-discount > total)
+          discount = -total;
+
+        $('#coupon_discount').currencymagic(discount);
+        total += discount;
+      }
+      else {
+        $('#coupon_discount').text('');
+      }
+
+      // Calculate VAT
+      var vat_required = false;
+      if(vat_required) {
+
+        var seller_country = 'US';
+        var eu_countries = ["AT","BE","BG","CY","CZ","DK","EE","ES","FI","FR","DE","GB","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SE","SI","SK"];
+        var charges_vat = false;
+        var buyer_country_code = $('#billing_info_country').val();
+
+        var ratio_with_vat = 1.0 + (0.0 / 100.0);
+
+        if (charges_vat && $.inArray(buyer_country_code, eu_countries) != -1) {
+          if (buyer_country_code != seller_country &&
+          $('#billing_info_vat_number').val() &&
+          $('#billing_info_vat_number').val() != $('#billing_info_vat_number').attr('placeholder')) {
+            $('#vat_amount').hide();
+            vat_ratio = 1.0;
+          } else {
+            $('#vat_amount, #vat_row').show();
+            vat_ratio = ratio_with_vat;
+          }
+        } else {
+          $('#vat_amount, #vat_row').hide();
+          vat_ratio = 1.0;
+        }
+
+        var vat_total = total * vat_ratio;
+        var just_vat = vat_total - total;
+        $('#vat_amount span').currencymagic(just_vat);
+        total += just_vat;
+      }
+
+      $('#subscription_total').currencymagic(total);
+    }
+  });
+</script>
+
+
+    </div>
+    <!-- /content -->
+  </div>
+  <!-- /wrapper -->
+       <div class="test-data" style="position:absolute;">
+                        <h2>Test Data</h2>
+                        <dl data-fills="#billing_info_number">
+                          <summary>Card Numbers</summary>
+
+                          <dt>4111-1111-1111-1111</dt> <dd>This will succeed</dd>
+                          <!-- dt>4222-2222-2222-2220</dt> <dd>Success, but flagged for Fraud Review by the gateway</dd -->
+
+                          <dt>4000-0000-0000-0002</dt> <dd>This will be declined</dd>
+                          <!-- dt>4000-0000-0000-0010</dt> <dd>AVS failed on street address and postal code</dd -->
+                          <!-- dt>4000-0000-0000-0028</dt> <dd>AVS failed on street address</dd -->
+                          <!-- dt>4000-0000-0000-0036</dt> <dd>AVS failed on postal code</dd -->
+                          <!-- dt>4000-0000-0000-0044</dt> <dd>Advanced Verification failed (Secure 3D, etc)</dd -->
+                          <!-- dt>4000-0000-0000-0051</dt> <dd>Card number declined</dd -->
+                          <!-- dt>4000-0000-0000-0069</dt> <dd>Expired card or expiration date does not match</dd -->
+                          <!-- dt>4000-0000-0000-0077</dt> <dd>Insufficient funds</dd -->
+                          <!-- dt>4000-0000-0000-0085</dt> <dd>Did not pass your fraud filters</dd -->
+                          <!-- dt>4000-0000-0000-0093</dt> <dd>Originating from fraudulent IP address</dd -->
+                          <!-- dt>4000-0000-0000-0101</dt> <dd>CVV / Security code did not match</dd -->
+                          <!-- dt>4000-0000-0000-0119</dt> <dd>Declined by issuing bank, customer needs to contact their bank</dd -->
+                          <!-- dt>4000-0000-0000-0200</dt> <dd>Invalid data or parameter</dd -->
+                          <!-- dt>4222-2222-2222-2222</dt> <dd>Invalid card number (Fails the Luhn algorithm check)</dd -->
+                          <!-- dt>4000-0000-0000-0226</dt> <dd>Invalid expiration date</dd -->
+                          <!-- dt>4000-0000-0000-0309</dt> <dd>Gateway Timeout</dd -->
+                          <!-- dt>4000-0000-0000-0317</dt> <dd>Duplicate transaction</dd -->
+                          <!-- dt>4000-0000-0000-0325</dt> <dd>Card type not accepted</dd -->
+                          <!-- dt>4000-0000-0000-0341</dt> <dd>Declined by the gateway, but Recurly will allow you to save regardless</dd -->
+                        </dl>
+                        <p class="only-test">Your users will not see this box.</p>
+                      </div>
+
+</apex:page>

@@ -1,0 +1,76 @@
+<!-- activatecompany --> 
+<apex:page standardController="c2g__codaCompany__c" extensions="c2g.ActivateCompanyController">
+	<script type="text/javascript" src="{!URLFOR($Resource.front_bankrec,'front_bankrec/base/frameworks/jquery-1.10.2.min.js')}"></script>
+    <script type="text/javascript">
+        var $FFDC = jQuery.noConflict();
+		var action;
+		var originalButtonClasses = [];
+		var originalButtonValues = [];
+		
+		$FFDC.disableButtons = function(buttons) {
+        	for (var i = 0; i < buttons.length; i++) {
+        		$FFDC(buttons[i]).attr('class', 'btnDisabled');
+				$FFDC(buttons[i]).val('{!$Label.codaProcessing}');
+				$FFDC(buttons[i]).attr('disabled', 'disabled');
+			}
+		}
+		
+		$FFDC.enableButtons = function(buttons) {
+			for (var i = 0; i < buttons.length; i++) {
+				$FFDC(buttons[i]).attr('class', originalButtonClasses[i]);
+				$FFDC(buttons[i]).val(originalButtonValues[i]);
+				$FFDC(buttons[i]).removeAttr('disabled');
+			}
+		}
+	</script>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.codaActivateCompanyPageTitle}" subtitle="{!viewstate.CompanyName}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1144')}"/>
+		<apex:pageBlock >
+			<apex:pageMessages id="messagePanel"/>
+			<apex:pageBlockButtons location="bottom">
+				<apex:commandButton value="" action="{!back}" id="back_h" styleclass="hiddensubmit backClass" 
+					immediate="true" reRender=""/>
+			    <apex:outputPanel id="confirmPanel" rendered="{!viewState.canShowButton}">
+				    <input id="confirmButton" class="btn" value="{!$Label.codaActivateCompanyPageConfirmButton}" type="button" 
+				    	onclick="$FFDC.disableButtons(['#confirmButton', '#cancelButton']);createQueue();return false;"/>
+			    </apex:outputPanel>
+			    <input id="cancelButton" class="btn" value="{!$Label.codaActivateCompanyPageCancelButton}" type="button" onclick="$FFDC('.backClass').click();"/>
+			    <script>
+					originalButtonClasses.push($FFDC('#confirmButton').attr('class'));
+        			originalButtonValues.push($FFDC('#confirmButton').val());
+        			originalButtonClasses.push($FFDC('#cancelButton').attr('class'));
+        			originalButtonValues.push($FFDC('#cancelButton').val());
+					$FFDC.enableButtons(['#confirmButton', '#cancelButton']);
+				</script>
+			</apex:pageBlockButtons>
+			<apex:outputPanel id="ISOCodePanel">
+				<apex:pageBlockSection rendered="{!viewState.NeedToFillCurrISOCode}">
+	                <apex:pageBlockSectionItem >
+	                    <apex:outputLabel value="{!$Label.codaPromptISOCode}" for="accCurr"/>
+	                    <apex:inputText id="accCurr" value="{!viewState.CurIsoCode}"/>
+	                </apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+			<apex:outputPanel id="QueueNamePanel">
+				<apex:pageBlockSection >
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel value="{!$Label.companyQueueNameFieldLabel}" for="theQueueName" />
+						<apex:inputText value="{!viewState.QueueName}" id="theQueueName" required="true" maxlength="{!viewState.MAX_QUEUE_NAME_LENGTH}"/>
+					</apex:pageBlockSectionItem>
+				</apex:pageBlockSection>
+			</apex:outputPanel>
+			<apex:outputPanel id="functionPanel">
+				<apex:outputPanel >
+					<script type="text/javascript">
+						action = '{!viewState.Action}';
+					</script>
+				</apex:outputPanel>
+				<apex:actionFunction name="createQueue" action="{!createQueue}" rerender="messagePanel,functionPanel,ISOCodePanel"
+					oncomplete="if(action === '2'){ activateCompany(); }else{ $FFDC.enableButtons(['#confirmButton', '#cancelButton']); }"/>
+				<apex:actionFunction name="activateCompany" action="{!activateCompany}" rerender="messagePanel,functionPanel"
+					oncomplete="$FFDC.enableButtons(['#confirmButton', '#cancelButton']); if(action === '3'){ $FFDC('#confirmButton').hide(); }"/>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

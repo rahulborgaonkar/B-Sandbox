@@ -1,0 +1,53 @@
+<apex:page standardController="c2g__codaCurrencyRevaluation__c" extensions="c2g.CODACurrencyRevalBatchController" tabStyle="c2g__codaCurrencyRevaluation__c">
+	<!-- codarevalcurbatchlistview -->
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__front,'front/components/ffdcTable/ffdcTable.css')}"/>
+    <style type="text/css">.ffdcTable thead tr{font-size:1em;}.hiddensubmit{display:none}</style>
+  <!-- Header -->
+    <apex:sectionHeader title="" subtitle="Errors List View" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1074')}"/>
+    
+    <div class="goBreadcrumb">
+        &nbsp;&#171;<a href="{!Home}"> Back to Currency Revaluation</a>
+    </div>
+    <apex:form id="theForm">
+        <apex:pageBlock >
+            
+         	<apex:outputPanel id="messagePanel" layout="block" rendered="{!showError}">
+				<apex:outputPanel id="errorPanel" layout="block" styleClass="pbError" >
+					<!--apex:messages/-->		
+						<apex:outputText value="{!c2g__codaCurrencyRevaluation__c.c2g__ErrorText__c}"/><br/>				
+				</apex:outputPanel>
+			</apex:outputPanel>
+            <apex:pageBlockTable value="{!CurrencyRevalBatchRecords}" var="curReval" styleClass="ffdcTable" rendered="{!!showError}">
+                <apex:facet name="footer">
+                    <apex:outputPanel layout="block">
+                        <div class="paginator" style="text-align:left;padding-left:5px;">
+                            <span class="pages">
+                                {!$Label.codaPaymentBatchListViewPagePage}&nbsp;<span class="page">{!pageNumber}</span>&nbsp;{!$Label.codaPaymentBatchListViewPageOf}&nbsp;<span class="page">{!numberOfPages}</span>
+                            </span>
+                            <apex:outputPanel styleClass="prevNextLinks">
+                                <apex:outputPanel styleClass="prevNext" rendered="{!hasPrevious}">
+                                    <apex:commandLink id="previous" action="{!previous}"><img class="prev" src="/s.gif"></img>{!$Label.codaPaymentBatchListViewPagePrevious}</apex:commandLink>
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel styleClass="prevNext" rendered="{!!hasPrevious}">
+                                    <img class="prevoff" src="/s.gif"></img>{!$Label.codaPaymentBatchListViewPagePrevious}
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel styleClass="prevNext" rendered="{!hasNext}">
+                                    <apex:commandLink id="next" action="{!next}">{!$Label.codaPaymentBatchListViewPageNext}<img class="next" src="/s.gif"></img></apex:commandLink>
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel styleClass="prevNext" rendered="{!!hasNext}">
+                                    {!$Label.codaPaymentBatchListViewPageNext}<img class="nextoff" src="/s.gif"></img>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                </apex:facet>
+              
+                <apex:column value="{!curReval.c2g__CurrencyRevaluationBatchNumber__c}"/>
+                <apex:column value="{!curReval.c2g__ErrorDescription__c}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

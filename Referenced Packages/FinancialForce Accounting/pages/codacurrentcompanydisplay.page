@@ -1,0 +1,48 @@
+<!-- codacurrentcompanydisplay -->
+<apex:page controller="c2g.CODACurrentCompanyDisplayController" showHeader="false" sidebar="false" readonly="true">
+<html>
+<head>
+<style type="text/css">
+	body{background-color:#CFEEF8;margin:0px;}
+	
+	.companyLink{
+	font-size:12px;
+	font-family:Arial;
+	text-shadow:0px 1px 1px #ffffff;
+	color:#333333;
+	font-weight:700;
+	}
+	
+	.companyLink:hover{
+	color:#015ba7;
+	
+	}
+</style>
+</head>
+	<body bgcolor="#E8E8F8">
+		<script type="text/javascript">
+			Visualforce.remoting.Manager.invokeAction(
+				'{!$RemoteAction.CODACurrentCompanyDisplayController.getCompanyName}', 
+				function(result, event)
+			{  
+	  			if (event.status)  
+	  			{ 
+	   				tn = document.createTextNode(result.CompanyName);
+	   				newlink = document.createElement('a');
+					newlink.setAttribute('class', 'companyLink');
+					newlink.setAttribute('target', '_parent');
+					newlink.setAttribute('href', result.CompanyUrl);
+					newlink.appendChild(tn);
+	   				document.body.appendChild(newlink);
+	  			}
+	  			else
+	  			{
+	   				tn = document.createTextNode(event.message);
+	   				document.body.appendChild(tn);
+	  			}   
+	   		}, 
+	   		{escape: false});
+	   	</script>
+	</body>
+	</html>
+</apex:page>

@@ -4,4 +4,5 @@
     <label>Fast Forms</label>
     <tab>FastForms</tab>
     <tab>Form_Submission__c</tab>
+    <tab>IDG_Find_Tab</tab>
 </CustomApplication>

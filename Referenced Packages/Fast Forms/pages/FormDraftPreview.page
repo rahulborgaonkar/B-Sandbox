@@ -1,10 +1,224 @@
 <apex:page standardController="VisualAntidote__Previous_Form__c" applyBodyTag="true" applyHtmlTag="true"  extensions="VisualAntidote.FormDraftPreviewController" showHeader="false">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script>
- 
-</script>
-    <link href="https://fftest.visualantidote.com/FormEngine/Styles/hostedform.css" rel="stylesheet" type="text/css" />
-  <div id="dvFastForms" style="margin: 10px;">
-  <apex:outputText value="{!Form_Html}" escape="false"/>
+<head>
+	<style>
+  body{
+    background-repeat: repeat;
+  }
+  </style>
+</head>
+
+
+     <script src="{!URLFOR($Resource.lzstringJs,'lz-string-master/libs/lz-string.min.js')}"></script>
+     <script src="{!URLFOR($Resource.lzstringJs,'lz-string-master/libs/base64-string.js')}"></script>
+
+
+  
+
+  <div id="dvFastForms" style="margin-left: 5px;margin-right:5px;">
+  <apex:outputText id="formHtml" value="{!Form_Html}" escape="false"/>
   </div>
+
+  <script>
+  $( document ).ready(function() {
+  	var formHtml = decompressText(document.getElementById('{!$Component.formHtml}').innerHTML);
+    document.getElementById('{!$Component.formHtml}').innerHTML = formHtml;
+
+	//resetSelect2ForFormElementsDraft();  
+    //resetFlexInputForFormElementsDraft();  
+
+	function compressText(txtIn)
+	{
+	    if (txtIn.length > 131072)
+	        return LZString.compressToEncodedURIComponent(txtIn);
+	    else
+	        return txtIn;
+	}
+
+	function decompressText(txtIn)
+	{
+	    if (txtIn.length > 0 && txtIn.charAt(0) != '<')
+	        return LZString.decompressFromEncodedURIComponent(txtIn);
+	    else
+	        return txtIn;
+	}
+
+  function resetFlexInputForFormElementsDraft()
+{
+  
+ $('#dvFastForms .ff-col-2 input[type="textbox"]').each(function (i, inputElement) {
+        
+        var attrDataFlexControl = $(inputElement).attr('data-flexcontrol');
+        if (typeof attrDataFlexControl !== typeof undefined && attrDataFlexControl !== false && attrDataFlexControl!='') {
+            switch (attrDataFlexControl) 
+            {     
+                case "integer-starrating":
+               var noofitems=$(inputElement).attr('data-flex-max');
+               var minlabel=$(inputElement).attr('data-flex-minlabel');
+               var maxlabel=$(inputElement).attr('data-flex-maxlabel');
+
+                setRatingInput($(inputElement),noofitems,minlabel,'',maxlabel,attrDataFlexControl);
+               // $('.rating-range-block').removeClass('display-none');
+                 //   $('.rating-range-block .star-rating-range').removeClass('display-none'); 
+                    break;
+                case "integer-npsrating":
+                var minlabel=$(inputElement).attr('data-flex-minlabel');
+               var maxlabel=$(inputElement).attr('data-flex-maxlabel');
+                    var middlelabel=$(inputElement).attr('data-flex-middlelabel');
+                    setRatingInput($(inputElement),'',minlabel,middlelabel,maxlabel,attrDataFlexControl);
+                    //$('.rating-range-block').removeClass('display-none');
+                   // $('.rating-range-block .nps-rating-range').removeClass('display-none'); 
+                    break;
+                default:
+                setRatingInput($(inputElement),'','','','',attrDataFlexControl);
+                break;
+            }
+        }
+    });
+
+}
+function resetSelect2ForFormElementsDraft()
+{
+  
+ $('#dvFastForms .ff-col-2>select').each(function (i, selectelement) {
+        
+        var attrDataFlexControl = $(selectelement).attr('data-flexcontrol');
+        if (typeof attrDataFlexControl !== typeof undefined && attrDataFlexControl !== false && attrDataFlexControl!='') {
+            switch (attrDataFlexControl) 
+            {     
+                case "picklist-default":
+                    break;
+                case "picklist-combobox":
+                case "multipicklist-multi-tags":
+                    $(selectelement).select2();
+                    console.log('combo select or simple multi select2');
+                    break;
+                case "multipicklist-multi-tags-check":
+                    $(selectelement).select2({closeOnSelect:false,dropdownCssClass : 'ff-multi-checkbox'});
+                    console.log(' multi select2 with checkbox');
+                    break;
+                case "picklist-radiobutton-vertical":
+                 
+                reinitializeSelectToRadioElementDraft('',$(selectelement).parent(),false,false,'ff-ext-radio','vertical');
+                    break;
+                case  "picklist-radiobutton-horizontal":
+                reinitializeSelectToRadioElementDraft('',$(selectelement).parent(),false,false,'ff-ext-radio','horizontal');
+                  //$(selectelement).SelectToRadio({controlType:'ff-ext-radio',alignment:'horizontal'});
+                    break;
+                case  "multipicklist-checkbox-horizontal":
+                  $(selectelement).SelectToRadio({controlType:'ff-ext-checkbox',alignment:'horizontal'});
+                    break;
+                case  "multipicklist-checkbox-vertical":
+                  $(selectelement).SelectToRadio({controlType:'ff-ext-checkbox',alignment:'vertical'});
+                    break;
+                default:break;
+            }
+        }
+    });
+
+}
+
+
+  function setRatingInput(inputElement,noofitems,minlabel,middlelabel,maxlabel,controltype){
+            
+             
+                 var readOnly=false;
+                 switch (controltype) {     
+                    case "integer-starrating":
+                        if(noofitems=='')
+                        {
+                            noofitems=5;
+                            $('#noOfStars').val('5');
+                        }
+                        $(inputElement).ffrating('destroy');
+                        $(inputElement).attr('data-flexcontrol',controltype);
+                        $(inputElement).attr('data-flex-min',1);
+                        $(inputElement).attr('data-flex-max',noofitems);
+                        $(inputElement).attr('data-flex-minlabel',minlabel);
+                        $(inputElement).attr('data-flex-maxlabel',maxlabel); 
+                        if ( $(inputElement).is('[readonly]') ) 
+                            { 
+                                readOnly=true;
+                            }
+                        $(inputElement).ffrating('show', {readonly:true,showSelectedRating:true});
+                    break;
+                    case "integer-npsrating":
+                        $(inputElement).ffrating('destroy');
+                        $(inputElement).attr('data-flexcontrol',controltype);
+                        $(inputElement).attr('data-flex-min',0);
+                        $(inputElement).attr('data-flex-middle',5);
+                        $(inputElement).attr('data-flex-max',10);
+                        $(inputElement).attr('data-flex-minlabel',minlabel);
+                        $(inputElement).attr('data-flex-middlelabel',middlelabel);
+                        $(inputElement).attr('data-flex-maxlabel',maxlabel); 
+
+                         if ( $(inputElement).is('[readonly]') ) 
+                            { 
+                                readOnly=true;
+                            }
+                        $(inputElement).ffrating('show', {readonly:true,isStar:false});
+                    break;
+                    default:
+                    $(inputElement).ffrating('destroy');
+                    if($(inputElement).hasClass('custom-flexcontrol-offscreen'))
+                    {
+                        $(inputElement).removeClass('custom-flexcontrol-offscreen');
+                    }
+                    
+                    break;
+                }
+             
+        }
+
+         function reinitializeSelectToRadioElementDraft(selectedcontrolType,selectElementParent,readOnly,destroyOnly,displayType,controlAlignment)
+        {
+            var controltype=selectedcontrolType;
+            var displaytype=displayType;
+            var controlalignment=controlAlignment;
+            
+             
+                $(selectElementParent).find('select:first').SelectToRadio('destroy');  
+                /* just remove custom style list if destroy doesn't work just in case*/
+                $(selectElementParent).find('div.custom-flex-control-container').remove();
+                $(selectElementParent).find('select:first').removeClass('custom-select-offscreen');
+                if(!destroyOnly)
+                {
+                    var flexcontrolattr=       $(selectElementParent).find('select:first').attr('data-flexcontrol');
+                    if(controltype=='')
+                    {
+                             controltype=  flexcontrolattr;// $(selectElementParent).find('select:first').attr('data-flexcontrol');
+                    }
+                    if(controlalignment=='')
+                    {
+                         
+                         if(flexcontrolattr.indexOf('multipicklist-')>=0)
+                         {
+                            
+                              controlalignment=controltype.replace('multipicklist-checkbox-','');
+                         }
+                         else
+                         {
+                          console.log(' ALIGNMENT changed-'+controltype);
+                            controlalignment=controltype.replace('picklist-radiobutton-','');
+                         }
+                    }
+                    
+                    if(displaytype=='' )
+                    {
+                         
+                         if(flexcontrolattr.indexOf('multipicklist-')>=0)
+                         {
+                            displaytype='ff-ext-checkbox'; 
+                         }
+                         else
+                         {
+                            displaytype='ff-ext-radio'; 
+                         }
+                    }
+
+                    $(selectElementParent).find('select:first').SelectToRadio({controlType:displaytype,alignment:controlalignment,readonly:readOnly});
+                    $(selectElementParent).find('select:first').attr('data-flexcontrol',controltype);
+                }
+        }
+        });
+  </script>
 </apex:page>

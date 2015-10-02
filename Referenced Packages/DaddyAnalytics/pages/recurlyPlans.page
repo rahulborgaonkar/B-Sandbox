@@ -1,0 +1,162 @@
+<apex:page controller="DaddyAnalytics.RecurlyPlanController"  sidebar="false" tabStyle="Daddy_Analytics_Setup_Checklist__tab">   
+    <style>
+    .userNum{width:60px; margin-left:10px; height:20px; border:1px solid #ccc; border-radius:4px;}
+    .btnNext{padding:3px 10px!important; margin-left:5px!important;}
+    @media screen and (max-width: 1024px) {
+        #contentWrapper{min-width:100%; width:100%;}
+    }
+    @media screen and (max-width: 650px) {
+      .btnNext{   background: #79abfc !important; /* Old browsers */
+                    background: -moz-linear-gradient(top, #79abfc 0%, #417cf2 100%)!important; /* FF3.6+ */
+                    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#79abfc), color-stop(100%,#417cf2))!important; /* Chrome,Safari4+ */
+                    background: -webkit-linear-gradient(top, #79abfc 0%,#417cf2 100%)!important; /* Chrome10+,Safari5.1+ */
+                    background: -o-linear-gradient(top, #79abfc 0%,#417cf2 100%) !important; /* Opera 11.10+ */
+                    background: -ms-linear-gradient(top, #79abfc 0%,#417cf2 100%) !important; /* IE10+ */
+                    background: linear-gradient(to bottom, #79abfc 0%,#417cf2 100%) !important; /* W3C */
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#79abfc', endColorstr='#417cf2',GradientType=0 )!important; /* IE6-9 */
+                    color:#fff!important; text-shadow:-1px 0 1px #205FCC  !important; border:1px solid #205FCC  !important;
+         }
+    }
+    </style>
+    <script>
+        function validate(NumOfUserId)
+        {            
+            //var SubscriptionPlan = document.getElementById(planId);
+            var NumberOfUser     = document.getElementById(NumOfUserId); 
+            var ErrorMsgBlock    = document.getElementById('ErrorMsg');    
+            var isError = false;
+            
+            ErrorMsgBlock.style.display = 'none';     
+            //document.getElementById('PlanErrorMsg').style.display="none"; 
+            document.getElementById('NumOfUsrErrorMsg').style.display="none";        
+            
+            /*if(SubscriptionPlan.value == 'None')
+            {                
+                ErrorMsgBlock.style.display = 'block';              
+                document.getElementById('PlanErrorMsg').style.display="block";
+                isError = true;               
+            }   */                                                  
+                
+            if(!NumberOfUser.value || isNaN(NumberOfUser.value) || NumberOfUser.value < 4)
+            {                
+                ErrorMsgBlock.style.display = 'block';   
+                document.getElementById('NumOfUsrErrorMsg').innerHTML = 'You must purchase a minimum of 4 Daddy Analytics Super Users';      
+                document.getElementById('NumOfUsrErrorMsg').style.display="block"; 
+                isError = true;                                                             
+                
+            }   
+            
+            if(isError != true)            
+            {      
+                submitJS();                      
+                document.getElementById('EditDiv').style.display = "none";   
+                document.getElementById('myIframe').src = 'https://daddy-donkey-labs.recurly.com/subscribe/da-monthly-license/{!$Organization.Id}?quantity=' + NumberOfUser.value;    
+                document.getElementById('iframeDivId').style.display="block";                                           
+            }
+            else
+            {
+                document.getElementById('EditDiv').style.display = "block"; 
+                document.getElementById('iframeDivId').style.display="none"; 
+            } 
+                
+            return false;  
+        }
+                      
+    </script>
+    <apex:outputPanel >
+        <table>
+            <tr>
+                <td style="padding-left: 5px; vertical-align: middle"><apex:outputLabel style="font-family:Lucida Sans Unicode;font-size:20px;"
+                    value="Daddy Analytics Billing"></apex:outputLabel></td>
+            </tr>
+        </table>
+    </apex:outputPanel> 
+    
+    <div style="display:none;" id="ErrorMsg">
+        <table width="100%" border="0">
+            <tr>
+                <th height="30px" style="color: Black; vertical-align: middle; left =5px; background-color: Yellow;">                
+                <!--<label style="color:red;display:none;padding-left: 10px;" id="PlanErrorMsg">Please select a Plan</label>-->
+                <label style="color:red;display:none;padding-left: 10px;" id="NumOfUsrErrorMsg"></label>                
+                </th>
+            </tr>
+        </table>
+   </div>
+    
+    <apex:outputPanel rendered="{!showError}">
+        <table width="100%" border="0">
+            <tr>
+                <th height="30px" style="color: Black; vertical-align: middle; left =5px; background-color: Yellow;">   
+                    <apex:outputLabel value="{!errorMsg}" style="color:red;padding-left:10px;"></apex:outputLabel>
+                    <apex:outputLink value="/apex/DaddyAnalytics__DaddyAnalyticsInsertCustomSettings" style="color:blue;"> Here </apex:outputLink>
+                </th>
+            </tr>
+        </table>
+    </apex:outputPanel>
+    
+    <apex:form > 
+        <apex:actionFunction name="submitJS" action="{!submit}" reRender=""/>  
+        <div id="EditDiv">  
+            <br/>  
+            <apex:pageBlock id="pageBlockId">                
+                <apex:pageBlockSection title="How many people need to see and report on Daddy Analytics data?" columns="2" collapsible="false"></apex:pageBlockSection>  
+                    <!--<apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Subscription Plans : "></apex:outputLabel>                
+                        <apex:selectList multiselect="false" size="1" id="Plan" value="{!selectedSubscription}"> 
+                            <script>
+                                var SubscriptionPlanId = '{!$Component.Plan}';
+                            </script> 
+                            <apex:selectOption itemValue="None" itemLabel="None"></apex:selectOption>                      
+                            <apex:selectOption itemValue="basic-5-users-da" itemLabel="Basic Edition - 5 or More Users"></apex:selectOption>
+                            <apex:selectOption itemValue="be-da" itemLabel="Basic User License - Daddy Analytics"></apex:selectOption>                        
+                        </apex:selectList>                    
+                    </apex:pageBlockSectionItem>-->                                                
+                        <br/>
+                        <apex:outputLabel style="margin-left:6%;" value="Number of Users : "></apex:outputLabel>                
+                        <apex:inputText styleClass="userNum" id="NumOfUser" value="{!numberOfUser}">                    
+                            <script>
+                                var NumberOfUserId = '{!$Component.NumOfUser}';
+                            </script>
+                        </apex:inputText>
+                        <apex:commandButton styleClass="btnNext" value="Next" onclick="return validate(NumberOfUserId);" />       
+                                              
+                    
+                
+                
+                                                           
+<p style="font-size:18px; margin-bottom:20px;">Like what you see? Subscribe now to Daddy Analytics to get uninterrupted service.</p>
+
+<p style="font-size:14px; ">Track Leads across all platforms, understand your Marketing ROI, and improve Sales.</p>
+
+<p style="font-size:14px;">With a Daddy Analytics license, your Salesforce users will be able to </p>
+
+<ul>
+<li>See Daddy Analytics fields on the Lead</li>
+<li>See Daddy Analytics fields on the Opportunity</li>
+<li>Run Reports, such as which Google Adwords Campaign or Keyword a Lead or Opportunity came from.</li>
+<li>See the per-click information on Leads, showing which pages they visited before and after submitting the Form</li>
+</ul>
+
+<p style="font-size:14px; margin-bottom:20px;">Your entire organization will benefit from Daddy Analytics. Even without licenses, your Salesforce users will be able to</p>
+
+<ul style="margin-bottom:20px;">
+<li>See information captured in a Task attached to the Lead or Contact</li>
+<li>Run limited reports on Leads and Opportunities associated with that Task</li>
+</ul>
+
+<p style="font-size:14px; margin-bottom:20px;">If you are tracking leads on multiple websites, you do not need multiple licenses for each site. A Salesforce user with a Daddy Analytics can track your leads across multiple websites.</p>
+
+                
+                </apex:pageBlock>  
+           </div>                  
+    </apex:form>   
+  
+    <div id="iframeDivId" style="display:none"> 
+        <apex:outputLink value="/apex/DaddyAnalytics__recurlyPlans" style="color:blue;"> Back </apex:outputLink>
+        <br/>
+        <iframe id="myIframe" src="" height="1200" width="1200">
+        </iframe> 
+    </div>
+    <br/>    
+               
+</apex:page>

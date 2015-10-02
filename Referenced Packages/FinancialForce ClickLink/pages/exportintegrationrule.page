@@ -1,0 +1,8 @@
+<apex:page standardController="ffirule__IntegrationRule__c" recordSetVar="var" extensions="ffirule.ExportIntegrationRuleController"  >
+    <apex:sectionHeader title="{!$Label.IRExportTitle}" help="{!URLFOR('/apex/helploader?topicid=1073')}"  />
+    <apex:form >
+        <apex:pageMessages escape="false" />
+        <apex:commandButton value="{!$Label.IRExportBackBtn}" action="{!cancel}"/>
+        <apex:commandButton value="{!$Label.IRExportDownloadBtn}" action="{!downloadJSON}" rendered="{!IsJSONReady}"/>
+    </apex:form>
+</apex:page>

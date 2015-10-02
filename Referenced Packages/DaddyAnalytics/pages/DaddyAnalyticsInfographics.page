@@ -1,0 +1,171 @@
+<apex:page controller="DaddyAnalytics.DaddyAnalyticsInfographicsController">
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>        
+   <!--<apex:includeScript value="{!URLFOR($Resource.JSAndJquery,'jquery-1.7.1.min.js')}"/>  
+    <apex:includeScript value="{!URLFOR($Resource.JSAndJquery,'jquery-ui-1.8.18.custom.min.js')}"/>  
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>  --> 
+    
+    <style>
+        .heading_h1{font-family:century gothic, arial, helvetica; font-size:18px; font-weight:bold; display:block; padding-top:15px;}
+        .chartWrapp{width:550px;margin:15px 0; float:left; background:#fff;  border:1px solid #ccc; padding:20px; border-radius:10px;}
+        .chartWrapp text(margin-left:-20px;)                                 
+        #ui-datepicker-div{display:none;}    
+        #assign-action-spinner-main
+       {
+            position:fixed;
+            left:0;
+            top:0;
+            background-color:#8d8d8d;
+            height:100%;
+            width:100%;
+            opacity:0.6;
+            filter:alpha(opacity=60);
+            z-index:999;
+            align:center;
+            vertical-align:middle;
+        }
+        #assign-action-spinner-content
+        {
+            position:absolute; 
+            top:35%;
+            left:50%;
+            opacity:1.0;
+            filter:alpha(opacity=100);
+            z-index:1000;
+            background-color:#F5FCFF;
+            width:204; 
+            height:94;
+            border-radius:1em;
+            border:1px solid #CEECFF;
+            padding:20px 40px 20px 40px;
+            margin-left:-112px;
+        }
+        #assign-action-spinner-content img
+        {
+            width:32; 
+            height:32; 
+            align:center; 
+            vertical-align: middle;
+        }
+        #assign-action-spinner-content p
+        {
+            display:inline;
+            font-size:135%;
+            font-weight:bold;
+        }       
+    </style>        
+    <script type="text/javascript">
+        Array.prototype.reduce = undefined;
+    </script>  
+    <apex:form >
+    
+        <apex:actionStatus id="assign-action-status" layout="block">
+            <apex:facet name="start">
+                <div id="assign-action-spinner-main">
+                    <div id="assign-action-spinner-content">
+                        <img src="/img/analytics/reportbuilder/icons/spinner32.gif" alt="Processing..." title="Processing..." />
+                        &nbsp;&nbsp;
+                        <p>Processing...</p>
+                    </div>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>   
+        
+        <apex:outputLabel styleClass="heading_h1" value="Beta" id="headingLabel"/>
+        
+        <apex:outputPanel id="LeadSourceGroupChartPanel" styleClass="chartWrapp">            
+            <div id="LeadSourceGroupChartDiv"></div>                                           
+            <div class="datePickerInputs">
+                <center style="position:relative; height:25px;">
+                    <h2>From: </h2>                                      
+                    <apex:inputText value="{!startDate}" id="LeadSourceGroupStartDate" styleClass="showDatePicker" size="20" style="height:20px;"/>  
+                    <h2> To: </h2>
+                    <apex:inputText value="{!endDate}"  id="LeadSourceGroupEndDate" styleClass="showDatePicker" size="20" style="height:20px;"/>
+                    <apex:commandButton value="Go"  action="{!initLeadSourceGroupData}" reRender="LeadSourceGroupChartPanel" status="assign-action-status" onComplete="drawLeadSourceGroupChart('{!leadSourceGroupData}');"/>                    
+                </center>
+            </div>       
+         </apex:outputPanel>   
+         
+         <apex:outputPanel id="GoogleCampaignSourceGroupChartPanel" styleClass="chartWrapp" style="margin-left:20px;">               
+            <div id="GoogleCampaignSourceGroupChartDiv"></div>               
+            <div class="datePickerInputs">
+                <center style="position:relative; height:25px;">
+                <h2>From: </h2>
+                <apex:inputText value="{!startDateGoogleCampaign}" id="GoogleCampaignSourceGroupStartDate" styleClass="showDatePicker" size="20" style="height:20px;"/> 
+                <h2> To: </h2>
+                <apex:inputText value="{!endDateGoogleCampaign}"  id="GoogleCampaignSourceGroupEndDate" styleClass="showDatePicker" size="20" style="height:20px;"/>
+                <apex:commandButton value="Go"  action="{!initLeadGoogleCampaignSourceData}" reRender="GoogleCampaignSourceGroupChartPanel" status="assign-action-status" onComplete="drawGoogleCampaignSourceGroupChart('{!leadGoogleCampaignSourceData}');"/>                            
+            </center>
+            </div>           
+        </apex:outputPanel>                                 
+                
+    </apex:form>                       
+    
+    <script>  
+        //var j$ = jQuery.noConflict();  
+        
+        function initDatePickerChart()
+        {
+            j$('.showDatePicker').datepicker({dateFormat: 'mm-dd-yy',maxDate: new Date});
+        }                                                       
+        
+        j$(document).ready(function() {            
+             j$('.showDatePicker').datepicker({dateFormat: 'mm-dd-yy',maxDate: new Date});                              
+         });               
+         
+         function setFocusOnLoad() {}  
+         
+         // Load the Visualization API and the piechart package.
+        google.load('visualization', '1.0', {'packages':['corechart']});    
+        
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.setOnLoadCallback(initCharts);                                                  
+        
+        function initCharts()
+        {
+            drawLeadSourceGroupChart('{!leadSourceGroupData}'); 
+            drawGoogleCampaignSourceGroupChart('{!leadGoogleCampaignSourceData}');           
+        }              
+        
+        function drawLeadSourceGroupChart(data) {
+          var myList = new Array();
+          myList = data;        
+        
+          // Create and populate the data table.
+          var data = google.visualization.arrayToDataTable(JSON.parse(myList));
+          
+          var options = {'title':'Lead Source',
+                     'width':450,
+                     'height':450,
+                      'chartArea': {left:10,'width': '100%', 'height': '80%'},
+                     };  
+                     
+          // Create and draw the visualization.
+          new google.visualization.PieChart(document.getElementById('LeadSourceGroupChartDiv')).
+              draw(data, options);                      
+          
+          initDatePickerChart();    
+        } 
+        
+        function drawGoogleCampaignSourceGroupChart(data) {
+          var myList = new Array();
+          myList = data;
+          // Create and populate the data table.
+          var data = google.visualization.arrayToDataTable(JSON.parse(myList));
+        
+          var options = {'title':'Google Campaign Source',
+                     'width':450,
+                     'height':450,
+                      'chartArea': {left:10,'width': '100%', 'height': '80%'},
+                      };
+        
+          // Create and draw the visualization.
+          new google.visualization.PieChart(document.getElementById('GoogleCampaignSourceGroupChartDiv')).
+              draw(data, options);   
+          
+          initDatePickerChart();                                                
+        }  
+                  
+    </script>
+    
+</apex:page>

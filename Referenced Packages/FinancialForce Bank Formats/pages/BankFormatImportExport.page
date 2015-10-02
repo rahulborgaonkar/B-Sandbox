@@ -1,0 +1,47 @@
+<apex:page standardController="Document" extensions="ffbf.BankFormatImportExportController">
+	<apex:sectionHeader title="{!$Label.ffbfExportImportPageTitle}" subtitle="{!$Label.ffbfExportImportPageSubTitle}"/>
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageMessages />
+			
+     		<apex:pageBlockButtons id="buttons">
+     			<apex:commandButton value="{!$Label.ffbfExportImportPageExportToButton}" id="export_h" action="{!exportTo}"/>
+     			<apex:commandButton value="{!$Label.ffbfExportImportPageImportButton}" id="import_h" action="{!importFrom}"/>
+     		</apex:pageBlockButtons>
+			
+			<apex:pageBlockSection title="{!$Label.ffbfExportImportPageExportSection}">
+				
+				<apex:pageBlockSectionItem >
+		        	<apex:outputLabel value="{!$Label.ffbfExportImportPageFormats}" for="formNames" />
+	        		<apex:selectList id="formNames" value="{!bankFormatMappingName}" size="1" multiselect="false">
+						<apex:selectOptions value="{!subscribedBankFormatMappings}"/>
+					</apex:selectList>					
+		        </apex:pageBlockSectionItem>
+		        
+				<apex:outputText />
+		        
+	        	<apex:pageBlockSectionItem rendered="{!hasDocument}">
+	        	    <apex:outputLabel value="{!$Label.ffbfExportImportPageMappingDoc}" for="exportMappingDocument"/>
+		            <apex:outputLink value="/{!mappingDocument.Id}" id="exporttMappingDocument">
+		                <apex:outputText value="{!mappingDocument.Name}"/>
+		            </apex:outputLink>
+		        </apex:pageBlockSectionItem>
+		        <apex:pageBlockSectionItem rendered="{!hasDocument}">
+		        	<apex:outputLabel value="{!$Label.ffbfExportImportPageDefinitionDoc}" for="exportDefDocument"/>
+		            <apex:outputLink value="/{!definitionDocument.Id}" id="exportDefDocument">
+		                <apex:outputText value="{!definitionDocument.Name}"/>
+		            </apex:outputLink>		
+				</apex:pageBlockSectionItem>
+
+			</apex:pageBlockSection>
+		    <apex:pageBlockSection title="{!$Label.ffbfExportImportPageImportSection}">    
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.ffbfExportImportPageFile}" for="importFile" />
+	    			<apex:inputFile value="{!contentFile}" filename="{!fileName}" id="importFile"/>
+		        </apex:pageBlockSectionItem>				
+		        		        
+			</apex:pageBlockSection>			
+		</apex:pageBlock>		
+	</apex:form>
+</apex:page>

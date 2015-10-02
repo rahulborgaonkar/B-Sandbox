@@ -1,0 +1,123 @@
+<apex:page contentType="text/javascript" cache="false" expires="0">
+(function ($FFDC) {
+	var methods = {
+		init: function (options) {
+			options = $FFDC.extend({
+				param: null
+			}, options || {});
+			return this.each(function () {
+				//SETUP
+				var $calcGrid = $FFDC(this);
+				//GLOBAL VARIABLES
+				var lastInputFocus;
+				//FUNCTIONS
+
+				function calculateField() {
+					var thisInput = $FFDC(this);
+					if (thisInput.data('val') !== thisInput.val()) {
+						//Change Net Value
+						if (thisInput.hasClass('input_c2g__NetValue__c')) {
+							var thisRow = thisInput.closest('tr');
+							methods.calculateTaxValue(thisRow);
+							methods.calculateRow(thisRow);
+						}
+						//Change TaxValues
+						if (thisInput.hasClass('input_c2g__TaxValue1__c')) {
+							var thisRow = thisInput.closest('tr');
+							methods.calculateRow(thisRow);
+						}
+					}
+				}
+
+				function init() {
+					$calcGrid.find('tbody tr').each(function (i, e) {
+						$FFDC(e).find('td.inputCell .input:not(a)').bind('focusout', calculateField);
+					});
+					$calcGrid.find('.removeLine').each(function (i, e) {
+						$FFDC(e).bind('click', function () {
+							methods.calculateSubTotal($calcGrid);
+						});
+					});
+				}
+				init();
+			});
+		},
+		calculateTaxValue: function (row) {
+			var netValue = $FFDC().UtilNumeric('convertToFlatNumber', row.find('.input_c2g__NetValue__c').val());
+			var taxRate1 = $FFDC().UtilNumeric('convertToFlatNumber', row.find('.input_c2g__TaxRate1__c').val());
+			
+			/*var discount = $FFDC.globalDiscount;
+			alert(discount);
+			discount = (netValue*discount)/100;
+			alert(netValue);
+			alert(discount);
+			netValue = netValue - discount;
+			alert(netValue);
+			var taxValueCalculation = (netValue * taxRate1 )/ 100;
+			alert(taxValueCalculation);
+			*/
+			var taxValueCalculation = (netValue * (100 - $FFDC.globalDiscount) / 100) * (taxRate1 / 100);
+		
+	
+			
+			if (!isNaN(taxValueCalculation)) {
+				row.find('td .input_c2g__TaxValue1__c').val($FFDC().UtilNumeric('convertToLocaleNumber', taxValueCalculation)).removeClass('calcError');
+			} else {
+				row.find('td .input_c2g__TaxValue1__c').val($FFDC.errorString).addClass('calcError');
+			}
+		},
+		calculateRow: function (row) {
+			methods.calculateSubTotal('#uberGrid');
+		},
+		calculateSubTotal: function (grid) {
+			var subTotal = 0;
+			$FFDC(grid).find('tr:not(.hiddenRow) td .input_c2g__NetValue__c').each(function (i, e) {
+				var netValue = $FFDC.trim($FFDC().UtilNumeric('convertToFlatNumber', $FFDC(e).val()));
+				subTotal = subTotal + parseFloat(netValue);
+			});
+			subTotal = parseFloat(subTotal);
+			if (!isNaN(subTotal)) {
+				$FFDC('#subTotal').text($FFDC().UtilNumeric('convertToLocaleNumber', subTotal)).removeClass('calcError');
+			} else {
+				$FFDC('#subTotal').text($FFDC.errorString).addClass('calcError');
+			}
+			methods.calculateTaxTotal(grid);
+		},
+		calculateTaxTotal: function (grid) {
+			var taxTotal = 0;
+			$FFDC(grid).find('tr:not(.hiddenRow) td .input_c2g__TaxValue1__c').each(function (i, e) {
+				var taxValue1 = $FFDC.trim($FFDC().UtilNumeric('convertToFlatNumber', $FFDC(e).val()));
+				taxTotal = taxTotal + parseFloat(taxValue1);
+			});
+			taxTotal = parseFloat(taxTotal);
+			if (!isNaN(taxTotal)) {
+				$FFDC('#taxTotal').text($FFDC().UtilNumeric('convertToLocaleNumber', taxTotal)).removeClass('calcError');
+			} else {
+				$FFDC('#taxTotal').text($FFDC.errorString).addClass('calcError');
+			}
+			methods.calculateInvoiceTotal();
+		},
+		calculateInvoiceTotal: function () {
+			var invoiceTotal = 0;
+			var subTotal = $FFDC.trim($FFDC().UtilNumeric('convertToFlatNumber', $FFDC('#subTotal').text()));
+			var taxTotal = $FFDC.trim($FFDC().UtilNumeric('convertToFlatNumber', $FFDC('#taxTotal').text()));
+			invoiceTotal = (parseFloat(subTotal) + parseFloat(taxTotal));
+			invoiceTotal = parseFloat(invoiceTotal);
+			if (!isNaN(invoiceTotal)) {
+				$FFDC('#invoiceTotal').text($FFDC().UtilNumeric('convertToLocaleNumber', invoiceTotal)).removeClass('calcError');
+			} else {
+				$FFDC('#invoiceTotal').text($FFDC.errorString).addClass('calcError');
+			}
+		}
+	};
+	$FFDC.fn.CalcGrid = function (method) {
+		if (methods[method]) {
+			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		} else if (typeof method === 'object' || !method) {
+			return methods.init.apply(this, arguments);
+		} else {
+			alert('Method ' + method + ' does not exist on CalcGrid');
+		}
+	};
+})(jQuery);
+</apex:page>

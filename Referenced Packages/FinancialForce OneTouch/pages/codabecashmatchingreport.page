@@ -1,0 +1,99 @@
+<apex:page standardController="Account" extensions="ffbext.CODABECashMatchingReportController" sidebar="true" showHeader="false" standardStylesheets="true" action="{!showMessage}">
+	<script src="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<style>
+		body{
+		    background-color:#F3F3EC;
+		}
+		.accountBlock .secondaryPalette{
+		    background-color:#F3F3EC !important;
+		    border-color:#F3F3EC !important;
+		    background-image:none !important;
+		}
+	</style>
+	<apex:form id="mainForm" onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }" target="_parent"> 
+		<DIV id="indicator"><img src="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/><span id="indicatortext"></span></DIV>
+		<apex:pageBlock id="mainPage">
+			<apex:pageMessages id="pageBlockMessages"/>
+			<apex:pageBlockSection columns="1">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageChooseCriteria}"/>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="2">
+				<apex:pageBlockSectionItem id="pageBlockInvoice">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageSalesInvoice}" for="invoice"/>
+                    <apex:outputPanel >
+	                    <apex:inputField id="invoice" value="{!lookup.c2g__Invoice__c}"/> 
+	                    <apex:actionFunction name="onChangeInvoice" action="{!doNothing}" reRender="pageBlockMessages,pageBlockInvoice,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.invoice}", "", onChangeInvoice, true);
+						</script>
+					</apex:outputPanel> 
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pageBlockCreditNote">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageSalesCreditNote}" for="creditNote"/>
+                    <apex:outputPanel >
+	                    <apex:inputField id="creditNote" value="{!lookup.ffbext__SalesCreditNote__c}"/> 
+	                    <apex:actionFunction name="onChangeCreditNote" action="{!doNothing}" reRender="pageBlockMessages,pageBlockCreditNote,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.creditNote}", "", onChangeCreditNote, true);
+						</script>
+					</apex:outputPanel>
+                </apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="pageBlockVendorInvoiceNumber">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageVendorInvoiceNumber}" for="vendorInoviceNumber"/>
+                    <apex:outputPanel >
+	                    <apex:inputText id="vendorInoviceNumber" value="{!vendorInvoiceNumber}"/>
+	                    <apex:actionFunction name="onChangevVendorInoviceNumber" action="{!existVendorInvoiceNumber}" reRender="pageBlockMessages,pageBlockVendorInoviceNumber,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.vendorInoviceNumber}", "", onChangevVendorInoviceNumber, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="pageBlockVendorCreditNoteNumber">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageVendorCreditNoteNumber}" for="vendorCreditNoteNumber"/>
+                    <apex:outputPanel >
+	                    <apex:inputText id="vendorCreditNoteNumber" value="{!vendorCreditNoteNumber}"/>
+	                    <apex:actionFunction name="onChangevVendorCreditNoteNumber" action="{!existVendorCreditNoteNumber}" reRender="pageBlockMessages,pageBlockVendorCreditNoteNumber,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.vendorCreditNoteNumber}", "", onChangevVendorCreditNoteNumber, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="pageBlockCashEntry">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageCashEntry}" for="cashEntry"/>
+                    <apex:outputPanel >
+	                    <apex:inputField id="cashEntry" value="{!lookup.ffbext__Cash_Entry__c}"/>
+	                    <apex:actionFunction name="onChangeCashEntry" action="{!doNothing}" reRender="pageBlockMessages,pageBlockCashEntry,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.cashEntry}", "", onChangeCashEntry, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem id="pageBlockCashEntryRef">
+					<apex:outputLabel value="{!$Label.codaBECashMatchingReportPageCashEntryReference}" for="cashEntryRef"/>
+                    <apex:outputPanel >
+	                    <apex:inputText id="cashEntryRef" value="{!cashEntryRef}"/>
+	                    <apex:actionFunction name="onChangeCashEntryRef" action="{!existCashEntries}" reRender="pageBlockMessages,pageBlockCashEntryRef,buttonPanel" oncomplete="CODA.resumeQueueProcessing();"/>
+						<script>
+							CODA.addQueuedOnBlurEvent(null, "{!$Component.cashEntryRef}", "", onChangeCashEntryRef, true);
+						</script>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			<apex:pageBlockButtons location="bottom">
+                <apex:outputpanel id="buttonPanel">
+                	<apex:commandButton value="{!$Label.codaBECashMatchingReportPageShowReportButton}" action="{!showReport}" id="showButton_h" styleclass="hiddensubmit" disabled="{!!CanShowReport}"/>
+                	<apex:commandButton value="{!$Label.codaBECashMatchingReportPageShowReportButton}" id="showButton" onclick="document.getElementById('{!$Component.showButton_h}').click();return false;" rerender="" disabled="{!!CanShowReport}"/>
+					<script>
+						var CODA2GoButtons = new CODA2GoPage();
+						var CODA2GoBtnSaveValue = "{!$Label.codaBECashMatchingReportPageProcessing}"
+						var showButton = document.getElementById("{!$Component.showButton}");
+						CODA2GoButtons.initButtons([showButton.id]);
+					</script>
+				</apex:outputPanel>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

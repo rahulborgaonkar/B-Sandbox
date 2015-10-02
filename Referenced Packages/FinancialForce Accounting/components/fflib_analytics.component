@@ -1,0 +1,248 @@
+<apex:component controller="c2g.fflib_AnalyticsController">
+    <apex:attribute name="startEndLabels" description="Provide a delimited list of start and end labels" type="String" required="false" default="{}"/>
+    <apex:attribute name="onReadyCallback" description="Provide a Javascript callback to be executed when component is ready" type="String" required="false" default="null"/>
+
+    <script>
+        var analyticsLabels = {};
+        <!-- General Labels -->
+
+        analyticsLabels.fflib_AnalyticsFeedbackThanks_Good = '{!JSENCODE($Label.fflib_AnalyticsFeedbackThanks_Good)}';
+        analyticsLabels.fflib_AnalyticsFeedbackThanks_Neutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackThanks_Neutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackThanks_Bad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackThanks_Bad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackGood = '{!JSENCODE($Label.fflib_AnalyticsFeedbackGood)}';
+        analyticsLabels.fflib_AnalyticsFeedbackHideLink = '{!JSENCODE($Label.fflib_AnalyticsFeedbackHideLink)}';
+        analyticsLabels.fflib_AnalyticsFeedbackConfusingNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackConfusingNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackConfusingBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackConfusingBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackSlowBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackSlowBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackSlowNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackSlowNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackNotWorkingNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackNotWorkingNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackNotWorkingBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackNotWorkingBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackMissingBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackMissingBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackMissingNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackMissingNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackOtherNeutral = '{!JSENCODE($Label.fflib_AnalyticsFeedbackOtherNeutral)}';
+        analyticsLabels.fflib_AnalyticsFeedbackOtherBad = '{!JSENCODE($Label.fflib_AnalyticsFeedbackOtherBad)}';
+        analyticsLabels.fflib_AnalyticsFeedbackSendDetails = '{!JSENCODE($Label.fflib_AnalyticsFeedbackSendDetails)}';
+    </script>
+    <script>
+        /*
+        * It initialize the GA settings
+        * NOTE: We could save this script in a new component: GASettings.component
+        */
+        var _gaq = _gaq || [];
+        var googleAnalyticsAccId = '{!googleAnalyticsAccountId}';
+
+        _gaq.push(['_setAccount', googleAnalyticsAccId]);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+    <script>
+        /*
+        * It loads dinamicaly a javascript static resource
+        * NOTE: We could save this script in a new component: LoadScript.component
+        */
+        function loadScript(url, callback) {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            if (script.readyState) {
+                script.onreadystatechange = function () {
+                    if (script.readyState == "loaded" || script.readyState == "complete") {
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            } else {
+                script.onload = function () {
+                    callback();
+                };
+            }
+            script.src = url;
+            document.getElementsByTagName("head")[0].appendChild(script);
+        }
+    </script>
+
+    <script>
+        /*
+        * It loads the metrics and instantFeedback static resource. After that, it creates
+        * the event tracking for the "user journey" and the "instant feedback"
+        */
+        function loadMetricsAndIF(metricsAlreadyLoaded){
+            //Get the URL to be passed to the remote action to be analysed
+            // Sidebar case: use window.referrer because it's rendered in a iframe
+            // VF/Standard case: use window.URL because it's rendered in the main window
+            var urlToParse =(window.self === window.top) ? document.URL : document.referrer;
+
+            //1) Before load anything, we check the custom setting and then check if the metrics is already loaded
+            var isEnabled = {!analyticsIsEnabled};
+
+            if (isEnabled && !metricsAlreadyLoaded){
+                //Do a remote action to get some parameters like orgId, nameSpace, ...
+                Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.fflib_AnalyticsController.analyseUrl}',urlToParse, function(result, event) {
+                    if (result != 'Unexpected Url'){
+                        //Set the path for the required static resources
+                        var resourcePath = "{!URLFOR($Resource.fflib_analytics)}/";
+                        window.metrics = window.metrics || {};
+                        window.metrics.enableMetrics = true;
+                        window.metrics.urlAnalysis = result;
+                        window.metrics.organizationId = "{!$Organization.Id}";
+                        window.metrics.requireUrl = resourcePath+'require.min.js';
+                        window.metrics.zeptoUrl = (window.navigator.userAgent.indexOf("MSIE ") == -1) ? resourcePath+'zepto.min.js' : resourcePath+'jquery.min.js';
+                        window.metrics.metricsUrl = resourcePath+ 'metrics.js';
+                        window.metrics.instantFeedbackJsUrl = resourcePath + 'jquery.instantFeedback.js';
+                        window.metrics.instantFeedbackCssUrl = resourcePath+'stylesheets/jquery.instantFeedback.css';
+
+                        //Load the require.js library before, to take the control for the rest static resource load process
+                        loadScript(window.metrics.requireUrl, function () {
+                            //Once all the dependances has been loaded, we start using the metrics.js library
+                            require([window.metrics.zeptoUrl, window.metrics.metricsUrl, window.metrics.instantFeedbackJsUrl], onAllDependancesLoaded);
+                        });
+                    }
+                    else{
+                        console.log('Unexpected URL - Not executing metrics');
+                        window.metrics = window.metrics || {};
+                        window.metrics.enableMetrics = false;
+                    }
+                });
+            //2) Metrics is already loaded or is disabled from custom settings
+            }else{
+
+                if(metricsAlreadyLoaded){
+                    console.log('Metrics are being executing from Visualforce');
+                }
+                else{
+                    console.log('Metrics are disabled');
+                }
+                window.metrics = window.metrics || {};
+                window.metrics.enableMetrics = false;
+            }
+        }
+
+        /*
+        * It start using metrics.js library, enabling it and setting the timed labels.
+        * Also it set the event tracking for the user journey and the instant feedback.
+        * Finally, it executes the onReadyCallback function if it exist.
+        */
+        function onAllDependancesLoaded(){
+            console.log('Metrics library loaded!');
+            $Metrics.setTimedLabels({!startEndLabels});
+            $Metrics.enable();
+            setUserJourney('USER_JOURNEY');
+            setInstantFeedback('INSTANT_FEEDBACK');
+            if(typeof({!onReadyCallback}) === "function"){
+                {!onReadyCallback}();
+            }
+        }
+
+        /*
+        * It sets the event tracking for the user journey, using the analyzed URL that has been processed in the controller.
+        */
+        function setUserJourney(category){
+            var splitted = window.metrics.urlAnalysis.split(' - ');
+                $Metrics.setInstanceName(splitted[0]);
+                $Metrics.setNameSpace(splitted[3]);
+                $Metrics.setOrgId(splitted[1]);
+
+                if(splitted[3] != 'Standard object' && splitted[3] != 'Other package custom object')
+                {
+                    if (window.metrics.urlAnalysis.indexOf('Visualforce page') != -1)
+                    {
+                        $Metrics.logEvent(category, splitted[3] + ' - ' +'UJ_Visualforce_View'+ ' - ' + splitted[4]);//Namespace + UJ + VFName
+                    }
+                    else if (window.metrics.urlAnalysis.indexOf('Record view') != -1)
+                    {
+                        $Metrics.logEvent(category, splitted[3] + ' - ' +'UJ_Record_View'+ ' - ' + splitted[4]);//Namespace + UJ + Object
+                    }
+                    else if (window.metrics.urlAnalysis.indexOf('Record edit') != -1)
+                    {
+                        $Metrics.logEvent(category, splitted[3] + ' - ' +'UJ_Record_Edit'+ ' - ' + splitted[4]);//Namespace + UJ + Object
+                    }
+                    else if (window.metrics.urlAnalysis.indexOf('Record new') != -1)
+                    {
+                        $Metrics.logEvent(category, splitted[3] + ' - ' +'UJ_Record_New'+ ' - ' + splitted[4]);//Namespace + UJ + Object
+                    }
+                    else if (window.metrics.urlAnalysis.indexOf('List view') != -1)
+                    {
+                        $Metrics.logEvent(category, splitted[3] + ' - ' +'UJ_List_View'+ ' - ' + splitted[4]);//Namespace + UJ + Object
+                    }
+                }
+        }
+
+        /*
+        * It sets the event tracking for the instant feedback (sentimental faces), using the instantFeedback.js library.
+        */
+        function setInstantFeedback(category){
+            //Load CSS related with instantFeedback
+            var link = document.createElement('link');
+            link.type = 'text/css';
+            link.rel = 'stylesheet';
+            link.href = window.metrics.instantFeedbackCssUrl;
+            document.getElementsByTagName('head')[0].appendChild(link);
+            var instantFeedback = new InstantFeedback({
+                basicCallback: function(feedbackValue) {
+                    switch(feedbackValue.mood) {
+                        case -1:
+                        $Metrics.logEvent(category, 'FB_Dismiss', 'DISMISS');
+                        break;
+                        case 0:
+                        $Metrics.logEvent(category, 'FB_Bad', 'BAD' );
+                        break;
+                        case 1:
+                        $Metrics.logEvent(category, 'FB_Neutral', 'NEUTRAL');
+                        break;
+                        case 2:
+                        $Metrics.logEvent(category, 'FB_Good', 'GOOD');
+                        break;
+                    }
+                },
+                extendedCallback: function(feedbackValue) {
+                    switch(feedbackValue.reason) {
+                        case 1:
+                        $Metrics.logEvent(category, 'FB_Extended', 'CONFUSING_INFORMATION');
+                        break;
+                        case 2:
+                        $Metrics.logEvent(category, 'FB_Extended', 'SLOW');
+                        break;
+                        case 3:
+                        $Metrics.logEvent(category, 'FB_Extended', 'NOT_WORKING');
+                        break;
+                        case 4:
+                        $Metrics.logEvent(category, 'FB_Extended', 'MISSING');
+                        break;
+                        case 5:
+                        $Metrics.logEvent(category, 'FB_Extended', 'OTHER');
+                        break;
+                    }
+                },
+                detailsCallback: function(feedbackValue) {
+                    $Metrics.logEvent(category, "FB_Comments_"+feedbackValue.mood+"_"+feedbackValue.reason, feedbackValue.comment);
+                },
+                labels : analyticsLabels
+            });
+            instantFeedback.show();
+        }
+    </script>
+
+    <script>
+        /*
+        * It takes care to load the metrics and instant feedback resources just once.
+        * In case that sidebar and VF try to load it at the same time, it just load the VF one.
+        */
+        
+        if (window.self === window.top){
+            // Check if analyticsIF iframe exist, and remove it in this case, because the analytics used is the one from the VF page 
+            var sidebarIframe = document.querySelector('iframe#analyticsIF');
+            if(sidebarIframe) sidebarIframe.remove();
+        }
+        loadMetricsAndIF(false);
+
+    </script>
+</apex:component>

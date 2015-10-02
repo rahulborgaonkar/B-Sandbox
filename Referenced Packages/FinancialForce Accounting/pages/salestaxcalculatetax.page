@@ -1,0 +1,31 @@
+<apex:page controller="c2g.SalesTaxCalculateTaxController" action="{!calculateTax}">
+	<apex:form >
+		<apex:pageMessages />
+		<apex:sectionHeader title="{!$Label.salesTaxCalculateTaxPageTitle}"  help="{!URLFOR('/apex/c2g__codahelploader?topicid=1316')}"/>
+		<apex:pageBlock mode="edit">
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!accept}" value="{!$Label.salesTaxCalculateTaxAcceptButton}"/>
+				<apex:commandButton action="{!reject}" value="{!$Label.salesTaxCalculateTaxCancelButton}"/>				
+			</apex:pageBlockButtons>
+			
+			<apex:pageBlockSection columns="2">	
+				<apex:outputLabel value="{!$Label.codaPageSalesTaxConfirmDocDateLabel}"/>
+				<apex:outputText value="{!DocumentDate}"/>
+
+				<apex:outputLabel value="{!$Label.codaPageSalesTaxConfirmStateLabel}"/>
+				<apex:outputText value="{!State}"/>
+
+				<apex:outputLabel value="{!$Label.codaPageSalesTaxConfirmDocNetValueLabel}"/>
+				<apex:outputText value="{!NetValue}"/>
+
+				<apex:outputLabel value="{!$Label.codaPageSalesTaxConfirmCompositeTaxRateLabel}"/>
+				<apex:outputText value="{!CompositeRate}%"/>
+
+				<apex:outputLabel value="{!$Label.salesTaxCalculateTaxTotalTaxLabel}"/>
+				<apex:outputText value="{!totalTax}"/>
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+
+		 
+	</apex:form>
+</apex:page>

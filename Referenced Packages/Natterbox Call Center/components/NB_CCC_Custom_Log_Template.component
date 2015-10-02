@@ -1,0 +1,193 @@
+<apex:component controller="natterbox.NB_CCC_Custom_Log_Template_Controller">
+	<apex:attribute type="natterbox__nbCallCenterConfig__c"
+		name="theObject" assignTo="{!theObject}" description="Selected Object"
+		required="true" />
+	<apex:attribute type="String" name="theField1" assignTo="{!theField1}"
+		description="Selected Field1" required="true" />
+	<apex:attribute type="String" name="theField2" assignTo="{!theField2}"
+		description="Selected Field2" required="true" />
+	<apex:attribute type="String" name="theField3" assignTo="{!theField3}"
+		description="Selected Field3" required="true" />
+	<apex:attribute name="mode" assignTo="{!mode}"
+		description="This is the mode for the component." type="String" />
+	<script type="text/javascript">
+		j$ = jQuery.noConflict();
+
+		function showUpdating_Custom_Log_Template() {
+			j$("[id$=updatingImage_Custom_Log_Template]").css("visibility",
+					"visible");
+		}
+		function hideUpdating_Custom_Log_Template() {
+			j$("[id$=updatingImage_Custom_Log_Template]").css("visibility",
+					"hidden");
+		}
+
+		jQuery.fn.extend({
+			insertAtCaret : function(myValue) {
+				return this.each(function(i) {
+					if (document.selection) {
+						//For browsers like Internet Explorer
+						this.focus();
+						sel = document.selection.createRange();
+						sel.text = myValue;
+						this.focus();
+					} else if (this.selectionStart
+							|| this.selectionStart == '0') {
+						//For browsers like Firefox and Webkit based
+						var startPos = this.selectionStart;
+						var endPos = this.selectionEnd;
+						var scrollTop = this.scrollTop;
+						this.value = this.value.substring(0, startPos)
+								+ myValue
+								+ this.value.substring(endPos,
+										this.value.length);
+						this.focus();
+						this.selectionStart = startPos + myValue.length;
+						this.selectionEnd = startPos + myValue.length;
+						this.scrollTop = scrollTop;
+					} else {
+						this.value += myValue;
+						this.focus();
+					}
+				})
+
+			}
+		});
+
+		function addMacro(value) {
+
+			j$("[id$=inputValue]").insertAtCaret(value);
+		}
+
+		function showMacroSelector() {
+
+			j$("[id$=MacroSelector]")
+					.css(
+							"visibility",
+							j$("[id$=MacroSelector]").css("visibility") == "visible" ? "hidden"
+									: "visible");
+			j$("[id$=ToggleSelector]")
+					.attr(
+							'value',
+							j$("[id$=MacroSelector]").css("visibility") == "visible" ? "{$} ?"
+									: "{$} ?");
+		}
+		
+		var TableList_cache; // Variable for remember previous choice
+		
+	</script>
+	<apex:actionStatus id="updating_Custom_Log_Template"
+		onstart="showUpdating_Custom_Log_Template();"
+		onstop="hideUpdating_Custom_Log_Template();" />
+	<apex:pageBlock mode="edit">
+		<div class="pbHeader">
+			<table>
+				<tr>
+					<td width="200">
+						<h2 class="mainTitle">{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Custom_Log_Template__c.label}</h2>
+					</td>
+					<td width="50"><apex:commandButton action="{!addLine}"
+							value="New" rerender="SelectorContainer,objectsList"
+							status="updating_Custom_Log_Template"
+							rendered="{!mode != 'readonly'}" /></td>
+					<td>
+						<apex:outputLabel value="Selected Table ">
+						<apex:outputLabel value=": {!selectedTable}" rendered="{!mode == 'readonly'}" />
+							<apex:SelectList value="{!selectedTable}" size="1" rendered="{!mode != 'readonly'}"
+								label="Select Table"
+								onclick="TableList_cache=this.value" 
+								onChange="if(eval({!items.size})==null) return ChangeTableJS(); if (!confirm('Changing the Table will reset all the fields.\nDo you want to continue?')) { this.value=TableList_cache; return}; return CommitChangeTableJS();">
+								<apex:SelectOptions value="{!objectsList}" />
+							</apex:SelectList>
+							<apex:actionFunction name="CommitChangeTableJS"
+								action="{!commitTable}"
+								rerender="SelectorContainer,List,fieldsblock,fieldError,objectError"
+								status="updating_Custom_Log_Template" />
+							<apex:actionFunction name="ChangeTableJS"
+								action="{!selectTable}"
+								rerender="SelectorContainer,List,fieldsblock,fieldError,objectError"
+								status="updating_Custom_Log_Template" />	
+							<apex:outputText id="objectError" value="{!objectError}"
+								styleClass="errorMsg" />
+						</apex:outputLabel></td>
+					<td><apex:image value="{!URLFOR($Resource.natterbox__jQuery, '/css/redmond/images/ajax-loader.gif')}"
+							id="updatingImage_Custom_Log_Template"
+							style="visibility: hidden;float:right;" /></td>
+				</tr>
+			</table>
+		</div>
+		<apex:pageBlockTable id="List" value="{!items}" var="item"
+			cellPadding="4" border="1" width="300">
+			<apex:column headerValue="Action" width="70"
+				rendered="{!mode != 'readonly'}">
+				<apex:commandLink value="Edit" action="{!selectLine}"
+					rerender="SelectorContainer" status="updating_Custom_Log_Template">
+					<apex:param name="selectedIndex" value="{!item[0]}"
+						assignTo="{!selectedIndex}" />
+					<apex:param name="editFieldNull" value="{!item[1]}"
+						assignTo="{!editFieldNull}" />
+					<apex:param name="editField" value="{!item[2]}"
+						assignTo="{!editField}" />
+					<apex:param name="editValue" value="{!item[3]}"
+						assignTo="{!editValue}" />
+				</apex:commandLink>
+				&nbsp;|&nbsp;
+				<apex:commandLink value="Del" action="{!deleteLine}"
+					rerender="SelectorContainer,List"
+					onClick="if (!confirmDelete('Press OK to delete this row.')) return;"
+					status="updating_Custom_Log_Template">
+					<apex:param name="selectedIndex" value="{!item[0]}"
+						assignTo="{!selectedIndex}" />
+				</apex:commandLink>
+			</apex:column>
+			<apex:column headerValue="Null" width="30" value="{!item[1]}" />
+			<apex:column headerValue="Field" width="150" value="{!item[2]}" />
+			<apex:column headerValue="Value" value="{!item[3]}" />
+		</apex:pageBlockTable>
+		<apex:pageBlockSection id="SelectorContainer">
+			<apex:pageBlockSection rendered="{!showSelector}" columns="3">
+				<apex:outputLabel value="Select the Field:">
+					<apex:SelectList value="{!selectedField}" size="1" id="fieldsblock">
+						<apex:SelectOptions value="{!fieldsList}" />
+					</apex:SelectList>
+					<apex:outputLabel value=" Null">
+						<apex:inputCheckbox value="{!selectedFieldNull}" />
+					</apex:outputLabel>
+					<br />
+					<apex:outputText id="fieldError" value="{!fieldError}"
+						styleClass="errorMsg" />
+				</apex:outputLabel>
+
+				<apex:outputLabel value="Set the value:">
+					<apex:inputTextArea value="{!selectedValue}" id="inputValue" cols="40" rows="4" />
+					<br/>
+						<apex:SelectList size="1" onFocus="this.selectedIndex=0;" onChange="addMacro(this.value);">
+							<apex:SelectOptions value="{!macrosList}" id="MacrosList" />
+						</apex:SelectList>
+					<br/><apex:outputText id="valueError" value="{!valueError}" styleClass="errorMsg" />
+				</apex:outputLabel>
+				<apex:outputPanel id="buttonsblock">
+					<table width="100">
+						<tr>
+							<td><apex:commandButton value="Update"
+									action="{!updateSelection}"
+									rerender="List,SelectorContainer,fieldError,valueError"
+									status="updating_Custom_Log_Template" />
+									<apex:outputText id="templateError" value="{!templateError}"
+						styleClass="errorMsg" />
+							</td>
+						</tr>
+						<tr>
+							<td><apex:commandButton value="Cancel"
+									action="{!cancelSelection}" rerender="List,SelectorContainer"
+									status="updating_Custom_Log_Template" /></td>
+						</tr>
+						<tr>
+							<td></td>
+						</tr>
+					</table>
+				</apex:outputPanel>
+			</apex:pageBlockSection>
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:component>

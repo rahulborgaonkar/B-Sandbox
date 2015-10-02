@@ -1,0 +1,17 @@
+<!-- fflib_batchprocessesrun -->
+<apex:page standardController="ffirule__fflib_BatchProcess__c" extensions="ffirule.fflib_BatchProcessController" recordSetVar="records">
+	<apex:form >
+		<apex:sectionHeader title="{!$Label.fflib_BatchProcessesRunPageTitle}"/>
+		<apex:pageBlock title="{!$Label.fflib_BatchProcessesRunPageSectionTitle}">
+			<apex:pageBlockButtons >
+				<apex:commandButton value="{!$Label.fflib_BatchProcessesRunJobsButton}" action="{!runJobs}" disabled="{!isEmpty}"/>
+				<apex:commandButton value="{!$Label.fflib_BatchProcessesCancelButton}" action="{!cancel}"/>
+			</apex:pageBlockButtons>
+			
+			<apex:pageMessages />
+			<apex:outputpanel rendered="{!!isEmpty}">
+				<apex:pageMessage summary="{!$Label.fflib_BatchProcessesConfirmationMessage}" severity="info" strength="2" />
+			</apex:outputpanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

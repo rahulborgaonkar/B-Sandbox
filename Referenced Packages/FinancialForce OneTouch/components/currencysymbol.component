@@ -1,0 +1,7 @@
+<apex:component controller="ffbext.CurrencySymbolController" access="global">
+    <apex:attribute name="iso" description="" access="global" type="String" assignTo="{!iso}"/>
+    <apex:attribute name="symbolVar" access="global" description="" type="String"/>
+    <apex:attribute name="format2dpVar" access="global" description="" type="String"/>
+    <apex:attribute name="format0dpVar" access="global" description="" type="String"/>    
+    <apex:variable var="{!symbolVar}" value="{!symbol}"/>
+</apex:component>

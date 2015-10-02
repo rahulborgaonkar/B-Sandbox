@@ -1,0 +1,125 @@
+<apex:page sidebar="true" controller="ffc.DisplayPageController" >
+    <c:thirdparty_shadowbox overlayOpacity="0.9" />
+    <apex:stylesheet value="https://dsfi6psrqehml.cloudfront.net/themes/ffdc/css/fonts.css" />
+    <apex:stylesheet value="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}{!URLFOR($Resource.ffc__ffCentral, '/central.css')}" />
+    <apex:stylesheet value="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}{!URLFOR($Resource.ffc__ffCentral, '/resetToolbar.css')}" />
+    <apex:stylesheet value="{!$Setup.ClientDeveloperSettings__c.ResourcePrefix__c}{!URLFOR($Resource.ffc__ffCentral, '/typography.css')}" />
+    
+    <style>
+        <!-- button offsets -->
+        div[id="{!$Component.topPageBlock.topButtons}"],
+        div[id="{!$Component.bottomPageBlock.bottomButtons}"] {
+            margin-top:-80px;
+            margin-bottom:-50px;
+        }
+    </style>
+    
+    <apex:sectionHeader title="{!$Label.Welcome}" />
+    
+    <apex:toolbar styleClass="linksToolbar" style="border:0;background:0;margin:20px 0 0 0;">
+        <apex:toolbarGroup >
+            
+            <apex:outputLink value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/Community_Auth_Provider" styleClass="goLink goCase" target="_blank">
+                <apex:param name="site" value="https://financial.secure.force.com/community" />
+                <apex:param name="startURL" value="/500/e?retURL=%2Fhome%2Fhome.jsp" />
+                {!$Label.Go_Case}
+            </apex:outputLink>
+            
+            <apex:outputLink value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/Community_Auth_Provider" styleClass="goLink goIdea" target="_blank">
+                <apex:param name="site" value="https://financial.secure.force.com/community" />
+                <apex:param name="startURL" value="/087/e?retURL=%2Fhome%2Fhome.jsp" />
+                {!$Label.Go_Idea}
+            </apex:outputLink>
+            
+            <apex:outputLink value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/Community_Auth_Provider" styleClass="goLink goCommunity" target="_blank">
+                <apex:param name="site" value="https://financial.secure.force.com/community" />
+                <apex:param name="startURL" value="/home/home.jsp" />
+                {!$Label.Go_Community}
+            </apex:outputLink>
+            
+
+        </apex:toolbarGroup>
+        
+        <apex:toolbarGroup location="right" style="border-left:0;">
+            <apex:outputLink value="{!URLFOR($Page.ffc__LicenseOrder)}" rel="shadowbox;width=530;height=225;" title="Need more FinancialForce licenses?" styleClass="goLink goLicense">
+                {!$Label.Go_License}
+            </apex:outputLink>
+        </apex:toolbarGroup>
+    </apex:toolbar>
+    
+    <apex:pageBlock mode="maindetail" id="topPageBlock">
+        <apex:outputLink value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/FFCommunityAuthProvider/Customer_Community?community=https://erp.force.com/community" styleClass="ffcc-link" target="_blank">
+            <img src="{!URLFOR($Resource.ffCentral, '/central-banner-link.png')}" />
+        </apex:outputLink>
+        <apex:pageBlockSection columns="3" collapsible="false">
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['Xtra']}" styleClass="Xtra">{!$Label.Xtra_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['Tutorial']}" styleClass="Tutorial">{!$Label.Tutorials_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['News']}" styleClass="News">{!$Label.News_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+
+        <apex:pageBlockSection columns="3" collapsible="false" id="topButtons">
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputLink target="_blank" styleClass="cta" value="{!URLFOR($Page.ffc__XtraSingleSignOn)}">
+                    <apex:param name="xtraUrl" value="/services/xtra/" />
+                    {!$Label.Xtra_Call_To_Action}
+                </apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputLink target="_blank" styleClass="cta" value="{!URLFOR($Page.ffc__XtraSingleSignOn)}">
+                    <apex:param name="xtraUrl" value="/services/xtra/tutorials/" />
+                    {!$Label.Tutorials_Call_To_Action}
+                </apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputLink target="_blank" styleClass="cta" value="http://www.financialforce.com/company/news/press-releases/">
+                    {!$Label.News_Call_To_Action}
+                </apex:outputLink>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock mode="maindetail" id="bottomPageBlock">
+        <apex:pageBlockSection columns="3" collapsible="false">
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['Idea']}" styleClass="Idea">{!$Label.Ideas_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['Announcement']}" styleClass="Announcement">{!$Label.Announcements_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="panelHolder" dataStyle="padding:20px 20px 70px 20px;">
+                <c:webLinksPanel webLinks="{!CollatedWebLinks['Solution']}" styleClass="Solution">{!$Label.Solutions_Caption}</c:webLinksPanel>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="3" collapsible="false" id="bottomButtons">
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputPanel >
+                    <apex:outputLink target="_blank" styleClass="cta" value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/Community_Auth_Provider">
+                        <apex:param name="site" value="https://financial.secure.force.com/community" />
+                        <apex:param name="startURL" value="/ideas/ideaList.apexp" />
+                        {!$Label.Ideas_Call_To_Action}
+                    </apex:outputLink>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputLink target="_blank" styleClass="cta" value="{!URLFOR($Page.ffc__XtraSingleSignOn)}">
+                    <apex:param name="xtraUrl" value="/services/xtra/announcements/" />
+                    {!$Label.Announcements_Call_To_Action}
+                </apex:outputLink>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem dataStyleClass="typography" dataStyle="padding:20px;">
+                <apex:outputLink target="_blank" styleClass="cta" value="https://login.salesforce.com/services/auth/sso/00D300000005poBEAQ/Community_Auth_Provider">
+                    <apex:param name="site" value="https://financial.secure.force.com/community" />
+                    <apex:param name="startURL" value="/501/o" />
+                    {!$Label.Solutions_Call_To_Action}
+                </apex:outputLink>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

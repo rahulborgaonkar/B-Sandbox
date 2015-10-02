@@ -1,0 +1,13 @@
+<apex:page standardController="c2g__codaJournal__c" extensions="ffbext.CODABEJournalCopyController" action="{!copy}" recordSetVar="journals">
+	<apex:sectionHeader title="{!$Label.codaBEJournalCopyPageTitle}" subtitle="{!$Label.codaBEJournalCopyPageSubtitle}"/>
+	<apex:form >
+		<apex:pageBlock mode="detail">
+			<apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <apex:outputpanel id="buttonPanel">
+                    <apex:commandButton id="back" value="{!$Label.codaBEJournalCopyPageBackButton}" action="{!cancel}"/>
+                </apex:outputpanel>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

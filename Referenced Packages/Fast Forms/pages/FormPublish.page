@@ -3,7 +3,7 @@
   <head>
    <meta http-equiv="X-UA-Compatible" content="IE=edge;" /> 
      
-      <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'ffcommon.css')}" /> 
+      <link rel="stylesheet" href="{!URLFOR($Resource.ffcommon,'ffcommon.css')}" />  
     <apex:includeScript value="//code.jquery.com/jquery-1.10.1.min.js" />
      <script src="{!URLFOR($Resource.sticky,'jquery.stickit.js')}"></script>
      <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
@@ -15,7 +15,8 @@
     <script src="{!URLFOR($Resource.foundation,'js/foundation.min.js')}"></script>
     <script src="{!URLFOR($Resource.foundation,'js/foundation/foundation.joyride.js')}"></script>
     <apex:includeScript value="{!URLFOR($Resource.VisualAntidote__jquery_dialog,'jquery_dialog/jquery-ui.js')}" />   
-    
+     <script src="{!URLFOR($Resource.commonJSHelper)}"></script>
+     <script src="{!URLFOR($Resource.FFCKEditor,'ckeditor.js')}"></script>
       <style>
       form {
 background-image: url("{!URLFOR($Resource.iconImages,'back.png')}");
@@ -287,12 +288,50 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
     text-align:left;
 }
    </style>
-   
+  <script>
+(function(f,b){if(!b.__SV){var a,e,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+        for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=f.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";e=f.getElementsByTagName("script")[0];e.parentNode.insertBefore(a,e)}})(document,window.mixpanel||[]);
+        mixpanel.init("39b7e8be28cfa1b59fdd342bad0004e0");
+  </script>
    </head>
    <script type='text/javascript'>
-(function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '25d09910-b904-4399-b5f3-988100ad71bf', f: true }); done = true; } }; })();
+/*(function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '25d09910-b904-4399-b5f3-988100ad71bf', f: true }); done = true; } }; })();
+*/
+/*FullStory Snippet*/
+window['_fs_debug'] = false;
+window['_fs_host'] = 'www.fullstory.com';
+window['_fs_org'] = '1ZpR';
+(function(m,n,e,t,l,o,g,y){
+  g=m[e]=function(a,b){g.q?g.q.push([a,b]):g._api(a,b);};g.q=[];
+  o=n.createElement(t);o.async=1;o.src='https://'+_fs_host+'/s/fs.js';
+  y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+  g.identify=function(i,v){g(l,{uid:i});if(v)g(l,v)};g.setUserVars=function(v){FS(l,v)};
+  g.clearUserCookie=function(d,i){d=n.domain;while(1){n.cookie='fs_uid=;domain='+d+
+  ';path=/;expires='+new Date(0);i=d.indexOf('.');if(i<0)break;d=d.slice(i+1)}}
+})(window,document,'FS','script','user');
+
+FS.identify('{!$Organization.Id}', {
+  displayName: '{!$User.FirstName} {!$User.LastName}',
+  email: '{!$User.Email}'
+});
+
+/*End FullStory Snippet*/
+/*Intercom Snippet*/
+window.intercomSettings = {
+    app_id: "uh2s363g",
+    user_id: "{!$Organization.Id}",
+    name: "{!$User.FirstName} {!$User.LastName}", // Full name
+    email: "{!$User.Email}", // Email address        
+    "widget": {
+        "activator": "#Intercom"     
+      }    
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/uh2s363g';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+/*End Intercom Snippet*/
 </script>
     <script>
+    var FFCKEditorurlroot="{!URLFOR($Resource.FFCKEditor)}";
         $(document).ready(function(){
        $(document).foundation();
 
@@ -333,7 +372,7 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
             if (event.status) {
                 // Get DOM IDs for HTML and Visualforce elements like this
                var  formeditorurl='{!URLENCODE($Site.BaseUrl)}'+'FormEditor?id='+'{!URLENCODE($CurrentPage.parameters.ffId)}'; 
-                console.log(' result[0] '+result[0] );
+                //console.log(' result[0] '+result[0] );
                 var formname=result[0]+'';
                 if($.trim(formname).length > 23){
             		formname = formname.substring(0, 22) + '...';
@@ -342,9 +381,9 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
                 $('#breadcrumb-formeditor').attr('href',formeditorurl);
                  
             } else if (event.type === 'exception') {
-               console.log(" Exception- "+event.message + "<br/>\n<pre>" + event.where + "</pre>");
+               //console.log(" Exception- "+event.message + "<br/>\n<pre>" + event.where + "</pre>");
             } else {
-                 console.log(" Exception 2- "+ event.message);
+                 //console.log(" Exception 2- "+ event.message);
             }
          }, 
          {escape: true}
@@ -362,7 +401,10 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
     setTimeout(function () { $(document).foundation('joyride', 'start'); }, 1000);
     
    }     
-   
+  function hideHelpIcon()
+  {
+    $('.intercomHelpIcon').fadeOut(500);
+  }   
 
  </script>
   
@@ -406,7 +448,7 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
             <div style="float: right;"><img src="{!URLFOR($Resource.logos,'color_logo.png')}" />
             </div>     
             
-            <div class="help-text-r"><a target="_blank" href="http://visualantidote.com/sfffdocumentation" ><img src="{!URLFOR($Resource.helptext_image)}" /></a>
+            <div class="help-text-r"><a target="_blank" href="http://www.visualantidote.com/fastforms/help?utm_source=fastformsapp&utm_medium=FormPublishPage&utm_campaign=help" ><img src="{!URLFOR($Resource.helptext_image)}" /></a>
             </div>                        
         </div>
                                  
@@ -418,10 +460,15 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
                 <h1  id="formTitle"  >{!form.Name}</h1>
                                           
                                           <div class="ObjectName"  > 
-                                              <h4 style="line-height:12.5px"><i>Object:</i>&nbsp;&nbsp;<span style="margin-bottom: 4px;display: inline-block;"  >{!primaryObjectName}</span><br/>
-                                                <apex:repeat value="{!secondaryObjectList}" var="f">
-                                                 <img style="margin-left: 53px;margin-top:-6px;float:left;clear:left" src="{!URLFOR($Resource.iconImages,'TreeEditorSingle.png')}"/><span class="secName" style="float:left;clear:right;margin-top:4px;"   id="{!f}"> {!f}</span> 
-                                                </apex:repeat>
+                                              <h4 style="line-height:12.5px"><i>Primary Object:</i>&nbsp;&nbsp;<span style="margin-bottom: 4px;display: inline-block;"  >{!primaryObjectName}</span><br/>
+                                                
+                                                <apex:variable var="childCount" value="{!0}" /> 
+                                  <apex:repeat value="{!secondaryObjectList}" var="sepObj">
+                                       <apex:variable var="childCount" value="{!IF(sepObj.FFTitle=='detail',childCount+1,childCount)}"/>
+                                    <span class="secName-wrap object-{!sepObj.FFTitle} relobj-{!IF(sepObj.FFTitle=='detail',childCount,'')}" >
+                                    <img src="{!URLFOR($Resource.iconImages,'TreeEditorSingle.png')}"></img> 
+                                    <span class="secName" id="{!sepObj.FFText}">{!sepObj.FFText}</span></span>
+                                    </apex:repeat>
                                               </h4>
                 </div>
             </div>
@@ -451,4 +498,6 @@ ul.nav-wizard.nav-wizard-backnav li:hover a:focus {
                      </div>
                       </div>
                           </apex:form>
+<div class="intercomHelpIcon" title="Questions? We're here to help!" alt="Questions? We're here to help!"><div class="intercomHelpIconText"><a id="Intercom" href="mailto:uh2s363g@incoming.intercom.io" class="intercomHelpIconLink">?</a></div><div class="intercomHelpIconClose" onclick="hideHelpIcon();">x</div></div>
+                          
 </apex:page>

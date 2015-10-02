@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>AccountCurrencyNotInCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountCurrencyNotInCurrentCompany</shortDescription>
+        <value>The currency for the chosen Account does not exist as an Accounting Currency within the current Company.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNotFound</shortDescription>
+        <value>Account &apos;&apos;{0}&apos;&apos; not found.</value>
+    </labels>
+    <labels>
+        <fullName>AccountNotSpecified</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountNotSpecified</shortDescription>
+        <value>Account Id has not been specified.</value>
+    </labels>
+    <labels>
+        <fullName>AccountWithoutAccountPayableControl</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountWithoutAccountPayableControl</shortDescription>
+        <value>The account &apos;&apos;{0}&apos;&apos; does not have an associated accounts payable control.</value>
+    </labels>
+    <labels>
+        <fullName>AccountWithoutAccountReceivableControl</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AccountWithoutAccountReceivableControl</shortDescription>
+        <value>The account &apos;&apos;{0}&apos;&apos; does not have an associated accounts receivable control.</value>
+    </labels>
+    <labels>
+        <fullName>ActionNotFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ActionNotFound</shortDescription>
+        <value>Action not specified or unexpected.</value>
+    </labels>
+    <labels>
+        <fullName>ActionNotValid</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Action Not Valid</shortDescription>
+        <value>Action name &apos;&apos;{0}&apos;&apos; is invalid.</value>
+    </labels>
+    <labels>
+        <fullName>AddNewLineButton</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AddNewLineButton</shortDescription>
+        <value>Add New Line</value>
+    </labels>
+    <labels>
+        <fullName>BankAccountMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BankAccountMandatory</shortDescription>
+        <value>Bank Account field: You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>BankAccountValueMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>BankAccountValueMandatory</shortDescription>
+        <value>You cannot modify the Bank Account Value field.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotModifyCompletedCashEntry</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotModifyCompletedCashEntry</shortDescription>
+        <value>You cannot modify a completed Cash Entry</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>Actions</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CashEntryAlreadyPosted</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CashEntryAlreadyPosted</shortDescription>
+        <value>Cash Entry Already Posted &apos;&apos;{0}&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>CashEntryLinesTitle</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CashEntryLinesTitle</shortDescription>
+        <value>Cash Entry Lines</value>
+    </labels>
+    <labels>
+        <fullName>CashEntryNotInProgress</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cash Entry Not In Progress</shortDescription>
+        <value>Cash Entry not in Progress.</value>
+    </labels>
+    <labels>
+        <fullName>CashEntryValueMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CashEntryValueMandatory</shortDescription>
+        <value>You cannot modify the Cash Entry Value field.</value>
+    </labels>
+    <labels>
+        <fullName>CashEntryWithoutLines</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CashEntryWithoutLines</shortDescription>
+        <value>You cannot post a Cash Entry without lines &apos;&apos;{0}&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ExchangeRateNotSetAsException</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExchangeRateNotSetAsException</shortDescription>
+        <value>{0} exchange rate not set.</value>
+    </labels>
+    <labels>
+        <fullName>FinancialCalendarDoesNotInclude</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FinancialCalendarDoesNotInclude</shortDescription>
+        <value>The financial calendar does not include {0}.</value>
+    </labels>
+    <labels>
+        <fullName>HomeCurrencyNotSet</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>HomeCurrencyNotSet</shortDescription>
+        <value>You must set the home currency for the company.</value>
+    </labels>
+    <labels>
+        <fullName>InternalErrorNoService</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InternalErrorNoService</shortDescription>
+        <value>Internal error, service &apos;&apos;{0}&apos;&apos; already registered.</value>
+    </labels>
+    <labels>
+        <fullName>LineChargesMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>LineChargesMandatory</shortDescription>
+        <value>You cannot modify the Line Charges field.</value>
+    </labels>
+    <labels>
+        <fullName>ManageLinesTitle</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ManageLinesTitle</shortDescription>
+        <value>Manage Lines</value>
+    </labels>
+    <labels>
+        <fullName>MultipleCompanies</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultipleCompanies</shortDescription>
+        <value>Multiple current companies.</value>
+    </labels>
+    <labels>
+        <fullName>MultipleItemsFound</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultipleItemsFound</shortDescription>
+        <value>Multiple items found.</value>
+    </labels>
+    <labels>
+        <fullName>NetValueMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NetValueMandatory</shortDescription>
+        <value>You cannot modify the Net Value field.</value>
+    </labels>
+    <labels>
+        <fullName>NoCurrentCompany</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoCurrentCompany</shortDescription>
+        <value>No current company.</value>
+    </labels>
+    <labels>
+        <fullName>NoServiceRegistered</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoServiceRegistered</shortDescription>
+        <value>No service has been registered for action &apos;&apos;{0}&apos;&apos;.</value>
+    </labels>
+    <labels>
+        <fullName>RemoveLineButton</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveLineButton</shortDescription>
+        <value>Remove Line</value>
+    </labels>
+    <labels>
+        <fullName>RemoveTransactionNumberBeforeToSave</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveTransactionNumberBeforeToSave</shortDescription>
+        <value>You must remove transaction number before saving</value>
+    </labels>
+    <labels>
+        <fullName>SaveAllButton</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SaveAllButton</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>TotalChargesMandatory</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TotalChargesMandatory</shortDescription>
+        <value>You cannot modify the Total Charges field.</value>
+    </labels>
+    <labels>
+        <fullName>TotalsLabel</fullName>
+        <categories>Generic</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TotalsLabel</shortDescription>
+        <value>Totals</value>
+    </labels>
+    <labels>
+        <fullName>UnableToGetRelatedCashEntry</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnableToGetRelatedCashEntry</shortDescription>
+        <value>Unable To Get Related Cash Entry</value>
+    </labels>
+</CustomLabels>

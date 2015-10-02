@@ -1,0 +1,132 @@
+<apex:component controller="natterbox.NB_CCC_Call_List_Template_Controller">
+	<apex:attribute type="natterbox__nbCallCenterConfig__c"
+		name="theObject" assignTo="{!theObject}" description="Selected Object"
+		required="true" />
+	<apex:attribute type="String" name="theField1" assignTo="{!theField1}"
+		description="Selected Field1" required="true" />
+	<apex:attribute type="String" name="theField2" assignTo="{!theField2}"
+		description="Selected Field2" required="true" />
+	<apex:attribute type="String" name="theField3" assignTo="{!theField3}"
+		description="Selected Field3" required="true" />
+	<apex:attribute name="mode" assignTo="{!mode}"
+		description="This is the mode for the component." type="String" />
+	<script type="text/javascript">
+		j$ = jQuery.noConflict();
+
+		function showUpdating_Call_List_Template() {
+			j$("[id$=updatingImage_Call_List_Template]").css("visibility",
+					"visible");
+		}
+		function hideUpdating_Call_List_Template() {
+			j$("[id$=updatingImage_Call_List_Template]").css("visibility",
+					"hidden");
+		}
+	</script>
+	<apex:actionStatus id="updating_Call_List_Template"
+		onstart="showUpdating_Call_List_Template();"
+		onstop="hideUpdating_Call_List_Template();" />
+		
+	<apex:pageBlock mode="edit" title="{!init}">
+		<div class="pbHeader">
+			<table>
+				<tr>
+					<td width="200">
+						<h2 class="mainTitle">{!$ObjectType.natterbox__nbCallCenterConfig__c.fields.natterbox__Call_List_Template__c.label}</h2>
+					</td>
+					<td><apex:image value="{!URLFOR($Resource.natterbox__jQuery, '/css/redmond/images/ajax-loader.gif')}"
+							id="updatingImage_Call_List_Template"
+							style="visibility: hidden;float:right;" /></td>
+				</tr>
+			</table>
+		</div>
+		
+		<apex:outputPanel id="SelectorContainer">
+		<apex:outputLabel value="{!debug}" />
+		<table class="detailList">
+				<tbody>
+					<tr>
+						<td class="labelCol">Table</td>
+						<td class="data2Col"><apex:SelectList value="{!selectedObject}" size="1" rendered="{!mode != 'readonly'}">
+								<apex:SelectOptions value="{!objectsList}" />
+								<apex:actionSupport action="{!selectAction}" event="onchange"
+									rerender="fieldsblock"
+									status="updating_Call_List_Template" />
+							</apex:SelectList>
+							<apex:outputLabel value="{!selectedObject}" rendered="{!mode == 'readonly'}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol">Fields</td>
+						<td class="data2Col">
+							
+				<table>
+				<tbody>
+					<tr>
+					<td>
+						<apex:SelectList value="{!selectedField}" size="6" multiselect="true" id="fieldsblock"  rendered="{!mode != 'readonly'}">
+								<apex:SelectOptions value="{!fieldsList}" />
+							</apex:SelectList>
+							<apex:outputLabel value="{!selectedFieldString}" rendered="{!mode == 'readonly'}" />
+						</td>
+						<td>
+						<apex:outputLabel value="Related Contact Fields" rendered="{!mode != 'readonly'}" />
+							<apex:SelectList value="{!selectedContactField}" size="5" multiselect="true"  rendered="{!mode != 'readonly'}">
+								<apex:SelectOptions value="{!contactfieldsList}" />
+							</apex:SelectList>
+						</td>
+						<td>
+						<apex:outputLabel value="Related Account Fields" rendered="{!mode != 'readonly'}" />
+							<apex:SelectList value="{!selectedAccountField}" size="5" multiselect="true"  rendered="{!mode != 'readonly'}">
+								<apex:SelectOptions value="{!accountfieldsList}" />
+							</apex:SelectList>
+						</td>
+					</tr>
+				</tbody>
+				</table>	
+							
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol">Query</td>
+						<td class="data2Col"><apex:inputTextArea value="{!selectedQuery}" cols="80"  rendered="{!mode != 'readonly'}"/>
+						<apex:outputLabel value="{!selectedQuery}" rendered="{!mode == 'readonly'}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol">Order</td>
+						<td class="data2Col"><apex:SelectList value="{!selectedOrder}" size="1" id="fieldsblock2" rendered="{!mode != 'readonly'}" >
+								<apex:SelectOptions value="{!FieldsListOrder}" />
+							</apex:SelectList> <apex:SelectList value="{!selectedOrderDirection}" size="1"  rendered="{!mode != 'readonly'}" >
+								<apex:SelectOptions value="{!OrderDirectionList}" />
+							</apex:SelectList>
+							
+							<apex:outputLabel value="{!selectedOrder}" rendered="{!mode == 'readonly'}" />
+							<apex:outputLabel value="{!selectedOrderDirection}" rendered="{!mode == 'readonly'}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol">Limit</td>
+						<td class="data2Col"><apex:inputText value="{!selectedLimit}" size="4" rendered="{!mode != 'readonly'}" />
+						<apex:outputLabel value="{!selectedLimit}" rendered="{!mode == 'readonly'}" />
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol">Template</td>
+						<td class="data2Col"><apex:inputTextArea value="{!selectedTemplate}" cols="80" rows="5" rendered="{!mode != 'readonly'}" />
+						<apex:outputLabel value="{!selectedTemplateString}" rendered="{!mode == 'readonly'}" escape="false" />
+						</td>
+					</tr>
+					<tr>
+						<td class="labelCol"></td>
+						<td class="data2Col"><apex:commandButton value="Update"
+								action="{!updateSelection}" rerender="SelectorContainer"
+								status="updating_Call_List_Template" rendered="{!mode != 'readonly'}" /><apex:outputText id="fieldsError" value="{!fieldsError}"
+						styleClass="errorMsg" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</apex:outputPanel>
+	</apex:pageBlock>
+</apex:component>

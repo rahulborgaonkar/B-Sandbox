@@ -6,15 +6,60 @@
     <namespacePrefix>Loop</namespacePrefix>
     <setupWeblink>DDP_Help</setupWeblink>
     <types>
+        <members>AboutLoopTest</members>
         <members>AdHoc</members>
+        <members>ApexDataHandler</members>
+        <members>ApexDataHandlerTest</members>
+        <members>CioCloneTest</members>
+        <members>CioNewExtTest</members>
+        <members>DdpButtonWizardExtTest</members>
+        <members>DdpCloneTest</members>
+        <members>DdpEditTest</members>
+        <members>DdpMigrationControllerTest</members>
+        <members>DdpSecurityController</members>
+        <members>DdpSecurityControllerTest</members>
+        <members>DdpTest</members>
+        <members>DdpTestExt</members>
+        <members>DdpTestExtTest</members>
+        <members>DdpWizardExtTest</members>
+        <members>DeliveryOptionExt</members>
+        <members>DeliveryOptionExtTest</members>
         <members>DocumentRequestMergeExt</members>
         <members>DocumentService</members>
+        <members>DocumentServiceTest</members>
+        <members>DsUserTest</members>
+        <members>DualSelectListController</members>
+        <members>EditFormExtTest</members>
+        <members>Exceptional</members>
+        <members>ExternalData</members>
+        <members>FieldTaggerExtTest</members>
+        <members>FlowDDPTest</members>
+        <members>IApexDataSource</members>
+        <members>InsertUpdateExtTest</members>
         <members>JSONObject</members>
+        <members>JSONObjectTest</members>
         <members>JobQueueStatusController</members>
+        <members>JobQueueStatusControllerTest</members>
         <members>LoopMergeExt</members>
+        <members>LoopMessageTest</members>
         <members>MassLoopPlusExt</members>
         <members>MassLoopPlusExtTest</members>
+        <members>MockDrawloopResponseGenerator</members>
         <members>PostInstall</members>
+        <members>ProcessDdpController</members>
+        <members>ProcessDdpControllerTest</members>
+        <members>ProcessDdpParameters</members>
+        <members>RecipientExtTest</members>
+        <members>RecipientFieldExt</members>
+        <members>RecipientFieldExtTest</members>
+        <members>RelationshipExtTest</members>
+        <members>RestFieldTaggerSectionsController</members>
+        <members>RestFieldTaggerSectionsControllerTest</members>
+        <members>RestIntegrationInfo</members>
+        <members>RestIntegrationInfoTest</members>
+        <members>SelectEmailTemplateTest</members>
+        <members>SubscriptionServicesControllerTest</members>
+        <members>TestTools</members>
         <members>aboutLoop</members>
         <members>cioClone</members>
         <members>cioNewExt</members>
@@ -29,7 +74,6 @@
         <members>dsUser</members>
         <members>editFormExt</members>
         <members>emailExt</members>
-        <members>errorController</members>
         <members>fieldTaggerExt</members>
         <members>flowDDP</members>
         <members>loopController</members>
@@ -49,6 +93,14 @@
         <name>ApexClass</name>
     </types>
     <types>
+        <members>ddpSecurity</members>
+        <members>dualSelectList</members>
+        <members>fieldTagger</members>
+        <members>processDDP</members>
+        <members>runDDP</members>
+        <name>ApexComponent</name>
+    </types>
+    <types>
         <members>JobQueueStatus</members>
         <members>aboutloop</members>
         <members>cioClone</members>
@@ -59,12 +111,15 @@
         <members>ddpDetails</members>
         <members>ddpEdit</members>
         <members>ddpMigration</members>
+        <members>ddpTest</members>
         <members>ddpWizard</members>
         <members>dsUnPass</members>
+        <members>editDeliveryOption</members>
         <members>editForm</members>
         <members>editInsertUpdate</members>
         <members>editPdfStamp</members>
         <members>editRecipient</members>
+        <members>editRecipientField</members>
         <members>editRelatedObject</members>
         <members>email</members>
         <members>error</members>
@@ -76,12 +131,16 @@
         <members>loopmerge</members>
         <members>masslooplus</members>
         <members>quickDDP</members>
+        <members>runOpportunityDDP</members>
         <members>selectemailtemplate</members>
         <members>smtpPassword</members>
         <members>subscriptionServices</members>
+        <members>viewDeliveryOption</members>
         <members>viewInsertUpdate</members>
         <members>viewPdfStamp</members>
         <members>viewRecipient</members>
+        <members>viewRecipientField</members>
+        <members>viewRelationship</members>
         <name>ApexPage</name>
     </types>
     <types>
@@ -143,6 +202,7 @@
         <members>DDP_Integration_Option__c.Data_Mapping_Name__c</members>
         <members>DDP_Integration_Option__c.Data_Mapping__c</members>
         <members>DDP_Integration_Option__c.Decryption_Required__c</members>
+        <members>DDP_Integration_Option__c.Delivery_Data__c</members>
         <members>DDP_Integration_Option__c.Description_Hover__c</members>
         <members>DDP_Integration_Option__c.Email_Doc_Links__c</members>
         <members>DDP_Integration_Option__c.Email_Template__c</members>
@@ -169,6 +229,7 @@
         <members>DDP_Integration_Option__c.PasswordonPDF__c</members>
         <members>DDP_Integration_Option__c.PasswordtoSign__c</members>
         <members>DDP_Integration_Option__c.PostParameters__c</members>
+        <members>DDP_Integration_Option__c.Preview_Step_Help_Text__c</members>
         <members>DDP_Integration_Option__c.Queue_Folder_Id__c</members>
         <members>DDP_Integration_Option__c.Remind_Recipient__c</members>
         <members>DDP_Integration_Option__c.RequireOutputAttachment__c</members>
@@ -180,11 +241,13 @@
         <members>DDP_Integration_Option__c.Signature_Order__c</members>
         <members>DDP_Integration_Option__c.Signature_Type__c</members>
         <members>DDP_Integration_Option__c.SkipPreview__c</members>
+        <members>DDP_Integration_Option__c.Storage_Data__c</members>
         <members>DDP_Integration_Option__c.Storage_Folder__c</members>
         <members>DDP_Integration_Option__c.Storage_Location__c</members>
         <members>DDP_Integration_Option__c.Tag_Before_Sending__c</members>
         <members>DDP_Integration_Option__c.Template__c</members>
         <members>DDP_Integration_Option__c.TurnTrackingOn__c</members>
+        <members>DDP_Integration_Option__c.Type__c</members>
         <members>DDP_Integration_Option__c.Wait__c</members>
         <members>DDP_Integration_Option__c.WorkspaceId__c</members>
         <members>DDP_Integration_Option__c.WorkspaceName__c</members>
@@ -301,7 +364,12 @@
         <members>Insert_Update__c.Run_at_Beginning__c</members>
         <members>Insert_Update__c.Submit_for_Approval__c</members>
         <members>Insert_Update__c.Use_Admin_Credentials__c</members>
+        <members>Integration_Info__c.API_Key__c</members>
+        <members>Integration_Info__c.Base_URL__c</members>
+        <members>Integration_Info__c.Tag_Source_URL__c</members>
         <members>LoopInfo__c.DDP_Files_Updated__c</members>
+        <members>LoopInfo__c.Drawloop_Subdomain__c</members>
+        <members>LoopInfo__c.Integration_Username__c</members>
         <members>LoopInfo__c.Sandbox__c</members>
         <members>LoopInfo__c.Trusted_Domains__c</members>
         <members>LoopInfo__c.Use_Connected_App_OAuth__c</members>
@@ -310,9 +378,11 @@
         <members>LoopSettings__c.DocuSign_Account_Names__c</members>
         <members>LoopSettings__c.DocuSign_User_Ids__c</members>
         <members>LoopSettings__c.Job_Queue_Status_Enabled__c</members>
+        <members>LoopSettings__c.Pause_to_Edit_Type__c</members>
         <members>LoopSettings__c.Sandbox__c</members>
         <members>LoopSettings__c.Show_DDP_Wizard_Message__c</members>
         <members>LoopSettings__c.Show_Edit_Form_Message__c</members>
+        <members>LoopSettings__c.Veeva_Vault_Subdomain__c</members>
         <members>PDF_Stamp__c.Background_Color__c</members>
         <members>PDF_Stamp__c.Background_Padding__c</members>
         <members>PDF_Stamp__c.DDP_Files__c</members>
@@ -341,6 +411,8 @@
         <members>Related_Object__c.DDP__c</members>
         <members>Related_Object__c.Delete_Table__c</members>
         <members>Related_Object__c.Filter_Conditions__c</members>
+        <members>Related_Object__c.Group_By_Fields__c</members>
+        <members>Related_Object__c.Group_By_SortOrders__c</members>
         <members>Related_Object__c.Hierarchy_Field__c</members>
         <members>Related_Object__c.Index__c</members>
         <members>Related_Object__c.Order_By__c</members>
@@ -350,6 +422,7 @@
         <members>Related_Object__c.Parent__c</members>
         <members>Related_Object__c.Record_Limit__c</members>
         <members>Related_Object__c.Related_Object_Alias__c</members>
+        <members>Related_Object__c.SOQL__c</members>
         <members>SecureField__c.Conceal__c</members>
         <members>SecureField__c.Font__c</members>
         <members>SecureField__c.GroupName__c</members>
@@ -372,11 +445,13 @@
         <members>User.LOOPlus_Tester__c</members>
         <members>User.dsPassword__c</members>
         <members>User.dsToken__c</members>
+        <members>dsRecipient__c.Address__c</members>
         <members>dsRecipient__c.Calc_Signing_Order__c</members>
         <members>dsRecipient__c.CustomAccessCode__c</members>
         <members>dsRecipient__c.DisplayTitle__c</members>
         <members>dsRecipient__c.EmailText__c</members>
         <members>dsRecipient__c.Embedded_Signer__c</members>
+        <members>dsRecipient__c.Host_Address__c</members>
         <members>dsRecipient__c.Host_Contact__c</members>
         <members>dsRecipient__c.Host_Role_Group_Names__c</members>
         <members>dsRecipient__c.Host_Static_Email__c</members>
@@ -442,6 +517,7 @@
         <members>Form_Rule__c</members>
         <members>Form_Step__c</members>
         <members>Insert_Update__c</members>
+        <members>Integration_Info__c</members>
         <members>LoopInfo__c</members>
         <members>LoopSettings__c</members>
         <members>PDF_Stamp__c</members>
@@ -478,8 +554,12 @@
         <members>DDP_Integration_Option__c-EchoSign Layout</members>
         <members>DDP_Integration_Option__c-Email Layout</members>
         <members>DDP_Integration_Option__c-HTTP Layout</members>
+        <members>DDP_Integration_Option__c-Lob Layout</members>
         <members>DDP_Integration_Option__c-SMTP Layout</members>
         <members>DDP_Integration_Option__c-Sertifi Layout</members>
+        <members>DDP_Integration_Option__c-SignNow Layout</members>
+        <members>DDP_Integration_Option__c-e-SignLive Layout</members>
+        <members>DDP__c-API DDP Layout</members>
         <members>DDP__c-Case DDP Layout</members>
         <members>DDP__c-Custom Object DDP Layout</members>
         <members>DDP__c-DDP Layout</members>
@@ -512,8 +592,13 @@
     <types>
         <members>DDP_Admin</members>
         <members>DDP_User</members>
+        <members>DDP_User_All</members>
         <members>DDP_User_Platform</members>
         <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>Opportunity.RunDDP</members>
+        <name>QuickAction</name>
     </types>
     <types>
         <members>DDP_Integration_Option__c.Attach</members>
@@ -525,8 +610,12 @@
         <members>DDP_Integration_Option__c.Email</members>
         <members>DDP_Integration_Option__c.HTTP_Service</members>
         <members>DDP_Integration_Option__c.LOOP</members>
+        <members>DDP_Integration_Option__c.Lob</members>
         <members>DDP_Integration_Option__c.SMTPService</members>
         <members>DDP_Integration_Option__c.Sertifi</members>
+        <members>DDP_Integration_Option__c.SignNow</members>
+        <members>DDP_Integration_Option__c.e_SignLive</members>
+        <members>DDP__c.API</members>
         <members>DDP__c.Account</members>
         <members>DDP__c.Case</members>
         <members>DDP__c.Contact</members>
@@ -547,6 +636,8 @@
     </types>
     <types>
         <members>DrawloopApps</members>
+        <members>DrawloopReleaseCandidate</members>
+        <members>DrawloopStaging</members>
         <name>RemoteSiteSetting</name>
     </types>
     <types>
@@ -556,18 +647,24 @@
         <name>Scontrol</name>
     </types>
     <types>
+        <members>CKEditor</members>
         <members>JQuery</members>
         <members>JQuery_UI</members>
+        <members>RunDDPActionIcon</members>
         <members>Scripts</members>
         <members>SelectDDPFilesSwf</members>
+        <members>Styles</members>
+        <members>TestTagSourceResponse</members>
         <name>StaticResource</name>
     </types>
     <types>
+        <members>dsRecipient__c.Recipient_Address</members>
         <members>dsRecipient__c.Recipient_Dynamic_Name</members>
         <members>dsRecipient__c.Recipient_Selected_Contact</members>
         <members>dsRecipient__c.Recipient_Selected_User</members>
         <members>dsRecipient__c.Recipient_Static_Email</members>
         <members>dsRecipient__c.Recipient_Static_Name</members>
+        <members>dsRecipient__c.SignNow_Signer_requires_Role_Name</members>
         <name>ValidationRule</name>
     </types>
     <types>

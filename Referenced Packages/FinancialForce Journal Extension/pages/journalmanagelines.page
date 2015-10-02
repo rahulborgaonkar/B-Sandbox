@@ -1,0 +1,367 @@
+<apex:page standardController="c2g__codaJournal__c" extensions="ffgl.JournalLineItemController" sidebar="false" action="{!loadLines}">
+    <apex:variable var="fields" value="{!$ObjectType.c2g__codaJournalLineItem__c.fields}"/>
+    <apex:variable var="fieldsInFieldSet" value="{!0}"/>
+    
+    <apex:stylesheet value="{!$Resource.ffgl__front_generalledger}/front_generalledger/components/UberGrid/UberGrid.css"/>
+    
+    <style type="text/css">
+    .datePicker{
+        z-index:2000 !important;
+    }
+    </style>
+    
+    <script type="text/javascript">
+        var FFDCGlobalThousandSeperator = "{!viewState.ThousandSeparator}";
+        var FFDCGlobalDecimalSeperator = "{!viewState.DecimalSeparator}";
+        var FFDCGlobalIsDebitCreditIndicatorOn = "{!viewState.IsDebitCreditIndicatorOn}";
+    </script>
+    
+    <script type="text/javascript" src="{!$Resource.front_generalledger}/front_generalledger/base/frameworks/jquery-1.5.min.js"></script>
+    <script type="text/javascript" src="{!$Resource.front_generalledger}/front_generalledger/components/UberGrid/UberGrid.js"></script>
+    <script type="text/javascript" src="{!$Resource.front_generalledger}/front_generalledger/pages/journalmanagelines/calculations.js"></script>
+    <script type="text/javascript" src="{!$Resource.front_generalledger}/front_generalledger/utils/utilNumeric.js"></script>
+    
+    <apex:form onsubmit="if(typeof($FFDC)!='undefined'){$FFDC('#uberGridWaiting').css({'display':'block'});}">
+        <!-- PAGE TITLE -->
+        <apex:sectionHeader title="{!$Label.ManageJournalLines}" subtitle="{!c2g__codaJournal__c.Name}"/>
+            <apex:pageBlock title="{!$Label.JournalLines}">
+                
+                <apex:pageBlockButtons >
+                    <apex:outputPanel rendered="{!!viewState.pageLoadErrors}" layout="none">
+                        <apex:commandButton action="{!saveAll}" value="{!$Label.Save}" />
+                    </apex:outputPanel>
+                    <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" immediate="true"/>
+                </apex:pageBlockButtons>
+                
+                <apex:PageMessages />
+                
+                <!-- HARD SET FIELDS -->
+                <div class="uberGridWrapper hideGrid_{!viewState.pageLoadErrors}">
+                    <div class="waiting" id="uberGridWaiting">
+                        <div class="waitingBG"></div>
+                        <div class="waitingIcon"></div>
+                    </div>
+                    <table cellpadding="0" cellspacing="0" border="0" class="uberGrid" id="uberGrid">
+                        <thead>
+                            <tr>
+                                <th class="aCenter ignorecol_true" width="30">
+                                    <div class="headerInner">&nbsp;</div>
+                                </th>
+                                
+                                <th class="picklist ignorecol_false">
+                                    <div class="headerInner required">
+                                        {!$ObjectType.c2g__codaJournalLineItem__c.fields.c2g__LineType__c.label}
+                                    </div>
+                                </th>
+                                
+                                <th class="reference ignorecol_false">
+                                    <div class="headerInner required">
+                                        Item
+                                    </div>
+                                </th>
+                                
+                                <apex:repeat value="{!$ObjectType.c2g__codaJournalLineItem__c.fieldsets.ffgl__ManageLines}" var="f">
+                                    <apex:variable var="fieldName" value="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name}_STRING"/>
+                                    
+                                    <apex:outputText rendered="{!IF((fieldName!='c2g__LineType__c_STRING' && fieldName!='c2g__Account__c_STRING' && fieldName!='c2g__BankAccount__c_STRING' && fieldName!='c2g__Product__c_STRING' && fieldName!='c2g__TaxCode__c_STRING' && fieldName!='c2g__DestinationCompany__c_STRING' && (fieldName!='c2g__DebitCredit__c_STRING' || $Setup.c2g__codaAccountingSettings__c.c2g__ShowDebitCreditIndicator__c == true)),true,false)}">
+                                        <apex:variable var="fieldsInFieldSet" value="{!fieldsInFieldSet+1}"/>
+                                        <th class="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].type} ignorecol_{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].calculated}">
+                                            <div class="headerInner {!IF(!$ObjectType.c2g__codaJournalLineItem__c.fields[f].nillable,'required','')} {!IF(fieldName='c2g__LineType__c_STRING','required','')}" >
+                                                {!$ObjectType.c2g__codaJournalLineItem__c.fields[f].label}
+                                            </div>
+                                        </th>
+                                    </apex:outputText>
+                                    
+                                </apex:repeat>
+                                
+                                <th class="aCenter ignorecol_true" width="30">
+                                    <div class="headerInner">&nbsp;</div>
+                                </th>
+                                
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <apex:variable var="lineNumber" value="{!0}"/>
+                            
+                            <apex:repeat var="viewLine" value="{!viewState.JournalLines}">
+                            <apex:variable var="lineNumber" value="{!lineNumber+1}"/>
+                                <tr class="{!IF(viewLine.deleted,'hiddenRow','')}">
+                                    <td class="aCenter" width="30">
+                                        <div class="cellInnerText lineNumber"><apex:outputText value="{0,number,###}"><apex:param value="{!lineNumber}" /></apex:outputText></div>
+                                        <apex:inputCheckbox value="{!viewLine.deleted}" styleClass="deleted"/>
+                                    </td>
+                                    
+                                    <td class="picklist inputCell">
+                                        <div class="c2g__LineType__c picklist cellInner">
+                                            <apex:inputField value="{!viewLine.line.c2g__LineType__c}" styleClass="input input_c2g__LineType__c"/>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="reference inputCell">
+                                        <div class="c2g__Account__c c2g__BankAccount__c c2g__Product__c c2g__TaxCode__c c2g__DestinationCompany__c reference cellInner">
+                                            <div class="multi multi_c2g__Account__c {!IF(OR(viewLine.line.c2g__LineType__c='Account - Customer', viewLine.line.c2g__LineType__c='Account - Vendor'),'multiShow','')}">
+                                                <apex:inputField value="{!viewLine.line.c2g__Account__c}" styleClass="input input_c2g__Account__c">
+                                                    <apex:message /> 
+                                                </apex:inputField>
+                                            </div>
+                                            
+                                            <div class="multi multi_c2g__BankAccount__c {!IF(viewLine.line.c2g__LineType__c='Bank Account','multiShow','')}">
+                                                <apex:inputField value="{!viewLine.line.c2g__BankAccount__c}" styleClass="input input_c2g__BankAccount__c">
+                                                    <apex:message /> 
+                                                </apex:inputField>
+                                            </div>
+                                            
+                                            <div class="multi multi_c2g__Product__c {!IF(OR(viewLine.line.c2g__LineType__c='Product - Purchases', viewLine.line.c2g__LineType__c='Product - Sales'),'multiShow','')}">
+                                                <apex:inputField value="{!viewLine.line.c2g__Product__c}" styleClass="input input_c2g__Product__c">
+                                                    <apex:message /> 
+                                                </apex:inputField>
+                                            </div>
+                                            
+                                            <div class="multi multi_c2g__TaxCode__c {!IF(viewLine.line.c2g__LineType__c='Tax Code','multiShow','')}">
+                                                <apex:inputField value="{!viewLine.line.c2g__TaxCode__c}" styleClass="input input_c2g__TaxCode__c">
+                                                    <apex:message /> 
+                                                </apex:inputField>
+                                            </div>
+                                            
+                                            <div class="multi multi_c2g__DestinationCompany__c {!IF(viewLine.line.c2g__LineType__c='Intercompany','multiShow','')}">
+                                                <apex:inputField value="{!viewLine.line.c2g__DestinationCompany__c}" styleClass="input input_c2g__DestinationCompany__c">
+                                                    <apex:message /> 
+                                                </apex:inputField>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <apex:repeat value="{!$ObjectType.c2g__codaJournalLineItem__c.fieldsets.ffgl__ManageLines}" var="f">
+                                        <apex:variable var="fieldName" value="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name}_STRING"/>
+                                        <apex:outputText rendered="{!IF((fieldName!='c2g__LineType__c_STRING' && fieldName!='c2g__Account__c_STRING' && fieldName!='c2g__BankAccount__c_STRING' && fieldName!='c2g__Product__c_STRING' && fieldName!='c2g__TaxCode__c_STRING' && fieldName!='c2g__DestinationCompany__c_STRING' && (fieldName!='c2g__DebitCredit__c_STRING' || $Setup.c2g__codaAccountingSettings__c.c2g__ShowDebitCreditIndicator__c == true)),true,false)}">
+                                            <td class="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaJournalLineItem__c.fields[f].calculated==false,'inputCell','')}">
+                                                <div class="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name} {!$ObjectType.c2g__codaJournalLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaJournalLineItem__c.fields[f].calculated==false,'cellInner','cellInnerText')}">
+                                                    <apex:inputField value="{!viewLine.line[f]}" styleClass="input input_{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name}">
+                                                        <apex:message />
+                                                    </apex:inputField>
+                                                </div>
+                                            </td>
+                                        </apex:outputText>
+                                        
+                                    </apex:repeat>
+                                    
+                                    <td class="aCenter" width="30">
+                                        <a href="#" class="removeLine" title="{!$Label.RemoveLine}">{!$Label.RemoveLine}</a>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            
+                        </tbody>
+                        
+                        <apex:outputPanel layout="none">
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td rowSpan="3">
+                                    <div class="cellInnerText">
+                                        <input type="button" class="btnAddLine addLine" value="{!$Label.AddNewLine}"/>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td colspan="{!fieldsInFieldSet-2}"></td>
+                                <td class="hiddenCell"></td>
+                                <td class="aRight">
+                                    <div class="cellInnerText">{!$Label.Debits}</div>
+                                </td>
+                                <td class="aRight">
+                                    <div class="cellInnerText" id="debitTotal">0.00</div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td colspan="{!fieldsInFieldSet-2}"></td>
+                                <td class="hiddenCell"></td>
+                                <td class="aRight">
+                                    <div class="cellInnerText">{!$Label.Credits}</div>
+                                </td>
+                                <td class="aRight">
+                                    <div class="cellInnerText" id="creditTotal">0.00</div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td colspan="{!fieldsInFieldSet-2}"></td>
+                                <td class="hiddenCell"></td>
+                                <td class="aRight">
+                                    <div class="cellInnerText">{!$Label.Total}</div>
+                                </td>
+                                <td class="aRight">
+                                    <div class="cellInnerText total" id="journalTotal">0.00</div>
+                                </td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        </tfoot>
+                        </apex:outputPanel> 
+                    </table>
+                </div>
+                
+                <div id="defaultRowFields" class="defaultRowFields">
+                    <apex:repeat value="{!$ObjectType.c2g__codaJournalLineItem__c.fieldsets.ffgl__ManageLines}" var="f">
+                        <apex:variable var="fieldName" value="{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name}_STRING"/>
+                        <apex:outputText rendered="{!IF((fieldName!='c2g__Account__c_STRING' && fieldName!='c2g__BankAccount__c_STRING' && fieldName!='c2g__Product__c_STRING' && fieldName!='c2g__TaxCode__c_STRING' && fieldName!='c2g__DestinationCompany__c_STRING'),true,false)}">
+                        {!$ObjectType.c2g__codaJournalLineItem__c.fields[f].label}:<apex:inputField value="{!viewState.DefaultJournalLine[f]}" styleClass="input input_{!$ObjectType.c2g__codaJournalLineItem__c.fields[f].name}"/><br/>
+                        </apex:outputText>
+                        <apex:outputText rendered="{!IF(fieldName='c2g__LineType__c_STRING',true,false)}">
+                            Account:<apex:inputField value="{!viewState.DefaultJournalLine.c2g__Account__c}" styleClass="input input_c2g__Account__c"/><br/>
+                            BankAccount:<apex:inputField value="{!viewState.DefaultJournalLine.c2g__BankAccount__c}" styleClass="input input_c2g__BankAccount__c"/><br/>
+                            Product:<apex:inputField value="{!viewState.DefaultJournalLine.c2g__Product__c}" styleClass="input input_c2g__Product__c"/><br/>
+                            TaxCode:<apex:inputField value="{!viewState.DefaultJournalLine.c2g__TaxCode__c}" styleClass="input input_c2g__TaxCode__c"/><br/>
+                            InterCompany:<apex:inputField value="{!viewState.DefaultJournalLine.c2g__DestinationCompany__c}" styleClass="input input_c2g__DestinationCompany__c"/><br/>
+                        </apex:outputText>
+                    </apex:repeat>
+                </div>
+            </apex:pageBlock>
+            
+            <apex:outputPanel rendered="{!!viewState.pageLoadErrors}" layout="none">
+            <script type="text/javascript">
+                var $FFDC = jQuery.noConflict();
+                $FFDC(document).ready(function () {
+                    
+                    $FFDC.errorString = '{!$Label.Error}';
+                    
+                    //SETUP KEYBOARD GRID
+                    $FFDC('#uberGrid').UberGrid({
+                        'addLine': $FFDC('.addLine'),
+                        'allowKeys':true
+                    });
+                    
+                    //SETUP CALCULATION JS FOR THIS GRID
+                    $FFDC('#uberGrid').CalcGrid();
+                    
+                    //CALCULATE EACH ROW
+                    $FFDC('#uberGrid tbody tr:not(.hiddenRow)').each(function (i, e) {
+                        $FFDC().CalcGrid('calculateRow', $FFDC(e));
+                    });
+                    
+                    
+                    /*****************************************************/
+                    /* TO BE PUT IN A SPECIFIC JOURANLMANAGELINES JS FILE
+                    /*****************************************************/
+                    
+                    //FIND ALL ERROR MESSAGES FOR THE MULTI OBJECTS AND SHOW THE OBJECTS IF ERROR OCCURS
+                    $FFDC('.multi .errorMsg').each(function (i, e) {
+                        $FFDC(e).closest('tr').removeClass('hiddenRow');
+                        $FFDC(e).closest('.multi').css({'display':'block'});
+                        $FFDC(e).closest('td.inputCell').css({
+                            'height': ($FFDC(e).outerHeight() + 37)
+                        }).addClass('inputCellError');
+                    });
+                    
+                    //LOOP THROUGH ALL OF THE SELECTS AND SHOW THE CORRECT LINE TPE ITEM
+                    $FFDC('.input_c2g__LineType__c').each(function(i,e){
+                        var field = $FFDC(e);
+                        var fieldValue = field.val();
+                        var row = field.closest('tr');
+                        
+                        switch(fieldValue)
+                        {
+                        case 'Account - Customer':
+                          row.find('.multi_c2g__Account__c').css({'display':'block'});
+                          break;
+                        case 'Account - Vendor':
+                          row.find('.multi_c2g__Account__c').css({'display':'block'});
+                          break;
+                        case 'Bank Account':
+                          row.find('.multi_c2g__BankAccount__c').css({'display':'block'});
+                          break;
+                        case 'General Ledger Account':
+                          break;
+                        case 'Product - Purchases':
+                          row.find('.multi_c2g__Product__c').css({'display':'block'});
+                          break;
+                        case 'Product - Sales':
+                          row.find('.multi_c2g__Product__c').css({'display':'block'});
+                          break;
+                        case 'Tax Code':
+                          row.find('.multi_c2g__TaxCode__c').css({'display':'block'});
+                          break;
+                        case 'Intercompany':
+                            row.find('.multi_c2g__DestinationCompany__c').css({'display':'block'});
+                            break;
+                        default:
+                        }
+                        
+                    });
+                    
+                    //SETUP EACH LINETYPE TO TOGGLE CORRECT ITEM
+                    $FFDC('.input_c2g__LineType__c').bind('change',showItemField);
+                    
+                    function showItemField(){
+                        var field = $FFDC(this);
+                        var fieldValue = field.val();
+                        var row = field.closest('tr');
+                        
+                        row.find('.multi').css({'display':'none'});
+                        
+                        $FFDC('#defaultRowFields').find('.input:not(a)').each(function (i, e) {
+                            var fieldName = $FFDC(e).get(0).className;
+                            fieldName = fieldName.replace('input ', '');
+                            var fieldValue = $FFDC(e).val();
+                            if(fieldName !='input_c2g__LineType__c'){
+                                row.find('.' + fieldName + ':not(a)').val(fieldValue);
+                                row.find('.calcError').removeClass('calcError');
+                            }
+                            row.find('td.inputCell .errorMsg').each(function (i, e) {
+                                $FFDC(e).closest('td.inputCell').css({
+                                    'height': 'auto'
+                                }).removeClass('inputCellError');
+                            }).remove();
+                        });
+                        
+                        switch(fieldValue)
+                        {
+                        case 'Account - Customer':
+                          row.find('.multi_c2g__Account__c').css({'display':'block'});
+                          break;
+                        case 'Account - Vendor':
+                          row.find('.multi_c2g__Account__c').css({'display':'block'});
+                          break;
+                        case 'Bank Account':
+                          row.find('.multi_c2g__BankAccount__c').css({'display':'block'});
+                          break;
+                        case 'General Ledger Account':
+                          break;
+                        case 'Product - Purchases':
+                          row.find('.multi_c2g__Product__c').css({'display':'block'});
+                          break;
+                        case 'Product - Sales':
+                          row.find('.multi_c2g__Product__c').css({'display':'block'});
+                          break;
+                        case 'Tax Code':
+                          row.find('.multi_c2g__TaxCode__c').css({'display':'block'});
+                          break;
+                        case 'Intercompany':
+                            row.find('.multi_c2g__DestinationCompany__c').css({'display':'block'});
+                            break;
+                        default:
+                        }
+                    }
+                    
+                    /*****************************************************/
+                    /* TO BE PUT IN A SPECIFIC JOURANLMANAGELINES JS FILE
+                    /*****************************************************/
+                    
+                });
+                
+                $FFDC(window).load(function () {
+                    $FFDC('#uberGridWaiting').css({
+                        'display': 'none'
+                    });
+                });
+                
+            </script>
+            </apex:outputPanel>
+            
+    </apex:form>
+    
+</apex:page>

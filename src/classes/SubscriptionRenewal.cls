@@ -179,7 +179,8 @@ global without sharing class SubscriptionRenewal {
                                                                         FROM
                                                                             Site_Products__r
                                                                         WHERE
-                                                                            Subscription_Site__r.Active__c = True),
+                                                                            Subscription_Site__r.Active__c = True
+                                                                            AND Subscription_Site__r.Do_Not_Renew_This_Site__c = false),
                                                                     (SELECT
                                                                             Id,
                                                                             Delivery_Address__c,
@@ -193,11 +194,14 @@ global without sharing class SubscriptionRenewal {
                                                                             Type__c,
                                                                             Username__c,
                                                                             Previous_Subscription_Site__c,
-                                                                            Subscription_Site_Product_Codes__c
+                                                                            Subscription_Site_Product_Codes__c,
+                                                                            Do_Not_Renew_This_Site__c
                                                                         FROM
                                                                             Subscriptions__r
                                                                         WHERE
-                                                                            Active__c = True)
+                                                                            Active__c = True
+                                                                            AND Do_Not_Renew_This_Site__c = false
+                                                                            )
                                                                 FROM 
                                                                     Subscription__c 
                                                                 WHERE
@@ -286,7 +290,27 @@ global without sharing class SubscriptionRenewal {
                     pricebookId = PRICEBOOK_INTL_MEMBERS;
                 }
             }
-            
+
+            // Case 6704 - This is added to get correct number of Site Product records and update Quantity on Subscriptions Lines.
+            Map<Id, Integer> MapLineSiteCount = new Map<Id, Integer> ();
+            Map<Id, Id> MapSubscriptionNewProduct = new Map<Id, Id> ();
+
+            for (Site_Product__c siteProduct:subscription.Site_Products__r)
+            {
+                if(MapLineSiteCount.containsKey(siteProduct.Subscription_Line__c))
+                {
+                    Integer siteCount = MapLineSiteCount.get(siteProduct.Subscription_Line__c);
+                    siteCount++;
+                    MapLineSiteCount.put(siteProduct.Subscription_Line__c, siteCount);
+                }
+                else
+                {
+                    MapLineSiteCount.put(siteProduct.Subscription_Line__c, 1);
+                }
+            }
+            system.debug('RSB MapLineSiteCount - ' + MapLineSiteCount);
+            // Case 6704
+
             // Create a mapping between opp line and old sub line for later on... 
             Map<Id,OpportunityLineItem> oldSubLineToOppLine = new Map<Id,OpportunityLineItem>();
             
@@ -304,14 +328,20 @@ global without sharing class SubscriptionRenewal {
                                                 Id, 
                                                 UnitPrice,
                                                 Product2.Renewal_Multiplier__c,
-                                                Product2.Duration_Years__c
+                                                Product2.Duration_Years__c,
+                                                Product2.Minimum_Attendees__c,
+                                                Product2.Maximum_Attendees__c,
+                                                Product2.Product_Correspondence_Name__c
                                             FROM 
                                                 PricebookEntry
                                             WHERE 
                                                 Pricebook2Id = :pricebookId
                                                 AND Product2Id = :subscriptionLine.Product__c 
                                             LIMIT 1];
-                        System.debug('PriceBook Entry: '+pricebookEntries);
+                        System.debug('RSB PriceBook Entry: '+pricebookEntries);
+                        System.debug('RSB pricebookEntries[0].Product2.Minimum_Attendees__c - ' + pricebookEntries[0].Product2.Minimum_Attendees__c);
+                        System.debug('RSB pricebookEntries[0].Product2.Maximum_Attendees__c - ' + pricebookEntries[0].Product2.Maximum_Attendees__c);
+                        System.debug('RSB pricebookEntries[0].Product2.Product_Correspondence_Name__c - ' + pricebookEntries[0].Product2.Product_Correspondence_Name__c);
                     }
                     //PricebookEntry pricebookEntry = pricebookId;
                     Double totalPrice = 0;  
@@ -324,6 +354,39 @@ global without sharing class SubscriptionRenewal {
                         quantity = subscriptionLine.Renewal_Quantity__c;
                     }
                     
+                    // Case 6704 - Find correct PricebookEntry as per Quantity Range and assign it to Opportunity Line
+                    system.debug('RSB subscriptionLine.Id - ' + subscriptionLine.Id);
+                    system.debug('RSB MapLineSiteCount Line Exists - ' + MapLineSiteCount.containsKey(subscriptionLine.Id));
+                    system.debug('RSB MapLineSiteCount Quantity - ' + MapLineSiteCount.get(subscriptionLine.Id));
+                    if(MapLineSiteCount.containsKey(subscriptionLine.Id))
+                    {
+                        quantity = MapLineSiteCount.get(subscriptionLine.Id);
+                        // Case 6704 - Check first if min and max attendees are not null then check if quantity fits within range
+                        if(pricebookEntries[0].Product2.Minimum_Attendees__c != null && pricebookEntries[0].Product2.Maximum_Attendees__c != null && !(quantity >= pricebookEntries[0].Product2.Minimum_Attendees__c && quantity <= pricebookEntries[0].Product2.Maximum_Attendees__c))
+                        {
+                            system.debug('RSB Wrong Range');
+                            List<PricebookEntry> newPBE = null;
+                            newPBE = [SELECT Id, Name, UnitPrice, Product2.Id, Product2.Name,
+                                                Product2.Renewal_Multiplier__c,Product2.Duration_Years__c,
+                                                Product2.Minimum_Attendees__c,Product2.Maximum_Attendees__c,
+                                                Product2.Product_Correspondence_Name__c
+                                                FROM PricebookEntry 
+                                                WHERE Pricebook2Id = :pricebookId
+                                                AND Product2.Product_Correspondence_Name__c like :pricebookEntries[0].Product2.Product_Correspondence_Name__c + '%'
+                                                AND (Product2.Minimum_Attendees__c <= :quantity AND Product2.Maximum_Attendees__c >= :quantity) LIMIT 1];
+
+                            system.debug('RSB List<PricebookEntry> newPBE - ' + newPBE);
+                            pricebookEntries = newPBE;
+
+                        }
+                        else
+                        {
+                            system.debug('RSB Correct Range');
+                        }
+                        MapSubscriptionNewProduct.put(subscriptionLine.Id, pricebookEntries[0].Product2.Id);
+                    }
+                    // Case 6704
+
                     if (pricebookEntries != null && !pricebookEntries.isEmpty()){
                         System.debug('pricebookEntries is not empty or null');
                         if (subscriptionLine.Renewal_Price__c == null && subscriptionLine.Ongoing_Renewal_Price__c == null){
@@ -357,6 +420,7 @@ global without sharing class SubscriptionRenewal {
                         System.debug('In myException');
                         throw new myException('Subscription line product is not in the correct price book');
                     }
+
                     OpportunityLineItem opportunityLineItem = new OpportunityLineItem(
                         Quantity = quantity,
                         OpportunityId = opportunity.Id,
@@ -386,7 +450,7 @@ global without sharing class SubscriptionRenewal {
                     opportunityLineItems.add(opportunityLineItem);
                     oldSubLineToOppLine.put(subscriptionLine.Id,opportunityLineItem);
                 }
-                System.debug('SW Opp Lines: '+opportunityLineItems);
+                System.debug('RSB Opp Lines: '+opportunityLineItems);
                 
                 
             }
@@ -448,11 +512,10 @@ global without sharing class SubscriptionRenewal {
                     );
                 newSubSites.add(newSubSite);
             }
+            system.debug('RSB newSubSites - ' + newSubSites);
             insert newSubSites;
             
             // *** END: CREATE SUBSCRTPTION SITES
-            
-
 
             // *** START: CREATE SUBSCRTPTION LINES
             
@@ -465,15 +528,29 @@ global without sharing class SubscriptionRenewal {
                 
                 // Get the oppline that was created for this subscription line to get the new pricing info for sub line.
                 OpportunityLineItem oppLine = oldSubLineToOppLine.get(subscription.Subscription_Lines__r[i].Id);
-                
+                system.debug('RSB OpportunityLineItem oppLine - ' + oppLine);
+                system.debug('RSB OpportunityLineItem oppLine.PricebookEntry.Product2 - ' + oppLine.PricebookEntry.Product2);
+                system.debug('RSB OpportunityLineItem oppLine.PricebookEntry.Product2.Id - ' + oppLine.PricebookEntry.Product2Id);
+                                
                 Double quantity;
                 if(subscription.Subscription_Lines__r[i].Renewal_Quantity__c == null){
                     quantity = subscription.Subscription_Lines__r[i].Quantity__c;
                 }else{
                     quantity = subscription.Subscription_Lines__r[i].Renewal_Quantity__c;
                 }
+                // Case 6704 - quantity assignment for Subscription Lines
+                system.debug('RSB subscription.Subscription_Lines__r[i].Id - ' + subscription.Subscription_Lines__r[i].Id);
+                system.debug('RSB MapLineSiteCount Line Exists - ' + MapLineSiteCount.containsKey(subscription.Subscription_Lines__r[i].Id));
+                system.debug('RSB MapLineSiteCount Quantity - ' + MapLineSiteCount.get(subscription.Subscription_Lines__r[i].Id));
+                if(MapLineSiteCount.containsKey(subscription.Subscription_Lines__r[i].Id))
+                {
+                    quantity = MapLineSiteCount.get(subscription.Subscription_Lines__r[i].Id);
+                }
+                // Case 6704
+
                 Subscription_Line__c subLine = new Subscription_Line__c(
-                                                        Product__c = subscription.Subscription_Lines__r[i].Product__c,
+                                                        //Product__c = subscription.Subscription_Lines__r[i].Product__c,
+                                                        Product__c = MapSubscriptionNewProduct.get(subscription.Subscription_Lines__r[i].id), // Case 6704
                                                         Quantity__c = quantity,
                                                         E_Delivery_Number_of_Licences__c = subscription.Subscription_Lines__r[i].E_Delivery_Number_of_Licences__c,
                                                         //Renewal_Price__c = subscription.Subscription_Lines__r[i].Renewal_Price__c,
@@ -491,7 +568,7 @@ global without sharing class SubscriptionRenewal {
                 newSubLines.add(subLine);
                 
             }
-            System.debug('Inserting newSubLines: '+newSubLines);
+            System.debug('RSB Inserting newSubLines: '+newSubLines);
             insert newSubLines;
             
             // *** END: CREATE SUBSCRTPTION LINES
@@ -503,29 +580,38 @@ global without sharing class SubscriptionRenewal {
             for(Subscription_Line__c subline:newSubLines){
                 subLineMap.put(subline.Previous_Subscription_Line__c, subline.Id);
             }
+            System.debug('RSB subLineMap : ' + subLineMap);
 
             // Create MAP of previous_subscription_Site__c, Id
             Map<Id, Id> subSiteMap = new Map<Id,Id>();
             for(Subscription_Site__c subSite:newSubSites){
                 subSiteMap.put(subSite.Previous_Subscription_Site__c, subSite.Id);
             }           
-            
+            System.debug('RSB subSiteMap : ' + subSiteMap);
+
             List<Site_Product__c> newSubProducts = new List<Site_Product__c>();
-            for (Site_Product__c siteProduct:subscription.Site_Products__r) {
-                
-                Site_Product__c newSiteProduct = new Site_Product__c(
-                                                    Alternative_Address__c = siteProduct.Alternative_Address__c,
-                                                    Previous_Site_Product__c = siteProduct.Id,
-                                                    Site_Product_Contact__c = siteProduct.Site_Product_Contact__c,
-                                                    Subscription__c = newSub.Id
-                );
-                
-                newSiteProduct.Subscription_Line__c = subLineMap.get(siteProduct.Subscription_Line__c);
-                newSiteProduct.Subscription_Site__c = subSiteMap.get(siteProduct.Subscription_Site__c);
-                newSubProducts.add(newSiteProduct);
-            }
             
+            for (Site_Product__c siteProduct:subscription.Site_Products__r) {
+
+                if(subLineMap.containsKey(siteProduct.Subscription_Line__c) && subSiteMap.containsKey(siteProduct.Subscription_Site__c))
+                {
+                    Site_Product__c newSiteProduct = new Site_Product__c
+                                                    (
+                                                        Alternative_Address__c = siteProduct.Alternative_Address__c,
+                                                        Previous_Site_Product__c = siteProduct.Id,
+                                                        Site_Product_Contact__c = siteProduct.Site_Product_Contact__c,
+                                                        Subscription__c = newSub.Id
+                                                    );
+                
+                    newSiteProduct.Subscription_Line__c = subLineMap.get(siteProduct.Subscription_Line__c);
+                    newSiteProduct.Subscription_Site__c = subSiteMap.get(siteProduct.Subscription_Site__c);
+                    newSubProducts.add(newSiteProduct);
+                }
+            }
+
+            system.debug('RSB List<Site_Product__c> newSubProducts - ' + newSubProducts);
             insert newSubProducts;
+            update newSubProducts; // Case 6704 - This will update Subscription -> Subscription Sites -> Product code with current products.
             // *** END: CREATE SUBSCRIPTION PRODUCTS
 
 

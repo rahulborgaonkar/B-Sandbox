@@ -1,0 +1,71 @@
+<apex:page controller="DaddyAnalytics.DaddyAnalyticsHeatmapController" action="{!setHeatmapDetails}">
+ <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     <style>
+      .tableStyle tr td{ padding:10px 15px; vertical-align:middle; line-height:23px!important; color:#777777;}
+      .tableStyle1 tr td{ padding:10px 15px!important;}
+      .tableStyle1 tr:nth-child(odd) {background: #E5EEFF}   
+      .tableStyle1 tr:nth-child(even){background:#fff;} 
+      .tableStyle1 tr:nth-child(odd) td {border-top:1px solid #D5D7E8; border-bottom:1px solid #D5D7E8;}              
+      .links{color:#0060BF!important; text-decoration:underline;}
+      .links:hover{color:#000!important;}
+      
+  /* MEDIA QUERIES
+================================================================= */
+    @media screen and (max-width: 1024px) {
+        #contentWrapper{width:auto;min-width:100%;}
+        .links{word-wrap: break-word;word-break: break-all;}
+        .mainTitle{display:block;}
+        .tableStyle tr td{padding:10px 5px;}
+    } 
+    
+    </style>
+   </head>
+  <br/>
+  <apex:outputPanel >
+        <table>
+            <tr>
+                <td style=" vertical-align: middle"><apex:outputLabel style="font-family:Arial,Helvetica,sans-serif;font-size:19px;font-weight:bold;"
+                    value="DaddyAnalytics Heatmap"></apex:outputLabel></td>                        
+            </tr>
+            <tr></tr>
+            <tr>
+                <td style=" vertical-align: middle"><apex:outputLabel style="font-family:Arial,Helvetica,sans-serif;font-size:12px;"
+                    value="It may take up to 7 days after adding our tracking code to your website before we have gathered enough data in order to show heatmaps"></apex:outputLabel></td>                        
+            </tr>
+        </table>
+    </apex:outputPanel>
+    <br/>
+    <apex:pageBlock title="Heatmap Pages">
+    <apex:outputPanel rendered="{!isDaddyAnalyticsInfoAvailable}">
+        <table border="0" class="tableStyle" cellspacing="0" cellpadding="0" style="height:300px;width:100%;">
+            <tr>
+                <td width="60%" style="vertical-align:top;height:250px; padding:0;">
+                <div class="addScroll">
+                    <table class="tableStyle1" cellspacing="0" cellpadding="0" width="100%">   
+                                         
+                        <apex:repeat value="{!listHeatmapDetail}" var="heatmapDetail">                        
+                            <tr>                                
+                                <td>    
+                                    <apex:outputLink value="{!heatmapDetail.heatmapURL}" target="_blank" styleClass="links">                           
+                                        {!heatmapDetail.url}  
+                                    </apex:outputLink>     
+                                   <div>{!heatmapDetail.title}</div>                               
+                                </td>
+                                <!--<td>
+                                    <apex:outputLink value="{!heatmapDetail.heatmapURL}" target="_blank">
+                                        <apex:image url="{!$Resource.heatmapIcon}"/>
+                                    </apex:outputLink>
+                                </td>-->
+                            </tr>
+                                                                
+                        </apex:repeat>                                       
+                    </table>
+                    </div>
+                </td>                
+            </tr>                                   
+        </table>           
+    </apex:outputPanel>   
+    </apex:pageBlock>        
+  
+</apex:page>

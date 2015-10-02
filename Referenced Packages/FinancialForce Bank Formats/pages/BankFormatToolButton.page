@@ -1,0 +1,46 @@
+<!-- BankFormatToolButton -->
+<apex:page standardController="c2g__codaPayment__c" extensions="ffbf.BankFormatToolController" recordsetVar="payment">
+
+	<!-- 
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<script src="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+	<DIV id="indicator"><img src="{!URLFOR($Resource.c2g__coda2go, 'coda2go/web/images/waiting.gif')}" align="absMiddle"/><span id="indicatortext"></span></DIV>
+ 	-->
+ 	
+	<apex:sectionHeader title="{!$Label.ffbfGenerateBankFilePageTitle}" subtitle="{!$Label.ffbfGenerateBankFilePageSubTitle}" />
+	<apex:form >
+		<apex:pageBlock mode="detail">
+     		<!-- Buttons -->
+     		<apex:pageBlockButtons id="buttons">
+     			<apex:commandButton value="{!$Label.ffbfGenerateBankFilePageGenerateButton}" id="generate_h" action="{!goToGenerateOutputFile}" rendered="{!viewState.canGenerateBankFile}"/>
+     			<apex:commandButton value="{!$Label.ffbfGenerateBankFilePageBackButton}" id="back_h" action="{!cancel}"/>
+     		</apex:pageBlockButtons>
+     	
+     		<apex:pageMessages />
+			
+			<apex:pageBlockSection id="sectionId" columns="1">
+				<apex:pageBlockSectionItem id="pickListSection" rendered="{!viewState.hasBankFormatMappings}">
+					<apex:outputLabel value="{!$Label.ffbfGenerateBankFilePageFileName}" for="formNames"/>
+					<apex:outputPanel >
+						<apex:selectList id="formNames" value="{!viewState.bankFormatMappingName}" size="1" multiselect="false">
+							<apex:selectOptions value="{!viewState.subscribedBankFormatMappings}"/>
+						</apex:selectList>
+						<!-- 
+						<apex:actionFunction name="onChangePickListValue" action="{!viewState.updateCSVOutput}" reRender="sectionId" oncomplete="CODA.resumeQueueProcessing();"/>
+	                    <script>
+	                        CODA.addQueuedOnBlurEvent(null, "{!$Component.formNames}", "{!$Label.ffbfProcessing}", onChangePickListValue, true);
+	                    </script>
+	                     -->
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>			 
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="{!$Label.ffbfDateLabel}" for="date"/> <!--  rendered="{!viewState.hasCSVOutput}"/>-->
+					<apex:inputField id="date" value="{!viewState.dateLookupView.dto.c2g__LookupDate__c}"/> <!-- rendered="{!viewState.hasCSVOutput}"/>-->
+				</apex:pageBlockSectionItem>
+								
+			</apex:pageBlockSection>	
+			
+		</apex:pageBlock>
+	</apex:form>	
+</apex:page>

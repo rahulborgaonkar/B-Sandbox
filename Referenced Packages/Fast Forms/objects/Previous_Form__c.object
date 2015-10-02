@@ -64,6 +64,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Disable_Lookup_Visible_Warning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>suppress lookup visibility warning</description>
+        <externalId>false</externalId>
+        <label>Disable Lookup Visible Warning</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Draft_Form__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <deprecated>false</deprecated>
@@ -94,6 +104,15 @@
         </picklist>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Dynamic_Prefill_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Dynamic Prefill Enabled</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>EmailDraft__c</fullName>
@@ -264,6 +283,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Hidden_Related_Object__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Hidden Related Object</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Hidden_Secondary_Object__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -316,6 +345,84 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>PDF_Confirmation_Chatter__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PDF Confirmation Chatter</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PDF_Confirmation_Record__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PDF Confirmation Record</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PDF_Send_To_Email__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PDF Send To Email</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PDF_Send_To__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>PDF Send To</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Prefill_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Prefill Key</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Prefill_Object_list__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Prefill Object list</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prefill_Secret_Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Prefill Secret Key</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Related_Object__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Related Object</label>
+        <length>5000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>Secondary_Object__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -327,8 +434,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Theme__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Theme</label>
+        <referenceTo>Form_Style__c</referenceTo>
+        <relationshipLabel>Templates</relationshipLabel>
+        <relationshipName>Templates</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TrackingEnabled__c</fullName>
-        <defaultValue>false</defaultValue>
+        <defaultValue>true</defaultValue>
         <deprecated>false</deprecated>
         <description>Tracking Enabled</description>
         <externalId>false</externalId>
@@ -352,6 +472,26 @@
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Custom_template_list</fullName>
+        <columns>NAME</columns>
+        <columns>Dynamic_Prefill_Enabled__c</columns>
+        <columns>FastFormID__c</columns>
+        <columns>Fields_xml__c</columns>
+        <columns>Form_Final_Html__c</columns>
+        <columns>Fields_Object_xml__c</columns>
+        <columns>Form_ID__c</columns>
+        <columns>Hosted_Form_ID__c</columns>
+        <columns>Object_Name__c</columns>
+        <columns>Hidden_Secondary_Object__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Hosted_Form_ID__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <label>Custom template list</label>
     </listViews>
     <nameField>
         <label>Template Name</label>

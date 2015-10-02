@@ -1,0 +1,248 @@
+<apex:page standardController="c2g__codaPurchaseInvoice__c" extensions="ffap.PayableInvoiceManageExpLinesController" sidebar="false" action="{!loadLines}">
+	<apex:variable var="fields" value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields}"/>
+	<apex:variable var="fieldsInFieldSet" value="{!0}"/>
+	<apex:stylesheet value="{!$Resource.ffap__front_payables}/front_payables/components/UberGrid/UberGrid.css"/>
+	
+	<style type="text/css">
+	.datePicker{
+		z-index:2000 !important;
+	}
+	</style>
+	<script type="text/javascript">
+		var FFDCGlobalThousandSeperator = "{!thousandSeparator}";
+		var FFDCGlobalDecimalSeperator = "{!decimalSeparator}";
+	</script>
+	
+	<script type="text/javascript" src="{!$Resource.front_payables}/front_payables/base/frameworks/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_payables}/front_payables/components/UberGrid/UberGrid.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_payables}/front_payables/pages/payableinvoicemanageexplines/calculations.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_payables}/front_payables/utils/utilNumeric.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_payables}/front_payables/utils/ajaxProxy.js"></script>
+	
+	<apex:form onsubmit="if(typeof($FFDC)!='undefined'){$FFDC('#uberGridWaiting').css({'display':'block'});}">
+		<!-- PAGE TITLE -->
+		<apex:sectionHeader title="{!$Label.ManageExpenseLines}" subtitle="{!c2g__codaPurchaseInvoice__c.Name}"/>
+			<apex:pageBlock title="{!$Label.InvoiceLines}">
+				
+				<apex:pageBlockButtons >
+					<apex:outputPanel rendered="{!!pageLoadErrors}" layout="none">
+						<apex:commandButton action="{!saveAll}" value="{!$Label.Save}" />
+					</apex:outputPanel>
+	            	<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" immediate="true"/>
+				</apex:pageBlockButtons>
+				
+				<apex:PageMessages />
+				
+				<!-- HARD SET FIELDS -->
+				<div class="uberGridWrapper hideGrid_{!pageLoadErrors}">
+					<div class="waiting" id="uberGridWaiting">
+						<div class="waitingBG"></div>
+						<div class="waitingIcon"></div>
+					</div>
+					<table cellpadding="0" cellspacing="0" border="0" class="uberGrid" id="uberGrid">
+						
+						<thead>
+							<tr>
+								<th class="aCenter ignorecol_true">
+									<div class="headerInner">&nbsp;</div>
+								</th>
+								
+								<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesVAT}" var="f" rendered="{!IF(taxMode=='VAT',true,false)}">
+									<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}_STRING"/>
+									<apex:variable var="fieldsInFieldSet" value="{!fieldsInFieldSet+1}" rendered="{!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),false,true)}"/>
+									<th class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} ignorecol_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'hiddenCell','')} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'ignorecol_true','')}">
+										<div class="headerInner {!IF(!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].nillable,'required','')} {!IF(fieldName='c2g__GeneralLedgerAccount__c_STRING','required','')}" >
+											{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].label}
+										</div>
+									</th>
+								</apex:repeat>
+								
+								<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesSUT}" var="f" rendered="{!IF(taxMode=='SUT',true,false)}">
+									<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}_STRING"/>
+									<apex:variable var="fieldsInFieldSet" value="{!fieldsInFieldSet+1}" rendered="{!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),false,true)}"/>
+									<th class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} ignorecol_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'hiddenCell','')} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'ignorecol_true','')}">
+										<div class="headerInner {!IF(!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].nillable,'required','')} {!IF(fieldName='c2g__GeneralLedgerAccount__c_STRING','required','')}" >
+											{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].label}
+										</div>
+									</th>
+								</apex:repeat>
+								
+								
+								<th class="aCenter ignorecol_true">
+									<div class="headerInner">&nbsp;</div>
+								</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<apex:variable var="lineNumber" value="{!0}"/>
+							
+							<apex:repeat var="viewLine" value="{!PayableInvoiceExpenseLines}">
+							<apex:variable var="lineNumber" value="{!lineNumber+1}"/>
+								<tr class="{!IF(viewLine.deleted,'hiddenRow','')}">
+									<td class="aCenter" width="30">
+										<div class="cellInnerText lineNumber"><apex:outputText value="{0,number,###}"><apex:param value="{!lineNumber}" /></apex:outputText></div>
+										<apex:inputCheckbox value="{!viewLine.deleted}" styleClass="deleted"/>
+									</td>
+									
+									<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesVAT}" var="f" rendered="{!IF(taxMode=='VAT',true,false)}">
+										<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}_STRING"/>
+										<td class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated==false,'inputCell','')} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'hiddenCell','')}">
+											<div class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name} {!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated==false,'cellInner','cellInnerText')}">
+												<apex:inputField value="{!viewLine.line[f]}" styleClass="input input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}">
+													<apex:message />
+												</apex:inputField>
+											</div>
+										</td>
+									</apex:repeat>
+									<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesSUT}" var="f" rendered="{!IF(taxMode=='SUT',true,false)}">
+										<apex:variable var="fieldName" value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}_STRING"/>
+										<td class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated==false,'inputCell','')} {!IF(OR(fieldName='c2g__TaxRate1__c_STRING'),'hiddenCell','')}">
+											<div class="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name} {!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].type} {!IF($ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].calculated==false,'cellInner','cellInnerText')}">
+												<apex:inputField value="{!viewLine.line[f]}" styleClass="input input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}">
+													<apex:message />
+												</apex:inputField>
+											</div>
+										</td>
+									</apex:repeat>
+									
+									
+									<td class="aCenter" width="30">
+										<a href="#" class="removeLine" title="{!$Label.RemoveLine}">{!$Label.RemoveLine}</a>
+									</td>
+								</tr>
+							</apex:repeat>
+							
+							
+						</tbody>
+						
+						
+						<apex:outputPanel layout="none" rendered="{!IF(taxMode=='VAT',true,false)}">
+						<tfoot>
+							<tr>
+								<td></td>
+								<td rowSpan="3">
+									<div class="cellInnerText">
+										<input type="button" class="btnAddLine addLine" value="{!$Label.AddNewLine}"/>
+									</div>
+								</td>
+								<td colspan="{!fieldsInFieldSet-3}"></td>
+								<td class="aRight">
+									<div class="cellInnerText">{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__NetTotal__c.label}</div>
+								</td>
+								<td class="aRight">
+									<div class="cellInnerText" id="subTotal">0.00</div>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="{!fieldsInFieldSet-3}"></td>
+								<td class="aRight">
+									<div class="cellInnerText">{!$ObjectType.c2g__codaPurchaseInvoice__c.fields.c2g__TaxTotal__c.label}</div>
+								</td>
+								<td class="aRight">
+									<div class="cellInnerText" id="taxTotal">0.00</div>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="{!fieldsInFieldSet-3}"></td>
+								<td class="aRight">
+									<div class="cellInnerText">{!$Label.ExpenseLinesTotal}</div>
+								</td>
+								<td class="aRight">
+									<div class="cellInnerText total" id="invoiceTotal">0.00</div>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+						</tfoot>
+						</apex:outputPanel>
+						
+						
+						<apex:outputPanel layout="none" rendered="{!IF(taxMode=='SUT',true,false)}">
+						<tfoot>
+							<tr>
+								<td></td>
+								<td colspan="{!fieldsInFieldSet-3}">
+									<div class="cellInnerText">
+										<input type="button" class="addLine btnAddLine" value="{!$Label.AddNewLine}"/>
+									</div>
+								</td>
+								<td class="aRight">
+									<div class="cellInnerText">{!$Label.ExpenseLinesTotal}</div>
+								</td>
+								<td class="aRight">
+									<div class="cellInnerText" id="subTotal" style="display:none">0.00</div>
+									<!-- <div class="cellInnerText" id="taxTotal" style="display:none">0.00</div>-->
+									<div class="cellInnerText total" id="invoiceTotal">0.00</div>
+								</td>
+								<td>&nbsp;</td>
+							</tr>
+						</tfoot>
+						</apex:outputPanel>
+						
+						
+						
+						
+					</table>
+				</div>
+				
+				<div id="defaultRowFields" class="defaultRowFields">
+					<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesVAT}" var="f" rendered="{!IF(taxMode=='VAT',true,false)}">
+						<div>input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].label}:<apex:inputField value="{!DefaultPayableInvoiceExpenseLine[f]}" styleClass="input input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}"/></div>
+					</apex:repeat>
+					<apex:repeat value="{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fieldsets.ffap__ManageExpenseLinesSUT}" var="f" rendered="{!IF(taxMode=='SUT',true,false)}">
+						<div>input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].label}:<apex:inputField value="{!DefaultPayableInvoiceExpenseLine[f]}" styleClass="input input_{!$ObjectType.c2g__codaPurchaseInvoiceExpenseLineItem__c.fields[f].name}"/></div>
+					</apex:repeat>
+				</div>
+	        </apex:pageBlock>
+			
+			<script type="text/javascript">
+				var $FFDC = jQuery.noConflict();
+				$FFDC(document).ready(function () {
+					
+					$FFDC.globalDiscount = parseFloat({!invoiceDiscount});
+					
+					$FFDC.errorString = '{!$Label.Error}';
+					
+					//SETUP KEYBOARD GRID
+					$FFDC('#uberGrid').UberGrid({
+						'addLine': $FFDC('.addLine')
+					});
+					
+					//SETUP CALCULATION JS FOR THIS GRID
+					$FFDC('#uberGrid').CalcGrid();
+					
+					//CALCULATE EACH ROW
+					$FFDC('#uberGrid tbody tr:not(.hiddenRow)').each(function (i, e) {
+						$FFDC().CalcGrid('calculateRow', $FFDC(e));
+					});
+					
+					//SETUP EACH LOOKUP TO USE VF AJAX PROXY
+					$FFDC('#uberGrid tbody tr').each(function (i, e) {
+						$FFDC(e).find('td.inputCell.reference .lookupInput .input.input_c2g__InputVATCode__c:not(a)').AjaxProxy({
+							action: 'Common2.GetTaxRate1',
+							fields: ["c2g__TaxRate1__c", "c2g__TaxValue1__c"],
+							currency: '{!invoiceCurrency}',
+							accountid: '{!invoiceAccountId}',
+							documentid: '{!invoiceId}',
+							productField: 'input_c2g__GeneralLedgerAccount__c',
+							calcMethods: ["calculateTaxValue", "calculateRow"]
+						});
+					});
+					
+				});
+				
+				$FFDC(window).load(function () {
+					$FFDC('#uberGridWaiting').css({
+						'display': 'none'
+					});
+				});
+				
+			</script>
+			
+	</apex:form>
+	
+</apex:page>

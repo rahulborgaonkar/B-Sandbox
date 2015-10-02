@@ -1,0 +1,26 @@
+<apex:page showHeader="false">
+<script type="text/javascript" src="https://na7.salesforce.com/support/api/25.0/interaction.js"></script>
+<script type="text/javascript" src="{!BLANKVALUE($Setup.natterbox__nbCallCenterConfig__c.natterbox__CTI_Service_Host__c,'https://cti.redmatter.com')}/dojo.js"></script>
+<link rel="stylesheet" type="text/css" href="{!BLANKVALUE($Setup.natterbox__nbCallCenterConfig__c.natterbox__CTI_Service_Host__c,'https://cti.redmatter.com')}/cti.css"/>
+<script type="text/javascript">
+if (typeof cticonfig != 'undefined')
+{
+    cticonfig.cometdURL="{!BLANKVALUE($Setup.natterbox__nbCallCenterConfig__c.natterbox__CTI_Service_Host__c,'https://cti.redmatter.com')}/cometd";
+    cticonfig.salesforce_sid="{!$Api.Session_ID}";
+}
+</script>
+<div id="cti-container">
+<div id="cti-header"> </div>
+<div id="cti-main">
+<div id="cti-login">
+<table><tbody>
+<tr><td>Username:</td><td><input id="username" type="text"/></td></tr>
+<tr><td>Password:</td><td><input id="password" type="password"/></td></tr>
+<tr><td colspan="2"><button id="login" class="cti-button cti-green">Log In</button></td></tr>
+</tbody></table></div>
+<div id="cti-render"> </div>
+<div id="cti-info"></div>
+</div>
+<div id="cti-footer"> </div>
+</div>
+</apex:page>

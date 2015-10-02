@@ -1,0 +1,38 @@
+<apex:page controller="ffbext.CODABETransactionEnquiryController" tabstyle="TransactionEnquiry__tab" sidebar="false" action="{!showMessage}">
+    <apex:form id="myForm">
+        <apex:sectionHeader title="{!$Label.codaBETransactionEnquiryPageTitle}"/>
+        <apex:pageBlock title="{!$Label.codaBETransactionEnquiryPageFilterCriteria}" mode="edit" id="myPageBlock">
+        	<apex:pageMessages />
+            <apex:pageBlockSection title="{!$Label.codaBETransactionEnquiryPageCompany}" columns="2" id="myCompanyPageBlockSection">
+            	<apex:facet name="header">
+	         	   <h3>{!$Label.codaBETransactionEnquiryPageCompany}</h3>
+	            </apex:facet>
+                <apex:inputField value="{!lookUp.c2g__Company__c}" id="company"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.codaBETransactionEnquiryPageGeneralLedgerAccount}" columns="2" id="myGLAPageBlockSection">
+                <apex:inputField value="{!lookUp.c2g__GeneralLedgerAccount__c}" id="gla"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.codaBETransactionEnquiryPageDimensions}" columns="2" id="myDimensionPageBlockSection">
+            	<apex:inputField value="{!lookUp.c2g__Dimension1__c}" id="dim1"/>
+                <apex:inputField value="{!lookUp.c2g__Dimension2__c}" id="dim2"/>
+                <apex:inputField value="{!lookUp.c2g__Dimension3__c}" id="dim3"/>
+                <apex:inputField value="{!lookUp.c2g__Dimension4__c}" id="dim4"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.codaBETransactionEnquiryPagePeriods}" columns="2" id="myPeriodPageBlockSection">
+            	<apex:pageBlockSectionItem >
+                	<apex:outputLabel value="{!$Label.codaBETransactionEnquiryPageFromPeriod}" for="fromPeriod"/>
+                	<apex:inputField value="{!FromPeriodlookUp.c2g__Period__c}" id="fromPeriod"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+	                <apex:outputLabel value="{!$Label.codaBETransactionEnquiryPageToPeriod}" for="toPeriod"/>
+	                <apex:inputField value="{!ToPeriodlookUp.c2g__Period__c}" id="toPeriod"/>
+	            </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:outputpanel id="buttonPanel">
+                    <apex:commandButton id="showReport" value="{!$Label.codaBETransactionEnquiryPageShowReportButton}" action="{!showReport}" disabled="{!!CanShowReport}"/>
+                </apex:outputpanel>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

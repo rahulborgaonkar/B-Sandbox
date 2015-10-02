@@ -1,0 +1,14 @@
+<apex:page standardController="c2g__AsOfAging__c" extensions="c2g.AsOfAgingController">
+    <apex:sectionHeader title="FinancialForce Accounting As Of Aging" subtitle="New As of Aging Process"/>
+    <apex:pageMessages />
+    <apex:form >
+        <apex:pageBlock title="Start New Process">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Start Process"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection collapsible="false" columns="1">
+                <apex:inputField value="{!c2g__AsOfAging__c.c2g__AsOfDate__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

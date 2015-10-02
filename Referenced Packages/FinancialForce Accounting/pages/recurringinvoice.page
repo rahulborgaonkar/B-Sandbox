@@ -1,0 +1,197 @@
+<apex:page standardController="c2g__codaInvoice__c" extensions="c2g.ffb_RecurringInvoiceController" action="{!viewstate.validateInvoice}">
+	<apex:stylesheet value="{!$Resource.c2g__front_billing}/front_billing/components/UberGrid/UberGrid.css"/>
+	<style type="text/css">
+	.datePicker{
+		z-index:2000 !important;
+	}
+	.cellInnerText{white-space:nowrap;}
+	
+	.uberGridWrapper{margin:7px 12px;}
+	</style>
+	<script type="text/javascript" src="{!$Resource.front_billing}/front_billing/base/frameworks/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="{!$Resource.front_billing}/front_billing/components/UberGrid/UberGrid.js"></script>
+	
+	<apex:sectionHeader title="{!$Label.RecurringInvoices}" subtitle="{!c2g__codaInvoice__c.Name}" />
+	
+	<apex:form onsubmit="if(typeof($FFDC)!='undefined'){$FFDC('#uberGridWaiting').css({'display':'block'});}">
+		<apex:pageBlock title="{!$Label.RecurringInvoice}" mode="edit">
+
+			<apex:pageBlockButtons >
+				<span class="saveButtonsWrapper" style="display:none">
+					<apex:commandButton action="{!Save}" value="{!$Label.Save}" />
+					<apex:commandButton action="{!SaveAndPost}" value="{!$Label.SaveAndPost}" />
+				</span>
+				<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}" />
+			</apex:pageBlockButtons>
+			
+			<apex:pagemessages id="messagesPanel"/>
+			
+			<apex:pageBlockSection id="criteria" title="{!$Label.Criteria}" columns="2" rendered="{!!viewState.HasError}">
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="recurringType" value="{!$Label.RecurringType}" />
+					<apex:outputPanel layout="block">
+						<apex:selectList id="recurringType" value="{!viewState.recurringType}" multiselect="false" size="1">
+							<apex:selectOptions value="{!viewState.recurringTypes}" />
+						</apex:selectList>
+					</apex:outputPanel>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="startDate" value="{!$Label.StartDate}" />
+					<apex:inputField id="startDate" value="{!viewstate.startDateLookup.c2g__LookupDate__c}"/>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="scheduleType" value="{!$Label.ScheduleType}" />
+					<apex:selectList id="scheduleType" value="{!viewstate.scheduleType}" multiselect="false" size="1">
+						<apex:selectOptions value="{!viewstate.scheduleTypes}" />
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="installmentInterval" value="{!$Label.InstallmentInterval}" />
+					<apex:selectList id="installmentInterval" value="{!viewstate.installmentInterval}" multiselect="false" size="1">
+						<apex:selectOptions value="{!viewstate.installmentIntervals}" />
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel for="numberOfInstallments" value="{!$Label.NumberOfInstallments}" />
+					<apex:outputText >
+						<div class="requiredInput">
+							<div class="requiredBlock"></div>
+							<apex:inputText id="numberOfInstallments" value="{!viewstate.numberOfInstallments}"/>
+						</div>
+					</apex:outputText>
+				</apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
+					<apex:outputText />
+					<apex:commandButton action="{!viewState.calculateRecurringLines}" value="{!$Label.PreviewRecurringInvoices}" rerender="messagesPanel,scheduleArea"/>
+				</apex:pageBlockSectionItem>
+			</apex:pageBlockSection>
+			
+			<apex:outputPanel id="scheduleArea" layout="block">
+			
+				<apex:outputPanel layout="block" rendered="{!IF((viewstate.numberOfInstallments != null && viewstate.numberOfInstallments>0),true,false)}">
+					<div style="height:20px;"></div>
+					<apex:pageBlockSection columns="1" collapsible="false">
+						<apex:facet name="header">
+							<h3>Schedule</h3>
+						</apex:facet>
+					</apex:pageBlockSection>
+					<!-- HARD SET FIELDS -->
+					<div class="uberGridWrapper hideGrid_false">
+						<div class="waiting" id="uberGridWaiting">
+							<div class="waitingBG"></div>
+							<div class="waitingIcon"></div>
+						</div>
+						<table cellpadding="0" cellspacing="0" border="0" class="uberGrid" id="uberGrid">
+							<thead>
+								<tr>
+									<th class="aCenter ignorecol_true">
+										<div class="headerInner">&nbsp;</div>
+									</th>
+									
+									<th class="string ignorecol_true"> 
+										<div class="headerInner" >
+											{!$Label.InvoiceDate} 
+										</div>
+									</th>
+									
+									<th class="string ignorecol_true">
+										<div class="headerInner" >
+											{!$Label.YearPeriod}
+										</div>
+									</th>
+									
+									<th class="date ignorecol_false">
+										<div class="headerInner required" >
+											{!$Label.DueDate}
+										</div>
+									</th>
+									
+									<th class="aCenter string ignorecol_true">
+										<div class="headerInner" >
+											{!$Label.Currency}
+										</div>
+									</th>
+									
+									<th class="double ignorecol_true">
+										<div class="headerInner" >
+											{!$Label.InvoiceAmount}
+										</div>
+									</th>
+									
+								</tr>
+							</thead>
+							
+							<tbody>
+								<apex:variable var="lineNumber" value="{!0}"/>
+								
+								<apex:repeat var="line" value="{!viewState.RecurringLines}">
+								
+								<tr>
+									<apex:variable var="lineNumber" value="{!lineNumber+1}"/>
+									<td class="aCenter" width="30px">
+										<div class="cellInnerText lineNumber"><apex:outputText value="{0,number,###}"><apex:param value="{!lineNumber}" /></apex:outputText></div>
+									</td>
+									
+									<td class="string" width="18%">
+										<div class="date cellInnerText">
+											<apex:outputField value="{!line.invoiceDateLookup.c2g__LookupDate__c}"/>
+										</div>
+									</td>
+									
+									<td class="string" width="18%">
+										<div class="string cellInnerText">
+											<!-- {!line.period} -->
+											<apex:outputField value="{!line.periodLookup.c2g__Period__c}"/>
+										</div>
+									</td>
+									
+									<td class="date inputCell" style="width:auto">
+										<div class="date cellInner">
+											<apex:inputField value="{!line.dueDateLookup.c2g__LookupDate__c}" styleClass="input"/>
+										</div>
+									</td>
+									
+									<td class="string aCenter" width="18%">
+										<div class="string cellInnerText">
+											<apex:outputField value="{!line.currencyLookup.c2g__AccountingCurrency__c}"/>
+										</div>
+									</td>
+									
+									<td class="double" width="18%">
+										<div class="double cellInnerText" style="font-size:13px;font-weight:700;">
+											<apex:outputField value="{!line.valueLookup.c2g__LookupNumber__c}"/>
+										</div>
+									</td>
+								</tr>
+								
+								</apex:repeat>
+								
+							</tbody>
+							
+						</table>
+					</div>
+					<script type="text/javascript">
+						var $FFDC = jQuery.noConflict();
+						$FFDC(document).ready(function () {
+							//SETUP KEYBOARD GRID
+							$FFDC('#uberGrid').UberGrid();
+							$FFDC('#uberGridWaiting').css({
+								'display': 'none'
+							});
+							
+							var hasErrors = {!viewstate.haveErrorsInRecurringDefinition};
+							if(hasErrors===true){
+								$FFDC('.saveButtonsWrapper').css({'display':'none'});
+							}else{
+								$FFDC('.saveButtonsWrapper').css({'display':'inline'});
+							}
+							
+						});
+						
+					</script>
+				</apex:outputPanel>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

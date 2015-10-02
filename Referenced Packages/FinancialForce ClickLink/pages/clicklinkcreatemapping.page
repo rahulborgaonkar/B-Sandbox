@@ -1,0 +1,31 @@
+<apex:page standardController="ffirule__IntegrationRule__c" extensions="ffirule.CreateMappingController">
+    <apex:form >
+        <apex:sectionHeader title="{!$Label.CreateBasicMapping}" subtitle="{!RuleName}"/>
+        <apex:pageBlock >
+            <apex:pagemessages />
+            <apex:pageBlockSection >
+            	<apex:pageBlockSectionItem >
+            		<apex:outputLabel value="{!$Label.SourceObjectField}" for="sourceField"/>
+		    		<apex:selectList id="sourceField" value="{!sourceField}" size="1">
+		    			<apex:selectOptions value="{!sourceObjectFieldLabels}"/>
+		    		</apex:selectList>
+            	</apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+            		<apex:outputLabel value="{!$Label.TargetObjectField}" for="targetField"/>
+		    		<apex:selectList id="targetField" value="{!targetField}" size="1">
+		    			<apex:selectOptions value="{!targetObjectFieldLabels}"/>
+		    		</apex:selectList>
+            	</apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!saveMapping}" value="{!$Label.Save}"/>
+                <apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+		<apex:inputField value="{!ffirule__IntegrationRule__c.Name}" rendered="false"/>
+		<apex:inputField value="{!ffirule__IntegrationRule__c.ffirule__SourceObject__c}" rendered="false"/>
+		<apex:inputField value="{!ffirule__IntegrationRule__c.ffirule__TargetObject__c}" rendered="false"/>
+    </apex:form>
+</apex:page>

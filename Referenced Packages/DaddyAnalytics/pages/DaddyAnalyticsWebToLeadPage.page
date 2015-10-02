@@ -1,0 +1,118 @@
+<apex:page controller="DaddyAnalytics.DaddyAnalyticsWebToLeadPageController" title="Daddy Analyitcs - Web-to-Lead Setup" tabStyle="Daddy_Analytics_Setup_Checklist__tab">   
+    <style>
+        #tableactionspinnermain
+        {
+           position:fixed;
+           left:0;
+           top:0;
+           background-color:#8d8d8d;
+           height:100%;
+           width:100%;
+           opacity:0.6;
+           filter:alpha(opacity=60);
+           z-index:999;
+           align:center;
+           vertical-align:middle;
+        }
+        
+        #tableactionspinnercontent
+        {
+           position:absolute; 
+           top:35%;
+           left:50%;
+           opacity:1.0;
+           filter:alpha(opacity=100);
+           z-index:1000;
+           background-color:#F5FCFF;
+           width:204; 
+           height:94;
+           border-radius:1em;
+           border:1px solid #CEECFF;
+           padding:20px 40px 20px 40px;
+        }
+
+        #tableactionspinnercontent img
+        {
+           width:32; 
+           height:32; 
+           align:center; 
+           vertical-align: middle;
+        }
+        
+        #tableactionspinnercontent p
+        {
+           display:inline;
+           font-size:135%;
+           font-weight:bold;
+        }
+    </style>
+    <apex:form >
+    
+        <div class="bPageTitle">
+            <div class="ptBody">                    
+                <div class="content"> 
+                    <h1 class="pageType noSecondHeader" style="margin-left:0%">Daddy Analytics Web-to-Lead Code Generator</h1>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bDescription" style="margin-left:1%">Easliy set up a page on your website to capture new leads</div>
+        
+        <apex:outputPanel id="selectFieldPanel">
+            <apex:pageBlock title="Create a Web-to-Lead Form" rendered="{!showLeadFieldBlock}">
+                <h2>Select the fields to be included on your Web-to-Lead form:</h2>  
+                <br/><br/>                    
+                        
+                <c:MultiselectPicklist leftLabel="Available Fields"
+                leftOptionsList="{!leftSelectListValues}"
+                rightLabel="Selected Fields"
+                rightOptionsList="{!rightSelectListValues}"
+                size="14"
+                width="150px"/>
+                <br/>                                                                                                                                                                                  
+                <div style="margin-bottom: 1.0em;">After user submits the Web-to-Lead form, they will be taken to the specififed return URL on your website , such as a "thank you" page.</div>
+                
+                <h2>Return URL</h2> &nbsp;&nbsp;
+                <apex:outputPanel styleClass="requiredInput">
+                    <apex:outputPanel styleClass="requiredBlock"/>                    
+                    <apex:inputText value="{!returnUrl}" size="75"/>  
+                </apex:outputPanel>           
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton value="Generate" action="{!generate}" reRender="selectFieldPanel,htmlForm" status="showStatus"/>                          
+                    <apex:commandButton value="Cancel"/>
+                </apex:pageBlockButtons>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:actionStatus id="showStatus" layout="block">
+           <apex:facet name="start">
+               <div id="tableactionspinnermain">
+                   <div id="tableactionspinnercontent">
+                       <img src="/img/analytics/reportbuilder/icons/spinner32.gif" alt="Processing" title="Processing" />                         
+                       <p>Processing</p>
+                   </div>
+               </div>
+           </apex:facet>
+       </apex:actionStatus>
+        <apex:outputPanel id="htmlForm">
+            <apex:pageBlock title="Create a Web-to-Lead Form" rendered="{!showHTMLForm}">
+                <div style="margin-bottom: 1.0em;">Copy and paste the sample HTML below and send it to your webmaster.</div>  
+                <div align="center" style="width:100%;">
+                    <div class="webToXHtmlBorder">  
+                        <apex:inputTextarea value="{!htmlForm}" rows="17" cols="150" styleClass="webToXHtmlOutput"/>
+                    </div>
+                </div> 
+                <br/><br/> <hr style="border: none;background-color: #ccc;color: #ccc;height: 1px;width:100% "/> <br/>   
+                <apex:outputPanel >
+                    <p > <h2 style="font-family: Arial,Helvetica,sans-serif;"> Copy and paste this code onto your website where you want a web form. </h2> </p>                    
+                    <p ><h2 style="font-family: Arial,Helvetica,sans-serif;"> When you have finished, return to the </h2>
+                    <apex:outputLink style="font-size:12px;color:blue;" value="/apex/DaddyAnalytics__DaddyAnalyticsInstallationChecks">
+                        Daddy Analytics Setup Checklist
+                    </apex:outputLink></p>
+                </apex:outputPanel>      
+                <!--<apex:pageBlockButtons location="bottom" >
+                    <apex:commandButton value="Finished" action="{!finish}" />                                             
+                </apex:pageBlockButtons>-->
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>      
+</apex:page>

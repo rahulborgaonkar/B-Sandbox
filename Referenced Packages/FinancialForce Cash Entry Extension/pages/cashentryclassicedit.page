@@ -1,0 +1,12 @@
+<apex:page standardController="c2g__codaCashEntry__c" extensions="ffcash.CashEntryController" sidebar="false" action="{!classicedit}">
+    <apex:form >
+    	<apex:sectionHeader title="{!$ObjectType.c2g__codaCashEntry__c.Label}" subtitle="{!c2g__codaCashEntry__c.Name}"/>
+    		<apex:pageBlock >
+    			<apex:pagemessages />
+    			
+    			<apex:pageBlockButtons >
+    				<apex:commandButton action="{!cancel}" value="{!$Label.Cancel}"/>
+    			</apex:pageBlockButtons>
+    		</apex:pageBlock>    
+    </apex:form>
+</apex:page>

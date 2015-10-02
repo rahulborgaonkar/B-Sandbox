@@ -1,0 +1,26 @@
+<!-- Intercompany Transfer List-Process Confirm -->
+<apex:page standardController="c2g__codaIntercompanyTransfer__c" extensions="c2g.IntercompanyTransferController" recordSetVar="icts">
+	<script src="{!URLFOR($Resource.coda2go,'coda2go/web/script/lib.js')}" type="text/javascript"></script>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<script>
+		var CODA2GoButtons = new CODA2GoPage();
+		var CODA2GoBtnSaveValue = "{!$Label.codaProcessing}";
+	</script>
+	<apex:form onsubmit="if(CODA2GoButtons.disableSaveButtons){ return CODA2GoButtons.disableSaveButtons(); }">
+		<apex:sectionHeader title="{!$Label.codaIntercompanyTransferPageTitle}"  help="{!URLFOR('/apex/c2g__codahelploader?topicid=1209')}"/>
+		<apex:pageBlock >
+			<apex:pageMessages />
+			<apex:pageBlockButtons location="bottom">
+				<!-- Hidden Buttons -->
+				<apex:commandButton value="{!$Label.codaIntercompanyTransferPageConfirmButton}" action="{!processICTsAsync}" id="process_h" styleclass="hiddensubmit"/>
+				<apex:commandButton value="{!$Label.IntercompanyTransferCancelButton}" action="{!cancel}" id="cancel_h" styleclass="hiddensubmit" immediate="true" reRender=""/>
+				<!-- End of Hidden Buttons -->
+				<apex:commandButton value="{!$Label.codaIntercompanyTransferPageConfirmButton}" id="process" rendered="{!ShowProcessButton}" onclick="document.getElementById('{!$Component.process_h}').click();return false;"  />
+				<apex:commandButton value="{!$Label.IntercompanyTransferCancelButton}" id="cancel" rerender="" onclick="if(!CODA.queing()){document.getElementById('{!$Component.cancel_h}').click()};return false;"/>
+				<script>
+					CODA2GoButtons.initButtons(["{!$Component.process}","{!$Component.cancel}"]);
+				</script>
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

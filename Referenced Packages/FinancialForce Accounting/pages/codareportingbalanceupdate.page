@@ -1,0 +1,90 @@
+<!-- codarepotingbalanceupdate -->
+<apex:page controller="c2g.CODAReportingBalanceController">
+	<script type="text/javascript" src="{!URLFOR($Resource.front_bankrec,'front_bankrec/base/frameworks/jquery-1.10.2.min.js')}"></script>
+    <script type="text/javascript">
+        var $FFDC = jQuery.noConflict();
+        var originalButtonClasses = [];
+		var originalButtonValues = [];
+    </script>
+	<apex:stylesheet value="{!URLFOR($Resource.c2g__coda2go,'coda2go/web/css/style.css')}"/>
+	<link type="text/css" href="{!URLFOR($Resource.front_bankrec,'front_bankrec/components/UberPopup/uberpopup.css')}" rel="stylesheet"/>
+	<script type="text/javascript">
+        $FFDC.showWarning = function() {
+	        //transition effect
+	        $FFDC('#dialogWrapper').show();     
+	        $FFDC('#dialogWrapper .dialogBackground').fadeIn(1000);    
+	        $FFDC('#dialogWrapper .dialogBackground').fadeTo("slow", 0.5);
+	        
+	        //transition effect
+	        $FFDC('#dialogBox').fadeIn(2000); 
+
+	        //if close button is clicked
+		    $FFDC('#dialogWrapper .close').click(function (e) {
+		        //Cancel the link behavior
+		        e.preventDefault();
+		        $FFDC('#dialogWrapper .dialogBackground').hide();
+		        $FFDC('#dialogWrapper #dialogBox').hide();
+		        $FFDC('#dialogWrapper').hide();
+			});
+		}
+		
+		$FFDC.disableButtons = function(buttons) {
+        	for (var i = 0; i < buttons.length; i++) {
+        		$FFDC(buttons[i]).attr('class', 'btnDisabled');
+				$FFDC(buttons[i]).val('{!$Label.codaSelectionDefinitionNewPageProcessing}');
+				$FFDC(buttons[i]).attr('disabled', 'disabled');
+			}
+		}
+		
+		$FFDC.enableButtons = function(buttons) {
+			for (var i = 0; i < buttons.length; i++) {
+				$FFDC(buttons[i]).attr('class', originalButtonClasses[i]);
+				$FFDC(buttons[i]).val(originalButtonValues[i]);
+				$FFDC(buttons[i]).removeAttr('disabled');
+			}
+		}
+	</script>
+	<apex:form onsubmit="$FFDC.disableButtons(['#runIncrementalButton', '#runButton']);">
+		<apex:sectionHeader title="{!$Label.codaReportingBalanceUpdatePageTitle}" help="{!URLFOR('/apex/c2g__codahelploader?topicid=1087')}"/>
+		<apex:pageBlock mode="edit">
+			<apex:pageBlockButtons location="top">
+				<apex:commandButton id="runIncrementalButton_h" action="{!runIncrementalSynchronization}" reRender="" styleclass="hiddensubmit runIncSyn"/>
+				<input id="runIncrementalButton" class="btn" value="{!$Label.codaReportingBalanceUpdateIncrementalSynchronization}" type="button" onclick="$FFDC('.runIncSyn').click();"/>
+				<apex:commandButton id="yesBtn_h" action="{!runFullSynchronization}" reRender="" styleclass="hiddensubmit runFull"/> 
+				<input id="runButton" class="btn" value="{!$Label.codaReportingBalanceUpdateFullSynchronization}" type="button" onclick="$FFDC.showWarning();"/>
+				<script>
+					originalButtonClasses.push($FFDC('#runIncrementalButton').attr('class'));
+        			originalButtonValues.push($FFDC('#runIncrementalButton').val());
+        			
+        			originalButtonClasses.push($FFDC('#runButton').attr('class'));
+        			originalButtonValues.push($FFDC('#runButton').val());
+					
+					$FFDC.enableButtons(['#runIncrementalButton', '#runButton']);
+				</script>
+			</apex:pageBlockButtons>
+			<apex:outputPanel id="messagesPanel">
+                <apex:pageMessages id="pMessages"/>
+            </apex:outputPanel>
+		</apex:pageBlock>
+		<div class="dialogWrapper" id="dialogWrapper" style="display:none;">
+	    	<div class="dialogBackground" style="display:none;"></div>
+	    	<div class="dialogBox" id="dialogBox" style="display:none;">
+	    		<div class="top">
+	    			<div class="topLeft"><h2>{!$Label.codaReportingBalanceUpdateDialogTitle}</h2></div>
+	    		</div>
+	    		<div class="middle" id="dialogBoxMiddle">
+	    			<div>
+	    				<div style="padding:5px;">{!$Label.codaReportingBalanceUpdateDialogContent}</div>
+		        		<div style="padding:5px;" align="center">
+		        			<input id="yesBtn" class="btn" onclick="$FFDC.disableButtons(['#yesBtn', '#noBtn']);$FFDC('.runFull').click();" value="{!$Label.codaReportingBalanceUpdateDialogYes}" type="button"/> 
+		        			<input id="noBtn" class="btn close" onclick="return false;" value="{!$Label.codaReportingBalanceUpdateDialogNo}" type="button"/>
+		        		</div>
+	    			</div>
+	    		</div>
+	    		<div class="bottom">
+	    			<div class="bottomLeft"></div>
+	    		</div>
+	    	</div>
+	    </div>
+	</apex:form>
+</apex:page>

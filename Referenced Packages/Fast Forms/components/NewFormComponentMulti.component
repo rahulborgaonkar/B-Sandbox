@@ -14,276 +14,10 @@
      <link rel="stylesheet" href="{!URLFOR($Resource.select2,'select2.css')}" />
      <script src="{!URLFOR($Resource.select2,'select2.js')}"></script>
      <script>    
-             $(function() {
-              /*  $("#source").select2();*/
-                $("select.drop-select").select2();
-                $(".drop-select").on("change", function(e) {
 
-                      if(e.val == '' || $('.formName').val().trim().length ==0){
-                          $('.newBtn').addClass('btnSaved');                        
-                      }else{
-                          $('.newBtn').removeClass('btnSaved');
-                      }
-                      $('#lineFirst').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-                      
-                      $('#hoverRel').show();
-                      $('#lineFirst').show();   
-                      $('#lineSecond').show();
+           
 
-                      
-                      //Default Condition
-                      $('#levelFirst').hide(); 
-                      $('#levelSecond').hide();
-                      $('#levelThird').hide();
-                      
-                      $("select.drop").select2('destroy');
-                      $("select.dropRelated").select2('destroy');
-                      $("select.dropRelatedThird").select2('destroy'); 
-                      $('#hoverRelSelectedImg').css('display','none')
-                      
-                      $('#levelFirst').show();
-                      $('#levelFirst .scroll-parent').hide();
-                      $('#levelSecond .scroll-parent').hide();
-                      $('#levelThird .scroll-parent').hide();
-                      
-                      $('#levelFirst #hoverRelImg').hide();  
-                      goToNextTourStop();
-                      isFinalStep = true;
-                      
-                 })
-           });
-           function isLookupOption(fistListId){
-               return fistListId.indexOf('lookup') > -1;
-           }
-           function callSeleted(){
-               $("select.drop").select2('destroy');
-               $("select.drop").select2();
-               $("select.drop").select2('val','');
-               $('.drop').show();
-               $('#levelFirst .scroll-parent').show();
-               $('#levelFirst #hoverRelImg').show();
-               $('#hoverRelImg').show();
-               $('#hoverRel').hide();    
-               $('#lineFirst').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineSolid.png')}");      
-               $("select.drop").on("change", function(e) {
-                         $('#levelSecond').hide();
-                         $("select.dropRelated").select2('destroy');
-                         $('#levelThird').hide();
-                         $("select.dropRelatedThird").select2('destroy');
-                         if(e.val == ''){
-                             
-                         }else{  
-                              $('.select2-container.drop a').find('img').remove();
-                              if($(this).children().children(":selected").attr("name").indexOf('detail') >-1)
-                                  $('.select2-container.drop a').append('<img class="branchImage" src="{!URLFOR($Resource.alpha,'A.png')}">');  
-                              $("select.dropRelated").select2('destroy');
-                              $("select.dropRelatedThird").select2('destroy');                          
-                              $('#lineSecond').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-                              $('#hoverRelSelected').show();
-                              $('#lineThird').show();
-                              $('#levelSecond').show();
-                              $('#levelSecond .scroll-parent').hide();
-                              $('#levelSecond #hoverRelSelectedImg').hide();
-                              goToNextTourStop();
-                          }                         
-                 });
-                var countObj=0;
-                $("select.drop > option").each(function() {  
-                  countObj++;
-                  if($(this).text() == '----Select Child Object----'){
-                    return false;
-                  }  
-                });
-                var idx=0,newHtml='',newHtmlgrp='';
-                var sec=0;
-                $("select.drop > option").each(function() { 
-                  idx++;
-                  if(countObj > idx){
-                    if(idx != 1){
-                        newHtml += '<option name="lookup" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                    }
-                    $(this).remove();
-                  }
-                  else{ 
-                    sec++;
-                    if(sec != 1){
-                        newHtmlgrp += '<option class="childoption2" name="detail" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                    }
-                    $(this).remove();
-                  }
-                });
-                $('select.drop').append('<option value="">----Select Object----</option>');
-                $('select.drop').append('<optgroup class="LookupOption" label="Lookup Objects" >' + newHtml + '</optgroup>' );
-                $('select.drop').append('<optgroup class="ChildOption" label="Child Objects" >' + newHtmlgrp + '</optgroup>' );
-                $("select.drop").select2().select2("val", null);
-           }
-           function callSeletedRelated(){
-               $("select.dropRelated").select2('destroy');
-               $("select.dropRelated").select2();
-               $('.dropRelated').show();
-               $("select.dropRelated").select2('val','');
-               $('#levelSecond .scroll-parent').show();
-               $('#levelSecond #hoverRelSelectedImg').show();
-               $('#hoverRelSelectedImg').show();                
-               $('#hoverRelSelected').hide();
-               $('.dropRelated').unbind();   
-               $('#lineSecond').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineSolid.png')}");  
-               
-               //remove first selected item from second list
-               var fistListVal = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSec').val();
-               var fistListId = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSec').children().children(":selected").attr("name");
-               
-               if(isLookupOption(fistListId) && fistListVal !=null && fistListVal.trim().length >0){
-                   $(".dropRelated option[value='"+fistListVal+"']").remove();
-               }
-                          
-               if(($('.drop option').length - 1) > 2){     
-                   $("select.dropRelated").on("change", function(e) {
-                             $('#levelThird').hide();
-                             $("select.dropRelatedThird").select2('destroy');
-                             if(e.val == ''){                                 
-                             }else{
-                                  $('.select2-container.dropRelated a').find('img').remove();
-                                  
-                                  if($(this).children().children(":selected").attr("name").indexOf('detail') >-1){
-                                      var count = 'A';
-                                      if($("select.drop").children().children(":selected").attr("name").indexOf('detail') >-1)
-                                      {
-                                          count = 'B';
-                                      }
-                                      var containerHtml = '<img class="branchImage" '+
-                                          'src="{!URLFOR($Resource.alpha)}/'+count+'.png"'+
-                                          '/>';
-                                      $('.select2-container.dropRelated a').append(containerHtml);
-                                  }
-                                  $("select.dropRelatedThird").select2('destroy');
-                                  $('#hoverRelSelectedThird').show();
-                                  $('#lineThird').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-                                  $('#levelThird').show();
-                                  $('#levelThird .scroll-parent').hide();
-                                  $('#levelThird #hoverRelSelectedThirdImg').hide();                         
-                              }
 
-                     });
-                    var countObj=0;
-                    $("select.dropRelated > option").each(function() {  
-                      countObj++;
-                      if($(this).text() == '----Select Child Object----'){
-                        return false;
-                      }  
-                    });
-                    var idx=0,newHtml='',newHtmlgrp='';
-                    var sec=0;
-                    $("select.dropRelated > option").each(function() { 
-                      idx++;
-                      if(countObj > idx){
-                        if(idx != 1){
-                            newHtml += '<option name="lookup" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                        }
-                        $(this).remove();
-                      }
-                      else{ 
-                        sec++;
-                        if(sec != 1){
-                            newHtmlgrp += '<option name="detail" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                        }
-                        $(this).remove();
-                      }
-                    });
-                    $('select.dropRelated').append('<option value="">----Select Object----</option>');
-                    $('select.dropRelated').append('<optgroup class="LookupOption" label="Lookup Objects" >' + newHtml + '</optgroup>' );
-                    $('select.dropRelated').append('<optgroup class="ChildOption" label="Child Objects" >' + newHtmlgrp + '</optgroup>' );
-                    $("select.dropRelated").select2().select2("val", null);
-                 }               
-           }
-           function callSeletedRelatedThird(){
-               /*
-               //Remove first list selected item from second list
-               var fistListVal = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSec').val();
-               if(fistListVal !=null && fistListVal.trim().length >0){
-                   $(".dropRelatedThird option[value='"+fistListVal+"']").remove();
-               }
-               */
-               //Remove first and second list selected item from third list
-               var secondListVal = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSecRelated').val();
-               var secondListId  = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSecRelated').children().children(":selected").attr("name");
-               if(isLookupOption(secondListId) && secondListVal !=null && secondListVal.trim().length >0){
-                   $(".dropRelatedThird option[value='"+secondListVal+"']").remove();
-               }
-               //remove first selected item from second list
-               var fistListVal = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSec').val();
-               var fistListId = $('#pg\\:frm\\:pgCp\\:cp\\:mergeTypeSelectSec').children().children(":selected").attr("name");               
-               if(isLookupOption(fistListId) && fistListVal !=null && fistListVal.trim().length >0){
-                   $(".dropRelatedThird option[value='"+fistListVal+"']").remove();
-               }               
-               
-               if(($('.drop option').length - 1) >= 3){
-                   $("select.dropRelatedThird").on("change", function(e) {
-                             if(e.val == ''){                                 
-                             }else{
-                                  $('.select2-container.dropRelatedThird a').find('img').remove();
-                                  if($(this).children().children(":selected").attr("name").indexOf('detail') >-1){
-                                      var count = 'A';
-                                      if($("select.drop").children().children(":selected").attr("name").indexOf('detail') >-1 )
-                                      {
-                                          count = 'B';
-                                      }
-                                      if($("select.dropRelated").children().children(":selected").attr("name").indexOf('detail') >-1)
-                                      {
-                                          if(count == 'B'){
-                                              count = 'C';
-                                          }else{
-                                              count = 'B';
-                                          }
-                                      }
-                                      var containerHtml = '<img class="branchImage" '+
-                                          'src="{!URLFOR($Resource.alpha)}/'+count+'.png"'+
-                                          '/>';
-                                      $('.select2-container.dropRelatedThird a').append(containerHtml);                         
-                                  }
-                              }
-                   });
-                   $("select.dropRelatedThird").select2('destroy');
-                   $("select.dropRelatedThird").select2();
-                   $("select.dropRelatedThird").select2('val','');
-                   $('#levelThird .scroll-parent').show();
-                   $('#lineThird').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineSolid.png')}");                   
-                   $('#levelThird #hoverRelSelectedThirdImg').show();
-                   $('#hoverRelSelectedImg').show();
-                   $('.dropRelatedThird').show();
-                   $('#hoverRelSelectedThird').hide();
-                    
-                    var countObj=0;
-                    $("select.dropRelatedThird > option").each(function() {  
-                      countObj++;
-                      if($(this).text() == '----Select Child Object----'){
-                        return false;
-                      }  
-                    });
-                    var idx=0,newHtml='',newHtmlgrp='';
-                    var sec=0;
-                    $("select.dropRelatedThird > option").each(function() { 
-                      idx++;
-                      if(countObj > idx){
-                        if(idx != 1){
-                            newHtml += '<option name="lookup" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                        }
-                        $(this).remove();
-                      }
-                      else{ 
-                        sec++;
-                        if(sec != 1){
-                            newHtmlgrp += '<option name="detail" value="' + $(this).val() + '">' + $(this).text() + ' </option>';
-                        }
-                        $(this).remove();
-                      }
-                    });
-                    $('select.dropRelatedThird').append('<option value="">----Select Object----</option>');
-                    $('select.dropRelatedThird').append('<optgroup class="LookupOption" label="Lookup Objects" >' + newHtml + '</optgroup>' );
-                    $('select.dropRelatedThird').append('<optgroup class="ChildOption" label="Child Objects" >' + newHtmlgrp + '</optgroup>' );
-                    $("select.dropRelatedThird").select2().select2("val", null);
-               }
-           }
         </script>
   <style>
       .help {
@@ -313,53 +47,7 @@ width: 16px !important;
             background-color: #f1f6f8;
             border-top:1px solid #93d4fe;
        }
-     /* Removed on feb 12 - causing bad design on dashboard page  .select2-results li.select2-result-with-children > .select2-result-label{
-           font-size: 18px;
-           font-weight: 400;
-           color: #616161;
-       }
-       .select2-container .select2-choice > .select2-chosen{
-           float: left;
-       }
-      .select2-container .select2-choice{
-          width: 340px;
-          padding: 5px !important;
-          padding-left: 20px !important;
-          border-radius: 5px !important;
-          background-color: #fff !important;
-          height: 23px !important;
-          line-height: inherit !important;
-          background-image: none !important;
-      }
-      .select2-results li{
-          padding: 9px 5px;
-          margin:0 ;
-      }
-      .select2-highlighted{
-           background-color: transparent !important;
-           color: #000 !important;
-           border-left: 5px solid #33aefd;
-           margin-left:-5px !important;
-      }
-      .select-target.select-theme-default {
-            width: 340px;
-            padding: 5px;
-            border: 1px solid #cecece;
-            padding-left: 20px;
-            height: 35px;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-        .select-options .select-option.select-option-highlight {
-            background: #FFF !important;
-            color: black !important;
-            border-left: 5px solid #33aefd;
-            padding: 0.5rem 1em 0.5rem 25px !important;
-        }
-      .select-content {
-        max-width: 340px !important;
-        width: 340px;
-        }*/
+      
     .container > center {
         background-color: #F1F6F8;
         min-height: 200px;
@@ -423,6 +111,7 @@ width: 16px !important;
         color:#052942;
         width:217px;
         padding: 10px; 
+        font-family: 'Open Sans','sans-serif';
          
     }
     .formName:focus{
@@ -594,137 +283,526 @@ width: 16px !important;
     .firstBlock label{
     font-size: 14px;
     }
+    .select-secondary-element-wrapper {
+    float: left;
+    padding-top: 8px;
+    clear: left;
+}
+.select-secondary-element-wrapper .scroll-parent.add-related-obj {
+ 
+    padding-left: 30px;
+    padding-top: 23px;
+    cursor: pointer;
+    margin-top: -14px;
+     clear:left;
+    background-repeat: no-repeat;
+    background-position: left -13px;
+}
+.select-secondary-element-wrapper .add-related-obj .add-related-item {
+    color: #052942;
+    font-weight: 600;
+    padding: 5px;
+    border-radius: 5px;
+    line-height: 20px;
+    border: dashed 1px #33aefd;
+    text-align: center;
+    width: 340px;
+    font-family: 'Open Sans';
+}
+.secondary-object-block .scroll-parent {
+    padding-left: 30px;
+    padding-top: 23px;
+    margin-top: -14px;
+    clear:left;
+    background-repeat: no-repeat;
+    background-position: left -13px;
+}
+.secondary-object-block .delete-object-box .rel-object-delete:hover {
+    display: block;
+}
+.secondary-object-block .delete-object-box .rel-object-delete {
+    float: right;
+    -moz-border-radius: 100px / 50px;
+    -webkit-border-radius: 100px / 50px;
+    border-radius: 12px / 12px;
+    background-color: rgba(5, 41, 66, .10);
+    border: solid 1px rgba(5, 41, 66, .18);
+    background-position: -200px -1px !important;
+    height: 25px;
+    width: 25px;
+    margin-top: 7px;
+}
+.secondary-object-block .delete-object-box {
+  float: left;
+    margin-left: 10px;
+    margin-top: 5px;
+    display: block;
+}
+
 </style>
 <script>
+var maxRelatedObject=9;
+  var selectedPrimary="";
+        var ffcommonResuorceUrl  = "{!URLFOR($Resource.ffcommon)}";
+        var colorTagArray=['Z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y'];
+          $(function() {
+               <apex:outputText rendered="{!if(isFreemium,true,false)}">  
+                         resetPrimaryForFreemium('select.drop-select'); 
+                          </apex:outputText> 
+                $("select.drop-select").select2();
+
+                
+           });
+function OnChangePrimary(e)
+{
+  <apex:outputText rendered="{!if(isFreemium,true,false)}">
+                      if(e.value != '' &&  $.inArray(e.value, validObjects())<0) 
+                      {
+                        
+                         
+                          upgradeNowMessage("Only Case, Account, Contact and Lead objects are available in Fast Forms free edition.","","http://visualantidote.com/fastforms#Subscribe");
+console.log(' selectedPrimary: '+selectedPrimary);
+$("select.drop-select").select2("val",selectedPrimary);
+                    return false;
+                      }
+                      else{
+                      </apex:outputText>
+
+                      if(e.value == '' || $('.formName').val().trim().length ==0){
+                          $('.newBtn').addClass('btnSaved'); 
+                                               
+                      }else{
+                          $('.newBtn').removeClass('btnSaved');
+                          
+                      }
+                      
+                      if(e.value == '')
+                      {
+                        $('.select-secondary-element-wrapper').hide();  
+                      }
+                      else
+                      {
+                        
+                        $('.select-secondary-element-wrapper').show();
+                          $('.select-secondary-element-wrapper .secondary-object-block').remove();
+                         
+                      }
+                       
+                       
+                      goToNextTourStop();
+                      isFinalStep = true;
+                       <apex:outputText rendered="{!if(isFreemium,true,false)}">
+                    }/*else condition ends*/
+                       </apex:outputText>
+                       selectedPrimary=e.value;
+}
+           function isLookupOption(fistListId){
+               return fistListId.indexOf('lookup') > -1;
+           }
+           
     $( document ).ready(function() {
         $('.newForm').hide();
         $('.newBtn').addClass('btnSaved'); 
-        setHover();        
+               
     });
     function checkFormName(val){
         if($(val).val() == undefined || $(val).val().trim().length == 0 || $("Select.drop-select").select2('val') == ''){
               $('.newBtn').addClass('btnSaved'); 
+              //$('.select-secondary-element-wrapper').hide(); 
           }else{
-              $('.newBtn').removeClass('btnSaved');                                                
+              $('.newBtn').removeClass('btnSaved'); 
+             // $('.select-secondary-element-wrapper').show();                                                
           }
     }
     
-    function setHover(){  
-            $('.hoverRelSelectedImg').bind('mouseover', function() {
-                $(this).attr("src","{!URLFOR($Resource.iconImages,'TrashHover.png')}");
-              });
-            $('.hoverRelSelectedImg').bind('mouseout', function() {
-                $(this).attr("src","{!URLFOR($Resource.iconImages,'TrashActive.png')}");
-            });          
-            $('.hoverRelImg').bind('mouseover', function() {
-                $(this).attr("src","{!URLFOR($Resource.alpha,'TrashHover.png')}");
-              });
-            $('.hoverRelImg').bind('mouseout', function() {
-                $(this).attr("src","{!URLFOR($Resource.alpha,'TrashActive.png')}");
-            });
-            $('.hoverRelSelectedThirdImg').bind('mouseover', function() {
-                $(this).attr("src","{!URLFOR($Resource.alpha,'TrashHover.png')}");
-              });
-            $('.hoverRelSelectedThirdImg').bind('mouseout', function() {
-                $(this).attr("src","{!URLFOR($Resource.alpha,'TrashActive.png')}");
-            });
-    }
+     
     function showDiv(){
         $("select.drop-select").select2("val", "");
         $('[id$="formName"]').val('');
         
        /* $("#createNewForm").removeClass('button').addClass('btnSaved');*/      
     } 
-    function callSaveForm(){
+    function fetchHiddenObjectValues(){
+                        var hiddenObjects = '';
+                      var seperator="";         
+                                 $('.select-secondary-element-wrapper').find('.secondary-object-block').each(function(indx,selectParentElem){
+                        var selectedValue=$(selectParentElem).find('select.select-secondary-element').val();
+                      if(!isNullOrEmpty(selectedValue))
+                      {
+                       var objtype= $(selectParentElem).find('select.select-secondary-element').children().children(':selected').attr('name');
+                        console.log(' selectedValue  '+selectedValue+'  objtype-'+objtype);
+                        hiddenObjects+=seperator+selectedValue+'##'+objtype;
+                        seperator=",";      
+                      }
+
+                    });
+                        return hiddenObjects;
+             }
+    function callSaveForm(){             
+             mixpanel.track('Create button clicked');
+             Intercom('trackEvent', 'clicked-create');
              var formName = $('[id$="formName"]').val();
-             var hiddenObject = '';
-                var valFirst='',valSecond='',valThird='';
+           <apex:outputText rendered="{!IF(!isFreemium || (isFreemium && (noOfForms<2)),true,false)}">
+             var hiddenObject = fetchHiddenObjectValues();
                 
-                if($("select.drop").select2('val') != '' && $('#levelFirst .scroll-parent').css('display')=='block'){
-                    valFirst=$("select.drop").select2('val');
-                    hiddenObject = valFirst+'##'+$("select.drop").children().children(':selected').attr('name');
-                }else
-                    valFirst=''
-                    
-                if($("select.dropRelated").select2('val') != '' && $('#levelSecond .scroll-parent').css('display')=='block'){
-                    valSecond=$("select.dropRelated").select2('val');
-                    hiddenObject += ','+valSecond+'##'+$("select.dropRelated").children().children(':selected').attr('name');
-                }else
-                    valSecond='' 
-               
-                if($("select.dropRelatedThird").select2('val') != '' && $('#levelThird .scroll-parent').css('display')=='block'){
-                    valThird=$("select.dropRelatedThird").select2('val');
-                    hiddenObject += ','+valThird+'##'+$("select.dropRelatedThird").children().children(':selected').attr('name');
-                }else
-                    valThird=''
                  
                 var selectedObject = $('select.drop-select').select2('val');
-   
-                saveForm(formName,selectedObject,valFirst,valSecond,valThird,hiddenObject); 
-    }
-    
-    function callObject(){
-        var selectedObject = $('select.drop-select').select2('val');
-        RelatedObject(selectedObject);
-     }
-    function callRelatedObject(){
-        //RelatedObjectRelated();
-        callSeletedRelated();
-    }
-    function callRelatedObjectThird(){    
-        //RelatedObjectRelatedThird();
-        callSeletedRelatedThird();
-    }
-    function delRelated(){
-        $('#levelFirst').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-        $('#hoverRel').css('display','block'); 
-        $('#levelFirst .scroll-parent').hide();
-        $('#hoverRelImg').css('display','none');       
-        $("select.drop").select2('destroy');
-        $('#levelSecond').hide();
-             $("select.dropRelated").select2('destroy');
-             $('#levelThird').hide();
-             $("select.dropRelatedThird").select2('destroy');  
-    }
-    function delRelatedTwo(){
-        $('#levelSecond').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-        $('#hoverRelSelected').css('display','block'); 
-        $('#levelSecond .scroll-parent').hide();         
-        $('#hoverRelSelectedImg').css('display','none');
-        $("select.dropRelated").select2('destroy');
-        $('#levelThird').hide();
-        $("select.dropRelatedThird").select2('destroy'); 
-    }
-    
-    function delRelatedThird(){
-        $('#levelThird').find('img').attr('src',"{!URLFOR($Resource.iconImages,'LineDoted.png')}");
-        $('#hoverRelSelectedThird').css('display','block'); 
-        $('#levelThird .scroll-parent').hide();
-        $('#hoverRelSelectedThirdImg').css('display','none');
-        $("select.dropRelatedThird").select2('destroy');
-    }
 
+                 var relatedObjectsJSON=[];
+                     $('.select-secondary-element-wrapper').find('.secondary-object-block').each(function(indx,selectParentElem){
+                        var selectedValue=$(selectParentElem).find('select.select-secondary-element').select2("val");
+                      if(!isNullOrEmpty(selectedValue))
+                      {
+                        relatedObjectsJSON.push(createRelJSONObj(selectedValue));
+                        console.log(' selectedValue  '+selectedValue+'  Index of Rel obj-'+indx);
+                      }
+
+                    });
+                    
+                                        var relatedObjectsXML='<relatedObjects>';
+                                        $.each(relatedObjectsJSON, function (index, jsonitem) {
+                                            if (relatedObjectsJSON[index].object!=null && relatedObjectsJSON[index].object!='') {
+                                               relatedObjectsXML+='<object>'+ relatedObjectsJSON[index].object+'</object>';
+                                            }
+                                        });
+                                        relatedObjectsXML+='</relatedObjects>';
+   
+                saveForm(formName,selectedObject,relatedObjectsXML,hiddenObject); 
+                  </apex:outputText>
+                  <apex:outputText rendered="{!IF(isFreemium && (1<noOfForms),true,false)}">
+
+                          upgradeNowMessage("A maximum of two forms can be created in Fast Forms free edition.","","http://visualantidote.com/fastforms#Subscribe");
+ 
+                  </apex:outputText>
+    }
+    function createRelJSONObj(relatedObjectName)
+    {
+        var data= { "object": relatedObjectName};
+      return data;
+    }
+    
+    function addRelatedObject(elemSource)
+    {
+      var selectedValue=$('select.drop-select').select2("val");      
+      if(!isNullOrEmpty(selectedValue) )
+      {
+         <apex:outputText rendered="{!if(isFreemium,false,true)}">
+        if($('.select-secondary-element-wrapper').find('.secondary-object-block').length==0)
+        {
+          toggleLoadingOnAddRelatedObj(true);
+        remoteGetRelatedObjectsJS(selectedValue,elemSource);
+        }
+        else
+        {
+         var selectHTML= $('.select-secondary-element-wrapper').find('.secondary-object-block:first-child select').html();
+           populateRelatedObject(elemSource,selectHTML);
+        }
+         </apex:outputText>
+         <apex:outputText rendered="{!if(isFreemium,true,false)}">
+         upgradeNowMessage("Related objects are only available for paid subscriptions.","","http://visualantidote.com/fastforms#Subscribe");
+ 
+         </apex:outputText>
+      }
+      else
+      {
+
+      }
+    }
+    function toggleLoadingOnAddRelatedObj(show)
+    {
+      if(show)
+      {
+        $('.select-secondary-element-wrapper .scroll-parent.add-related-obj').hide();
+       $('.select-secondary-element-wrapper .load-status-small').show();
+
+      }
+      else
+      {
+        $('.select-secondary-element-wrapper .scroll-parent.add-related-obj').show();
+       $('.select-secondary-element-wrapper .load-status-small').hide(); 
+      }
+    }
+    function populateRelatedObject(elemSource,selectHTML)
+    {
+       
+        var parentWrapperDiv=$(elemSource).parents('.select-secondary-element-wrapper');
+        $(parentWrapperDiv).find('div.scroll-parent.add-related-obj').hide();
+        
+            var relWrapElem=$('<div/>').html($('#relatedSelObjWrapperTEMP').html());
+            
+             
+             
+            if($(parentWrapperDiv).find('.secondary-object-block').length>0)
+            {
+            var lastDiv = $(parentWrapperDiv).find('.secondary-object-block').last();
+            $( lastDiv ).after( $( relWrapElem).html() );
+            }
+            else
+            {
+                $( parentWrapperDiv ).prepend( $( relWrapElem).html() );
+               
+            }
+            if($(parentWrapperDiv).find('.secondary-object-block').length>0)
+            {
+                var count=$(parentWrapperDiv).find('.secondary-object-block').length;
+                var lastDiv = $(parentWrapperDiv).find('.secondary-object-block').last();
+                $( lastDiv).find('select.select-secondary-element').removeClass('select-related-');
+                $( lastDiv).find('select.select-secondary-element').addClass('select-related-'+count);
+                $( lastDiv).find('select.select-secondary-element').attr('data-rel-index',count);
+             restructureRelatedObjSelectElement($( lastDiv).find('select.select-secondary-element'), selectHTML);
+            }
+            else
+            {
+                var elementDiv=$(parentWrapperDiv).find('.secondary-object-block');
+                $( elementDiv).find('select.select-secondary-element').removeClass('select-related-');
+                $( elementDiv).find('select.select-secondary-element').addClass('select-related-1');
+                $( elementDiv).find('select.select-secondary-element').attr('data-rel-index',1);
+                
+            }
+            if($(parentWrapperDiv).find('.secondary-object-block').length<maxRelatedObject)
+        {
+            $(parentWrapperDiv).find('div.scroll-parent.add-related-obj').show();
+        }
+          disableSelectLookupOption();
+    }
+    function restructureRelatedObjSelectElement(selectElement,selecthtml)
+    {
+        var selectedValue=$(selectElement).val();
+        var elemClass=$(selectElement).attr("class");
+         if(isNullOrEmpty(selectedValue))
+        {
+          selectedValue="";
+        }
+
+        $(selectElement).empty();
+        $(selectElement).append(selecthtml);
+        
+        $(selectElement).select2();
+        $(selectElement).select2("val", selectedValue);
+    }
+    function disableSelectLookupOption()
+    {
+      var lookupSelected=[];
+      $('.select-secondary-element-wrapper .secondary-object-block select').each(function (indx, selectElement) {
+        if($(selectElement).find('option:selected').attr('name')=='lookup')
+        {
+         // lookupSelected.push({"order":indx,"svalue":$(selectElement).val()});
+          lookupSelected.push($(selectElement).val());
+        }
+      });
+      $('.select-secondary-element-wrapper .secondary-object-block select option').each(function (indx, optionelem) {
+         var optgrpclass=$(optionelem).parent().attr('class');
+        if(!isNullOrEmpty(optgrpclass) && optgrpclass=='LookupOption')
+         {
+          $(optionelem).removeAttr('disabled', 'disabled');
+           $(optionelem).removeClass('display-none');
+        }
+      });
+       
+      $('.select-secondary-element-wrapper .secondary-object-block select').each(function (selindx, selectElement) {
+      $(selectElement).find('optgroup').each(function (index, optgroup) {
+        var optgrpclass=$(optgroup).attr('class');
+         if(!isNullOrEmpty(optgrpclass) && optgrpclass=='LookupOption')
+         {
+        $(optgroup).find('option').each(function (indx, optionelem) {
+console.log(' item found in array '+$.inArray($(optionelem).val(), lookupSelected))
+            if(!$(optionelem).is(':selected') && $.inArray($(optionelem).val(), lookupSelected)>=0) {
+                 
+                 
+                    $(optionelem).attr('disabled', 'disabled');
+                       $(optionelem).addClass('display-none');
+                    
+            }
+            else{
+             // $(optionelem).removeAttr('disabled', 'disabled');
+                      // $(optionelem).removeClass('display-none');
+            }
+        });
+        }
+    });
+      
+      });
+    }
+    function deleteRelatedObject(elemSource){
+       var parentObjectElemDiv=$(elemSource).parents('.secondary-object-block');
+       var relindx=$(parentObjectElemDiv).find('select.select-secondary-element').attr('data-rel-index');
+       
+       var relcount=1;
+       $('.select-secondary-element-wrapper .secondary-object-block').each(function (indx,selectElemParentDiv) {
+        var nextcount=relcount;
+        nextcount++;
+        var currentclass="select-related-"+relcount;
+        var nextclass="select-related-"+nextcount;
+        if($(selectElemParentDiv).find('select.select-secondary-element').hasClass(nextclass)){
+            $(selectElemParentDiv).find('select.select-secondary-element').removeClass(nextclass);
+            $(selectElemParentDiv).find('div.select2-container.select-secondary-element').removeClass(nextclass);
+        }
+        else if($(selectElemParentDiv).find('select.select-secondary-element').hasClass(currentclass)){
+         $(selectElemParentDiv).find('select.select-secondary-element').removeClass(currentclass);   
+         $(selectElemParentDiv).find('div.select2-container.select-secondary-element').removeClass(currentclass);  
+        }
+        
+        $(selectElemParentDiv).find('select.select-secondary-element').attr('data-rel-index','0');
+        relcount++;
+       });
+        $(parentObjectElemDiv).remove();
+        var relcount=1;
+        $('.select-secondary-element-wrapper .secondary-object-block').each(function (indx,selectElemParentDiv) {
+         var currentclass="select-related-"+relcount;
+        $(selectElemParentDiv).find('select.select-secondary-element').addClass(currentclass);
+        $(selectElemParentDiv).find('div.select2-container.select-secondary-element').addClass(currentclass);
+        $(selectElemParentDiv).find('select.select-secondary-element').attr('data-rel-index',relcount);
+        relcount++;
+       });
+        updateRelatedSelectElements();
+        if($('.select-secondary-element-wrapper').find('.secondary-object-block').length<maxRelatedObject)
+        {
+            $('.select-secondary-element-wrapper').find('div.scroll-parent.add-related-obj').show();
+        }
+    }
+    function OnChangeRelObject(elemSource)
+    {
+      updateRelatedSelectElements();
+      trackObjectSelected(elemSource.value, 'Related');
+    }
+    function updateRelatedSelectElements()
+{
+    $('.secondary-object-block .select2-container.select-secondary-element').each(function(indx,select2Elem){
+        /*remove all classes starts with color-tag*/
+        $(select2Elem).removeClass (function (index, css) {
+            return (css.match (/(^|\s)color-tag-\S+/g) || []).join(' ');
+        });
+    });
+    
+      
+    var childCount=1;   
+     
+    $('.select2-container.select-secondary-element a').find( ".branchImage" ).remove();;
+    $('.secondary-object-block .scroll-parent').each(function (indx, selectElemParent) {
+        var fistListVal = $(selectElemParent).find('select.select-secondary-element').val();
+        var groupLabel = $(selectElemParent).find("select.select-secondary-element option[value='" + fistListVal + "']").parent().attr('label');
+        var containerHtml = '';
+        if (groupLabel == "Child Objects") {
+            //containerHtml = '<img class="branchImage" src="' + urlResAlpha + colorTagArray[countChild] + '.png" />';
+           containerHtml = '<img class="branchImage" src="'+ffcommonResuorceUrl+'/iconalpha/'+colorTagArray[childCount]+'.png" />';
+            childCount += 1;
+        }
+        $(selectElemParent).find('.select2-container.select-secondary-element a').append(containerHtml);
+
+    });
+ disableSelectLookupOption();
+}
+function getRelatedObjSelectOptionHTML(selectOptionData){
+        var htmlForSelect='';
+                    console.log(' Fill select ');
+                        var countObj=0;
+                         
+                        $.each(selectOptionData,function(indx,optionElem) {  
+                                countObj++;
+                                if(optionElem.FFText == '----Select Child Object----'){
+                                        return false;
+                                }  
+                        });
+                        var idx=0,newHtml='',newHtmlgrp='';
+                        var sec=0;
+                          $.each(selectOptionData,function(indx,optionElem) {  
+                                idx++;
+                                if(countObj > idx){
+                                    // console.log(' here in if  lookup select val -' + $(this).val());
+                                        if(idx != 1){
+                                              newHtml += '<option name="lookup" value="' + extraSpaceSafe(optionElem.FFValue) + '">' + extraSpaceSafe(optionElem.FFText) + ' </option>';
+                                        }
+                                         
+                                }
+                                else{ 
+                            //  console.log(' here in if  detail select val -' + $(this).val());
+                                        sec++;
+                                        if(sec != 1){
+                                                newHtmlgrp += '<option class="childoption2" name="detail" value="' + optionElem.FFValue + '">' + optionElem.FFText + ' </option>';
+                                        }
+                                     
+                                }
+                        });
+                             
+                        htmlForSelect+='<option value="">----Select Object----</option>';
+                        htmlForSelect+='<optgroup class="LookupOption" label="Lookup Objects" >' + newHtml + '</optgroup>' ;
+                        htmlForSelect+='<optgroup class="ChildOption" label="Child Objects" >' + newHtmlgrp + '</optgroup>' ;
+                        
+                                
+                     return htmlForSelect;    
+                                
+                }
+                function extraSpaceSafe(elemValue)
+                {
+                    if(elemValue!==undefined && elemValue!=null && elemValue!='')
+                    {
+                        elemValue=elemValue.replace('  (',' (');
+                    }
+                    return elemValue;
+                }
+                function remoteGetRelatedObjectsJS(primaryobjectname,selectElemSource) {
+                /*JAVASCRIPT Remoting Method to populate Email draft configuration xml */
+                 console.log(' Call to remoteGetRelatedObjectsJS- primary object name: '+primaryobjectname);
+                Visualforce.remoting.Manager.invokeAction(
+                        '{!URLENCODE($RemoteAction.CKEditorNewFormMultiController.remoteGetRelatedObjects)}',
+                        primaryobjectname,
+                        function(result, event) {
+                              if (event.status) {
+                                  
+                                  
+                                  if (result != null && result.length > 0) {
+                                    console.log(' remoteGetRelatedObjectsJS result HTML-' + result);
+                                      for (i = 0; i < result.length; i++) {
+                                          console.log(' Output -'+i+' -- '+ result[i]);   
+
+                                      }
+                                      var selectHTML =getRelatedObjSelectOptionHTML(result);
+                                      toggleLoadingOnAddRelatedObj(false);
+                                      populateRelatedObject(selectElemSource,selectHTML);
+
+                                       
+                                  } else {
+                                       console.log('No account information found');
+                                       toggleLoadingOnAddRelatedObj(false);
+                                  }
+
+                              } else if (event.type === 'exception') {
+                                  //console.log(" Exception while getting available theme list- " + event.message + "<br/>\n<pre>" + event.where + "</pre>");
+                              } else {
+                                  //console.log(" unknown Exception while getting available themes- " + event.message);
+                              }
+                          },
+                        {
+                                escape: true
+                        }
+                );
+        }
+
+        function trackObjectSelected(objName,objType)
+        {
+          var metadata = {
+            object_name: objName
+          };          
+          Intercom('trackEvent', 'selected-' + objType + '-object', metadata);          
+        }
 </script>
 <apex:outputPanel id="newForm" styleClass="newForm" layout="block" >
 <div class="container">
 <apex:actionFunction immediate="true" name="saveForm" action="{!saveForm}" reRender="pg" status="status">
             <apex:param name="sForm" value="" assignTo="{!formName}" />
             <apex:param name="sObj" value="" assignTo="{!sobjectName}" />
-            <apex:param name="sFirst" value="" assignTo="{!selectedRelatedFieldName}" />
-            <apex:param name="sSecond" value="" assignTo="{!selectedFieldNameSecond }" />
-            <apex:param name="sThird" value="" assignTo="{!selectedFieldNameThird }" />
+             <apex:param name="relatedObjsXml" value="relatedObjsXml"  />
             <apex:param name="hiddenObject" value="" assignTo="{!hiddenSelectedObjects}" />
 </apex:actionFunction>
  
-<apex:actionFunction name="RelatedObject" action="{!RelatedObject}" reRender="mergeTypeSelectSec,mergeTypeSelectSecRelated,mergeTypeSelectSecRelatedThird" status="status" oncomplete="callSeleted();return false;">
-    <apex:param name="aa" value="" assignTo="{!sobjectName}"/>
-</apex:actionFunction>
-<apex:actionFunction name="RelatedObjectRelated" action="{!RelatedObject}" reRender="mergeTypeSelectSecRelated" status="status" oncomplete="callSeletedRelated();return false;"/>
-<apex:actionFunction name="RelatedObjectRelatedThird" action="{!RelatedObject}" reRender="mergeTypeSelectSecRelatedThird" status="status" oncomplete="callSeletedRelatedThird();return false;"/>
-<center><table id="newForm">
-<!--     <tr> -->
-<!--         <td colspan="3"><div id="isError" style="text-align:center;color:red"></div></td> -->
-<!--     </tr> -->
+  
+<center>
+
+<div class="new-form-block-wrapper" id="newForm">
+ 
+<apex:outputPanel styleClass="new-form-block" layout="block"  >
+<table >
+ 
      <tr>
         <td class="firstTd">        
             
@@ -742,7 +820,7 @@ width: 16px !important;
         </div> </div>
         
              <div class="scroll-parent">
-                <select class="drop-select" id="mergeTypeSelect">
+                <select class="drop-select" id="mergeTypeSelect" onchange="mixpanel.track('First object selected', {'Object':this.value});trackObjectSelected(this.value, 'Primary');OnChangePrimary(this);">
                     <apex:repeat value="{!SobjectList}" var="modalList"> 
                         <apex:repeat value="{!modalList}" var="modal">           
                             <option value="{!modal.value}">{!modal.label}</option>
@@ -751,47 +829,40 @@ width: 16px !important;
                 </select>             
              </div>
              <br/>
-             <div id="levelFirst" style="margin-left: 35px;margin-top: 25px;display:none">
-                <div id="lineFirst" style="float: left;margin-left: -29px;margin-top: -37px;display:none"><img src="{!URLFOR($Resource.iconImages,'LineDoted.png')}" /> </div>
-                <div id="hoverRel"  class="relatedDiv" onClick="callObject();return false;">+ Add Related Object  </div>
-                <div class="scroll-parent" style="margin-left: -16px;"><!-- first child list -->
-                     <apex:selectList styleclass="drop" style="display:none" id="mergeTypeSelectSec"  value="{!selectedRelatedFieldName}" multiselect="false" size="1">                         
-                             <apex:selectOptions value="{!fieldRelatedList}"></apex:selectOptions>                                                   
-                     </apex:selectList>
-                                          
-                </div>
-                <div id="hoverRelImg" onClick="delRelated();return false;" style="float:left;margin-left: 10px;margin-top: 5px;display:none"/>
-             <br/>
-             </div>
-             
-             <div id="levelSecond" style="margin-left: 35px;margin-top: 25px;display:none">
-                <div id="lineSecond" style="float: left;margin-left: -29px;margin-top: -37px;display:none"><img src="{!URLFOR($Resource.iconImages,'LineDoted.png')}" /> </div>
-                <div id="hoverRelSelected" class="relatedDiv" onClick="callRelatedObject();return false;">+ Add Related Object </div>
-                <div class="scroll-parent" style="margin-left: -16px;">
-                     <apex:selectList styleclass="dropRelated" style="display:none" id="mergeTypeSelectSecRelated"  value="{!selectedFieldNameSecond}" multiselect="false" size="1">
-                              <apex:selectOptions value="{!fieldRelatedList}"></apex:selectOptions>                           
-                     </apex:selectList>
-                </div>
-                <div id="hoverRelSelectedImg" onClick="delRelatedTwo();return false;" style="float:left;margin-left: 10px;margin-top: 5px;display:none"/>
-            <br/>
-            </div>
-            
-            <div id="levelThird" style="margin-left: 35px;margin-top: 25px;display:none">
-                <div id="lineThird" style="float: left;margin-left: -29px;margin-top: -37px;display:none"><img src="{!URLFOR($Resource.iconImages,'LineDoted.png')}" /> </div>
-                <div id="hoverRelSelectedThird" class="relatedDiv" onClick="callRelatedObjectThird();return false;">+ Add Related Object </div>
-                <div class="scroll-parent" style="margin-left: -16px;">
-                     <apex:selectList styleclass="dropRelatedThird" style="display:none" id="mergeTypeSelectSecRelatedThird"  value="{!selectedFieldNameThird}" multiselect="false" size="1">
-                          <apex:selectOptions value="{!fieldRelatedList}"></apex:selectOptions> 
-                     </apex:selectList>
-                </div>
-                <div id="hoverRelSelectedThirdImg" onClick="delRelatedThird();return false;" style="float:left;margin-left: 10px;margin-top: 5px;display:none" />
-             </div>
+               <div class="select-secondary-element-wrapper" style="display:none">
+               <div class="scroll-parent add-related-obj" >
+                                                                        <div class="add-related-item"   onclick="addRelatedObject(this);return false;"  >+ Add Related Object </div> 
+
+                                                                        </div>
+                   <div class="load-status-small"  style="display:none;margin:5px 30px;" >
+                   <div class="dialogSmall"></div> 
+                   </div>
+               </div>
+
         </td>        
         <td class="bodr"><!--<br/>-->
         <div style="padding-top: 30px;min-height:90px;"><a href="javascript:void(0);" class="button newBtn" id="createBtn" onClick="callSaveForm();return false;">Create</a></div></td>
     </tr>    
 </table>
+</apex:outputPanel>
+</div>
+
 </center>
 </div>
+ 
+<div id="relatedSelObjWrapperTEMP" style="display:none">
+                           <div        class="secondary-object-block" >
+                        <div class="scroll-parent" >
+                        <select data-selected="" data-rel-index="0"  class="select-secondary-element select-related-" onchange="OnChangeRelObject(this);"  > 
+
+                        </select>
+                         </div>
+                         <div class="delete-object-box">
+                          <a class="fffe-actions rel-object-delete"  onclick="deleteRelatedObject(this);return false;"></a> 
+                           </div>
+                           </div> 
+                </div>
+
 </apex:outputPanel>
+
 </apex:component>

@@ -1,0 +1,6 @@
+<!-- Delegates to the controller to determine whether the invoice should be edited or amended, the controller will serve up
+the correct edit or amend page -->
+<apex:page standardController="c2g__codaInvoice__c" extensions="c2g.CODAInvoiceController" 
+action="{!determineEditOrAmendAction}">
+
+</apex:page>

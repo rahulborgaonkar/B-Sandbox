@@ -1,0 +1,6 @@
+<apex:page standardController="c2g__AsOfAging__c">
+    <apex:form >
+        <c:fflib_batchInfo id="jobStatus" batchControlRecordId="{!Id}"
+                                          batchJobClass="AsOfAgingBatch"/>
+    </apex:form>
+</apex:page>

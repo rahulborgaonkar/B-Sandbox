@@ -4,8 +4,13 @@
         <center>
             <div class="trialExpiryNumDays">{!daysLeftToExpiry}</div>
             <div class="trialExpiryMsg">days left on your free trial</div>
-            <a href="http://visualantidote.com/fastforms#Subscribe" alt="Upgrade today!" class="trialExpiryUpgradeBtn" target="_blank">UPGRADE NOW</a>
+            <a href="https://visualantidote.com/fastforms?orgid={!$Organization.Id}#Subscribe" alt="Subscribe today!" class="trialExpiryUpgradeBtn" onclick="mixpanel.track('Subscribe button clicked',{ 'Days to expiry': '{!daysLeftToExpiry}'});" target="_blank">SUBSCRIBE NOW</a>
         </center>
         </div>
     </apex:outputPanel>
+    <apex:outputPanel layout="block" styleClass="freemium-block" rendered="{!IF(isFreemiumVer,true,false)}">
+    <div class="freemium-block-inner"  >
+<h3>You have <span class="forms-count">{!IF(formsCount>1,'0',(2-formsCount))}</span> {!IF(formsCount!=1,'forms','form')} remaining</h3><a class="trialExpiryUpgradeBtn" href="http://visualantidote.com/fastforms#Subscribe" target="_blank">UPGRADE NOW</a>
+  </div>
+</apex:outputPanel>
 </apex:component>

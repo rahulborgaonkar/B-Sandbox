@@ -26,6 +26,7 @@
         <members>CompanyMapperFactory</members>
         <members>CompanyMapperFactoryTest</members>
         <members>CompanyMapperTest</members>
+        <members>Config</members>
         <members>ExchangeRateMapperFactory</members>
         <members>ExchangeRateMapperFactoryTest</members>
         <members>GeneralLedgerAccountMapper</members>
@@ -87,6 +88,9 @@
         <members>ProductMapper</members>
         <members>ProductMapperFactory</members>
         <members>ProductMapperFactoryTest</members>
+        <members>RecordTypeMapper</members>
+        <members>RecordTypeMapperFactory</members>
+        <members>RecordTypeMapperFactoryTest</members>
         <members>StringBuilder</members>
         <members>StringBuilderTest</members>
         <members>TaxCodeMapper</members>
@@ -200,6 +204,7 @@
         <members>ManageExpenseLines</members>
         <members>ManageExpensesLinesHeader</members>
         <members>ManageProductLines</members>
+        <members>MessageObjectIdDoesNotExist</members>
         <members>MultipleCompanies</members>
         <members>MustEnterGLA</members>
         <members>NoCurrentCompany</members>

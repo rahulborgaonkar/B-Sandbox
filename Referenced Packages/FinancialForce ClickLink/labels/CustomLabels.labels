@@ -1,0 +1,2349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ActionNameMustNotBeNullOrEmpty</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ActionNameMustNotBeNullOrEmpty</shortDescription>
+        <value>actionName must not be null or empty.</value>
+    </labels>
+    <labels>
+        <fullName>AllSelectedRecordsAlreadyProcessed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AllSelectedRecordsAlreadyProcessed</shortDescription>
+        <value>The records you selected have already been processed.</value>
+    </labels>
+    <labels>
+        <fullName>AllSelectedRecordsNotEligible</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>AllSelectedRecordsNotEligible</shortDescription>
+        <value>None of the records you selected are eligible for processing.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotAddLine</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotAddLine</shortDescription>
+        <value>Cannot add line items to this record. A ClickLink rule is currently in use which synchronizes this record with another record and that record does not allow new lines to be added at this time.</value>
+    </labels>
+    <labels>
+        <fullName>CanNotFillTargetCreationOnSourceInsertIfSyncEnabled</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CanNotFillTargetCreationOnSourceInsertIfSyncEnabled</shortDescription>
+        <value>The Target Relation with Source field cannot contain the value One to Many while the Sync Enabled checkbox is selected. Clear the Sync Enabled checkbox or set the Target Relation with Source field to None.</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>ChatterNoEnabled</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ChatterNoEnabled</shortDescription>
+        <value>You must enable Chatter.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkFeedLinkMessageOrFeedLinkMessageTargetIsRequired</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkFeedLinkMessageOrFeedLinkMessageTargetIsRequired</shortDescription>
+        <value>You must complete one of the following fields: Feed Link Message or Feed Link Message Target Field.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkFeedMessageOrFeedMessageTargetIsRequired</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkFeedMessageOrFeedMessageTargetIsRequired</shortDescription>
+        <value>You must complete one of the following fields: Feed Message or Feed Message Target Field.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkJobAlreadyRunning</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkJobAlreadyRunning</shortDescription>
+        <value>A ClickLink Job is already running for this source object. Try again later. If you believe this is not the case, delete the ClickLink Managed Job associated with the source object and try again.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkNotValidAPIName</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkNotValidAPIName</shortDescription>
+        <value>This is not a valid API name for the {0} object.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkObjectNotInNamespace</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkObjectNotInNamespace</shortDescription>
+        <value>Invalid objects specified in the source and target object fields. At a minimum, the source or target object must belong to a permitted namespace. Permitted namespaces are: {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkRuleIdNotExist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkRuleIdNotExist</shortDescription>
+        <value>The ClickLink rule no longer exists.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkSyncCanNotDeleteLine</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkSyncCanNotDeleteLine</shortDescription>
+        <value>Cannot delete line items on this record. A ClickLink rule is currently in use which synchronizes this record with another record and that record cannot be deleted at this time.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkSyncCanNotEditField</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkSyncCanNotEditField</shortDescription>
+        <value>Cannot edit this field. A ClickLink rule is currently in use which synchronizes this field with a field on another record. The target record cannot be updated for the following reason:</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkYouCannotPopulateFeedLinkMessageAndFeedLinkMessageTarget</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkYouCannotPopulateFeedLinkMessageAndFeedLinkMessageTarget</shortDescription>
+        <value>Complete only one of the following fields: Feed Link Message or Feed Link Message Target Field.</value>
+    </labels>
+    <labels>
+        <fullName>ClickLinkYouCannotPopulateFeedMessageAndFeedMessageTarget</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ClickLinkYouCannotPopulateFeedMessageAndFeedMessageTarget</shortDescription>
+        <value>Complete only one of the following fields: Feed Message or Feed Message Target Field.</value>
+    </labels>
+    <labels>
+        <fullName>CloneClickLinkRule</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CloneClickLinkRule</shortDescription>
+        <value>Clone ClickLink Rule</value>
+    </labels>
+    <labels>
+        <fullName>CloneSuffix</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CloneSuffix</shortDescription>
+        <value>Clone</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmClone</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConfirmClone</shortDescription>
+        <value>Please confirm you wish to clone this ClickLink rule.</value>
+    </labels>
+    <labels>
+        <fullName>Continue</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Continue</shortDescription>
+        <value>Continue</value>
+    </labels>
+    <labels>
+        <fullName>ConvertSourceRecord</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConvertSourceRecord</shortDescription>
+        <value>Converting record {0} ({1})</value>
+    </labels>
+    <labels>
+        <fullName>ConvertedRecord</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ConvertedRecord</shortDescription>
+        <value>Converted record {0} ({1}) to {2} ({3})</value>
+    </labels>
+    <labels>
+        <fullName>CreateBasicMapping</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>CreateBasicMapping</shortDescription>
+        <value>New ClickLink Basic Mapping</value>
+    </labels>
+    <labels>
+        <fullName>Daily</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Daily</shortDescription>
+        <value>Daily</value>
+    </labels>
+    <labels>
+        <fullName>DeleteIntegrationRuleValidation</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DeleteIntegrationRuleValidation</shortDescription>
+        <value>Cannot delete this rule. The rule is already referenced in one or more relationships. To delete the rule you must first change relationships or delete them.</value>
+    </labels>
+    <labels>
+        <fullName>DeleteNotAllowedFieldsInSync</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DeleteNotAllowedFieldsInSync</shortDescription>
+        <value>It is not possible to delete this record at this time, as it is being synchronized with a related record.</value>
+    </labels>
+    <labels>
+        <fullName>DocumentNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DocumentNotFound</shortDescription>
+        <value>Document &quot;{0}&quot; not found.</value>
+    </labels>
+    <labels>
+        <fullName>ErrorMappingCustomSetting</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorMappingCustomSetting</shortDescription>
+        <value>Error occurred mapping custom setting field {0}.{1} value &apos;&apos;{2}&apos;&apos; to {3}.{4} : {5}</value>
+    </labels>
+    <labels>
+        <fullName>ErrorMappingLiteral</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorMappingLiteral</shortDescription>
+        <value>Error occurred mapping literal value &apos;&apos;{0}&apos;&apos; to {1}.{2} : {3}</value>
+    </labels>
+    <labels>
+        <fullName>ErrorMappingSource</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorMappingSource</shortDescription>
+        <value>Error occurred mapping source field {0}.{1} value &apos;&apos;{2}&apos;&apos; to {3}.{4} : {5}</value>
+    </labels>
+    <labels>
+        <fullName>ErrorsOccuredUpdating</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ErrorsOccuredUpdating</shortDescription>
+        <value>Errors occurred updating records.</value>
+    </labels>
+    <labels>
+        <fullName>ExportDeprecated</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ExportDeprecated</shortDescription>
+        <value>This method of exporting rules is no longer in use. To export ClickLink rules, use the Export button on the ClickLink Rules list view.</value>
+    </labels>
+    <labels>
+        <fullName>FieldInvalidForExternalSourceObject</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldInvalidForExternalSourceObject</shortDescription>
+        <value>This field cannot be set because the source object is an external object.</value>
+    </labels>
+    <labels>
+        <fullName>FieldNotCustomSetting</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldNotCustomSetting</shortDescription>
+        <value>Field is not a custom setting. Change the Mapping Type to Source Field, or type the name of a custom setting field.</value>
+    </labels>
+    <labels>
+        <fullName>FieldNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldNotFound</shortDescription>
+        <value>Field or object does not exist. Check the fields in the object and add a custom field if necessary or check the object name.</value>
+    </labels>
+    <labels>
+        <fullName>FieldNotFoundOnObject</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldNotFoundOnObject</shortDescription>
+        <value>Field {0} not found on the object {1}.</value>
+    </labels>
+    <labels>
+        <fullName>FieldNotValidForMappingType</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldNotValidForMappingType</shortDescription>
+        <value>You cannot specify a value for this field with the selected mapping type.</value>
+    </labels>
+    <labels>
+        <fullName>FieldValueRequired</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>FieldValueRequired</shortDescription>
+        <value>You must enter a value.</value>
+    </labels>
+    <labels>
+        <fullName>Frequency</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Frequency</shortDescription>
+        <value>Frequency</value>
+    </labels>
+    <labels>
+        <fullName>Friday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Friday</shortDescription>
+        <value>Friday</value>
+    </labels>
+    <labels>
+        <fullName>IRExportBackBtn</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportBackBtn</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>IRExportChildrenIncluded</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportChildrenIncluded</shortDescription>
+        <value>&lt;br/&gt;These include children of the rules that you selected.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportDownloadBtn</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportDownloadBtn</shortDescription>
+        <value>Download</value>
+    </labels>
+    <labels>
+        <fullName>IRExportDownloadMessage</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportDownloadMessage</shortDescription>
+        <value>&lt;br/&gt;To download these rules as a JSON file, click Download.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailBody</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailBody</shortDescription>
+        <value>The ClickLink Import process is complete.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailBodyError</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailBodyError</shortDescription>
+        <value>Unable to import ClickLink rules. These errors occurred while importing ClickLink lines:</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailBodySuccess</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailBodySuccess</shortDescription>
+        <value>&lt;br/&gt;These ClickLink rules were successfully imported:</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailBodySuccessOne</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailBodySuccessOne</shortDescription>
+        <value>&lt;br/&gt;One ClickLink was imported successfully.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailDisplayName</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailDisplayName</shortDescription>
+        <value>FinancialForce</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailFooter</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailFooter</shortDescription>
+        <value>&lt;br/&gt;&lt;br/&gt;Thank you for using FinancialForce ClickLink.&lt;br/&gt;&lt;br/&gt;Created by FinancialForce.com&lt;br/&gt;&lt;a href=&quot;http://www.FinancialForce.com/&quot;&gt;http://www.FinancialForce.com/&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IRExportEmailSubject</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportEmailSubject</shortDescription>
+        <value>FinancialForce ClickLink: ClickLink Import process is complete</value>
+    </labels>
+    <labels>
+        <fullName>IRExportError</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportError</shortDescription>
+        <value>Unable to export ClickLink rules at this time. Contact your administrator for assistance.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportHyperlink</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportHyperlink</shortDescription>
+        <value>&lt;a href=&quot;https://login.salesforce.com/{0}&quot;&gt;{1}&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>IRExportImportBtn</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportImportBtn</shortDescription>
+        <value>Import</value>
+    </labels>
+    <labels>
+        <fullName>IRExportImportStrarted</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportImportStrarted</shortDescription>
+        <value>Importing ClickLink rules. You will be notified by email when the process is complete.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportImportValidationHeader</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportImportValidationHeader</shortDescription>
+        <value>Unable to import the ClickLink rules. These errors occurred:</value>
+    </labels>
+    <labels>
+        <fullName>IRExportInvalidJSON</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportInvalidJSON</shortDescription>
+        <value>Invalid content in the import file. The JSON file that you have chosen to import  is empty or contains invalid JSON data.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportNoFileToImport</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportNoFileToImport</shortDescription>
+        <value>No JSON rule file selected. Select a JSON rule file that has the .json file extension.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportNoIRInFile</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportNoIRInFile</shortDescription>
+        <value>No ClickLink rules to import. The JSON file that you have chosen to import does not contain any ClickLink rules.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportNoIRSelected</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportNoIRSelected</shortDescription>
+        <value>No ClickLink rules are selected. You must select at least one ClickLink before clicking Export.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportSuccessExportHeader</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportSuccessExportHeader</shortDescription>
+        <value>You selected {0} for export. {1} ClickLink rules were processed for exporting.</value>
+    </labels>
+    <labels>
+        <fullName>IRExportTitle</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportTitle</shortDescription>
+        <value>Export ClickLink Rules</value>
+    </labels>
+    <labels>
+        <fullName>IRExportValidationError</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRExportValidationError</shortDescription>
+        <value>{0} refers to {1}, which does not exist in this organization.</value>
+    </labels>
+    <labels>
+        <fullName>IRImportFileToImport</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRImportFileToImport</shortDescription>
+        <value>JSON Rule File to Import</value>
+    </labels>
+    <labels>
+        <fullName>IRImportSubTitle</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRImportSubTitle</shortDescription>
+        <value>To import ClickLink rules, enter the location of a JSON file containing the ClickLink rules you want to import.</value>
+    </labels>
+    <labels>
+        <fullName>IRImportTitle</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRImportTitle</shortDescription>
+        <value>Import ClickLink Rules</value>
+    </labels>
+    <labels>
+        <fullName>IRJobsCanNotDelete</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IRJobsCanNotDelete</shortDescription>
+        <value>Cannot delete this record. An Apex job related to this record is still running. Try again later.</value>
+    </labels>
+    <labels>
+        <fullName>ImportDeprecated</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ImportDeprecated</shortDescription>
+        <value>This method of importing rules is no longer in use. To import ClickLink rules, use the Import button on the ClickLink Rules list view.</value>
+    </labels>
+    <labels>
+        <fullName>InformationMessageRecordsNotSelected</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InformationMessageRecordsNotSelected</shortDescription>
+        <value>Following records will not be processed:</value>
+    </labels>
+    <labels>
+        <fullName>IntegrationRuleButton</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>IntegrationRuleButton</shortDescription>
+        <value>ClickLink rule {0} is being processed.</value>
+    </labels>
+    <labels>
+        <fullName>InvalidId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidId</shortDescription>
+        <value>Unable to create target record for source record {0}. In mapping {1}, the field specified in the Source Resolution Control Field does not contain an ID but the Source Resolution Control Value is ID checkbox is selected. Either deselect the Source Resolution Control Value is ID checkbox or enter the API name of a field of type ID.</value>
+    </labels>
+    <labels>
+        <fullName>InvalidLicense</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidLicense</shortDescription>
+        <value>The ClickLink license key defined in this org is not valid. Enter a valid license key in the ClickLink Settings License Key field in Custom Settings.</value>
+    </labels>
+    <labels>
+        <fullName>InvalidRelationshipDepth</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidRelationshipDepth</shortDescription>
+        <value>The rule cannot be cloned - the rule you are cloning contains relationships deeper than one level.</value>
+    </labels>
+    <labels>
+        <fullName>InvalidSourceField</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidSourceField</shortDescription>
+        <value>SourceField must not be null or blank.</value>
+    </labels>
+    <labels>
+        <fullName>InvalidTargetField</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>InvalidTargetField</shortDescription>
+        <value>TargetField must not be null or blank.</value>
+    </labels>
+    <labels>
+        <fullName>JobCompleted</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JobCompleted</shortDescription>
+        <value>Job completed</value>
+    </labels>
+    <labels>
+        <fullName>JobFailedToSubmit</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JobFailedToSubmit</shortDescription>
+        <value>Job failed to submit.</value>
+    </labels>
+    <labels>
+        <fullName>JobSubmitted</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JobSubmitted</shortDescription>
+        <value>A Batch Apex Job has been submitted to process the selected records. Once the job is complete, check for any errors in ClickLink logs.</value>
+    </labels>
+    <labels>
+        <fullName>JobSubmittedId</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JobSubmittedId</shortDescription>
+        <value>Batch Apex job {0} was submitted.</value>
+    </labels>
+    <labels>
+        <fullName>JobSubmittedSuccess</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>JobSubmittedSuccess</shortDescription>
+        <value>Job has been successfully submitted.</value>
+    </labels>
+    <labels>
+        <fullName>ListViewNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ListViewNotFound</shortDescription>
+        <value>List view {0} not found.</value>
+    </labels>
+    <labels>
+        <fullName>LookupMappingsAreUnsupportedForExternalObjects</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>LookupMappingsAreUnsupportedForExternalObjects</shortDescription>
+        <value>Lookup mappings are not supported when either the source object or the target lookup object is an external object.</value>
+    </labels>
+    <labels>
+        <fullName>LookupMappingsUnSupported</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>LookupMappingsUnSupported</shortDescription>
+        <value>Cannot map lookup fields from text fields when executing rules configured to create target records on insertion of source records. Delete mapping {0} or change it so that it maps from a source lookup field.</value>
+    </labels>
+    <labels>
+        <fullName>Monday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Monday</shortDescription>
+        <value>Monday</value>
+    </labels>
+    <labels>
+        <fullName>Monthly</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Monthly</shortDescription>
+        <value>Monthly</value>
+    </labels>
+    <labels>
+        <fullName>MultipleMatchForAction</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultipleMatchForAction</shortDescription>
+        <value>More than one ClickLink Action for this source object has been defined. Delete the duplicate ClickLink Action.</value>
+    </labels>
+    <labels>
+        <fullName>MultiplePagesMatchForButton</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MultiplePagesMatchForButton</shortDescription>
+        <value>More than one ClickLink Button for this source object {0} for this page {1} has been defined. Delete the duplicate ClickLink Button.</value>
+    </labels>
+    <labels>
+        <fullName>MustDefineBothObjectAndField</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MustDefineBothObjectAndField</shortDescription>
+        <value>Define both List Object and List Object Source ID Fields.</value>
+    </labels>
+    <labels>
+        <fullName>MustDefineBothObjectAndFieldButton</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MustDefineBothObjectAndFieldButton</shortDescription>
+        <value>Define both List Object and List Object Source ID Fields.</value>
+    </labels>
+    <labels>
+        <fullName>MustEnterAValue</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MustEnterAValue</shortDescription>
+        <value>You must enter value</value>
+    </labels>
+    <labels>
+        <fullName>MustSelectRecords</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>MustSelectRecords</shortDescription>
+        <value>Select some records before pressing {0}.</value>
+    </labels>
+    <labels>
+        <fullName>NoActions</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoActions</shortDescription>
+        <value>There are no ClickLink Actions defined for the specified source objects and action names. Add ClickLink Actions to the rules related to these objects.</value>
+    </labels>
+    <labels>
+        <fullName>NoButtons</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoButtons</shortDescription>
+        <value>No ClickLink Buttons exist on {0}</value>
+    </labels>
+    <labels>
+        <fullName>NoButtonsForPage</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoButtonsForPage</shortDescription>
+        <value>There are no ClickLink Buttons for this Visualforce page {0}. Add an ClickLink Button on the rule related to this object.</value>
+    </labels>
+    <labels>
+        <fullName>NoClickLinkRuleId</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoClickLinkRuleId</shortDescription>
+        <value>The ID specified is not a ClickLink rule ID.</value>
+    </labels>
+    <labels>
+        <fullName>NoIDMappingForSyncEnabled</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoIDMappingForSyncEnabled</shortDescription>
+        <value>No Id mappings exist with Source Sync enabled. Ensure that the rule contains a mapping that has the Source field set to Id and Source Sync checkbox selected.</value>
+    </labels>
+    <labels>
+        <fullName>NoLicense</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoLicense</shortDescription>
+        <value>No ClickLink Rules license key is defined in this org. Enter a valid license key in the ClickLink Settings License Key field in Custom Settings.</value>
+    </labels>
+    <labels>
+        <fullName>NoMoreThanOneSyncing</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoMoreThanOneSyncing</shortDescription>
+        <value>It is not possible to mark more than one record as Syncing.</value>
+    </labels>
+    <labels>
+        <fullName>NoRelationshipToParentToBaseOn</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoRelationshipToParentToBaseOnIt</shortDescription>
+        <value>Error in ClickLink {0}. Target Mapping in {1} is set to Source Record Parent, but no parent record exists. Change the target mapping so that it is based on the Source Record.</value>
+    </labels>
+    <labels>
+        <fullName>NoScheduleDefined</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoScheduleDefined</shortDescription>
+        <value>No Schedule has been defined, click the Edit Schedule button to define one.</value>
+    </labels>
+    <labels>
+        <fullName>NoSourceRecords</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NoSourceRecords</shortDescription>
+        <value>No source records found.</value>
+    </labels>
+    <labels>
+        <fullName>None</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>None</shortDescription>
+        <value>--None--</value>
+    </labels>
+    <labels>
+        <fullName>NotLicensed</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NotLicensed</shortDescription>
+        <value>You cannot create, edit, delete or execute ClickLink rules in this organization. To use ClickLink, you must be a licensed user of one of the following FinancialForce applications: Accounting, Supply Chain Management, Professional Services Automation or Human Capital Management.</value>
+    </labels>
+    <labels>
+        <fullName>ObjectNotCustomSetting</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ObjectNotCustomSetting</shortDescription>
+        <value>Object is not a custom setting. Change the Mapping Type to Source Field, or type the name of a custom setting object.</value>
+    </labels>
+    <labels>
+        <fullName>ObjectNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ObjectNotFound</shortDescription>
+        <value>Object does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>On</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>On</shortDescription>
+        <value>On</value>
+    </labels>
+    <labels>
+        <fullName>OnDay</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>On Day</shortDescription>
+        <value>On Day</value>
+    </labels>
+    <labels>
+        <fullName>OnlyOneFieldValueAllowed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>OnlyOneFieldValueAllowed</shortDescription>
+        <value>You can complete the Source Relationship Name field or the Source Relationship Field, but not both.</value>
+    </labels>
+    <labels>
+        <fullName>PreferredStartTime</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Preferred Start Time</shortDescription>
+        <value>Preferred Start Time</value>
+    </labels>
+    <labels>
+        <fullName>ProcessedRecords</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProcessedRecords</shortDescription>
+        <value>Processed records {0}</value>
+    </labels>
+    <labels>
+        <fullName>ProcessingRelationshipSourceRecords</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ProcessingRelationshipSourceRecords</shortDescription>
+        <value>Processing {0} relationship source records</value>
+    </labels>
+    <labels>
+        <fullName>PublisherActionErrorDescription</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PublisherActionErrorDescription</shortDescription>
+        <value>The following error has occurred:</value>
+    </labels>
+    <labels>
+        <fullName>PublisherActionErrorTitle</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>PublisherActionErrorTitle</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>RecordAlreadyProcessed</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordAlreadyProcessed</shortDescription>
+        <value>Record {0} has already been processed.</value>
+    </labels>
+    <labels>
+        <fullName>RecordNameIsAmbigious</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordNameIsAmbigious</shortDescription>
+        <value>Value for {0} from record {1} does not contain a unique record name.</value>
+    </labels>
+    <labels>
+        <fullName>RecordNameNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordNameNotFound</shortDescription>
+        <value>Value for {0} from record {1} does not reference an existing record.</value>
+    </labels>
+    <labels>
+        <fullName>RecordNotProcessed</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordNotProcessed</shortDescription>
+        <value>Record {0} is not eligible for processing.</value>
+    </labels>
+    <labels>
+        <fullName>RecordSkipped</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RecordSkipped</shortDescription>
+        <value>Record skipped. {0} ({1}) not selected for processing.</value>
+    </labels>
+    <labels>
+        <fullName>Recurseveryweekon</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Recurs every week on</shortDescription>
+        <value>Recurs every week on</value>
+    </labels>
+    <labels>
+        <fullName>RelationshipNotFound</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RelationshipNotFound</shortDescription>
+        <value>Source Relationship does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>RemoveSyncIsMasterTick</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RemoveSyncIsMasterTick</shortDescription>
+        <value>A detail rule has been set as a master rule. Review the rule and, in Synchronize Setup, deselect Sync Is Master.</value>
+    </labels>
+    <labels>
+        <fullName>RuleIdCanNotBeNull</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RuleIdCanNotBeNull</shortDescription>
+        <value>Rule Id cannot be null.</value>
+    </labels>
+    <labels>
+        <fullName>RuleNotProcessed</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RuleNotProcessed</shortDescription>
+        <value>ClickLink rule {0} will not be processed.</value>
+    </labels>
+    <labels>
+        <fullName>RunRuleSourceRecordsTypeMustMatchRuleSourceObjectType</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>RunRuleSourceRecordsTypeMustMatchRuleSourceObjectType</shortDescription>
+        <value>ClickLink rule {0} will not be processed. All of the source records must be of the same type as the rule source object type.</value>
+    </labels>
+    <labels>
+        <fullName>SObjectsMustBeSameType</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SObjectsMustBeSameType</shortDescription>
+        <value>You must pass a list SObjects of the same type.</value>
+    </labels>
+    <labels>
+        <fullName>SameSourceCanNotHaveTargetCreationAndSyncEnabledBoth</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SameSourceCanNotHaveTargetCreationAndSyncEnabledBoth</shortDescription>
+        <value>Sync Enabled and Target Relation with Source is set to One to Many in rules that contain the same value in the Source Object field. In all rules where the Source Object field contains the same value: Sync Enabled must not be selected if Target Relation with Source is set to One to Many in any of the rules; Target Relation with Source must be set to None if Sync Enabled is selected in any of the rules.</value>
+    </labels>
+    <labels>
+        <fullName>Saturday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Saturday</shortDescription>
+        <value>Saturday</value>
+    </labels>
+    <labels>
+        <fullName>Save</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>ScheduledJobId</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ScheduledJobId</shortDescription>
+        <value>Scheduled job {0} was submitted.</value>
+    </labels>
+    <labels>
+        <fullName>ScheduledJobSubmitted</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Scheduled job started and Apex Job was submitted to process records.</shortDescription>
+        <value>Scheduled job started and Apex Job was submitted to process records.</value>
+    </labels>
+    <labels>
+        <fullName>SelectTimeError</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SelectTimeError</shortDescription>
+        <value>Please select a preferred time.</value>
+    </labels>
+    <labels>
+        <fullName>SelectWeekDayError</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SelectWeekDayError</shortDescription>
+        <value>Please select at least 1 day of the week.</value>
+    </labels>
+    <labels>
+        <fullName>SelectedRecordNotEligible</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SelectedRecordNotEligible</shortDescription>
+        <value>The record you selected is not eligible for processing.</value>
+    </labels>
+    <labels>
+        <fullName>SelectedRecords</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SelectedRecords</shortDescription>
+        <value>Selected records.</value>
+    </labels>
+    <labels>
+        <fullName>SelectedRecordsAlreadyProcessed</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SelectedRecordsAlreadyProcessed</shortDescription>
+        <value>The record you selected has already been processed.</value>
+    </labels>
+    <labels>
+        <fullName>SourceIdNotExist</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceIdNotExist</shortDescription>
+        <value>The source object no longer exists.</value>
+    </labels>
+    <labels>
+        <fullName>SourceMappingNotPossible</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceMappingNotPossible</shortDescription>
+        <value>Source field mapping {0}.{1} is not possible. Review mapping {2} on rule {3}.</value>
+    </labels>
+    <labels>
+        <fullName>SourceObjectActionsMustNotBeNull</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceObjectActionsMustNotBeNull</shortDescription>
+        <value>sourceObjectActions must not be null.</value>
+    </labels>
+    <labels>
+        <fullName>SourceObjectField</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceObjectField</shortDescription>
+        <value>Source Object Field</value>
+    </labels>
+    <labels>
+        <fullName>SourceObjectTypeNotNull</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceObjectTypeNotNull</shortDescription>
+        <value>Check the source object&apos;s name because the one specified is incorrect.</value>
+    </labels>
+    <labels>
+        <fullName>SourceRecordIDsCanNotBeNull</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SourceRecordIDsCanNotBeNull</shortDescription>
+        <value>You must specify some source record IDs.</value>
+    </labels>
+    <labels>
+        <fullName>StringTruncated</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>StringTruncated</shortDescription>
+        <value>Text was truncated during mapping to target field {0}.{1} when processing source record {2}. Either increase the size of the target field or reduce the length of the text in the source record.</value>
+    </labels>
+    <labels>
+        <fullName>Sunday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Sunday</shortDescription>
+        <value>Sunday</value>
+    </labels>
+    <labels>
+        <fullName>SyncActiveFieldInvalidType</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncActiveFieldInvalidType</shortDescription>
+        <value>Invalid field in the Target Object Sync Active Field field of ClickLink rule {0}. Ensure that the Target Object Sync Active Field field of ClickLink rule {0} contains the API name of a field of type Checkbox, Number or Formula (Number).</value>
+    </labels>
+    <labels>
+        <fullName>SyncControlFieldInvalidType</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncControlFieldInvalidType</shortDescription>
+        <value>Invalid field in the Target Object Sync Control Field field of ClickLink rule {0}. Ensure that the Target Object Sync Control Field field of ClickLink rule {0} contains the API name of a field of type Text, Picklist or Formula (Text).</value>
+    </labels>
+    <labels>
+        <fullName>SyncEnabledNotChecked</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncEnabledNotChecked</shortDescription>
+        <value>This field must only contain a value when the Sync Enabled checkbox is selected.</value>
+    </labels>
+    <labels>
+        <fullName>SyncFieldsNotSpecified</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncFieldsNotSpecified</shortDescription>
+        <value>When the Sync Enabled checkbox is selected, the remaining Synchronize Setup fields must all contain a value. Enter a value in each Synchronize Setup field.</value>
+    </labels>
+    <labels>
+        <fullName>SyncObjectsInUse</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncObjectsInUse</shortDescription>
+        <value>This ClickLink cannot be synchronization enabled, as either the source or target object is already being synchronized by another ClickLink.</value>
+    </labels>
+    <labels>
+        <fullName>SyncedDetailButNotHeader</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SyncedDetailButNotHeader</shortDescription>
+        <value>Sync Enabled is selected in the detail rule, but it is not selected in the master rule. For synchronization to occur on the detail rule, select Sync Enabled in both master and detail rules.</value>
+    </labels>
+    <labels>
+        <fullName>TargetObjectCannotBeExternalObject</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TargetObjectCannotBeExternalObject</shortDescription>
+        <value>You cannot use an external object as the target object.</value>
+    </labels>
+    <labels>
+        <fullName>TargetObjectField</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TargetObjectField</shortDescription>
+        <value>Target Object Field</value>
+    </labels>
+    <labels>
+        <fullName>TargetRecordCreationOnSourceInsertNoIDMapping</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TargetRecordCreationOnSourceInsertNoIDMapping</shortDescription>
+        <value>No Id mapping exists on the rule. Target Relation with Source is set to One to Many, but the rule contains no mappings with the Target Field set to Id. Create a ClickLink Mapping with the Target field set to Id, or set Target Relation with Source to None.</value>
+    </labels>
+    <labels>
+        <fullName>TargetRecordTypeIfSourceSync</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>TargetRecordTypeIfSourceSync</shortDescription>
+        <value>When the Sync Enabled checkbox is selected on the ClickLink rule, the Target Record Type field must contain the value Default.</value>
+    </labels>
+    <labels>
+        <fullName>Thursday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Thursday</shortDescription>
+        <value>Thursday</value>
+    </labels>
+    <labels>
+        <fullName>Tuesday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tuesday</shortDescription>
+        <value>Tuesday</value>
+    </labels>
+    <labels>
+        <fullName>UnexpectedPath</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UnexpectedPath</shortDescription>
+        <value>Unexpected URI path.</value>
+    </labels>
+    <labels>
+        <fullName>UpdateNotAllowedFieldsInSync</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>UpdateNotAllowedFieldsInSync</shortDescription>
+        <value>Cannot update this record. A ClickLink rule is currently in use, which updates these fields when a related record is changed: {0}.</value>
+    </labels>
+    <labels>
+        <fullName>ValidateFieldTypeBoolean</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ValidateFieldTypeBoolean</shortDescription>
+        <value>You must choose a field of type Boolean.</value>
+    </labels>
+    <labels>
+        <fullName>ValidateFieldTypeDouble</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ValidateFieldTypeDouble</shortDescription>
+        <value>You must choose a field of type Number.</value>
+    </labels>
+    <labels>
+        <fullName>ValidateFieldTypeLookup</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ValidateFieldTypeLookup</shortDescription>
+        <value>When the Allow New Record Creation on Lookup checkbox is selected, you must enter a target field of type Lookup.</value>
+    </labels>
+    <labels>
+        <fullName>ValidateUpdateSourceTarget</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>ValidateUpdateSourceTarget</shortDescription>
+        <value>Cannot update this field. One or more mappings exist for this rule.</value>
+    </labels>
+    <labels>
+        <fullName>Wednesday</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Wednesday</shortDescription>
+        <value>Wednesday</value>
+    </labels>
+    <labels>
+        <fullName>Weekly</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Weekly</shortDescription>
+        <value>Weekly</value>
+    </labels>
+    <labels>
+        <fullName>WrongTypeOfSyncActiveField</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WrongTypeOfSyncActiveField</shortDescription>
+        <value>Invalid field type. Enter the API name of a field of type Checkbox, Number or Formula (Number).</value>
+    </labels>
+    <labels>
+        <fullName>WrongTypeOfTargetReferenceField</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WrongTypeOfTargetReferenceField</shortDescription>
+        <value>You must enter the name of a field of type Text or enter the name of a field which is a lookup to the target object.</value>
+    </labels>
+    <labels>
+        <fullName>WrongUriParameter</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>WrongUriParameter</shortDescription>
+        <value>The URI is incorrect. The {0} parameter was not found.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackBad</shortDescription>
+        <value>It needs improving</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackConfusingBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackConfusingBad</shortDescription>
+        <value>Confusing information</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackConfusingNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackConfusingNeutral</shortDescription>
+        <value>Confusing information</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackGood</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackGood</shortDescription>
+        <value>It works well</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackHideLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackHideLink</shortDescription>
+        <value>Hide</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackMissingBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackMissingBad</shortDescription>
+        <value>Something missing</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackMissingNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackMissingNeutral</shortDescription>
+        <value>Something missing</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackNeutral</shortDescription>
+        <value>It could be better</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackNotWorkingBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackNotWorkingBad</shortDescription>
+        <value>Something not working</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackNotWorkingNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackNotWorkingNeutral</shortDescription>
+        <value>Something not working</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackOtherBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackOtherBad</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackOtherNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackOtherNeutral</shortDescription>
+        <value>Other</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackSendDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackSendDetails</shortDescription>
+        <value>Send details</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackSlowBad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackSlowBad</shortDescription>
+        <value>Delay / slow loading</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackSlowNeutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackSlowNeutral</shortDescription>
+        <value>Delay / slow loading</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackThanks_Bad</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackThanks_Bad</shortDescription>
+        <value>Thanks for your feedback, it’s important to us.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackThanks_Good</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackThanks_Good</shortDescription>
+        <value>Thanks for your feedback, it’s important to us.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_AnalyticsFeedbackThanks_Neutral</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_AnalyticsFeedbackThanks_Neutral</shortDescription>
+        <value>Thanks for your feedback, it’s important to us.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFChatterErrorMessageWithLogType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFChatterErrorMessageWithLogType</shortDescription>
+        <value>job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFChatterMixedMessageWithLogType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFChatterMixedMessageWithLogType</shortDescription>
+        <value>job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFChatterRelatedListMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFChatterRelatedListMessage</shortDescription>
+        <value>See the {0} related list for more information.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFInvalidExtraRecipientsIds</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFInvalidExtraRecipientsIds</shortDescription>
+        <value>Not all users received a Chatter notification because their email address is not associated with a Salesforce user.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFTaskErrorMessageWithLogType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFTaskErrorMessageWithLogType</shortDescription>
+        <value>Job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFTaskMixedMessageWithLogType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFTaskMixedMessageWithLogType</shortDescription>
+        <value>Job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BAFTaskRelatedListMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BAFTaskRelatedListMessage</shortDescription>
+        <value>See the {0} related list for more information.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BPNotAllowActionManually</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BPNotAllowActionManually</shortDescription>
+        <value>You cannot {0} a Batch Process record manually.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BPNotAllowActionManuallyOnField</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BPNotAllowActionManuallyOnField</shortDescription>
+        <value>You cannot modify this field manually.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BPRecordNotIncludedToRun</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BPRecordNotIncludedToRun</shortDescription>
+        <value>Job {0} will not be run because its status is not Failed or Aborted.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchJobQueueError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchJobQueueError</shortDescription>
+        <value>This batch job cannot start. There are too many batch jobs already running.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchJobQueueErrorList</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchJobQueueErrorList</shortDescription>
+        <value>The selected batch jobs cannot start. There would be too many batch jobs running.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessCancelButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessCancelButton</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessConfirmationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessConfirmationMessage</shortDescription>
+        <value>You must confirm that you wish to start the job.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessDoesntExist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessDoesntExist</shortDescription>
+        <value>Batch process record does not exist.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessProgressCloseButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessProgressCloseButton</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessProgressSectionTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessProgressSectionTitle</shortDescription>
+        <value>Progress</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessProgressTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessProgressTitle</shortDescription>
+        <value>Batch Process Progress</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessRunJobsButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessRunJobsButton</shortDescription>
+        <value>Run Job</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessRunPageSectionTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessRunPageSectionTitle</shortDescription>
+        <value>Information</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessRunPageTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessRunPageTitle</shortDescription>
+        <value>Batch Process</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessValidationBatchControlIsRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessValidationBatchControlIsRequired</shortDescription>
+        <value>The Batch Process must have a batch control ID.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessValidationClassNameIsRequired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessValidationClassNameIsRequired</shortDescription>
+        <value>The Batch Process must have a class name.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessValidationJobIdMustBeEmpty</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessValidationJobIdMustBeEmpty</shortDescription>
+        <value>Apex Job ID field must be blank.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessValidationWrongBatchControl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessValidationWrongBatchControl</shortDescription>
+        <value>Another Batch Process is already using the batch control ID.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessValidationWrongClassName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessValidationWrongClassName</shortDescription>
+        <value>The Apex Job Class Name is invalid.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessesCancelButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessesCancelButton</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessesConfirmationMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessesConfirmationMessage</shortDescription>
+        <value>You must confirm that you wish to start the jobs.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessesRunJobsButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessesRunJobsButton</shortDescription>
+        <value>Run Jobs</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessesRunPageSectionTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessesRunPageSectionTitle</shortDescription>
+        <value>Information</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BatchProcessesRunPageTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BatchProcessesRunPageTitle</shortDescription>
+        <value>Batch Processes</value>
+    </labels>
+    <labels>
+        <fullName>fflib_BathProcessWrongClassName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_BathProcessWrongClassName</shortDescription>
+        <value>The Apex Job Class Name is invalid. Please check your Batch Process object.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterBodySuccessfully</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterBodySuccessfully</shortDescription>
+        <value>job has completed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterErrorMessage</shortDescription>
+        <value>job has completed with {0} errors. See the {1} related list for more information.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterErrorMessageWithGroup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterErrorMessageWithGroup</shortDescription>
+        <value>job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterMessageWithGroupLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterMessageWithGroupLink</shortDescription>
+        <value>See the {0} record for more information:</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterMixedMessageWithGroup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterMixedMessageWithGroup</shortDescription>
+        <value>job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ChatterTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ChatterTitle</shortDescription>
+        <value>{0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_CheckDetailsOnBatchProcessDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_CheckDetailsOnBatchProcessDetail</shortDescription>
+        <value>Please check Batch Process Details for further information.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_DeleteAction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_DeleteAction</shortDescription>
+        <value>delete</value>
+    </labels>
+    <labels>
+        <fullName>fflib_EmailFooter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_EmailFooter</shortDescription>
+        <value>&lt;br&gt;&lt;br&gt;Thank you for using {0}.&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorBatchProcessDelete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorBatchProcessDelete</shortDescription>
+        <value>The delete process failed and returned the following error: {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorDueToAbort</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorDueToAbort</shortDescription>
+        <value>The job was aborted. You must resubmit it.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorDueToExternalIssue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorDueToExternalIssue</shortDescription>
+        <value>The job failed. You must resubmit it. If the error persists, contact Customer Support.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorDueToFatalError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorDueToFatalError</shortDescription>
+        <value>The job failed due to an unhandled error. You must resubmit it. If the error persists, contact Customer Support.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorEmailBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorEmailBody</shortDescription>
+        <value>&lt;br&gt;{0} errors occurred during the process. See the {1} related list on the record’s detail page for more information.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorEmailBodyLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorEmailBodyLink</shortDescription>
+        <value>&lt;br&gt;&lt;a href=&quot;{0}&quot;&gt;View {1} record.&lt;a&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorEmailHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorEmailHeader</shortDescription>
+        <value>The batch Apex job {0} has completed with errors.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorEmailSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorEmailSubject</shortDescription>
+        <value>Process completed with {0} errors: {1}.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorLogMessage1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorLogMessage1</shortDescription>
+        <value>on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorLogMessage2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorLogMessage2</shortDescription>
+        <value>({0})</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorLogMessage3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DEPRECATED:fflib_ErrorLogMessage3</shortDescription>
+        <value>{0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorLogMessage4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorLogMessage3</shortDescription>
+        <value>{0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorOcurredOnRecords</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorOcurredOnRecords</shortDescription>
+        <value>An error has occurred</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ErrorOcurredOnRecordsWithNoLookupOnLogRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ErrorOcurredOnRecordsWithNoLookupOnLogRecord</shortDescription>
+        <value>There is an error on the {0} object. The following record IDs have been captured {1} as being related to this message. Some of these records may already have been removed by this process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_FieldNotDefinedProperly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_FieldNotDefinedProperly</shortDescription>
+        <value>The {0} should be of type: {1}.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_GroupByContactObjectType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_GroupByContactObjectType</shortDescription>
+        <value>This field must be related to User, Contact or Lead.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_IdValueNoCorrect</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_IdValueNoCorrect</shortDescription>
+        <value>The ID is invalid.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_InternalErrorWrongJob</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_InternalErrorWrongJob</shortDescription>
+        <value>The job does not match the BatchJob or BatchJobIterable type. Please review your selection.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_JobStopped</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_JobStopped</shortDescription>
+        <value>This job was stopped because there is already a batch executing for the same record.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_JobStoppedDuringUpdate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_JobStoppedDuringUpdate</shortDescription>
+        <value>This job was stopped because an error occurred during a record update.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_MixedEmailBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_MixedEmailBody</shortDescription>
+        <value>&lt;br&gt;Of {0} items, {1} items were successful, {2} failed during the process. See the {3} related list on the record’s detail page for more information.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_MixedEmailBodyLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_MixedEmailBodyLink</shortDescription>
+        <value>&lt;br&gt;&lt;a href=&quot;{0}&quot;&gt;View {1} record.&lt;a&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_MixedEmailHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_MixedEmailHeader</shortDescription>
+        <value>The batch Apex job {0} has completed with errors.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_MixedEmailSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_MixedEmailSubject</shortDescription>
+        <value>Process completed with {0} errors: {1}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_MultiUserBasic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_MultiUserBasic</shortDescription>
+        <value>This job was stopped because there is already a batch executing for the same process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NoBatchProcessRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NoBatchProcessRecord</shortDescription>
+        <value>There are no Batch Processes to run.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NoBatchProcessRecordSelected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NoBatchProcessRecordSelected</shortDescription>
+        <value>There are no Batch Processes to run.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NoChatterActivated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NoChatterActivated</shortDescription>
+        <value>To receive Chatter notifications for this object, Chatter must be enabled in your organization.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NoRunFromBatchProcess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NoRunFromBatchProcess</shortDescription>
+        <value>You cannot rerun the process from the Batch Process record. Rerun it from the {0} instead.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NoTaskActivated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NoTaskActivated</shortDescription>
+        <value>To receive task notifications for this object, its Track Activities checkbox must be selected.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToCreateBatchProcessDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToCreateBatchProcessDetail</shortDescription>
+        <value>You cannot create a Batch Process Detail record while it is included a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToDeleteBatchControl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToDeleteBatchControl</shortDescription>
+        <value>You cannot delete a {0} record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToDeleteBatchProcess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToDeleteBatchProcess</shortDescription>
+        <value>You cannot delete a Batch Process record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToDeleteBatchProcessDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToDeleteBatchProcessDetail</shortDescription>
+        <value>You cannot delete a Batch Process Detail record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToEditBatchControl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToEditBatchControl</shortDescription>
+        <value>You cannot modify a {0} record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToEditBatchProcess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToEditBatchProcess</shortDescription>
+        <value>You cannot modify a Batch Process record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotAllowToEditBatchProcessDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotAllowToEditBatchProcessDetail</shortDescription>
+        <value>You cannot modify a Batch Process Detail record while it is included in a batch process.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotificationFailure</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotificationFailure</shortDescription>
+        <value>Failure</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotificationMixed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotificationMixed</shortDescription>
+        <value>Mixed</value>
+    </labels>
+    <labels>
+        <fullName>fflib_NotificationSuccessfull</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_NotificationSuccessfull</shortDescription>
+        <value>Successful</value>
+    </labels>
+    <labels>
+        <fullName>fflib_PermissionToAccessDenied</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>fflib_PermissionToAccessDenied</shortDescription>
+        <value>Permission to access an {0} denied.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ProcessingStatusNotDefined</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ProcessingStatusNotDefined</shortDescription>
+        <value>: Batch Control Status not defined.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ProgressBarStatusCompleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ProgressBarStatusCompleted</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ProgressBarStatusError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ProgressBarStatusError</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ProgressBarStatusPrepraring</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ProgressBarStatusPrepraring</shortDescription>
+        <value>Preparing</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryAsynJobError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_QueryAsynJobError</shortDescription>
+        <value>More than one Async Apex Job record was returned.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryBatchProcessDetailError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_QueryBatchProcessDetailError</shortDescription>
+        <value>More than one Batch Process Detail record was returned.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryOnlyOneBatchControlRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_QueryOnlyOneBatchControlRecord</shortDescription>
+        <value>More than one {0} record was returned.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_QueryOnlyOneBatchProcessRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_QueryOnlyOneBatchProcessRecord</shortDescription>
+        <value>More than one Batch Process record was returned.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_RequireFieldDefinition</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_RequireFieldDefinition</shortDescription>
+        <value>You must complete the {0} field.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_ReturnEmptyList</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_ReturnEmptyList</shortDescription>
+        <value>The query returned an empty list.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SafeAbortDetail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SafeAbortDetail</shortDescription>
+        <value>Job was aborted by a user.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SafeAbortMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SafeAbortMessage</shortDescription>
+        <value>The job was paused. You can restart it when you are ready.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SeveralBatchProcessSameId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SeveralBatchProcessSameId</shortDescription>
+        <value>This job was stopped because there is more than one Batch Process with the same id.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SuccessfulEmailBodyLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SuccessfulEmailBodyLink</shortDescription>
+        <value>&lt;br&gt;&lt;a href=&quot;{0}&quot;&gt;View {1} record.&lt;a&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SuccessfulEmailHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SuccessfulEmailHeader</shortDescription>
+        <value>The batch Apex job {0} has completed successfully.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SuccessfulEmailSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SuccessfulEmailSubject</shortDescription>
+        <value>Process completed successfully: {0}.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_SuccessfullOnRecordsWithNoLookupOnLogRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_SuccessfullOnRecordsWithNoLookupOnLogRecord</shortDescription>
+        <value>The following record IDs have been captured {0} as being related to this message.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskBodySuccessful</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskBodySuccessful</shortDescription>
+        <value>Job has completed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskErrorMessage</shortDescription>
+        <value>Job has completed with {0} errors. See the {1} related list for more information.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskErrorMessageWithGroup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskErrorMessageWithGroup</shortDescription>
+        <value>Job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskMessageWithGroupLink</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskMessageWithGroupLink</shortDescription>
+        <value>See the {0} related list on the record’s detail page for more information:</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskMixedMessageWithGroup</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskMixedMessageWithGroup</shortDescription>
+        <value>Job has completed with {0} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskTitleMixed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskTitleMixed</shortDescription>
+        <value>{0} job has completed with {1} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskTitleSuccessfully</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskTitleSuccessfully</shortDescription>
+        <value>{0} job has completed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_TaskTitleWithErrors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_TaskTitleWithErrors</shortDescription>
+        <value>{0} job has completed with {1} errors.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_UnmanageableErrorBody</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_UnmanageableErrorBody</shortDescription>
+        <value>The notification failed: {0}&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_UnmanageableErrorHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_UnmanageableErrorHeader</shortDescription>
+        <value>The batch apex job {0} has completed with errors.&lt;br&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_UnmanageableErrorSubject</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_UnmanageableErrorSubject</shortDescription>
+        <value>Error on Completed Batch: {0}.</value>
+    </labels>
+    <labels>
+        <fullName>fflib_UpdateAction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_UpdateAction</shortDescription>
+        <value>modify</value>
+    </labels>
+    <labels>
+        <fullName>fflib_UrlDirection</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>fflib_UrlDirection</shortDescription>
+        <value>&lt;a href=&quot;http://www.FinancialForce.com/&quot;&gt;www.FinancialForce.com&lt;a&gt;&lt;br&gt;</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.field-not-insertable</shortDescription>
+        <value>You do not have permission to insert field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.field-not-readable</shortDescription>
+        <value>You do not have permission to read the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_field_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.field-not-updateable</shortDescription>
+        <value>You do not have permission to update the field {1} on {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_deletable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.object-not-deletable</shortDescription>
+        <value>You do not have permission to delete {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_insertable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.object-not-insertable</shortDescription>
+        <value>You do not have permission to insert {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_readable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.object-not-readable</shortDescription>
+        <value>You do not have permission to read {0}</value>
+    </labels>
+    <labels>
+        <fullName>fflib_security_error_object_not_updateable</fullName>
+        <categories>security,error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>security.error.object-not-updateable</shortDescription>
+        <value>You do not have permission to update {0}</value>
+    </labels>
+    <labels>
+        <fullName>incompatibleFieldTypes</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>incompatibleFieldTypes</shortDescription>
+        <value>Incompatible field mapping: Fields of type {0} cannot be converted to type {1}. Enter compatible Source and Target fields.</value>
+    </labels>
+    <labels>
+        <fullName>last</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>last</shortDescription>
+        <value>last</value>
+    </labels>
+    <labels>
+        <fullName>ofeverymonth</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>of every month</shortDescription>
+        <value>of every month</value>
+    </labels>
+    <labels>
+        <fullName>the1st</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the 1st</shortDescription>
+        <value>the 1st</value>
+    </labels>
+    <labels>
+        <fullName>the2nd</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the 2nd</shortDescription>
+        <value>the 2nd</value>
+    </labels>
+    <labels>
+        <fullName>the3rd</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the 3rd</shortDescription>
+        <value>the 3rd</value>
+    </labels>
+    <labels>
+        <fullName>the4th</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the 4th</shortDescription>
+        <value>the 4th</value>
+    </labels>
+    <labels>
+        <fullName>thelast</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>the last</shortDescription>
+        <value>the last</value>
+    </labels>
+    <labels>
+        <fullName>wrongtypeofprocessfield</fullName>
+        <categories>ClickLink</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>You must specify a field of Boolean or Double type.</shortDescription>
+        <value>You must specify a field of type Checkbox or Number.</value>
+    </labels>
+</CustomLabels>
